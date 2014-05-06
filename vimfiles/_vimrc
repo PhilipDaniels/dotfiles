@@ -1,0 +1,73 @@
+" To reload this file while editing it, use :so %   (source current file)
+
+set nocompatible    " Don't care about being compatible with vi.
+set number          " Turn on line numbers
+set vb t_vb=        " Turn off bleeping and flashing
+
+" Ensure tabs are always 4 spaces.
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" Turn off backups
+set nobackup
+set nowb
+set noswapfile
+
+" Turn on syntax highlighting and indentation based on filetype.
+syntax on
+filetype plugin indent on
+
+" Turn on automatic indentation. The Wiki says only do this manually if
+" filetype indentation is not working.
+"set smartindent
+
+" Backspace and cursor keys wrap to previous/next line and make
+" Backspace work correctly.
+set backspace=indent,eol,start whichwrap+=<,>,[,]
+
+" Backspace in Visual mode deletes selection
+vnoremap <BS> d
+
+" Buffer and tab navigation.
+map <silent> <C-Tab> :bnext<CR>
+map <silent> <C-S-Tab> :bprevious<CR>
+map <silent> <C-J> :bnext<CR>
+map <silent> <C-K> :bprev<CR>
+map <silent> <C-L> :tabn<CR>
+map <silent> <C-H> :tabp<CR>
+
+" Make F2 and F3 run the macros stored in the 'q' and 'w' registers
+" and Shift F2/F3 run the macros until a blank line is encountered.
+map <F2> @q
+map <F3> @w
+map <silent> <S-F2> :call RunMacroToBlankLine('q')<CR>
+map <silent> <S-F3> :call RunMacroToBlankLine('w')<CR>
+
+
+
+" ********** Function Definitions **********
+
+function! StripString(input_string)
+    " Remove leading and trailing whitespace from input_string.
+    return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
+endfunction
+
+function! RunMacroToBlankLine(registerName)
+    " Repeatedly run the macro stored in the registerName until the
+    " end of file or a blank line is reached. For this to work as you
+    " expect your macro should move down one line as part of its
+    " definition (typically it is the last thing it does).
+    let curLine = line(".")
+    let lastLine = line("$")
+    for line in getline(curLine, lastLine)
+        let sLine = StripString(line)
+        if (strlen(sLine) == 0)
+            break
+        endif
+        let cmd = '@' . a:registerName
+        execute "normal " . cmd
+    endfor
+endfunction
+
+

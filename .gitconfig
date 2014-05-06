@@ -1,0 +1,38 @@
+[user]
+    name = Philip Daniels
+    email = Philip.Daniels@example.com
+[color]
+    ui = true
+[alias]
+    s = status
+    ss = status --short
+    m = commit -m
+    a = add -A
+    b = branch -a -vv
+    # Do a git add followed by a git status. This is the syntax to define a shell function,
+    # which can be used to execute arbitrary commands.
+    as = "'!f() { git add .; git status; }; f'"
+    # Delete a branch locally and on the remote. See
+    # http://stackoverflow.com/questions/2003505/how-do-i-delete-a-git-branch-both-locally-and-remotely
+    rmbranch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
+    lg = log --graph --abbrev-commit --date=short --pretty=format:'%C(green)%h%C(red) %cd %C(reset)%s %C(bold blue)%an'
+    lg2 = log --graph --abbrev-commit --pretty=format:'%C(green)%h%C(red) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(bold blue)%an'
+[merge]
+    tool = kdiff3
+[mergetool "kdiff3"]
+    path = C:/PublicHome/OtherApps/KDiff3-64bit/kdiff3.exe
+[diff]
+    guitool = kdiff3
+    tool = kdiff3
+[difftool "kdiff3"]
+    path = C:/PublicHome/OtherApps/KDiff3-64bit/kdiff3.exe
+[difftool]
+    prompt = false
+[core]
+    editor = vim
+    pager = less -x4
+    autocrlf = input
+[push]
+    default = simple
+[http]
+    proxy = http://somewhere:9999/
