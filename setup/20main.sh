@@ -5,21 +5,24 @@
 sudo apt-get update
 
 # Non-X stuff.
-sudo apt-get install samba winbind smbclient cifs-utils  vim ctags \
+sudo apt-get install samba winbind smbclient cifs-utils vim \
 automake bc bison build-essential checkinstall libtool rsync \
 flex exuberant-ctags g++ gcc gdb gettext git git-core htop make \
-strace sudo usbutils
+strace sudo usbutils links2
 
-# X core.
+# Fonts. Doesn't require X.
 sudo apt-get install ttf-bitstream-vera ttf-dejavu fonts-droid ttf-liberation \
-fonts-inconsolata fonts-jura ttf-mscorefonts-installer \
+fonts-inconsolata fonts-jura \
 fonts-linuxlibertine fonts-quattrocento ttf-adf-gillius ttf-adf-ikarius \
 ttf-adf-romande ttf-adf-switzera ttf-adf-verana ttf-radisnoir
 
+# X core.
+sudo apt-get install xfce4  # Lots of stuff!!!
 
-# X apps.
-sudo apt-get install chromium-browser gimp gksu gthumb gnome-specimen \
-tightvncserver vim-gtk \
+
+# Extra X apps.
+#sudo apt-get install chromium-browser gimp gksu gthumb gnome-specimen \
+#tightvncserver vim-gtk \
 
 
 

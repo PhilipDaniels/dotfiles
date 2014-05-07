@@ -7,15 +7,15 @@ case $- in
 esac
 
 # Keep aliases and functions in separate files.
-if [ -f .bash_aliases ]; then 
-    . .bash_aliases
+if [ -f ~/.bash_aliases ]; then 
+    . ~/.bash_aliases
 fi
-if [ -f .bash_functions ]; then 
-    . .bash_functions
+if [ -f ~/.bash_functions ]; then 
+    . ~/.bash_functions
 fi
 
 DetermineOS
-echo "***** Running .bashrc, this looks like '$OS'"
+echo "***** Running dotfiles/.bashrc, this looks like '$OS'"
 
 
 # This is probably not needed.
