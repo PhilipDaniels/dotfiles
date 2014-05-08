@@ -20,9 +20,11 @@ ttf-adf-romande ttf-adf-switzera ttf-adf-verana ttf-radisnoir
 sudo apt-get install xfce4  # Lots of stuff!!!
 
 
-# Extra X apps.
-#sudo apt-get install chromium-browser gimp gksu gthumb gnome-specimen \
-#tightvncserver vim-gtk \
+# Extra X apps. 
+# eterm = 2MB, terminator = 80MB, gnome-terminal = 120MB!
+sudo apt-get install vim-gtk eterm terminator gimp gthumb \
+gnome-specimen gksu
+#chromium-browser tightvncserver
 
 
 
