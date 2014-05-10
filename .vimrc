@@ -6,8 +6,8 @@ if has("win32unix")
     source /cygdrive/c/PublicHome/dotfiles/vimfiles/_vimrc
 elseif has("unix")
     " We are running under Linux etc.
-    set runtimepath+=~/repos/dotfiles/vimfiles
-    source ~/repos/dotfiles/vimfiles/_vimrc
+    set runtimepath+=~/repos/github/dotfiles/vimfiles
+    source ~/repos/github/dotfiles/vimfiles/_vimrc
 elseif has("win32")
     " We are running under Windows.
     set runtimepath+=C:\PublicHome\dotfiles\vimfiles
