@@ -10,7 +10,7 @@ sudo apt-get update
 sudo apt-get install samba winbind smbclient cifs-utils vim \
 automake bc bison build-essential checkinstall libtool rsync \
 flex exuberant-ctags g++ gcc gdb gettext git git-core htop make \
-strace sudo usbutils links2 git gitk git-gui git-doc ssh apt-file curl vim \
+strace sudo usbutils links2 git git-doc ssh apt-file curl vim \
 libssl-dev apache2-utils \
 ttf-bitstream-vera ttf-dejavu fonts-droid ttf-liberation \
 fonts-inconsolata fonts-jura fonts-linuxlibertine fonts-quattrocento \
@@ -47,7 +47,7 @@ sudo apt-get install xorg openbox menu
 #   [X] Gimp
 #   [X] gnome-mines
 sudo apt-get install xfe vim-gtk geany terminator \
-iceweasel gimp \
+iceweasel gimp gitk git-gui \
 gthumb gnome-specimen gksu galculator evince gnome-mines \
 gnome-mahjongg
 
