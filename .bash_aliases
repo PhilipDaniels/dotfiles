@@ -14,4 +14,6 @@ alias l='ls -CF'
 
 alias more='less'
 alias cls='clear'
-
+# This will start an X server on Cygwin without displaying
+# any windows.
+alias cygx='touch ~/.startxwinrc; startxwin.exe; export DISPLAY=:0.0'
