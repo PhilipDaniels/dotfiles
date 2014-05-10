@@ -17,9 +17,10 @@ ttf-adf-verana ttf-radisnoir
 
 # X core.
 #   Window Manager
-#     [X] Openbox is lightest.
+#     [X] Openbox is lightest but menu doesn't update unless you also
+#         install the (tiny) 'menu' package.
 #     [ ] XFCE and LXDE are pretty good.
-sudo apt-get install xorg openbox
+sudo apt-get install xorg openbox menu
 #sudo apt-get install xfce4
 
 
@@ -42,8 +43,11 @@ sudo apt-get install xorg openbox
 #   [X] chromium-browser. About 
 # Other
 #   [X] Gimp
-sudo apt-get install xfe terminator gimp gthumb gnome-specimen \
-gksu vim-gtk geany iceweasel
+#   [X] gnome-mines
+sudo apt-get install xfe vim-gtk geany terminator \
+iceweasel gimp \
+gthumb gnome-specimen gksu galculator evince gnome-mines \
+gnome-mahjongg
 
 #chromium-browser
 
