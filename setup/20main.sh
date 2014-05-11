@@ -35,6 +35,9 @@ sudo apt-get install xorg openbox menu
 # Text Editor
 #   [X] vim-gtk
 #   [X] geany, small about 10Mb. Might as well have.
+# Diff tool
+#   [ ] P4Merge
+#   [ ] KDiff3. Cross platform, but brings in 100Mb of KDE libs.
 # Terminal
 #   [X] Terminator - has solarized theme built-in!
 #   [ ] ETerm - very small but a bit "off". 
