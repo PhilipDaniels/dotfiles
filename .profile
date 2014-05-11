@@ -8,6 +8,10 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+
+# This file is executed when you login via SSH; we follow the principles
+# in .bash_profile and defer everything to .bashrc.
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     if [ -f ~/.bashrc ]; then
@@ -15,15 +19,4 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# include sbin in PATH
-if [ -d "/sbin" ] ; then
-    PATH="/sbin:$PATH"
-fi
-if [ -d "/usr/sbin" ] ; then
-    PATH="/usr/sbin:$PATH"
-fi
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
 

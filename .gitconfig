@@ -18,14 +18,10 @@
     lg = log --graph --abbrev-commit --date=short --pretty=format:'%C(green)%h%C(red) %cd %C(reset)%s %C(bold blue)%an'
     lg2 = log --graph --abbrev-commit --pretty=format:'%C(green)%h%C(red) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(bold blue)%an'
 [merge]
-    tool = kdiff3
-[mergetool "kdiff3"]
-    path = C:/PublicHome/OtherApps/KDiff3-64bit/kdiff3.exe
+    tool = p4merge
 [diff]
-    guitool = kdiff3
-    tool = kdiff3
-[difftool "kdiff3"]
-    path = C:/PublicHome/OtherApps/KDiff3-64bit/kdiff3.exe
+    guitool = p4merge
+    tool = p4merge
 [difftool]
     prompt = false
 [core]
@@ -34,5 +30,5 @@
     autocrlf = input
 [push]
     default = simple
-[http]
-    proxy = http://somewhere:9999/
+#[http]
+#    proxy = http://somewhere:9999/

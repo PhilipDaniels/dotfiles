@@ -35,9 +35,24 @@ HISTFILESIZE=2000
 shopt -s checkwinsize
 
 # List of directories to be searched by the cd command.
-CDPATH=.:~:~/repos
+CDPATH=.:~:~/repos/github:~/repos/philipdaniels.com
 
-export PATH=$HOME/local/bin:$PATH
+
+# include sbin in PATH
+if [ -d "/sbin" ] ; then
+    PATH="/sbin:$PATH"
+fi
+if [ -d "/usr/sbin" ] ; then
+    PATH="/usr/sbin:$PATH"
+fi
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+if [ -d "$HOME/bin/p4merge/bin" ] ; then
+    PATH="$HOME/bin/p4merge/bin:$PATH"
+fi
+
 
 
 # set variable identifying the chroot you work in (used in the prompt below)
