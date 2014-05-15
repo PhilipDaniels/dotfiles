@@ -35,7 +35,7 @@ HISTFILESIZE=2000
 shopt -s checkwinsize
 
 # List of directories to be searched by the cd command.
-CDPATH=.:~:~/repos/github:~/repos/philipdaniels.com
+CDPATH=.:~/repos
 
 
 # include sbin in PATH
