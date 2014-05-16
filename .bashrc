@@ -7,14 +7,11 @@ case $- in
 esac
 
 # Keep aliases and functions in separate files.
-if [ -f ~/.bash_aliases ]; then 
-    . ~/.bash_aliases
-fi
 if [ -f ~/.bash_functions ]; then 
     . ~/.bash_functions
 fi
 
-DetermineOS
+f_DetermineOS
 echo "***** Running dotfiles/.bashrc, this looks like '$OS'"
 
 
@@ -72,12 +69,12 @@ force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+    	# We have color support; assume it's compliant with Ecma-48
+    	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    	# a case would tend to support setf rather than setaf.)
+	    color_prompt=yes
     else
-	color_prompt=
+    	color_prompt=
     fi
 fi
 
@@ -134,16 +131,48 @@ fi
 # different purpose in SSH.
 env=~/.ssh/agent.env
 
-if ! agent_is_running; then
-    agent_load_env
+if ! f_AgentIsRunning; then
+    f_AgentLoadEnv
 fi
 
-if ! agent_is_running; then
-    agent_start
+if ! f_AgentIsRunning; then
+    f_AgentStart
     ssh-add ~/.ssh/id_phil
-elif ! agent_has_keys; then
+elif ! f_AgentHasKeys; then
     ssh-add ~/.ssh/id_phil
 fi
 
 unset env
+
+
 ########################################################################
+# Do aliases last.
+if [ "$OSTYPE" == "cygwin" ] || [ "$OSTYPE" == "msys" ]; then
+    # On Windows, setup various folders to be ignored in ls commands.
+    # This is to hide garbage in my %UserProfile% folder.
+    LSIGNORE="-I NTUSER.DAT\* -I ntuser.dat\* -I AppData\* -I Cookies\*"  
+
+    # Ignore case while completing.
+    set completion-ignore-case on
+fi
+
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls $LSIGNORE -hF --color=auto'
+    alias grep='grep --color'
+    alias egrep='egrep --color=auto'
+    alias fgrep='fgrep --color=auto'
+fi
+
+alias ll='ls $LSIGNORE -lA'
+alias la='ls $LSIGNORE -A'
+alias l='ls $LSIGNORE -CF'
+
+alias more='less'
+alias cls='printf "\033c"'
+
+# This will start an X server on Cygwin without displaying any windows.
+if [ "$OSTYPE" == "cygwin" ]; then
+    alias startxcygx='touch ~/.startxwinrc; startxwin.exe; export DISPLAY=:0.0'
+fi
+

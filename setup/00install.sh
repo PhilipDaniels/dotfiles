@@ -2,7 +2,7 @@
 
 # Sets up the bash environment.
 
-DetermineOS()
+f_DetermineOS()
 {
   case "$OSTYPE" in
     cygwin*)  OS="cygwin" ;;
@@ -11,16 +11,15 @@ DetermineOS()
     *)        OS="unknown: $OSTYPE"  ;;
   esac
 }
-DetermineOS
+f_DetermineOS
 
 
 # Nuke any existing files or links.
-rm -f ~/.bash_aliases ~/.bash_functions ~/.bash_logout ~/.bash_profile \
-    ~/.bashrc ~/.profile ~/.gitconfig ~/.gvimrc ~/.vimrc ~/.dircolors
+rm -f ~/.bash_functions ~/.bash_logout ~/.bash_profile \
+    ~/.bashrc ~/.profile ~/.gitconfig ~/.gvimrc ~/.vimrc
 
 
 if [ "$OS" == "linux" ] ; then
-  ln -s ~/repos/dotfiles/.bash_aliases ~/.bash_aliases
   ln -s ~/repos/dotfiles/.bash_functions ~/.bash_functions
   ln -s ~/repos/dotfiles/.bash_logout ~/.bash_logout
   ln -s ~/repos/dotfiles/.bash_profile ~/.bash_profile
@@ -32,7 +31,6 @@ if [ "$OS" == "linux" ] ; then
   ln -s ~/repos/dotfiles/.vimrc ~/.vimrc
 else
   # Windows does not support symbolic links so we must copy files into place.
-  cp ../.bash_aliases ~/.bash_aliases
   cp ../.bash_functions ~/.bash_functions
   cp ../.bash_logout ~/.bash_logout
   cp ../.bash_profile ~/.bash_profile
