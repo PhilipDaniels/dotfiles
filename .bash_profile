@@ -4,5 +4,7 @@
 # DO NOT USE THIS FILE. JUST LEAVE THE LINE BELOW.
 # echo "***** Running ~/.bash_profile"
 
-if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi
 
