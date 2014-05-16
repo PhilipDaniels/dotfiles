@@ -5,3 +5,4 @@
 if [ "$SHLVL" = 1 ]; then
     printf "\033c"
 fi
+
