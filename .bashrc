@@ -76,6 +76,8 @@ if [ -n "$force_color_prompt" ]; then
     else
     	color_prompt=
     fi
+else
+    color_prompt=yes
 fi
 
 if [ "$color_prompt" == "yes" ]; then
@@ -160,10 +162,11 @@ fi
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls="ls $LSIGNORE -hF --color=auto"
-    alias grep="grep --color"
-    alias egrep="egrep --color=auto"
-    alias fgrep="fgrep --color=auto"
 fi
+
+alias grep="grep --color"
+alias egrep="egrep --color=auto"
+alias fgrep="fgrep --color=auto"
 
 alias ll="ls $LSIGNORE -lA"
 alias la="ls $LSIGNORE -A"
@@ -174,6 +177,6 @@ alias cls='printf "\033c"'
 
 # This will start an X server on Cygwin without displaying any windows.
 if [ "$OSTYPE" == "cygwin" ]; then
-    alias startxcygx='touch ~/.startxwinrc; startxwin.exe; export DISPLAY=:0.0'
+    alias startcygx="touch ~/.startxwinrc; startxwin.exe; export DISPLAY=:0.0"
 fi
 
