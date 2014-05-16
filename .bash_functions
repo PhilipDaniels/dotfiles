@@ -3,7 +3,8 @@
 
 echo "***** Running dotfiles/.bash_functions"
 
-function f_ShowPath() {
+function f_ShowPath()
+{
     echo $PATH | tr ':' '\n' | sort -u
 }
 
@@ -32,7 +33,8 @@ f_DetermineOS()
 # Note: Don't bother checking SSH_AGENT_PID. It's not used
 #       by SSH itself, and it might even be incorrect
 #       (for example, when using agent-forwarding over SSH).
-f_AgentIsRunning() {
+f_AgentIsRunning()
+{
     if [ "$SSH_AUTH_SOCK" ]; then
         # ssh-add returns:
         #   0 = agent running, has keys
@@ -44,15 +46,18 @@ f_AgentIsRunning() {
     fi
 }
 
-f_AgentHasKeys() {
+f_AgentHasKeys()
+{
     ssh-add -l >/dev/null 2>&1
 }
 
-f_AgentLoadEnv() {
+f_AgentLoadEnv()
+{
     . "$env" >/dev/null
 }
 
-f_AgentStart() {
+f_AgentStart()
+{
     (umask 077; ssh-agent >"$env")
     . "$env" >/dev/null
 }
