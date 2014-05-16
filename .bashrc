@@ -180,3 +180,6 @@ if [ "$OSTYPE" == "cygwin" ]; then
     alias startcygx="touch ~/.startxwinrc; startxwin.exe; export DISPLAY=:0.0"
 fi
 
+if [ "$OSTYPE" == "msys" ]; then
+    alias gvim="~/OtherApps/gvim7.4/gvim.exe"
+fi
