@@ -6,7 +6,7 @@ case $- in
       *) return;;
 esac
 
-# Keep aliases and functions in separate files.
+# Keep functions in separate files.
 if [ -f ~/.bash_functions ]; then 
     . ~/.bash_functions
 fi
@@ -49,7 +49,6 @@ fi
 if [ -d "$HOME/bin/p4merge/bin" ] ; then
     PATH="$HOME/bin/p4merge/bin:$PATH"
 fi
-
 
 
 # set variable identifying the chroot you work in (used in the prompt below)
@@ -149,7 +148,7 @@ unset env
 
 ########################################################################
 # Do aliases last.
-if [ "$OSTYPE" == "cygwin" ] || [ "$OSTYPE" == "msys" ]; then
+if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
     # On Windows, setup various folders to be ignored in ls commands.
     # This is to hide garbage in my %UserProfile% folder.
     LSIGNORE="-I NTUSER.DAT\* -I ntuser.dat\* -I AppData\* -I Cookies\*"
@@ -164,9 +163,15 @@ if [ "$OSTYPE" == "cygwin" ] || [ "$OSTYPE" == "msys" ]; then
     alias gvim="~/OtherApps/gvim7.4/gvim.exe"
 fi
 
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+
+# dircolors only affects the output of the "ls" command.
+# In ConEmu, we already get decent highlighting.
+if [ "$OS" == "linux" ]; then
+    if [ -x /usr/bin/dircolors ]; then
+        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    fi
 fi
+
 
 alias grep="grep --color"
 alias egrep="egrep --color=auto"
@@ -180,8 +185,8 @@ alias l="ls $LSIGNORE -CF --color=auto"
 alias more='less'
 alias cls='printf "\033c"'
 
-# This will start an X server on Cygwin without displaying any windows.
-if [ "$OSTYPE" == "cygwin" ]; then
+# This will start an X server on Cygwin without displaying any startup windows.
+if [ "$OS" == "cygwin" ]; then
     alias startcygx="touch ~/.startxwinrc; startxwin.exe; export DISPLAY=:0.0"
 fi
 
