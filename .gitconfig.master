@@ -31,9 +31,11 @@
     # This seems to be best for files that you need to use on different systems
     # (Linux, MSysGit, Cygwin). It requires Windows machines to know
     # about and preserve files with LF endings, which most modern tools do.
+    # See http://stackoverflow.com/questions/170961 and 13960696
     autocrlf = false
 [push]
-    # Cygwin git doesn't understand this yet.
+    # Cygwin git doesn't understand this yet. Use MSysGit on Windows, it
+    # is much more recent.
     default = simple
 #[http]
 #    proxy = http://somewhere:9999/
