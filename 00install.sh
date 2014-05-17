@@ -28,7 +28,8 @@ if [ "$OS" == "linux" ] ; then
   ln -s ~/repos/dotfiles/.profile ~/.profile
   ln -s ~/repos/dotfiles/.gvimrc ~/.gvimrc
   ln -s ~/repos/dotfiles/.vimrc ~/.vimrc
-  ln -s ~/repos/dotfiles/.dircolors.solarized ~/.dircolors
+  # Makes console vim in Terminator worse (and it is already quite bad).
+  #ln -s ~/repos/dotfiles/.dircolors.solarized ~/.dircolors
 else
   # Windows does not support symbolic links so we must copy files into place.
   cp .bash_functions ~/.bash_functions
