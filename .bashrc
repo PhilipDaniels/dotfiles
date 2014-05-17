@@ -158,7 +158,9 @@ if [ "$OSTYPE" == "cygwin" ] || [ "$OSTYPE" == "msys" ]; then
     # Ignore case while completing.
     set completion-ignore-case on
 
-    # Favour the real Windows gVim.
+    # Favour the real Windows gVim. MSysGit console vim and Cygwin
+    # console vim do not display the correct solarized colors.
+    alias vim="~/OtherApps/gvim7.4/vim.exe"
     alias gvim="~/OtherApps/gvim7.4/gvim.exe"
 fi
 

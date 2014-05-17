@@ -23,6 +23,17 @@ filetype plugin indent on
 
 " Turn on the solarized theme. This "just works" for gVims, but for
 " console Vims you should set your terminal's theme to solarized too.
+"
+" Env                    Notes
+" =====================  =====
+" ConEmu-MSysGit         No colors, everything looks grey.
+" ConEmu-Cygwin Git      Looks ok, but some colors swapped compared to gVim.
+" ConEmu SSH-condolr     Looks like Cygwin vim
+" ConEmu-Win native git  Perfect, looks just like Windows gVim
+" Win gVim               Perfect
+" XWin gVim              Perfect
+" Linux console          ?
+" terminator             ?
 set background=dark
 colors solarized
 call togglebg#map("<F12>")

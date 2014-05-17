@@ -1,3 +1,5 @@
+# vim: set filetype=sh:
+
 # Boolean functions should return 0 for success, following the same
 # convention as unix utilities.
 
@@ -61,6 +63,55 @@ f_AgentStart()
     (umask 077; ssh-agent >"$env")
     . "$env" >/dev/null
 }
+
+########################################################################
+# This is to setup the Linux VT for the solarized theme.
+# This makes LinuxVT-vim work with solarized, but the ls colors
+# are washed out. Fix by using the .dircolors.solarized theme?
+f_SetLinuxTerminalToSolarized()
+{
+    local base02="073642"
+    local red="dc322f"
+    local green="859900"
+    local yellow="b58900"
+    local blue="268bd2"
+    local magenta="d33682"
+    local cyan="2aa198"
+    local base2="eee8d5"
+    local base03="002b36"
+    local orange="cb4b16"
+    local base01="586e75"
+    local base00="657b83"
+    local base0="839496"
+    local violet="6c71c4"
+    local base1="93a1a1"
+    local base3="fdf6e3"
+
+    echo -en "\e]P0${base02}"   # black
+    echo -en "\e]P1${red}"      # red
+    echo -en "\e]P2${green}"    # green
+    echo -en "\e]P3${yellow}"   # yellow
+    echo -en "\e]P4${blue}"     # blue
+    echo -en "\e]P5${magenta}"  # magenta
+    echo -en "\e]P6${cyan}"     # cyan
+    echo -en "\e]P7${base2}"    # white
+    echo -en "\e]P8${base03}"   # brblack
+    echo -en "\e]P9${orange}"   # brred
+    echo -en "\e]PA${base01}"   # brgreen
+    echo -en "\e]PB${base00}"   # bryellow
+    echo -en "\e]PC${base0}"    # brblue
+    echo -en "\e]PD${violet}"   # brmagenta
+    echo -en "\e]PE${base1}"    # brcyan
+    echo -en "\e]PF${base3}"    # brwhite
+#    clear                       # for background artifacting
+}
+
+if [ "$TERM" == "linux" ]; then
+    f_SetLinuxTerminalToSolarized
+fi
+
+unset -f f_SetLinuxTerminalToSolarized
+
 
 ########################################################################
 # settitle () 
