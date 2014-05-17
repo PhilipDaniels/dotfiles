@@ -157,6 +157,9 @@ if [ "$OSTYPE" == "cygwin" ] || [ "$OSTYPE" == "msys" ]; then
 
     # Ignore case while completing.
     set completion-ignore-case on
+
+    # Favour the real Windows gVim.
+    alias gvim="~/OtherApps/gvim7.4/gvim.exe"
 fi
 
 if [ -x /usr/bin/dircolors ]; then
@@ -180,6 +183,3 @@ if [ "$OSTYPE" == "cygwin" ]; then
     alias startcygx="touch ~/.startxwinrc; startxwin.exe; export DISPLAY=:0.0"
 fi
 
-if [ "$OSTYPE" == "msys" ]; then
-    alias gvim="~/OtherApps/gvim7.4/gvim.exe"
-fi

@@ -1,8 +1,9 @@
 " To reload this file while editing it, use :so %   (source current file)
 " Setup file for *graphical* vim only.
 
- if has("X11")
- elseif has("win32")
+if has("X11")
+   set guifont=Droid\ Sans\ Mono\ 10,Liberation\ Mono\ 10
+elseif has("win32")
    set guifont=Consolas:h11,Lucida_Console:h10,Courier_New:h10
 endif
 
