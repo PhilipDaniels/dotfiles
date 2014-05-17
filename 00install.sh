@@ -16,7 +16,7 @@ f_DetermineOS
 
 # Nuke any existing files or links.
 rm -f ~/.bash_functions ~/.bash_logout ~/.bash_profile \
-    ~/.bashrc ~/.profile ~/.gitconfig ~/.gvimrc ~/.vimrc
+  ~/.bashrc ~/.profile ~/.gitconfig ~/.gvimrc ~/.vimrc
 
 
 if [ "$OS" == "linux" ] ; then
@@ -26,19 +26,22 @@ if [ "$OS" == "linux" ] ; then
   ln -s ~/repos/dotfiles/.bashrc ~/.bashrc
   ln -s ~/repos/dotfiles/.profile ~/.profile
   # ln -s ~/repos/dotfiles/.dircolors ~/.dircolors
-  ln -s ~/repos/dotfiles/.gitconfig ~/.gitconfig
   ln -s ~/repos/dotfiles/.gvimrc ~/.gvimrc
   ln -s ~/repos/dotfiles/.vimrc ~/.vimrc
 else
   # Windows does not support symbolic links so we must copy files into place.
-  cp ../.bash_functions ~/.bash_functions
-  cp ../.bash_logout ~/.bash_logout
-  cp ../.bash_profile ~/.bash_profile
-  cp ../.bashrc ~/.bashrc
-  cp ../.profile ~/.profile
-  cp ../.gitconfig ~/.gitconfig
-  cp ../.gvimrc ~/.gvimrc
-  cp ../.vimrc ~/.vimrc
+  cp .bash_functions ~/.bash_functions
+  cp .bash_logout ~/.bash_logout
+  cp .bash_profile ~/.bash_profile
+  cp .bashrc ~/.bashrc
+  cp .profile ~/.profile
+  cp .gvimrc ~/.gvimrc
+  cp .vimrc ~/.vimrc
 fi
 
+
+# Always copy this. It can get tricky having a file called
+# .gitconfig in the repo, because that affects the behaviour
+# of git in this repo!
+cp .gitconfig.master ~/.gitconfig
  
