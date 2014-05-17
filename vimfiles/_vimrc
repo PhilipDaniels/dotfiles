@@ -18,6 +18,20 @@ set noswapfile
 syntax on
 filetype plugin indent on
 
+" Highlight current line?
+"set cursorline
+
+" Turn on the solarized theme. This "just works" for gVims, but for
+" console Vims you should set your terminal's theme to solarized too.
+set background=dark
+colors solarized
+call togglebg#map("<F12>")
+
+
+" Force highlight of current line number in bright yellow.
+hi CursorLineNr term=bold ctermfg=Yellow gui=bold guifg=Yellow
+
+
 " Turn on automatic indentation. The Wiki says only do this manually if
 " filetype indentation is not working.
 "set smartindent

@@ -7,8 +7,3 @@ elseif has("win32")
    set guifont=Consolas:h11,Lucida_Console:h10,Courier_New:h10
 endif
 
-set cursorline      " Highlight current line
-
-set background=dark
-colors solarized
-
