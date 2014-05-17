@@ -10,6 +10,17 @@ function f_ShowPath()
     echo $PATH | tr ':' '\n' | sort -u
 }
 
+# Add a directory to the path if and only if it is not already
+# in the path and if it exists.
+# Usage: f_AddToPath "~/some/folder"
+#        f_AddToPath "/c/Users/Phil/something"
+function f_AddToPath()
+{
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="$1:$PATH"
+    fi
+}
+
 f_AptUpdateAndUpgrade() 
 {
   sudo apt-get update && \
