@@ -14,6 +14,23 @@ set nobackup
 set nowb
 set noswapfile
 
+" Set a status line.
+set noruler
+set laststatus=2
+set statusline=
+set statusline+=%-3.3n\                      " buffer number
+set statusline+=%f\                          " file name
+set statusline+=%{FileSizeForStatusLine()}\  " file size
+set statusline+=%h%m%r%w                     " flags
+set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
+set statusline+=%{&fileformat}]\             " file format
+set statusline+=%=                           " right align
+"set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
+set statusline+=%b,0x%-8B\                   " current char
+set statusline+=%-14.(%l,%c%V%)\ %<%P        " line, column, offset
+"set titlestring=%f\ %{FileSizeForStatusLine()}
+
 " Turn on syntax highlighting and indentation based on filetype.
 syntax on
 filetype plugin indent on
@@ -39,8 +56,9 @@ colors solarized
 call togglebg#map("<F12>")
 
 
-" Force highlight of current line number in bright yellow.
-hi CursorLineNr term=bold ctermfg=Yellow gui=bold guifg=Yellow
+" Force highlight of current line number in bright yellow at the left.
+set cursorline
+"hi CursorLineNr term=bold ctermfg=Yellow gui=bold guifg=Yellow
 
 
 " Turn on automatic indentation. The Wiki says only do this manually if
@@ -72,7 +90,6 @@ map <silent> <S-F3> :call RunMacroToBlankLine('w')<CR>
 
 
 " ********** Function Definitions **********
-
 function! StripString(input_string)
     " Remove leading and trailing whitespace from input_string.
     return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
@@ -95,4 +112,16 @@ function! RunMacroToBlankLine(registerName)
     endfor
 endfunction
 
+function! FileSizeForStatusLine()
+    " Return file size in a format suitable for the status line.
+    let bytes = getfsize(expand("%:p"))
+    if bytes <= 0
+        return ""
+    endif
+    if bytes < 1024
+        return bytes
+    else
+        return (bytes / 1024) . "K"
+    endif
+endfunction
 

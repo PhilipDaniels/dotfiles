@@ -142,6 +142,8 @@ if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
     # This is to hide garbage in my %UserProfile% folder.
     LSIGNORE="-I NTUSER.DAT\* -I ntuser.dat\* -I AppData\* -I Cookies\*"
     LSIGNORE="$LSIGNORE -I ntuser.ini -I NetHood -I PrintHood -I Searches"
+    LSIGNORE="$LSIGNORE -I Application\ Data -I Contacts -I Local\ Settings"
+    LSIGNORE="$LSIGNORE -I Lync\ Recordings -I Saved\ Games"
 
     # Ignore case while completing.
     set completion-ignore-case on
@@ -161,10 +163,12 @@ if [ "$OS" == "linux" ]; then
     fi
 fi
 
-
-alias grep="grep --color"
-alias egrep="egrep --color=auto"
-alias fgrep="fgrep --color=auto"
+" MSysGit grep does not recognise the --color option.
+if [ "$OS" != "msys" ]; then
+    alias grep="grep --color"
+    alias egrep="egrep --color=auto"
+    alias fgrep="fgrep --color=auto"
+fi
 
 alias ls="ls $LSIGNORE -hF --color=auto"
 alias ll="ls $LSIGNORE -lA --color=auto"
