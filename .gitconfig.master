@@ -7,6 +7,7 @@
     s = status
     ss = status --short
     m = commit -m
+    amend = commit --amend --no-edit
     a = add -A
     b = branch -a -vv
     # Do a git add followed by a git status. This is the syntax to define a shell function,
