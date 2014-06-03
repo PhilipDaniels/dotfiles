@@ -87,6 +87,14 @@ map <F3> @w
 map <silent> <S-F2> :call RunMacroToBlankLine('q')<CR>
 map <silent> <S-F3> :call RunMacroToBlankLine('w')<CR>
 
+" Window resizing on function keys, +/- and the numeric keypad.
+map <F5> <C-W><
+map <F6> <C-W>>
+map <F7> <C-W>-
+map <F8> <C-W>+
+
+nnoremap <silent> _ :resize -1<CR>
+nnoremap <silent> + :resize +1<CR>
 
 
 " ********** Function Definitions **********
