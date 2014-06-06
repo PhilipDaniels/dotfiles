@@ -20,7 +20,8 @@ set laststatus=2
 set statusline=
 set statusline+=%-3.3n\                      " buffer number
 set statusline+=%f\                          " file name
-set statusline+=%{FileSizeForStatusLine()}\  " file size
+set statusline+=%{FileSizeForStatusLine()}\,  " file size
+set statusline+=%L\ Lines\ 
 set statusline+=%h%m%r%w                     " flags
 set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
 set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
@@ -28,7 +29,7 @@ set statusline+=%{&fileformat}]\             " file format
 set statusline+=%=                           " right align
 "set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
 set statusline+=%b,0x%-8B\                   " current char
-set statusline+=%-14.(%l,%c%V%)\ %<%P        " line, column, offset
+set statusline+=L%l,C%c\ [%P]
 "set titlestring=%f\ %{FileSizeForStatusLine()}
 
 " Turn on syntax highlighting and indentation based on filetype.
@@ -46,20 +47,46 @@ filetype plugin indent on
 " ConEmu-MSysGit         No colors, everything looks grey.
 " ConEmu-Cygwin Git      Looks ok, but some colors swapped compared to gVim.
 " ConEmu SSH-condolr     Looks like Cygwin vim
-" ConEmu-Win native git  Perfect, looks just like Windows gVim
+" ConEmu-Win native vim  Perfect, looks just like Windows gVim
 " Win gVim               Perfect
 " XWin gVim              Perfect
 " Linux console          ?
 " terminator             ?
+
+" This preps solarized to run in dark mode.
 set background=dark
+
+" Without this, links in the built-in help are illegible blue blocks.
+let g:solarized_underline=0
+
+" Calling the color theme sets colors not just for code syntax but
+" for many other things such as cursors and status lines...
 colors solarized
+
+" ...so if you want to override them you have to do it after the color
+" theme is installed. "hi visual" determines how text is highlighted
+" in visual mode, it is difficult to see in console Vim without this.
+" The operative terms are ctermbg and ctermfg, the numbers after them
+" are color palette indexes (they exactly correspond to what you can
+" see in ConEmu's colors dialog page). Do ":verbose hi visual" to
+" determine where this is set. See ":help highlight" for details on how
+" to set highlights and ":help highlight-groups" for a list of the
+" things that you can highlight.
+highlight Visual term=reverse cterm=reverse ctermbg=13 ctermfg=15 guibg=DarkGrey
+highlight StatusLine ctermbg=4 ctermfg=15
+highlight StatusLineNC ctermbg=14 ctermfg=0
+highlight CursorLineNr term=bold ctermfg=4 gui=bold guifg=Yellow
+
+
+" Allow quick toggle between light and dark solarized.
 call togglebg#map("<F12>")
+ 
 
-
-" Force highlight of current line number in bright yellow at the left.
-set cursorline
-"hi CursorLineNr term=bold ctermfg=Yellow gui=bold guifg=Yellow
-
+" Highlights the current line (highlight CursorLine group) and current column
+" (highlight CursorColumn group), typically by drawing the background in a
+" subdued colour.
+"set cursorline
+"set cursorcolumn
 
 " Turn on automatic indentation. The Wiki says only do this manually if
 " filetype indentation is not working.
