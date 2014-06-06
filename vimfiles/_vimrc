@@ -75,18 +75,21 @@ colors solarized
 highlight Visual term=reverse cterm=reverse ctermbg=13 ctermfg=15 guibg=DarkGrey
 highlight StatusLine ctermbg=4 ctermfg=15
 highlight StatusLineNC ctermbg=14 ctermfg=0
+
+" The first line turns on highlighting of the current line, but the second
+" line then cancels the highlighting effect by setting it to none. The third
+" line highlights the line number in the gutter column at the left; it needs
+" the first line to work!
+set cursorline
+highlight CursorLine ctermbg=none
 highlight CursorLineNr term=bold ctermfg=4 gui=bold guifg=Yellow
 
+" You can also highlight the current column in the same way.
+"set cursorcolumn
 
 " Allow quick toggle between light and dark solarized.
 call togglebg#map("<F12>")
  
-
-" Highlights the current line (highlight CursorLine group) and current column
-" (highlight CursorColumn group), typically by drawing the background in a
-" subdued colour.
-"set cursorline
-"set cursorcolumn
 
 " Turn on automatic indentation. The Wiki says only do this manually if
 " filetype indentation is not working.
