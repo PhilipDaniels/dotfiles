@@ -14,6 +14,11 @@ fi
 f_DetermineOS
 echo "***** Running dotfiles/.bashrc, this looks like '$OS'"
 
+if [ "$TERM" == "linux" ]; then
+    f_SetLinuxTerminalToSolarized
+fi
+unset -f f_SetLinuxTerminalToSolarized
+
 
 # This is probably not needed.
 # EDITOR="vim"

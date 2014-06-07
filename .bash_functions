@@ -114,14 +114,8 @@ f_SetLinuxTerminalToSolarized()
     echo -en "\e]PD${violet}"   # brmagenta
     echo -en "\e]PE${base1}"    # brcyan
     echo -en "\e]PF${base3}"    # brwhite
-#    clear                       # for background artifacting
+    clear                       # for background artifacting
 }
-
-if [ "$TERM" == "linux" ]; then
-    f_SetLinuxTerminalToSolarized
-fi
-
-unset -f f_SetLinuxTerminalToSolarized
 
 
 ########################################################################
