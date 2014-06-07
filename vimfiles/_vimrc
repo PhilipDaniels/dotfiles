@@ -36,9 +36,6 @@ set statusline+=L%l,C%c\ [%P]
 syntax on
 filetype plugin indent on
 
-" Highlight current line?
-"set cursorline
-
 " Turn on the solarized theme. This "just works" for gVims, but for
 " console Vims you should set your terminal's theme to solarized too.
 "
@@ -126,6 +123,8 @@ map <F8> <C-W>+
 nnoremap <silent> _ :resize -1<CR>
 nnoremap <silent> + :resize +1<CR>
 
+" Quick access to NERDTree.
+map <C-n> :NERDTreeToggle<CR>
 
 " ********** Function Definitions **********
 function! StripString(input_string)
