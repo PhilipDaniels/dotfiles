@@ -81,39 +81,41 @@ f_AgentStart()
 # are washed out. Fix by using the .dircolors.solarized theme?
 f_SetLinuxTerminalToSolarized()
 {
-    local base02="073642"
-    local red="dc322f"
-    local green="859900"
-    local yellow="b58900"
-    local blue="268bd2"
-    local magenta="d33682"
-    local cyan="2aa198"
-    local base2="eee8d5"
-    local base03="002b36"
-    local orange="cb4b16"
-    local base01="586e75"
-    local base00="657b83"
-    local base0="839496"
-    local violet="6c71c4"
-    local base1="93a1a1"
-    local base3="fdf6e3"
+    # These color codes correspond to those at
+    # http://ethanschoonover.com/solarized/vim-colors-solarized
+    local base03="002b36"   #   0,  43,  54
+    local base02="073642"   #   7,  54,  66 
+    local base01="586e75"   #  88, 110, 117
+    local base00="657b83"   # 101, 123, 131
+    local base0="839496"    # 131, 148, 150
+    local base1="93a1a1"    # 147, 161, 161
+    local base2="eee8d5"    # 238, 232, 213
+    local base3="fdf6e3"    # 253, 246, 227
+    local yellow="b58900"   # 181, 137,   0
+    local orange="cb4b16"   # 203,  75,  22
+    local red="dc322f"      # 220,  50,  47
+    local magenta="d33682"  # 211,  54, 130
+    local violet="6c71c4"   # 108, 113, 196
+    local blue="268bd2"     #  38, 139, 210
+    local cyan="2aa198"     #  42, 161, 152
+    local green="859900"    # 133, 153,   0
 
-    echo -en "\e]P0${base02}"   # black
-    echo -en "\e]P1${red}"      # red
-    echo -en "\e]P2${green}"    # green
-    echo -en "\e]P3${yellow}"   # yellow
-    echo -en "\e]P4${blue}"     # blue
-    echo -en "\e]P5${magenta}"  # magenta
-    echo -en "\e]P6${cyan}"     # cyan
-    echo -en "\e]P7${base2}"    # white
     echo -en "\e]P8${base03}"   # brblack
-    echo -en "\e]P9${orange}"   # brred
+    echo -en "\e]P0${base02}"   # black
     echo -en "\e]PA${base01}"   # brgreen
     echo -en "\e]PB${base00}"   # bryellow
     echo -en "\e]PC${base0}"    # brblue
-    echo -en "\e]PD${violet}"   # brmagenta
     echo -en "\e]PE${base1}"    # brcyan
+    echo -en "\e]P7${base2}"    # white
     echo -en "\e]PF${base3}"    # brwhite
+    echo -en "\e]P3${yellow}"   # yellow
+    echo -en "\e]P9${orange}"   # brred
+    echo -en "\e]P1${red}"      # red
+    echo -en "\e]P5${magenta}"  # magenta
+    echo -en "\e]PD${violet}"   # brmagenta
+    echo -en "\e]P4${blue}"     # blue
+    echo -en "\e]P6${cyan}"     # cyan
+    echo -en "\e]P2${green}"    # green
     clear                       # for background artifacting
 }
 

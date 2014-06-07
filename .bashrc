@@ -15,9 +15,10 @@ f_DetermineOS
 echo "***** Running dotfiles/.bashrc, this looks like '$OS'"
 
 if [ "$TERM" == "linux" ]; then
+    echo "***** Setting Linux VT to solarized colour palette."
     f_SetLinuxTerminalToSolarized
 fi
-unset -f f_SetLinuxTerminalToSolarized
+#unset -f f_SetLinuxTerminalToSolarized
 
 
 # This is probably not needed.
