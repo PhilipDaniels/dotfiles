@@ -39,10 +39,13 @@ filetype plugin indent on
 " ************** START COLOR SETUP **************  
 " n.b gVim "just works". Most of this palaver is for console vim.
 " See also: http://vim.wikia.com/wiki/256_colors_setup_for_console_Vim
-" To see how many colors vim is using, do :set t_Co?
 " If all this isn't working, the "CSApprox" plugin may be an alternative,
 " see http://www.vim.org/scripts/script.php?script_id=2390
 " (the terminal must support 256 colors)
+"
+" Vim interrogation
+" :set t_Co? - display how many colors Vim thinks the terminal supports
+" :set term? - display the terminal type
 
 
 " This preps solarized to run in dark mode.
