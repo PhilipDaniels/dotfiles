@@ -36,25 +36,37 @@ set statusline+=L%l,C%c\ [%P]
 syntax on
 filetype plugin indent on
 
-" Turn on the solarized theme. This "just works" for gVims, but for
-" console Vims you should set your terminal's theme to solarized too.
-"
-" Env                    Notes
-" =====================  =====
-" ConEmu-MSysGit         No colors, everything looks grey.
-" ConEmu-Cygwin Git      Looks ok, but some colors swapped compared to gVim.
-" ConEmu SSH-condolr     Looks like Cygwin vim
-" ConEmu-Win native vim  Perfect, looks just like Windows gVim
-" Win gVim               Perfect
-" XWin gVim              Perfect
-" Linux console          ?
-" terminator             ?
+" ************** START COLOR SETUP **************  
+" n.b gVim "just works". Most of this palaver is for console vim.
+" See also: http://vim.wikia.com/wiki/256_colors_setup_for_console_Vim
+" To see how many colors vim is using, do :set t_Co?
+" If all this isn't working, the "CSApprox" plugin may be an alternative,
+" see http://www.vim.org/scripts/script.php?script_id=2390
+" (the terminal must support 256 colors)
+
 
 " This preps solarized to run in dark mode.
 set background=dark
 
+" This is set to 16 by default, meaning that Solarized will attempt to use the
+" standard 16 colors of your terminal emulator. You will need to set those
+" colors to the correct Solarized values either manually or by importing one
+" of the many colorscheme available for popular terminal emulators and
+" Xdefaults. If you cannot install the palette, change this to 256 which
+" will instruct solarized to use the 'degraded' 256 color scheme n.b. You
+" need a 256-color capable terminal to do that!
+let g_solarized_termcolors=16
+
 " Without this, links in the built-in help are illegible blue blocks.
 let g:solarized_underline=0
+
+" Not found a reason to suppress these yet.
+"let g:solarized_bold=0
+"let g_solarized_italic=0
+
+" Turn on trailing whitespace display?
+"let g:solarized_visibility=normal
+
 
 " Calling the color theme sets colors not just for code syntax but
 " for many other things such as cursors and status lines...
@@ -87,6 +99,8 @@ highlight CursorLineNr term=bold ctermfg=4 gui=bold guifg=Yellow
 " Allow quick toggle between light and dark solarized.
 call togglebg#map("<F12>")
  
+" ************** END COLOR SETUP **************  
+
 
 " Turn on automatic indentation. The Wiki says only do this manually if
 " filetype indentation is not working.

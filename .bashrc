@@ -156,8 +156,10 @@ if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
 
     # Favour the real Windows gVim. MSysGit console vim and Cygwin
     # console vim do not display the correct solarized colors.
-    alias vim="~/OtherApps/gvim7.4/vim.exe"
-    alias gvim="~/OtherApps/gvim7.4/gvim.exe"
+    if [ $TERM == "cygwin" ]; then
+        alias vim="~/OtherApps/gvim7.4/vim.exe"
+        alias gvim="~/OtherApps/gvim7.4/gvim.exe"
+    fi
 fi
 
 
