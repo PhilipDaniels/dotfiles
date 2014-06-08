@@ -81,6 +81,11 @@ that 256 color support is enabled by ticking "Inject ConEmuHk"  and
     because the terminal is the same as the cygwin one, and it really
     only does support 8 colors.
 
+MSysGit via Cygwin's mintty
+---------------------------
+This does not work. MSysGit is unable to use mintty.
+https://github.com/msysgit/git/issues/60
+
 Cygwin via Cygwin.bat (OS = cygwin, TERM = cygwin, COLORS = 8/16)
 -----------------------------------------------------------------
 This basically runs: C:\cygwin64\bin\bash --login -i
@@ -109,8 +114,7 @@ use a full path to the exe).
 [ ] Windows native Vim does not work at all, the cursor keys
     are borked and/or the window never displays!
 [ ] However the Cygwin vim now works well. Best to set 
-    "Term=xterm-256color" in .minttyrc or do "Set t_Co=16" in
-    _vimrc.
+    "Term=xterm-256color" in .minttyrc.
 
 
 Cywgin under ConEmu, via bash (OS = cygwin, TERM = cygwin)
