@@ -70,7 +70,7 @@ colors solarized
 " to set highlights and ":help highlight-groups" for a list of the
 " things that you can highlight.
 highlight Visual term=reverse cterm=reverse ctermbg=13 ctermfg=15 guibg=DarkGrey
-highlight StatusLine ctermbg=4 ctermfg=15
+highlight StatusLine ctermbg=4 ctermfg=7
 highlight StatusLineNC ctermbg=14 ctermfg=0
 
 " The first line turns on highlighting of the current line, but the second

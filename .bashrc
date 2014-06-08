@@ -12,7 +12,7 @@ if [ -f ~/.bash_functions ]; then
 fi
 
 f_DetermineOS
-echo "***** Running dotfiles/.bashrc, this looks like '$OS'"
+echo "***** Running dotfiles/.bashrc, OS is '$OS' and TERM is '$TERM'."
 
 if [ "$TERM" == "linux" ]; then
     echo "***** Setting Linux VT to solarized colour palette."
