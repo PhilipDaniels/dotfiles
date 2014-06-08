@@ -10,9 +10,11 @@ to get the terminals to look like that.
 
 Setup of .bashrc
 ----------------
-It is considered a bad idea to specify what your terminal is using
+It is considered a bad idea to override your $TERM variable using
+
   export TERM=xterm-256color
-or similar. This is because you are eseentially lying about what you terminal
+
+or similar. This is because you are essentially lying about what you terminal
 is. It is better to use a terminal that can be properly configured, i.e.
 one that supports 256 colors is ideal.
 
@@ -79,16 +81,37 @@ that 256 color support is enabled by ticking "Inject ConEmuHk"  and
     because the terminal is the same as the cygwin one, and it really
     only does support 8 colors.
 
-
 Cygwin via Cygwin.bat (OS = cygwin, TERM = cygwin, COLORS = 8/16)
 -----------------------------------------------------------------
 This basically runs: C:\cygwin64\bin\bash --login -i
 Neither of the color scripts looks good.
  
-Cygwin via mintty (OS = cygwin, TERM = xterm, COLORS = 256)
+Cygwin via mintty (OS = cygwin, TERM = various, COLORS = 256)
 -------------------------------------------------------------
-Double click mintty.exe in the bin folder.
-Color scripts look good.
+Mintty home page: https://code.google.com/p/mintty/
+See the wiki for tips on starting up with ssh or from DOS batch files
+and configuring colors.
+
+Color scripts look good. You need to customize mintty via a ~/.minttyrc
+to get solarized, see: https://github.com/mavnn/mintty-colors-solarized
+
+Various ways of starting it up (if mintty is not on your path
+use a full path to the exe).
+
+1) mintty.exe -     (note the dash)
+2) mintty.exe -c ~/.minttyrc.solarized.dark - 
+3) mintty.exe mc.exe 
+ 
+1) Starts a login shell using the default ~/.minttyrc.
+2) Another login shell, but specify which config file to use
+3) Start Midnight Commander with default colors
+
+[ ] Windows native Vim does not work at all, the cursor keys
+    are borked and/or the window never displays!
+[ ] However the Cygwin vim now works well. Best to set 
+    "Term=xterm-256color" in .minttyrc or do "Set t_Co=16" in
+    _vimrc.
+
 
 Cywgin under ConEmu, via bash (OS = cygwin, TERM = cygwin)
 ----------------------------------------------------------
@@ -99,14 +122,8 @@ file. Neither of the color scripts looks good.
 Cygwin under Conemu, via mintty (OS = cygwin, TERM = xterm, COLORS = 256)
 -------------------------------------------------------------------------
 ConEmu task: C:\cygwin64\bin\mintty.exe -
-Color scripts look good, however, none of ConEmu's solarized theme is
-picked up. You need to customize mintty via a ~/.minttyrc.
-
-See: https://github.com/mavnn/mintty-colors-solarized
-
-[ ] Windows native Vim no longer works.
-[ ] Cygwin vim does, but looks funny - do "set t_Co=16" and it looks
-    pretty good.
+None of ConEmu's solarized theme is picked up.
+All comments under "Cygwin via mintty" apply.
 
 
 Setup of Vim

@@ -78,6 +78,9 @@ if [ "$OS" == "linux" ] ; then
   f_Relink ~/repos/dotfiles/.profile ~/.profile
   f_Relink ~/repos/dotfiles/.gvimrc ~/.gvimrc
   f_Relink ~/repos/dotfiles/.vimrc ~/.vimrc
+  f_Relink ~/repos/dotfiles/colors/.minttyrc ~/.minttyrc
+  f_Relink ~/repos/dotfiles/colors/.minttyrc.solarized.dark ~/.minttyrc.solarized.dark
+  f_Relink ~/repos/dotfiles/colors/.minttyrc.solarized.light ~/.minttyrc.solarized.light
   # Makes console vim in Terminator worse (and it is already quite bad).
   #f_Relink ~/repos/dotfiles/.dircolors.solarized ~/.dircolors
 else
@@ -89,6 +92,9 @@ else
   f_CopyFileWithBackup .profile ~/.profile
   f_CopyFileWithBackup .gvimrc ~/.gvimrc
   f_CopyFileWithBackup .vimrc ~/.vimrc
+  f_CopyFileWithBackup colors/.minttyrc ~/.minttyrc
+  f_CopyFileWithBackup colors/.minttyrc.solarized.dark ~/.minttyrc.solarized.dark
+  f_CopyFileWithBackup colors/.minttyrc.solarized.light ~/.minttyrc.solarized.light
   #f_CopyFileWithBackup .dircolors.solarized ~/.dircolors
 fi
 

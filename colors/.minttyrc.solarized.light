@@ -3,8 +3,8 @@ Font=Consolas
 FontHeight=11
 BoldAsFont=no
 
-ForegroundColour=131, 148, 150
-BackgroundColour=  0,  43,  54
+ForegroundColour=101, 123, 131
+BackgroundColour=253, 246, 227
 CursorColour=    220,  50,  47
 
 Black=             7,  54,  66
