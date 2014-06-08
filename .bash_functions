@@ -39,6 +39,131 @@ f_DetermineOS()
   esac
 }
 
+f_GetTimestamp()
+{
+    # Return the current date and time as a string suitable for timestamping.
+    date +"%Y-%m-%d.%I.%M.%S"
+}
+
+f_BackupFile()
+{
+    # Backs up a file using the current date-time to form a timestamp
+    # which is appeneded to the filename.
+    # $1: name of the file to backup.
+    local filename=$1
+    local ts=`f_GetTimestamp`
+    local filenameBak="$filename.$ts"
+
+    if [ -f $filename ]; then
+        cp $filename $filenameBak
+    fi
+}
+
+f_CopyFileWithBackup()
+{
+    # Copies a file to a destination, but backs up the destination
+    # first file if it exists, to prevent overwriting.
+    # $1: name of the file to copy.
+    # $2: the destination filename.
+    local srcFile=$1
+    local destFile=$2
+    f_BackupFile $2
+    cp $srcFile $destFile
+}
+
+f_Relink()
+{
+    # Ensures a link exists. If the source is a file a backup is taken,
+    # otherwise it is just deleted, then a new link from src to target
+    # is established.
+    # $1: link target
+    # $2: link source
+    local target=$1
+    local src=$2
+
+    if [ -e $src ]; then
+        if [ -f $src ]; then
+            f_BackupFile $src
+        fi
+        rm -f $src
+    fi
+
+    ln -s $target $src
+}
+
+########################################################################
+# Support for setting the terminal color in the Linux virtual console and mintty.
+f_SetTerminalColors()
+{
+    # First set all the colors for our chosen scheme.
+    local base03
+    local base02
+    local base01
+    local base00
+    local base0
+    local base1
+    local base2
+    local base3
+    local yellow
+    local orange
+    local red
+    local magenta
+    local violet
+    local blue
+    local cyan
+    local green
+
+    if [ $1 == "SolarizedDark" ]; then
+        # The order of these colors matches those on the Solarized home page.
+        # at http://ethanschoonover.com/solarized
+        base03="002b36"   #   0,  43,  54
+        base02="073642"   #   7,  54,  66 
+        base01="586e75"   #  88, 110, 117
+        base00="657b83"   # 101, 123, 131
+        base0="839496"    # 131, 148, 150
+        base1="93a1a1"    # 147, 161, 161
+        base2="eee8d5"    # 238, 232, 213
+        base3="fdf6e3"    # 253, 246, 227
+        yellow="b58900"   # 181, 137,   0
+        orange="cb4b16"   # 203,  75,  22
+        red="dc322f"      # 220,  50,  47
+        magenta="d33682"  # 211,  54, 130
+        violet="6c71c4"   # 108, 113, 196
+        blue="268bd2"     #  38, 139, 210
+        cyan="2aa198"     #  42, 161, 152
+        green="859900"    # 133, 153,   0
+    fi
+
+
+    # Then issue the appropriate set of escape codes. These vary
+    # from terminal to terminal.
+    if [ "$TERM" == "linux" ]; then
+        echo -en "\e]P8${base03}"   # brblack
+        echo -en "\e]P0${base02}"   # black
+        echo -en "\e]PA${base01}"   # brgreen
+        echo -en "\e]PB${base00}"   # bryellow
+        echo -en "\e]PC${base0}"    # brblue
+        echo -en "\e]PE${base1}"    # brcyan
+        echo -en "\e]P7${base2}"    # white
+        echo -en "\e]PF${base3}"    # brwhite
+        echo -en "\e]P3${yellow}"   # yellow
+        echo -en "\e]P9${orange}"   # brred
+        echo -en "\e]P1${red}"      # red
+        echo -en "\e]P5${magenta}"  # magenta
+        echo -en "\e]PD${violet}"   # brmagenta
+        echo -en "\e]P4${blue}"     # blue
+        echo -en "\e]P6${cyan}"     # cyan
+        echo -en "\e]P2${green}"    # green
+    fi
+
+    clear # deal with background artifacting    
+}
+
+f_SetSolDark()
+{
+    f_SetTerminalColors "SolarizedDark"
+}
+
 ########################################################################
 # Support for using ssh-agent because keychain doesn't seem to work
 # that well in MSysGit.
@@ -73,50 +198,6 @@ f_AgentStart()
 {
     (umask 077; ssh-agent >"$env")
     . "$env" >/dev/null
-}
-
-########################################################################
-# This is to setup the Linux VT for the solarized theme.
-# This makes LinuxVT-vim work with solarized, but the ls colors
-# are washed out. Fix by using the .dircolors.solarized theme?
-f_SetLinuxTerminalToSolarized()
-{
-    # These color codes correspond to those at
-    # http://ethanschoonover.com/solarized/vim-colors-solarized
-    local base03="002b36"   #   0,  43,  54
-    local base02="073642"   #   7,  54,  66 
-    local base01="586e75"   #  88, 110, 117
-    local base00="657b83"   # 101, 123, 131
-    local base0="839496"    # 131, 148, 150
-    local base1="93a1a1"    # 147, 161, 161
-    local base2="eee8d5"    # 238, 232, 213
-    local base3="fdf6e3"    # 253, 246, 227
-    local yellow="b58900"   # 181, 137,   0
-    local orange="cb4b16"   # 203,  75,  22
-    local red="dc322f"      # 220,  50,  47
-    local magenta="d33682"  # 211,  54, 130
-    local violet="6c71c4"   # 108, 113, 196
-    local blue="268bd2"     #  38, 139, 210
-    local cyan="2aa198"     #  42, 161, 152
-    local green="859900"    # 133, 153,   0
-
-    echo -en "\e]P8${base03}"   # brblack
-    echo -en "\e]P0${base02}"   # black
-    echo -en "\e]PA${base01}"   # brgreen
-    echo -en "\e]PB${base00}"   # bryellow
-    echo -en "\e]PC${base0}"    # brblue
-    echo -en "\e]PE${base1}"    # brcyan
-    echo -en "\e]P7${base2}"    # white
-    echo -en "\e]PF${base3}"    # brwhite
-    echo -en "\e]P3${yellow}"   # yellow
-    echo -en "\e]P9${orange}"   # brred
-    echo -en "\e]P1${red}"      # red
-    echo -en "\e]P5${magenta}"  # magenta
-    echo -en "\e]PD${violet}"   # brmagenta
-    echo -en "\e]P4${blue}"     # blue
-    echo -en "\e]P6${cyan}"     # cyan
-    echo -en "\e]P2${green}"    # green
-    clear                       # for background artifacting
 }
 
 
