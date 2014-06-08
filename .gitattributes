@@ -1,3 +1,5 @@
 # Ensure files are always checked out with LF line endings.
 * text eol=lf
 
+*.png binary
+
