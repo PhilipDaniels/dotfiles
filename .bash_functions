@@ -42,12 +42,12 @@ f_DetermineOS()
 f_IsRoot()
 {
     # Determine if you are root, and set two environment variables accordingly.
-    if [[ $EUID -ne 0 ]]; then
-        ISROOT=0
-        ISROOTMSG="You are root!"
-    else
+    if [ $EUID -ne 0 ]; then
         ISROOT=1
         ISROOTMSG="You are NOT root."
+    else
+        ISROOT=0
+        ISROOTMSG="You are root!"
     fi
 }
 
