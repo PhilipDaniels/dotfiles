@@ -39,6 +39,18 @@ f_DetermineOS()
   esac
 }
 
+f_IsRoot()
+{
+    # Determine if you are root, and set two environment variables accordingly.
+    if [[ $EUID -ne 0 ]]; then
+        ISROOT=0
+        ISROOTMSG="You are root!"
+    else
+        ISROOT=1
+        ISROOTMSG="You are NOT root."
+    fi
+}
+
 f_GetTimestamp()
 {
     # Return the current date and time as a string suitable for timestamping.

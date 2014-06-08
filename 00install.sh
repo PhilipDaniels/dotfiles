@@ -71,7 +71,6 @@ f_Relink()
 f_CopyFileWithBackup .gitconfig.master ~/.gitconfig
 
 if [ "$OS" == "linux" ] ; then
-  f_Relink ~/repos/dotfiles/.bash_functions ~/.bash_functions
   f_Relink ~/repos/dotfiles/.bash_logout ~/.bash_logout
   f_Relink ~/repos/dotfiles/.bash_profile ~/.bash_profile
   f_Relink ~/repos/dotfiles/.bashrc ~/.bashrc
@@ -84,7 +83,6 @@ if [ "$OS" == "linux" ] ; then
   f_Relink ~/repos/dotfiles/colors/.dircolors.solarized.ansi-universal ~/.dircolors
 else
   # Windows does not support symbolic links so we must copy files into place.
-  f_CopyFileWithBackup .bash_functions ~/.bash_functions
   f_CopyFileWithBackup .bash_logout ~/.bash_logout
   f_CopyFileWithBackup .bash_profile ~/.bash_profile
   f_CopyFileWithBackup .bashrc ~/.bashrc

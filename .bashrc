@@ -7,12 +7,13 @@ case $- in
 esac
 
 # Keep functions in separate files.
-if [ -f ~/.bash_functions ]; then 
-    . ~/.bash_functions
+if [ -f ~/repos/dotfiles/.bash_functions ]; then 
+    . ~/repos/dotfiles/.bash_functions
 fi
 
 f_DetermineOS
-echo "***** Running dotfiles/.bashrc, OS is '$OS' and TERM is '$TERM'."
+f_IsRoot
+echo "***** Running dotfiles/.bashrc, OS is '$OS' and TERM is '$TERM'. $ISROOTMSG."
 
 #if [ "$TERM" == "linux" ]; then
 #    echo "***** Setting Linux VT to solarized colour palette."
