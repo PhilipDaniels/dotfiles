@@ -14,10 +14,10 @@ fi
 f_DetermineOS
 echo "***** Running dotfiles/.bashrc, OS is '$OS' and TERM is '$TERM'."
 
-if [ "$TERM" == "linux" ]; then
-    echo "***** Setting Linux VT to solarized colour palette."
-    f_SetLinuxTerminalToSolarized
-fi
+#if [ "$TERM" == "linux" ]; then
+#    echo "***** Setting Linux VT to solarized colour palette."
+#    f_SetLinuxTerminalToSolarized
+#fi
 #unset -f f_SetLinuxTerminalToSolarized
 
 
@@ -156,6 +156,7 @@ if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
 
     # Favour the real Windows gVim. MSysGit console vim and Cygwin
     # console vim do not display the correct solarized colors.
+    # MSys2 does have a good console Vim though...
     if [ $TERM == "cygwin" ]; then
         alias vim="~/OtherApps/gvim7.4/vim.exe"
         alias gvim="~/OtherApps/gvim7.4/gvim.exe"
@@ -164,11 +165,12 @@ fi
 
 
 # dircolors only affects the output of the "ls" command.
-# In ConEmu, we already get decent highlighting.
-if [ "$OS" == "linux" ]; then
-    if [ -x /usr/bin/dircolors ]; then
-        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    fi
+# Typically, my dotfiles installs the "ansi-universal" dircolors database, which
+# requires the terminal to have been configured with solarized colors but will
+# fall back to reasonable defaults if not. n.b. MSysGit does not provide dircolors,
+# but we seem to get some highlighting anyway.
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
 # MSysGit grep does not recognise the --color option.
