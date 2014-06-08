@@ -73,7 +73,9 @@ that 256 color support is enabled by ticking "Inject ConEmuHk"  and
 
 [ ] The vim that ships with MSysGit does not appear to work correctly
     (everything looks grey) so alias "vim" to the native Windows vim.
-    Syntax and colors then look very similar to gVim.
+    Syntax and colors then look very similar to gVim BUT STILL NOT
+    PERFECT compared to gVim or even the console vim from MSYS2
+    (the status line is inverted, for example).
 
 [ ] SSH to Debian: 'tput colors' reports only 8 colors.
     Directory listings are similar to MSysGit-local, but vim looks
@@ -115,7 +117,7 @@ use a full path to the exe).
     are borked and/or the window never displays!
 [ ] However the Cygwin vim now works well. Best to set 
     "Term=xterm-256color" in .minttyrc.
-
+[ ] The version of git in Cygwin is out of date!
 
 Cywgin under ConEmu, via bash (OS = cygwin, TERM = cygwin)
 ----------------------------------------------------------
@@ -123,11 +125,16 @@ ConEmu task: C:\cygwin64\bin\bash --login -i
 This is the same as starting Cygwin by clicking the "Cygwin.bat"
 file. Neither of the color scripts looks good.
 
-Cygwin under Conemu, via mintty (OS = cygwin, TERM = xterm, COLORS = 256)
+Cygwin under ConEmu, via mintty (OS = cygwin, TERM = xterm, COLORS = 256)
 -------------------------------------------------------------------------
 ConEmu task: C:\cygwin64\bin\mintty.exe -
 None of ConEmu's solarized theme is picked up.
 All comments under "Cygwin via mintty" apply.
+
+MSYS2 under ConEmu, via mintty (OS = cygwin, TERM = xterm-256color, COLORS = 256)
+---------------------------------------------------------------------------------
+ConEmu task: C:\Users\Phil\OtherApps\MSYS2.64\bin\mintty.exe -c ~/.minttyrc.solarized.dark -
+Everything looks good...
 
 
 Setup of Vim

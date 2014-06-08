@@ -1,4 +1,4 @@
-" To reload this file while editing it, use :so %   (source current file)
+" To reload file while editing it, use :so %   (source current file)
 
 set nocompatible    " Don't care about being compatible with vi.
 set number          " Turn on line numbers
@@ -84,9 +84,9 @@ colors solarized
 " determine where this is set. See ":help highlight" for details on how
 " to set highlights and ":help highlight-groups" for a list of the
 " things that you can highlight.
-highlight Visual term=reverse cterm=reverse ctermbg=13 ctermfg=15 guibg=DarkGrey
-highlight StatusLine ctermbg=4 ctermfg=7
-highlight StatusLineNC ctermbg=14 ctermfg=0
+highlight Visual term=reverse cterm=none ctermbg=13 ctermfg=15 guibg=#6c71c4 guifg=#fdf6e3
+highlight StatusLine ctermbg=7 ctermfg=4 guibg=#eee8d5 guifg=#268bd2
+highlight StatusLineNC ctermbg=4 ctermfg=7 guibg=#268bd2 guifg=#eee8d5
 
 " The first line turns on highlighting of the current line, but the second
 " line then cancels the highlighting effect by setting it to none. The third
@@ -94,7 +94,7 @@ highlight StatusLineNC ctermbg=14 ctermfg=0
 " the first line to work!
 set cursorline
 highlight CursorLine ctermbg=none
-highlight CursorLineNr term=bold ctermfg=4 gui=bold guifg=Yellow
+highlight CursorLineNr term=bold ctermfg=4 gui=bold guifg=#268bd2
 
 " You can also highlight the current column in the same way.
 "set cursorcolumn
