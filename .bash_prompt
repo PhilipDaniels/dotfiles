@@ -145,7 +145,7 @@ function f_SetPrompt()
 
     # Indicate if root, white text on red background.
     if [ "$ISROOT" == "1" ]; then
-        ROOTINDICATOR=", \[$F1\]root!\[$F6\]"
+        ROOTINDICATOR=", \[$F1\]root\[$F6\]"
     fi  
 
     # User@hostname (OS, ROOTINDICATOR)

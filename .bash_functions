@@ -43,11 +43,11 @@ f_IsRoot()
 {
     # Determine if you are root, and set two environment variables accordingly.
     if [ $EUID -ne 0 ]; then
-        ISROOT=1
-        ISROOTMSG="You are NOT root."
+        export ISROOT=0
+        export ISROOTMSG="You are NOT root."
     else
-        ISROOT=0
-        ISROOTMSG="You are root!"
+        export ISROOT=1
+        export ISROOTMSG="You are root!"
     fi
 }
 
