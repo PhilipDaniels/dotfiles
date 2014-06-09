@@ -64,7 +64,7 @@ f_BackupFile()
     # $1: name of the file to backup.
     local filename=$1
     local ts=`f_GetTimestamp`
-    local filenameBak="$filename.$ts"
+    local filenameBak="$filename.$ts.bak"
 
     if [ -f $filename ]; then
         cp $filename $filenameBak
@@ -81,6 +81,36 @@ f_CopyFileWithBackup()
     local destFile=$2
     f_BackupFile $2
     cp $srcFile $destFile
+}
+
+f_Confirm()
+{
+    # Ask user a YES/NO question and return 1 if the user replies
+    # YES, else return 0.
+    # $1: The text of the question to ask.
+    local question=$1
+    read -p "$question [y/n]: "
+    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
+        y|yes) echo "1" ;;
+        *)     echo "0" ;;
+    esac
+}
+
+f_DeleteBackups()
+{
+    # Deletes backup files in the current directory.
+    # First displays the files it thinks are backups and then
+    # asks for confirmation. The pattern for backups is the
+    # one used by the f_BackupFile function.
+    if find . -maxdepth 0 -name "*.bak" -o -name ".*.bak"; then
+        ls -al *.bak .*.bak 2> /dev/null
+        local answer=`f_Confirm "Delete selected files?"`
+        if [ "$answer" -eq "1" ]; then
+            rm -f *.bak .*.bak
+        fi
+    else
+        echo "No backups matching $pattern found."
+    fi
 }
 
 f_Relink()
