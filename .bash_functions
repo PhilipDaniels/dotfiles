@@ -54,7 +54,7 @@ f_IsRoot()
 f_GetTimestamp()
 {
     # Return the current date and time as a string suitable for timestamping.
-    date +"%Y-%m-%d.%I.%M.%S"
+    date +"%Y-%m-%d.%H%M%S"
 }
 
 f_BackupFile()
@@ -64,7 +64,7 @@ f_BackupFile()
     # $1: name of the file to backup.
     local filename=$1
     local ts=`f_GetTimestamp`
-    local filenameBak="$filename.$ts.bak"
+    local filenameBak="${filename}.${ts}.bak"
 
     if [ -f $filename ]; then
         cp $filename $filenameBak
@@ -102,7 +102,7 @@ f_DeleteBackups()
     # First displays the files it thinks are backups and then
     # asks for confirmation. The pattern for backups is the
     # one used by the f_BackupFile function.
-    if find . -maxdepth 0 -name "*.bak" -o -name ".*.bak"; then
+    if find . -maxdepth 0 -name "*.bak" -o -name ".*.bak" -print; then
         ls -al *.bak .*.bak 2> /dev/null
         local answer=`f_Confirm "Delete selected files?"`
         if [ "$answer" -eq "1" ]; then

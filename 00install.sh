@@ -16,7 +16,7 @@ f_DetermineOS
 f_GetTimestamp()
 {
     # Return the current date and time as a string suitable for timestamping.
-    date +"%Y-%m-%d.%I.%M.%S"
+    date +"%Y-%m-%d.%H.%M.%S"
 }
 
 f_BackupFile()
@@ -26,7 +26,7 @@ f_BackupFile()
     # $1: name of the file to backup.
     local filename=$1
     local ts=`f_GetTimestamp`
-    local filenameBak="$filename.$ts"
+    local filenameBak="${filename}.${ts}.bak"
 
     if [ -f $filename ]; then
         cp $filename $filenameBak
