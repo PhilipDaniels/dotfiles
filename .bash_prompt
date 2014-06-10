@@ -151,8 +151,17 @@ function f_SetPrompt()
         ROOTINDICATOR=", \[$F1\]root\[$F6\]"
     fi  
 
+    # Indicate if in a screen session.
+    # n.b. Cygwin has an old version of bash (pre 4.2) which does not understand
+    # the \uFFFF syntax, so you have to use the hexadecimal escape syntax, \xFF
+    # for each byte in the character. Use 'echo <uchars> | hexdump -C' in a
+    # Unicode terminal to see the bytes you need.
+    if [ ! -z $STY ]; then
+        SCREEN="\[$F13\][SCR]\[$R_All\] "
+    fi
+
     # User@hostname (OS, ROOTINDICATOR)
-    PS1="${PS1}\[$F6\]\u@\h (${OS}${ROOTINDICATOR})\[$R_All\]"
+    PS1="${SCREEN}\[$F6\]\u@\h (${OS}${ROOTINDICATOR})\[$R_All\]"
 
     # Current directory.
     PS1="${PS1} \[$F2\]\w\[$R_All\]"

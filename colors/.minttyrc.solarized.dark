@@ -1,9 +1,11 @@
 Term=xterm-256color
-Font=Consolas
+Font=Cousine
 FontHeight=11
 BoldAsFont=no
 CursorType=Block
 CursorBlinks=no
+Rows=48
+Columns=120
 
 ForegroundColour=131, 148, 150
 BackgroundColour=  0,  43,  54
