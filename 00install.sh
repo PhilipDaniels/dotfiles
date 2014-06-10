@@ -1,69 +1,7 @@
 #!/bin/bash
 
 # Sets up the bash environment.
-
-f_DetermineOS()
-{
-  case "$OSTYPE" in
-    cygwin*)  OS="cygwin" ;;
-    linux*)   OS="linux" ;;
-    msys*)    OS="msys" ;;
-    *)        OS="unknown: $OSTYPE"  ;;
-  esac
-}
-f_DetermineOS
-
-f_GetTimestamp()
-{
-    # Return the current date and time as a string suitable for timestamping.
-    date +"%Y-%m-%d.%H.%M.%S"
-}
-
-f_BackupFile()
-{
-    # Backs up a file using the current date-time to form a timestamp
-    # which is appeneded to the filename.
-    # $1: name of the file to backup.
-    local filename=$1
-    local ts=`f_GetTimestamp`
-    local filenameBak="${filename}.${ts}.bak"
-
-    if [ -f $filename ]; then
-        cp $filename $filenameBak
-    fi
-}
-
-f_CopyFileWithBackup()
-{
-    # Copies a file to a destination, but backs up the destination
-    # first file if it exists, to prevent overwriting.
-    # $1: name of the file to copy.
-    # $2: the destination filename.
-    local srcFile=$1
-    local destFile=$2
-    f_BackupFile $2
-    cp $srcFile $destFile
-}
-
-f_Relink()
-{
-    # Ensures a link exists. If the source is a file a backup is taken,
-    # otherwise it is just deleted, then a new link from src to target
-    # is established.
-    # $1: link target
-    # $2: link source
-    local target=$1
-    local src=$2
-
-    if [ -e $src ]; then
-        if [ -f $src ]; then
-            f_BackupFile $src
-        fi
-        rm -f $src
-    fi
-
-    ln -s $target $src
-}
+source .bash_functions
 
 # Always copy this. It can get tricky having a file called
 # .gitconfig in the repo, because that affects the behaviour
