@@ -2,10 +2,12 @@ Term=xterm-256color
 Font=Consolas
 FontHeight=11
 BoldAsFont=no
+CursorType=Block
+CursorBlinks=no
 
 ForegroundColour=131, 148, 150
 BackgroundColour=  0,  43,  54
-CursorColour=    220,  50,  47
+CursorColour=    238, 232, 213
 
 Black=             7,  54,  66
 BoldBlack=         0,  43,  54
