@@ -36,6 +36,10 @@ set statusline+=L%l,C%c\ [%P]
 syntax on
 filetype plugin indent on
 
+" And ensure markdown files are edited as such, not Modula-2.
+au BufRead,BufNewFile *.md set filetype=markdown
+
+
 " ************** START COLOR SETUP **************  
 " n.b gVim "just works". Most of this palaver is for console vim.
 " See also: http://vim.wikia.com/wiki/256_colors_setup_for_console_Vim

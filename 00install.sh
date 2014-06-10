@@ -33,3 +33,5 @@ else
   f_CopyFileWithBackup colors/.dircolors.solarized.ansi-universal ~/.dircolors
 fi
 
+echo "Installation complete."
+
