@@ -1,3 +1,5 @@
+# vim: set filetype=sh:
+
 # See https://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files.html
 # Unfortunately MSysGit (Git Bash) has the wrong behaviour. It only calls
 # ~/.bashrc, so we are forced to put everything in there. 

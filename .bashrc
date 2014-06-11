@@ -1,3 +1,5 @@
+# vim: set filetype=sh:
+
 # See https://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files.html
 
 # If not running interactively, don't do anything

@@ -1,3 +1,5 @@
+# vim: set filetype=gitconfig:
+
 # This is an example of how to setup git on Windows (MSysGit) to
 # use kdiff3 for diff and merge.
 [merge]
