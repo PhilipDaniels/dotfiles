@@ -3,11 +3,14 @@
 * Use the cygwin installer to do a minimal install.
 
 * You can get rid of the /cygdrive prefix by issuing
-    mount -c /
-    mount -m > /etc/fstab
-which should change /etc/fstab tosomething like
+```
+mount -c /
+mount -m > /etc/fstab
+```
+which should change /etc/fstab to something like
+```
     none / cygdrive binary,posix=0,user 0 0
-
+```
 CARE: You will probably need to edit /etc/passwd as well.
 
 * After installation, your home dir will probably be in /home/name, rather
