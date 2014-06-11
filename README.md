@@ -1,12 +1,15 @@
-dotfiles
-========
+# dotfiles
 
-dotfiles + Debian/Linux install scripts
+dotfiles: bash, vim, terminal and misc config for
+Linux, Cygwin and MSysGit.
 
-Replace or copy the .files into your home dir.
-The script should work on Linux, MSysGit and Cygwin.
+See script 00install.sh for installation.
 
-The setup folder contains scripts to run after a Debian NetInstall
-to create a usable machine.
 
+# TODO
+[ ] Git prompt indication.
+[ ] .screenrc
+[ ] Tweak mintty to support themes and contrib some!
+[ ] htop, mc
+[ ] Clean up the colors folder.
 
