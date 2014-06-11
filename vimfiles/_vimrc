@@ -97,7 +97,7 @@ highlight StatusLineNC ctermbg=4 ctermfg=7 guibg=#268bd2 guifg=#eee8d5
 " line highlights the line number in the gutter column at the left; it needs
 " the first line to work!
 set cursorline
-highlight CursorLine ctermbg=none
+highlight CursorLine ctermbg=none guibg=NONE
 highlight CursorLineNr term=bold ctermfg=4 gui=bold guifg=#268bd2
 
 " You can also highlight the current column in the same way.
