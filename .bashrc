@@ -9,19 +9,14 @@ case $- in
 esac
 
 # Keep functions in separate files.
-if [ -f ~/repos/dotfiles/.bash_functions ]; then 
-    . ~/repos/dotfiles/.bash_functions
-fi
-
+. ~/repos/dotfiles/.bash_functions
 f_DetermineOS
 f_IsRoot
 echo "***** Running dotfiles/.bashrc, OS is '$OS' and TERM is '$TERM'. $ISROOTMSG"
 
-#if [ "$TERM" == "linux" ]; then
-#    echo "***** Setting Linux VT to solarized colour palette."
-#    f_SetLinuxTerminalToSolarized
-#fi
-#unset -f f_SetLinuxTerminalToSolarized
+# Bring in control codes (for setting colors etc.) then configure the prompt.
+. ~/repos/dotfiles/.bash_controlcodes
+. ~/repos/dotfiles/.bash_prompt
 
 
 # This is probably not needed.
@@ -60,15 +55,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Configure the prompt.
-if [ -f ~/repos/dotfiles/.bash_prompt ]; then 
-    . ~/repos/dotfiles/.bash_prompt
-else
-    PS1="\u@\h : \w\n\$ "
-fi
-
-
-########################################################################
+#######################################################################
 # Setup ssh-agent.
 # Run the keychain program to cache ssh keys. Keychain comes with Cygwin
 # and is just a shell script which you should copy into the PortableGit

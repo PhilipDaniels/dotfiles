@@ -1,0 +1,129 @@
+# vim: set filetype=sh:
+
+# Control codes for bash. These are a mixture of formatting instructions (to
+# turn on bold fonts etc.), color instructions, and general control
+# instructions.
+#
+# References
+# http://misc.flogisoft.com/bash/tip_colors_and_formatting#terminals_compatibility
+# http://wiki.bash-hackers.org/scripting/terminalcodes
+#     "The VT implemented in the Linux kernel supports only 16 colors, and the usual
+#     default terminfo entry for TERM=linux defines only 8. There is sometimes an
+#     alternate "linux-16color" that you can switch to to get the other 8 colors."
+# http://ascii-table.com/ansi-escape-sequences.php
+ 
+# These sequences are formatting instructions. Mnemonic: S = set, R = reset.
+R_All='\e[0m'             # Turns off all special formatting. Very handy.
+S_Bold='\e[1m'            # Bold, aka "bright".
+S_Dim='\e[2m'
+S_Underline='\e[4m'
+S_Blink='\e[5m'           # Avoid, not supported.
+S_Reverse='\e[7m'         # Invert foreground and background colors.
+S_Hidden='\e[8m'          # Useful for passwords.
+R_Bold='\e[21m'
+R_Dim='\e[22m'
+R_Underlined='\e[24m'
+R_Blink='\e[25m'
+R_Reverse='\e[27m'
+R_Hidden='\e[28m'
+
+# These sequences set the foreground color. idx is the color palette
+# index number.
+F_Default='\e[39m'
+F_Black='\e[30m'            # idx 0
+F_Red='\e[31m'              # idx 1
+F_Green='\e[32m'            # idx 2
+F_Yellow='\e[33m'           # idx 3
+F_Blue='\e[34m'             # idx 4
+F_Magenta='\e[35m'          # idx 5
+F_Cyan='\e[36m'             # idx 6
+F_LightGray='\e[37m'        # idx 7
+F_DarkGray='\e[90m'         # idx 8
+F_LightRed='\e[91m'         # idx 9  Light aka "bold" aka "intense"
+F_LightGreen='\e[92m'       # idx 10
+F_LightYellow='\e[93m'      # idx 11
+F_LightBlue='\e[94m'        # idx 12
+F_LightMagenta='\e[95m'     # idx 13
+F_LightCyan='\e[96m'        # idx 14
+F_White='\e[97m'            # idx 15
+
+# Declare an array (0..15) to hold the color escapes. These are easier
+# to use when setting up themes such as solarized.
+FC=($F_Black $F_Red $F_Green $F_Yellow \
+    $F_Blue $F_Magenta $F_Cyan $F_LightGray \
+    $F_DarkGray $F_LightRed $F_LightGreen $F_LightYellow \
+    $F_LightBlue $F_LightMagenta $F_LightCyan $F_White)
+
+# These sequences set the background color.
+B_Default='\e[49m'
+B_Black='\e[40m'            # idx 0
+B_Red='\e[41m'              # idx 1
+B_Green='\e[42m'            # idx 2
+B_Yellow='\e[43m'           # idx 3
+B_Blue='\e[44m'             # idx 4
+B_Magenta='\e[45m'          # idx 5
+B_Cyan='\e[46m'             # idx 6
+B_LightGray='\e[47m'        # idx 7
+B_DarkGray='\e[100m'        # idx 8
+B_LightRed='\e[101m'        # idx 9
+B_LightGreen='\e[102m'      # idx 10
+B_LightYellow='\e[103m'     # idx 11
+B_LightBlue='\e[104m'       # idx 12
+B_LightMagenta='\e[105m'    # idx 13
+B_LightCyan='\e[106m'       # idx 14
+B_White='\e[107m'           # idx 15
+
+# Alternative names again.
+BC=($B_Black $B_Red $B_Green $B_Yellow \
+    $B_Blue $B_Magenta $B_Cyan $B_LightGray \
+    $B_DarkGray $B_LightRed $B_LightGreen $B_LightYellow \
+    $B_LightBlue $B_LightMagenta $B_LightCyan $B_White)
+
+
+# For completeness, here are the solarized colors taken from
+# http://ethanschoonover.com/solarized
+
+# This set is sorted by palette index for easy reference to the above.
+# This corresponds to what you can see in the ConEmu screenshot.
+
+# SOLARIZED HEX     16/8 TERMCOL  XTERM/HEX   L*A*B      RGB         HSB
+# --------- ------- ---- -------  ----------- ---------- ----------- -----------
+# base02    #073642  0/4 black    235 #262626 20 -12 -12   7  54  66 192  90  26
+# red       #dc322f  1/1 red      160 #d70000 50  65  45 220  50  47   1  79  86
+# green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
+# yellow    #b58900  3/3 yellow   136 #af8700 60  10  65 181 137   0  45 100  71
+# blue      #268bd2  4/4 blue      33 #0087ff 55 -10 -45  38 139 210 205  82  82
+# magenta   #d33682  5/5 magenta  125 #af005f 50  65 -05 211  54 130 331  74  83
+# cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
+# base2     #eee8d5  7/7 white    254 #e4e4e4 92 -00  10 238 232 213  44  11  93
+# base03    #002b36  8/4 brblack  234 #1c1c1c 15 -12 -12   0  43  54 193 100  21
+# orange    #cb4b16  9/3 brred    166 #d75f00 50  50  55 203  75  22  18  89  80
+# base01    #586e75 10/7 brgreen  240 #585858 45 -07 -07  88 110 117 194  25  46
+# base00    #657b83 11/7 bryellow 241 #626262 50 -07 -07 101 123 131 195  23  51
+# base0     #839496 12/6 brblue   244 #808080 60 -06 -03 131 148 150 186  13  59
+# violet    #6c71c4 13/5 brmagenta 61 #5f5faf 50  15 -45 108 113 196 237  45  77
+# base1     #93a1a1 14/4 brcyan   245 #8a8a8a 65 -05 -02 147 161 161 180   9  63
+# base3     #fdf6e3 15/7 brwhite  230 #ffffd7 97  00  10 253 246 227  44  10  99
+
+
+# And this set is sorted in the same way as Ethan does on the web page
+
+# SOLARIZED HEX     16/8 TERMCOL  XTERM/HEX   L*A*B      RGB         HSB
+# --------- ------- ---- -------  ----------- ---------- ----------- -----------
+# base03    #002b36  8/4 brblack  234 #1c1c1c 15 -12 -12   0  43  54 193 100  21
+# base02    #073642  0/4 black    235 #262626 20 -12 -12   7  54  66 192  90  26
+# base01    #586e75 10/7 brgreen  240 #585858 45 -07 -07  88 110 117 194  25  46
+# base00    #657b83 11/7 bryellow 241 #626262 50 -07 -07 101 123 131 195  23  51
+# base0     #839496 12/6 brblue   244 #808080 60 -06 -03 131 148 150 186  13  59
+# base1     #93a1a1 14/4 brcyan   245 #8a8a8a 65 -05 -02 147 161 161 180   9  63
+# base2     #eee8d5  7/7 white    254 #e4e4e4 92 -00  10 238 232 213  44  11  93
+# base3     #fdf6e3 15/7 brwhite  230 #ffffd7 97  00  10 253 246 227  44  10  99
+# yellow    #b58900  3/3 yellow   136 #af8700 60  10  65 181 137   0  45 100  71
+# orange    #cb4b16  9/3 brred    166 #d75f00 50  50  55 203  75  22  18  89  80
+# red       #dc322f  1/1 red      160 #d70000 50  65  45 220  50  47   1  79  86
+# magenta   #d33682  5/5 magenta  125 #af005f 50  65 -05 211  54 130 331  74  83
+# violet    #6c71c4 13/5 brmagenta 61 #5f5faf 50  15 -45 108 113 196 237  45  77
+# blue      #268bd2  4/4 blue      33 #0087ff 55 -10 -45  38 139 210 205  82  82
+# cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
+# green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
+

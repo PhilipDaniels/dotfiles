@@ -18,8 +18,8 @@
     # Delete a branch locally and on the remote. See
     # http://stackoverflow.com/questions/2003505/how-do-i-delete-a-git-branch-both-locally-and-remotely
     rmbranch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
-    lg2 = log --graph --abbrev-commit --date=short --pretty=format:'%C(green)%h%C(red) %cd %C(reset)%s %C(bold blue)%an'
-    lg = log --graph --abbrev-commit --pretty=format:'%C(green)%h%C(red) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(bold blue)%an'
+    lg2 = log --graph --abbrev-commit --date=short --pretty=format:'%C(yellow)%h%C(bold magenta) %cd %C(reset)%s %C(blue)%an'
+    lg = log --graph --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold magenta) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(blue)%an'
 [merge]
     tool = p4merge
 [diff]
@@ -37,8 +37,6 @@
     # See http://stackoverflow.com/questions/170961 and 13960696
     autocrlf = false
 [push]
-    # Cygwin git doesn't understand this yet. Use MSysGit on Windows, it
-    # is much more recent.
     default = simple
 #[http]
 #    proxy = http://somewhere:9999/

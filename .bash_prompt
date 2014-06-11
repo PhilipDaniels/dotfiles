@@ -1,154 +1,49 @@
 # vim: set filetype=sh:
 
-# Setup the bash prompt.
-# We assume you want a color prompt and your terminal has color support (even
-# the Linux console has 8 color support) and has been customized for solarized.
+# Configure the prompt. This relies on the codes in the .bash_controlcodes script.
 
-# Solarized colors as sorted by their creator...
-#
-# SOLARIZED HEX     16/8 TERMCOL  XTERM/HEX   L*A*B      RGB         HSB
-# --------- ------- ---- -------  ----------- ---------- ----------- -----------
-# base03    #002b36  8/4 brblack  234 #1c1c1c 15 -12 -12   0  43  54 193 100  21
-# base02    #073642  0/4 black    235 #262626 20 -12 -12   7  54  66 192  90  26
-# base01    #586e75 10/7 brgreen  240 #585858 45 -07 -07  88 110 117 194  25  46
-# base00    #657b83 11/7 bryellow 241 #626262 50 -07 -07 101 123 131 195  23  51
-# base0     #839496 12/6 brblue   244 #808080 60 -06 -03 131 148 150 186  13  59
-# base1     #93a1a1 14/4 brcyan   245 #8a8a8a 65 -05 -02 147 161 161 180   9  63
-# base2     #eee8d5  7/7 white    254 #e4e4e4 92 -00  10 238 232 213  44  11  93
-# base3     #fdf6e3 15/7 brwhite  230 #ffffd7 97  00  10 253 246 227  44  10  99
-# yellow    #b58900  3/3 yellow   136 #af8700 60  10  65 181 137   0  45 100  71
-# orange    #cb4b16  9/3 brred    166 #d75f00 50  50  55 203  75  22  18  89  80
-# red       #dc322f  1/1 red      160 #d70000 50  65  45 220  50  47   1  79  86
-# magenta   #d33682  5/5 magenta  125 #af005f 50  65 -05 211  54 130 331  74  83
-# violet    #6c71c4 13/5 brmagenta 61 #5f5faf 50  15 -45 108 113 196 237  45  77
-# blue      #268bd2  4/4 blue      33 #0087ff 55 -10 -45  38 139 210 205  82  82
-# cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
-# green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
+f_GetGitInfo()
+{
+    local gitsym=`git symbolic-ref HEAD`
 
-# ...and sorted properly, by palette index order. This corresponds to what you
-# can see in the ConEmu screenshot.
+    # if "fatal: Not a git repo .., then exit
+    case "$gitsym" in
+        fatal*) GitInfo[IsGitDir]=0; exit 0 ;;
+        *) GitInfo[IsGitDir]=1 ;;
+    esac
 
-# SOLARIZED HEX     16/8 TERMCOL  XTERM/HEX   L*A*B      RGB         HSB
-# --------- ------- ---- -------  ----------- ---------- ----------- -----------
-# base02    #073642  0/4 black    235 #262626 20 -12 -12   7  54  66 192  90  26
-# red       #dc322f  1/1 red      160 #d70000 50  65  45 220  50  47   1  79  86
-# green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
-# yellow    #b58900  3/3 yellow   136 #af8700 60  10  65 181 137   0  45 100  71
-# blue      #268bd2  4/4 blue      33 #0087ff 55 -10 -45  38 139 210 205  82  82
-# magenta   #d33682  5/5 magenta  125 #af005f 50  65 -05 211  54 130 331  74  83
-# cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
-# base2     #eee8d5  7/7 white    254 #e4e4e4 92 -00  10 238 232 213  44  11  93
-# base03    #002b36  8/4 brblack  234 #1c1c1c 15 -12 -12   0  43  54 193 100  21
-# orange    #cb4b16  9/3 brred    166 #d75f00 50  50  55 203  75  22  18  89  80
-# base01    #586e75 10/7 brgreen  240 #585858 45 -07 -07  88 110 117 194  25  46
-# base00    #657b83 11/7 bryellow 241 #626262 50 -07 -07 101 123 131 195  23  51
-# base0     #839496 12/6 brblue   244 #808080 60 -06 -03 131 148 150 186  13  59
-# violet    #6c71c4 13/5 brmagenta 61 #5f5faf 50  15 -45 108 113 196 237  45  77
-# base1     #93a1a1 14/4 brcyan   245 #8a8a8a 65 -05 -02 147 161 161 180   9  63
-# base3     #fdf6e3 15/7 brwhite  230 #ffffd7 97  00  10 253 246 227  44  10  99
+    # the current branch is the tail end of the symbolic reference
+#   branch="${gitsym##refs/heads/}"    # get the basename after "refs/heads/"
 
+    GitInfo[Branch]="master"
+}
+
+f_MainPrompt()
+{
+    # Declare an associative array to hold the things
+    # that we want to work out.
+    declare -A GitInfo
+    GitInfo[IsGitDir]=0
+    GitInfo[Branch]=""
+    GitInfo[StagedCount]=0
+
+    # Call other function to fill in the info.
+    f_GetGitInfo
+
+    # Now display it.
+    #echo "${animals["moo"]}"
+    for info in "${!GitInfo[@]}"; do
+        echo "$info = ${GitInfo["$info"]}";
+    done
+}
 
 function f_SetPrompt()
 {
-    # See http://misc.flogisoft.com/bash/tip_colors_and_formatting#terminals_compatibility
-
-    # These sequences are formatting instructions. Mnemonic: S = set, R = reset.
-    local R_All='\e[0m'             # Turns off all special formatting. Very handy.
-    local S_Bold='\e[1m'            # Bold, aka "bright".
-    local S_Dim='\e[2m'
-    local S_Underline='\e[4m'
-    local S_Blink='\e[5m'           # Avoid, not supported.
-    local S_Reverse='\e[7m'         # Invert foreground and background colors.
-    local S_Hidden='\e[8m'          # Useful for passwords.
-    local R_Bold='\e[21m'
-    local R_Dim='\e[22m'
-    local R_Underlined='\e[24m'
-    local R_Blink='\e[25m'
-    local R_Reverse='\e[27m'
-    local R_Hidden='\e[28m'
-
-    # These sequences set the foreground color.
-    local F_Default='\e[39m'
-    local F_Black='\e[30m'
-    local F_Red='\e[31m'
-    local F_Green='\e[32m'
-    local F_Yellow='\e[33m'
-    local F_Blue='\e[34m'
-    local F_Magenta='\e[35m'
-    local F_Cyan='\e[36m'
-    local F_LightGray='\e[37m'
-    local F_DarkGray='\e[90m'
-    local F_LightRed='\e[91m'       # Light seems to mean "bright" or "intense".
-    local F_LightGreen='\e[92m'
-    local F_LightYellow='\e[93m'
-    local F_LightBlue='\e[94m'
-    local F_LightMagenta='\e[95m'
-    local F_LightCyan='\e[96m'
-    local F_White='\e[97m'
-
-    # Provide alternative names based on color index, these are easier to use
-    # when setting up a theme such as solarized.
-    local F0=$F_Black
-    local F1=$F_Red
-    local F2=$F_Green
-    local F3=$F_Yellow
-    local F4=$F_Blue
-    local F5=$F_Magenta
-    local F6=$F_Cyan
-    local F7=$F_LightGray
-    local F8=$F_DarkGray
-    local F9=$F_LightRed
-    local F10=$F_LightGreen
-    local F11=$F_LightYellow
-    local F12=$F_LightBlue
-    local F13=$F_LightMagenta
-    local F14=$F_LightCyan
-    local F15=$F_White
-
-    # These sequences set the background color.
-    local B_Default='\e[49m'
-    local B_Black='\e[40m'
-    local B_Red='\e[41m'
-    local B_Green='\e[42m'
-    local B_Yellow='\e[43m'
-    local B_Blue='\e[44m'
-    local B_Magenta='\e[45m'
-    local B_Cyan='\e[46m'
-    local B_LightGray='\e[47m'
-    local B_DarkGray='\e[100m'
-    local B_LightRed='\e[101m'
-    local B_LightGreen='\e[102m'
-    local B_LightYellow='\e[103m'
-    local B_LightBlue='\e[104m'
-    local B_LightMagenta='\e[105m'
-    local B_LightCyan='\e[106m'
-    local B_White='\e[107m'
-
-    # Alternative names again.
-    local B0=$B_Black
-    local B1=$B_Red
-    local B2=$B_Green
-    local B3=$B_Yellow
-    local B4=$B_Blue
-    local B5=$B_Magenta
-    local B6=$B_Cyan
-    local B7=$B_LightGray
-    local B8=$B_DarkGray
-    local B9=$B_LightRed
-    local B10=$B_LightGreen
-    local B11=$B_LightYellow
-    local B12=$B_LightBlue
-    local B13=$B_LightMagenta
-    local B14=$B_LightCyan
-    local B15=$B_White
- 
-    # 256 color terminals allow many other codes, see the link.
-
     unset PS1
 
     # Indicate if root, white text on red background.
     if [ "$ISROOT" == "1" ]; then
-        ROOTINDICATOR=", \[$F1\]root\[$F6\]"
+        ROOTINDICATOR=", \[${FC[1]}\]root\[${FC[6]}\]"
     fi  
 
     # Indicate if in a screen session.
@@ -157,14 +52,14 @@ function f_SetPrompt()
     # for each byte in the character. Use 'echo <uchars> | hexdump -C' in a
     # Unicode terminal to see the bytes you need.
     if [ ! -z $STY ]; then
-        SCREEN="\[$F13\][SCR]\[$R_All\] "
+        SCREEN="\[${FC[13]}\][SCR]\[$R_All\] "
     fi
 
     # User@hostname (OS, ROOTINDICATOR)
-    PS1="${SCREEN}\[$F6\]\u@\h (${OS}${ROOTINDICATOR})\[$R_All\]"
+    PS1="${SCREEN}\[${FC[6]}\]\u@\h (${OS}${ROOTINDICATOR})\[$R_All\]"
 
     # Current directory.
-    PS1="${PS1} \[$F2\]\w\[$R_All\]"
+    PS1="${PS1} \[${FC[2]}\]\w\[$R_All\]"
 
     # Final sequence.
     PS1="$PS1\n\$ "
