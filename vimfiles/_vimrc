@@ -105,7 +105,11 @@ highlight CursorLineNr term=bold ctermfg=4 gui=bold guifg=#268bd2
 
 " Allow quick toggle between light and dark solarized.
 call togglebg#map("<F12>")
- 
+
+" This is used to highlight long lines, it draws a subdued (in solarized)
+" vertical line at the 80th column.
+set colorcolumn=80
+
 " ************** END COLOR SETUP **************  
 
 
