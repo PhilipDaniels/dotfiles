@@ -62,11 +62,16 @@ f_BackupFile()
     # Backs up a file using the current date-time to form a timestamp
     # which is appeneded to the filename.
     # $1: name of the file to backup.
+    # $2: if 1, turns on quiet mode, does not echo a message.
     local filename=$1
+    local quietMode=$2
     local ts=`f_GetTimestamp`
     local filenameBak="${filename}.${ts}.bak"
 
     if [ -f $filename ]; then
+        if [ "$quietMode" != "1" ]; then
+            echo "Backing up $filename to $filenameBak"
+        fi
         cp $filename $filenameBak
     fi
 }

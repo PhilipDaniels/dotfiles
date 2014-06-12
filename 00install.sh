@@ -2,6 +2,7 @@
 
 # Sets up the bash environment.
 source .bash_functions
+f_DetermineOS
 
 # Always copy this. It can get tricky having a file called
 # .gitconfig in the repo, because that affects the behaviour
