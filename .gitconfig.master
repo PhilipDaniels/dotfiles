@@ -36,6 +36,8 @@
     # about and preserve files with LF endings, which most modern tools do.
     # See http://stackoverflow.com/questions/170961 and 13960696
     autocrlf = false
+    # Stop git whining about CRLF/LF conversions on Windows.
+    safecrlf = false
 [push]
     default = simple
 #[http]
