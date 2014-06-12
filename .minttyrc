@@ -1,5 +1,4 @@
 Term=xterm-256color
-Font=Consolas
+Font=Cousine
 FontHeight=11
-BoldAsFont=no
 

@@ -16,9 +16,7 @@ if [ "$OS" == "linux" ] ; then
   f_Relink ~/repos/dotfiles/.gvimrc ~/.gvimrc
   f_Relink ~/repos/dotfiles/.vimrc ~/.vimrc
   f_Relink ~/repos/dotfiles/.screenrc ~/.screenrc
-  f_Relink ~/repos/dotfiles/colors/.minttyrc ~/.minttyrc
-  f_Relink ~/repos/dotfiles/colors/.minttyrc.solarized.dark ~/.minttyrc.solarized.dark
-  f_Relink ~/repos/dotfiles/colors/.minttyrc.solarized.light ~/.minttyrc.solarized.light
+  f_Relink ~/repos/dotfiles/.minttyrc ~/.minttyrc
   f_Relink ~/repos/dotfiles/colors/.dircolors.solarized.ansi-universal ~/.dircolors
 else
   # Windows does not support symbolic links so we must copy files into place.
@@ -29,9 +27,7 @@ else
   f_CopyFileWithBackup .gvimrc ~/.gvimrc
   f_CopyFileWithBackup .vimrc ~/.vimrc
   f_CopyFileWithBackup .screenrc ~/.screenrc
-  f_CopyFileWithBackup colors/.minttyrc ~/.minttyrc
-  f_CopyFileWithBackup colors/.minttyrc.solarized.dark ~/.minttyrc.solarized.dark
-  f_CopyFileWithBackup colors/.minttyrc.solarized.light ~/.minttyrc.solarized.light
+  f_CopyFileWithBackup .minttyrc ~/.minttyrc
   f_CopyFileWithBackup colors/.dircolors.solarized.ansi-universal ~/.dircolors
 fi
 

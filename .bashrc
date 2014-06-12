@@ -98,12 +98,15 @@ if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
     # Ignore case while completing.
     set completion-ignore-case on
 
-    # Favour the real Windows gVim. MSysGit console vim and Cygwin
-    # console vim do not display the correct solarized colors.
-    # MSys2 does have a good console Vim though...
-    if [ $TERM == "cygwin" ]; then
-        alias vim="~/OtherApps/gvim7.4/vim.exe"
+    if [ $OS == "cygwin" ] || [ $OS == "msys"]; then
+        # Favour native Windows gvim when in Windows, even if an
+        # X server is running. If you want the Cygwin gvim just do /bin/gvim.
         alias gvim="~/OtherApps/gvim7.4/gvim.exe"
+    fi
+    if [ $OS == "msys" ]; then
+        # MSys does not have a good console, so use this Vim which
+        # plays nice with ConEmu.
+        alias vim="~/OtherApps/gvim7.4/vim.exe"
     fi
 fi
 
