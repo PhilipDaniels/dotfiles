@@ -5,11 +5,11 @@
 # instructions.
 #
 # References
-# http://misc.flogisoft.com/bash/tip_colors_and_formatting#terminals_compatibility
 # http://wiki.bash-hackers.org/scripting/terminalcodes
 #     "The VT implemented in the Linux kernel supports only 16 colors, and the usual
 #     default terminfo entry for TERM=linux defines only 8. There is sometimes an
 #     alternate "linux-16color" that you can switch to to get the other 8 colors."
+# http://misc.flogisoft.com/bash/tip_colors_and_formatting#terminals_compatibility
 # http://ascii-table.com/ansi-escape-sequences.php
  
 # These sequences are formatting instructions. Mnemonic: S = set, R = reset.
@@ -28,7 +28,8 @@ R_Reverse='\e[27m'
 R_Hidden='\e[28m'
 
 # These sequences set the foreground color. idx is the color palette
-# index number.
+# index number. The names are set to match those in the solarized tables below,
+# which seem to be pretty much "the official" color names.
 F_Default='\e[39m'
 F_Black='\e[30m'            # idx 0
 F_Red='\e[31m'              # idx 1
@@ -37,22 +38,22 @@ F_Yellow='\e[33m'           # idx 3
 F_Blue='\e[34m'             # idx 4
 F_Magenta='\e[35m'          # idx 5
 F_Cyan='\e[36m'             # idx 6
-F_LightGray='\e[37m'        # idx 7
-F_DarkGray='\e[90m'         # idx 8  aka "bold black"
-F_LightRed='\e[91m'         # idx 9  Light aka "bold" aka "intense"
-F_LightGreen='\e[92m'       # idx 10
-F_LightYellow='\e[93m'      # idx 11
-F_LightBlue='\e[94m'        # idx 12
-F_LightMagenta='\e[95m'     # idx 13
-F_LightCyan='\e[96m'        # idx 14
-F_White='\e[97m'            # idx 15
+F_White='\e[37m'            # idx 7
+F_BrightBlack='\e[90m'      # idx 8  the "Bright" colors, aka. bold, light or intense
+F_BrightRed='\e[91m'        # idx 9
+F_BrightGreen='\e[92m'      # idx 10
+F_BrightYellow='\e[93m'     # idx 11
+F_BrightBlue='\e[94m'       # idx 12
+F_BrightMagenta='\e[95m'    # idx 13
+F_BrightCyan='\e[96m'       # idx 14
+F_BrightWhite='\e[97m'      # idx 15
 
 # Declare an array (0..15) to hold the color escapes. These are easier
 # to use when setting up themes such as solarized.
 FC=($F_Black $F_Red $F_Green $F_Yellow \
-    $F_Blue $F_Magenta $F_Cyan $F_LightGray \
-    $F_DarkGray $F_LightRed $F_LightGreen $F_LightYellow \
-    $F_LightBlue $F_LightMagenta $F_LightCyan $F_White)
+    $F_Blue $F_Magenta $F_Cyan $F_White \
+    $F_BrightBlack $F_BrightRed $F_Brightreen $F_BrightYellow \
+    $F_BrightBlue $F_BrightMagenta $F_BrightCyan $F_BrightWhite)
 
 # These sequences set the background color.
 B_Default='\e[49m'
@@ -63,21 +64,21 @@ B_Yellow='\e[43m'           # idx 3
 B_Blue='\e[44m'             # idx 4
 B_Magenta='\e[45m'          # idx 5
 B_Cyan='\e[46m'             # idx 6
-B_LightGray='\e[47m'        # idx 7
-B_DarkGray='\e[100m'        # idx 8
-B_LightRed='\e[101m'        # idx 9
-B_LightGreen='\e[102m'      # idx 10
-B_LightYellow='\e[103m'     # idx 11
-B_LightBlue='\e[104m'       # idx 12
-B_LightMagenta='\e[105m'    # idx 13
-B_LightCyan='\e[106m'       # idx 14
-B_White='\e[107m'           # idx 15
+B_White='\e[47m'            # idx 7
+B_BrightBlack='\e[100m'     # idx 8
+B_BrightRed='\e[101m'       # idx 9
+B_BrightGreen='\e[102m'     # idx 10
+B_BrightYellow='\e[103m'    # idx 11
+B_BrightBlue='\e[104m'      # idx 12
+B_BrightMagenta='\e[105m'   # idx 13
+B_BrightCyan='\e[106m'      # idx 14
+B_BrightWhite='\e[107m'     # idx 15
 
 # Alternative names again.
 BC=($B_Black $B_Red $B_Green $B_Yellow \
-    $B_Blue $B_Magenta $B_Cyan $B_LightGray \
-    $B_DarkGray $B_LightRed $B_LightGreen $B_LightYellow \
-    $B_LightBlue $B_LightMagenta $B_LightCyan $B_White)
+    $B_Blue $B_Magenta $B_Cyan $B_White \
+    $B_BrightBlack $B_BrightRed $B_BrightGreen $B_BrightYellow \
+    $B_BrightBlue $B_BrightMagenta $B_BrightCyan $B_BrightWhite)
 
 
 # For completeness, here are the solarized colors taken from

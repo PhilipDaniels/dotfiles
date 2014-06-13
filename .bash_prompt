@@ -79,9 +79,3 @@ function f_SetPrompt()
 
 f_SetPrompt
 
-
-
-# This is the prompt in MSysGit. Note the use of the __git_ps1 script.
-# \[\033]0;$MSYSTEM:${PWD//[^[:ascii:]]/?}\007\]\n\[\033[32m\]\u@\h \[\033[33m\]\w$(__git_ps1)\[\033[0m\]\n$
-
-
