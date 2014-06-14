@@ -52,7 +52,7 @@ F_BrightWhite='\e[97m'      # idx 15
 # to use when setting up themes such as solarized.
 FC=($F_Black $F_Red $F_Green $F_Yellow \
     $F_Blue $F_Magenta $F_Cyan $F_White \
-    $F_BrightBlack $F_BrightRed $F_Brightreen $F_BrightYellow \
+    $F_BrightBlack $F_BrightRed $F_BrightGreen $F_BrightYellow \
     $F_BrightBlue $F_BrightMagenta $F_BrightCyan $F_BrightWhite)
 
 # These sequences set the background color.
