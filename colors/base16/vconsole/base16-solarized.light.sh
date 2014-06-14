@@ -2,15 +2,15 @@
 # Base16 Solarized - Virtual console color setup script
 # Ethan Schoonover (http://ethanschoonover.com/solarized)
 
-color00="fdf6e3" # Base 07 - White
-color01="dc322f" # Base 08 - Red
-color02="859900" # Base 0B - Green
-color03="b58900" # Base 0A - Yellow
-color04="268bd2" # Base 0D - Blue
-color05="d33682" # Base 0E - Magenta
-color06="2aa198" # Base 0C - Cyan
-color07="657b83" # Base 02 - Black
-color08="eee8d5" # Base 05 - Bright White
+color00="eee8d5" # Base 07 - White
+color01="002b36" # Base 08 - Red
+color02="657b83" # Base 0B - Green
+color03="586e75" # Base 0A - Yellow
+color04="6c71c4" # Base 0D - Blue
+color05="93a1a1" # Base 0E - Magenta
+color06="839496" # Base 0C - Cyan
+color07="859900" # Base 02 - Black
+color08="d33682" # Base 05 - Bright White
 color09=$color01 # Base 08 - Bright Red
 color10=$color02 # Base 0B - Bright Green
 color11=$color03 # Base 0A - Bright Yellow

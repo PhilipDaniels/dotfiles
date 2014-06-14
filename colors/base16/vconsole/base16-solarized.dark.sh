@@ -3,21 +3,21 @@
 # Ethan Schoonover (http://ethanschoonover.com/solarized)
 
 color00="073642" # Base 00 - Black
-color01="dc322f" # Base 08 - Red
-color02="859900" # Base 0B - Green
-color03="b58900" # Base 0A - Yellow
-color04="268bd2" # Base 0D - Blue
-color05="d33682" # Base 0E - Magenta
-color06="2aa198" # Base 0C - Cyan
-color07="eee8d5" # Base 05 - White
-color08="002b36" # Base 03 - Bright Black
+color01="002b36" # Base 08 - Red
+color02="657b83" # Base 0B - Green
+color03="586e75" # Base 0A - Yellow
+color04="6c71c4" # Base 0D - Blue
+color05="93a1a1" # Base 0E - Magenta
+color06="839496" # Base 0C - Cyan
+color07="d33682" # Base 05 - White
+color08="b58900" # Base 03 - Bright Black
 color09=$color01 # Base 08 - Bright Red
 color10=$color02 # Base 0B - Bright Green
 color11=$color03 # Base 0A - Bright Yellow
 color12=$color04 # Base 0D - Bright Blue
 color13=$color05 # Base 0E - Bright Magenta
 color14=$color06 # Base 0C - Bright Cyan
-color15="fdf6e3" # Base 07 - Bright White
+color15="eee8d5" # Base 07 - Bright White
 
 # 16 color space
 echo -e "\e]P0$color00"

@@ -2,21 +2,21 @@
 ! Scheme: Ethan Schoonover (http://ethanschoonover.com/solarized)
 
 #define base00 #073642
-#define base01 #586e75
-#define base02 #657b83
-#define base03 #002b36
-#define base04 #839496
-#define base05 #eee8d5
-#define base06 #6c71c4
-#define base07 #fdf6e3
-#define base08 #dc322f
+#define base01 #dc322f
+#define base02 #859900
+#define base03 #b58900
+#define base04 #268bd2
+#define base05 #d33682
+#define base06 #2aa198
+#define base07 #eee8d5
+#define base08 #002b36
 #define base09 #cb4b16
-#define base0A #b58900
-#define base0B #859900
-#define base0C #2aa198
-#define base0D #268bd2
-#define base0E #d33682
-#define base0F #93a1a1
+#define base0A #586e75
+#define base0B #657b83
+#define base0C #839496
+#define base0D #6c71c4
+#define base0E #93a1a1
+#define base0F #fdf6e3
 
 *.foreground:   base05
 *.background:   base00

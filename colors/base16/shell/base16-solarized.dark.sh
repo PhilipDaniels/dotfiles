@@ -8,30 +8,30 @@ if [ "${TERM%%-*}" = 'linux' ]; then
 fi
 
 color00="07/36/42" # Base 00 - Black
-color01="dc/32/2f" # Base 08 - Red
-color02="85/99/00" # Base 0B - Green
-color03="b5/89/00" # Base 0A - Yellow
-color04="26/8b/d2" # Base 0D - Blue
-color05="d3/36/82" # Base 0E - Magenta
-color06="2a/a1/98" # Base 0C - Cyan
-color07="ee/e8/d5" # Base 05 - White
-color08="00/2b/36" # Base 03 - Bright Black
+color01="00/2b/36" # Base 08 - Red
+color02="65/7b/83" # Base 0B - Green
+color03="58/6e/75" # Base 0A - Yellow
+color04="6c/71/c4" # Base 0D - Blue
+color05="93/a1/a1" # Base 0E - Magenta
+color06="83/94/96" # Base 0C - Cyan
+color07="d3/36/82" # Base 05 - White
+color08="b5/89/00" # Base 03 - Bright Black
 color09=$color01 # Base 08 - Bright Red
 color10=$color02 # Base 0B - Bright Green
 color11=$color03 # Base 0A - Bright Yellow
 color12=$color04 # Base 0D - Bright Blue
 color13=$color05 # Base 0E - Bright Magenta
 color14=$color06 # Base 0C - Bright Cyan
-color15="fd/f6/e3" # Base 07 - Bright White
+color15="ee/e8/d5" # Base 07 - Bright White
 color16="cb/4b/16" # Base 09
-color17="93/a1/a1" # Base 0F
-color18="58/6e/75" # Base 01
-color19="65/7b/83" # Base 02
-color20="83/94/96" # Base 04
-color21="6c/71/c4" # Base 06
-color_foreground="ee/e8/d5" # Base 05
+color17="fd/f6/e3" # Base 0F
+color18="dc/32/2f" # Base 01
+color19="85/99/00" # Base 02
+color20="26/8b/d2" # Base 04
+color21="2a/a1/98" # Base 06
+color_foreground="d3/36/82" # Base 05
 color_background="07/36/42" # Base 00
-color_cursor="ee/e8/d5" # Base 05
+color_cursor="d3/36/82" # Base 05
 
 if [ -n "$TMUX" ]; then
   # tell tmux to pass the escape sequences through
