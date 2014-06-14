@@ -39,6 +39,15 @@ filetype plugin indent on
 " And ensure markdown files are edited as such, not Modula-2.
 au BufRead,BufNewFile *.md set filetype=markdown
 
+" Enable visual line wrapping. nowrap turns this off.
+set wrap
+
+" Turn off the automatic insertion of new lines.
+set textwidth=0 wrapmargin=0
+
+" ...and really stay off, sometimes I want to break the rules.
+au BufRead,BufNewFile * set textwidth=0 wrapmargin=0
+
 
 " ************** START COLOR SETUP **************  
 " n.b gVim "just works". Most of this palaver is for console vim.
