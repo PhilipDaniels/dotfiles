@@ -18,8 +18,18 @@
     # Delete a branch locally and on the remote. See
     # http://stackoverflow.com/questions/2003505/how-do-i-delete-a-git-branch-both-locally-and-remotely
     rmbranch = "!f(){ git branch -d ${1} && git push origin --delete ${1}; };f"
-    lg2 = log --graph --abbrev-commit --date=short --pretty=format:'%C(yellow)%h%C(bold magenta) %cd %C(reset)%s %C(blue)%an'
-    lg = log --graph --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold magenta) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(blue)%an'
+
+    # The color names correspond to those in the palette. (Idx = logical color name).
+    # Note that the actual color may be nothing like "red" or "green", it depends on the terminal palette.
+    #     0 = black, 1 = red, 2 = green, 3 = yellow, 4 = blue, 5 = magenta, 6 = cyan, 7 = white
+    # Prefixing with bold adds 8 to all the colour indexes (i.e. now 8..15) and selects the "bright" aka "bold" variants.
+    # There is also the "normal" colour which is whatever the foreground is.
+    # You may also use the modifiers bold, dim, ul, blink and reverse.
+    # If two colours are given the first is the foreground and the second is the background.
+    lg = log --graph --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold red) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(blue)%an'
+    lg2 = log --graph --abbrev-commit --date=short --pretty=format:'%C(yellow)%h%C(bold red) %cd %C(reset)%s %C(blue)%an'
+    #lg = log --graph --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold magenta) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(blue)%an'
+    #lg2 = log --graph --abbrev-commit --date=short --pretty=format:'%C(yellow)%h%C(bold magenta) %cd %C(reset)%s %C(blue)%an'
 [merge]
     tool = p4merge
 [diff]
