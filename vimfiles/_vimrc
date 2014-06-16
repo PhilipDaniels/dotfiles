@@ -27,10 +27,11 @@ set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
 set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
 set statusline+=%{&fileformat}]\             " file format
 set statusline+=%=                           " right align
-set statusline+=%-10{strftime('%H:%M')}\     " Time in 24 hour format, right padded to a width of 10.
 "set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
 set statusline+=%b,0x%-8B\                   " current char
-set statusline+=L%l,C%c\ [%P]
+set statusline+=L%l,C%c\ [%P]\ 
+set statusline+=%{strftime('%H:%M')}         " Time in 24 hour format.
+
 "set titlestring=%f\ %{FileSizeForStatusLine()}
 
 " Turn on syntax highlighting and indentation based on filetype.
