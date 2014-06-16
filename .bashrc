@@ -12,7 +12,13 @@ esac
 . ~/repos/dotfiles/.bash_functions
 f_DetermineOS
 f_IsRoot
-echo "***** Running dotfiles/.bashrc, OS is '$OS' and TERM is '$TERM'. $ISROOTMSG"
+echo ">> Running dotfiles/.bashrc, OS is '$OS' and TERM is '$TERM'. $ISROOTMSG"
+
+if f_IsCmd "fortune"; then
+    echo
+    fortune -a ~/repos/dotfiles/fortunes
+    echo
+fi
 
 # Bring in control codes (for setting colors etc.) then configure the prompt.
 . ~/repos/dotfiles/.bash_controlcodes

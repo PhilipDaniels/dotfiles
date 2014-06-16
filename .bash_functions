@@ -3,7 +3,7 @@
 # Boolean functions should return 0 for success, following the same
 # convention as unix utilities.
 
-echo "***** Running dotfiles/.bash_functions"
+echo ">> Running dotfiles/.bash_functions"
 
 function f_ShowPath()
 {
