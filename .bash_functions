@@ -138,6 +138,15 @@ f_Relink()
     ln -s $target $src
 }
 
+f_IsCmd()
+{
+    # Check to see if a command is installed.
+    # $1: the command to check.
+    # Returns: 1 if the program is installed, 0 otherwise.
+    # Example:   if f_IsCmd "fortune"; then ...
+    command -v >&- "$@"
+}
+
 ########################################################################
 # Support for using ssh-agent because keychain doesn't seem to work
 # that well in MSysGit.
