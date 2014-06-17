@@ -146,9 +146,12 @@ set backspace=indent,eol,start whichwrap+=<,>,[,]
 " Backspace in Visual mode deletes selection
 vnoremap <BS> d
 
+" :h keycodes, :h <C-, :h map-special-chars, :h map-which-keys
+" Avoid things like C-HIJKLM[ as they have special meaning.
+"
 " Buffer and tab navigation.
-map <silent> <C-K> :bnext<CR>
-map <silent> <C-J> :tabn<CR>
+map <silent> <C-o> :bnext<CR>
+map <silent> <C-i> :tabn<CR>
 
 " Make F2 and F3 run the macros stored in the 'q' and 'w' registers
 " and Shift F2/F3 run the macros until a blank line is encountered.
