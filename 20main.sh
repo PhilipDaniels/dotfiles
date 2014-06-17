@@ -7,7 +7,7 @@ sudo apt-get update
 
 # Non-X stuff. The fonts don't require X. libssl-dev and apache2-utils
 # are required to compile node.
-sudo apt-get install samba winbind smbclient cifs-utils vim \
+sudo apt-get install samba winbind smbclient cifs-utils vim cscope \
 automake bc bison build-essential checkinstall libtool rsync \
 flex exuberant-ctags g++ gcc gdb gettext git git-core htop make \
 strace sudo usbutils links2 git git-doc ssh apt-file curl vim \

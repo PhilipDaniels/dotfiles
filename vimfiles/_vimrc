@@ -124,6 +124,17 @@ set colorcolumn=80
 " ************** END COLOR SETUP **************  
 
 
+" When Ctrl-P starts, run in mixed mode by default (searches files, buffers
+" and MRU lists).
+let g:ctrlp_cmd = 'CtrlPMixed'
+
+" Ignore these things when searching for matches. This is from the help.
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+    \ 'file': '\.exe$\|\.so$\|\.dll$|\.o$'
+    \ }
+
+
 " Turn on automatic indentation. The Wiki says only do this manually if
 " filetype indentation is not working.
 "set smartindent
@@ -136,12 +147,8 @@ set backspace=indent,eol,start whichwrap+=<,>,[,]
 vnoremap <BS> d
 
 " Buffer and tab navigation.
-map <silent> <C-Tab> :bnext<CR>
-map <silent> <C-S-Tab> :bprevious<CR>
-map <silent> <C-J> :bnext<CR>
-map <silent> <C-K> :bprev<CR>
-map <silent> <C-L> :tabn<CR>
-map <silent> <C-H> :tabp<CR>
+map <silent> <C-K> :bnext<CR>
+map <silent> <C-J> :tabn<CR>
 
 " Make F2 and F3 run the macros stored in the 'q' and 'w' registers
 " and Shift F2/F3 run the macros until a blank line is encountered.
@@ -151,16 +158,19 @@ map <silent> <S-F2> :call RunMacroToBlankLine('q')<CR>
 map <silent> <S-F3> :call RunMacroToBlankLine('w')<CR>
 
 " Window resizing on function keys, +/- and the numeric keypad.
-map <F5> <C-W><
-map <F6> <C-W>>
-map <F7> <C-W>-
-map <F8> <C-W>+
+map <S-F5> <C-W><
+map <S-F6> <C-W>>
+map <S-F7> <C-W>-
+map <S-F8> <C-W>+
 
 nnoremap <silent> _ :resize -1<CR>
 nnoremap <silent> + :resize +1<CR>
 
 " Quick access to NERDTree.
 map <C-n> :NERDTreeToggle<CR>
+
+" List of files to ignore.
+let NERDTreeIgnore=['.o$[[file]]', '.exe$[[file]]']
 
 " ********** Function Definitions **********
 function! StripString(input_string)
