@@ -16,7 +16,7 @@ echo ">> Running dotfiles/.bashrc, OS is '$OS' and TERM is '$TERM'. $ISROOTMSG"
 
 if f_IsCmd "fortune"; then
     echo
-    fortune -a ~/repos/dotfiles/fortunes
+    fortune -a ~/repos/dotfiles/fortunes ~/repos/dotfiles/fortunes-dune
     echo
 fi
 
