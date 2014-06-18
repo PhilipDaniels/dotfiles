@@ -1,0 +1,226 @@
+" From https://github.com/ulfalizer/Configuration-files/blob/master/.vimrc/
+" and slightly hacked.
+
+
+" This is a dictionary of folder -> exe name. I only work on 1 C program, so:
+let g:proj_exes = { 'mintty' : 'mintty.exe' }
+
+
+" Extra flags to pass to make (and gcc if you use that code path). You can use
+" this to make a debug build, for example. Exactly what to pass depends on the
+" Makefile in use. As an example, for mintty you would do this:
+"    :let g:make_flags="DEBUG=1"
+let g:make_flags = ""
+
+
+func! Compile()
+    " Compiles a program. Uses 'make' if 'Makefile' exists in the current
+    " directory. Otherwise, the program is assumed to consist of a single
+    " translation unit and the language (C or C++) is inferred from the file
+    " extension. 
+    "
+    " Returns a [succeeded, out_file] tuple, where 'succeeded' is 1 if compilation
+    " was successful (an executable was produced) and 0 otherwise, and where
+    " 'out_file' is the name of the produced executable. When building with
+    " 'make', the executable name is looked up in a dictionary 'proj_exes' that
+    " links project directories to executable names.
+    if filereadable("Makefile")
+        " If the current directory contains a Makefile, compile using 'make'
+
+        " If a file is bound to the current buffer, write it first
+        if expand("%") != "" | w | endif
+
+        let messages = system("make ".g:make_flags)
+        let succeeded = (v:shell_error == 0)
+
+        " Look up the current directory to see if an executable has been
+        " registered for it
+        if !exists("g:proj_exes")
+            echoerr "g:proj_exes does not exist"
+            return [0, ""]
+        endif
+
+        let proj_dir = expand("%:p:h:t")
+        let out_file = get(g:proj_exes, proj_dir, "")
+
+        if !strlen(out_file)
+            echoerr "No executable set for directory '".proj_dir."'"
+            return [0, ""]
+        endif
+
+    else
+        " If the current directory contains no Makefile, compile just the file
+        " bound to the current buffer
+        let f = expand("%")
+        if empty(f)
+            echoerr "No file bound to buffer"
+            return [0, ""]
+        endif
+
+        " Write before compiling
+        w
+
+        " Determine compiler to use
+        if &ft == "cpp"
+            let compiler = "g++ ".g:make_flags
+        elseif &ft == "c"
+            let compiler = "gcc ".g:make_flags
+        else
+            echoerr "Unknown language for '".f."'"
+            return [0, ""]
+        endif
+
+        if !executable(compiler)
+            echoerr "No executable '".compiler."' exists"
+            return [0, ""]
+        endif
+
+        let out_file = expand("%:r")
+        let messages = system(compiler." -o ".shellescape(out_file).
+          \ " -ggdb3 -Wall -Wno-unused-variable ".shellescape(f))
+        let succeeded = (v:shell_error == 0)
+    endif
+
+    " Create quickfix list
+    silent cexpr messages
+    " Display the quickfix window if there are warnings or errors or if the
+    " compilation failed; hide it otherwise.
+    if succeeded
+        cwindow
+    else
+        copen
+    endif
+    " If we are in the quickfix window, press enter to jump to the first error
+    if &buftype == "quickfix"
+        exec "normal \<CR>"
+    endif
+
+    if succeeded && !filereadable(out_file)
+        echoerr "The executable '".out_file."' does not exist even though"
+          \ "compilation was successful"
+        return [0, ""]
+    endif
+
+    echo "Compilation completed."
+
+    return [succeeded, out_file]
+endfunc
+
+func! CompileAndRun()
+    " Compiles the current file/project and runs it if compilation succeeds
+    let [succeeded, out_file] = Compile()
+
+    if succeeded && strlen(out_file)
+        exec "!./".shellescape(out_file)
+    endif
+endfunc
+
+
+
+" Pyclewn
+"   Home: http://pyclewn.sourceforge.net/
+"   Docs: http://pyclewn.sourceforge.net/_static/pyclewn.html
+" -q means start gdb in quiet mode. The --background colors are the colors
+" to use for enabled breakpoint, disabled breakpoint and frame sign,
+" respectively.
+let g:pyclewn_args = "--args=-q --window=bottom -b Red,Blue,Cyan"
+
+
+func! Debug(enable)
+    " Starts debugging the current file with pyclewn. If compilation fails, acts
+    " like Compile(). Debugging files with special characters seems to be broken,
+    " but it's probably pyclewn's fault.
+
+    " Always close a previous session
+    nbclose
+
+    silent! unmap <F8>
+    silent! unmap <F9>
+    silent! unmap <C-F9>
+    silent! unmap <F10>
+    silent! unmap <C-F10>
+    silent! unmap <F11>
+    silent! unmap <S-F11>
+    silent! unmap B
+    silent! unmap L
+    silent! unmap <special> <up>
+    silent! unmap <special> <down>
+    silent! unmap A
+    silent! unmap R
+    silent! unmap Q
+    silent! unmap S
+    silent! unmap W
+    silent! unmap X
+
+    if !a:enable
+        return
+    endif
+
+    " Compile (using GCC if there's no Makefile)
+    let [succeeded, out_file] = Compile()
+
+    " Do not start pyclewn if compilation failed or we got no executable name
+    if !succeeded || !strlen(out_file)
+        return
+    endif
+
+    " Start pyclewn, load debug symbols, and set up mappings
+    Pyclewn
+    exe "Cfile ".fnameescape(out_file)
+
+
+    " Visual Studio compatible (mainly) keymappings.
+     
+    " Continue (until next bp or end of program).
+    noremap <silent> <special> <F8> :Ccontinue<CR>
+    " Set bp.
+    noremap <silent> <special> <F9> :exe "Cbreak ".fnameescape(expand("%:p")).":".line(".")<CR>
+    " Delete bp.
+    noremap <silent> <special> <F21> :exe "Cclear ".fnameescape(expand("%:p")).":".line(".")<CR>
+
+
+    " Step over.
+    noremap <silent> <special> <F10> :Cnext<CR>
+    " Run until current position.
+    noremap <silent> <special> <F22> :exe "Cadvance".fnameescape(expand("%:p")).":".line(".")<CR> 
+    " Step in.
+    noremap <silent> <special> <F11> :Cstep<CR>
+    " Step out ("finish" in gdb parlance).
+    noremap <silent> <special> <S-F11> :Cfinish<CR>
+
+
+    " Info commands.
+    noremap <silent> <special> B :Cinfo breakpoints<CR>
+    noremap <silent> <special> L :Cinfo local<CR>
+    noremap <silent> <special> A :Cinfo args<CR>
+
+
+    " Print value of variable under cursor.
+    " map <F8> :exe "Cprint " . expand("<cword>") <CR>
+
+    " Stack frame navigation.
+    noremap <silent> <special> U :Cup<CR>
+    noremap <silent> <special> D :Cdown<CR>
+
+
+    " Misc.
+    noremap <silent> <special> R :Crun<CR>
+    noremap <silent> <special> Q :Cquit<CR>
+    noremap <silent> <special> S :Cstart<CR>
+    noremap <silent> <special> W :Cwhere<CR>
+    noremap <silent> <special> X :Cfoldvar<CR>
+
+
+
+    " TODO: Show call stack
+    " TODO: Show locals, Show args
+    " TODO: Watch variables
+    "
+    " We could do a 'start' here to be a bit more convenient, but for some
+    " reason it will sometimes execute before the 'file'. Sleeping for a while
+    " seems to fix it but is annoying.
+endfunc
+
+com! Debug call Debug(1)
+com! Nodebug call Debug(0)
+

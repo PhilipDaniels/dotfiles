@@ -1,4 +1,8 @@
-" To reload file while editing it, use :so %   (source current file)
+" To reload this file while editing it use :so % (source current file)
+runtime _vimrc.tkeys
+runtime _vimrc.vkeys
+runtime _vimrc.functions
+runtime _vimrc.programming
 
 set nocompatible    " Don't care about being compatible with vi.
 set number          " Turn on line numbers
@@ -31,7 +35,6 @@ set statusline+=%=                           " right align
 set statusline+=%b,0x%-8B\                   " current char
 set statusline+=L%l,C%c\ [%P]\ 
 set statusline+=%{strftime('%H:%M')}         " Time in 24 hour format.
-
 "set titlestring=%f\ %{FileSizeForStatusLine()}
 
 " Turn on syntax highlighting and indentation based on filetype.
@@ -50,83 +53,10 @@ set textwidth=0 wrapmargin=0
 " ...and really stay off, sometimes I want to break the rules.
 au BufRead,BufNewFile * set textwidth=0 wrapmargin=0
 
-
-" ************** START COLOR SETUP **************  
-" n.b gVim "just works". Most of this palaver is for console vim.
-" See also: http://vim.wikia.com/wiki/256_colors_setup_for_console_Vim
-" If all this isn't working, the "CSApprox" plugin may be an alternative,
-" see http://www.vim.org/scripts/script.php?script_id=2390
-" (the terminal must support 256 colors)
-"
-" Vim interrogation
-" :set t_Co? - display how many colors Vim thinks the terminal supports
-" :set term? - display the terminal type
-
-
-" This preps solarized to run in dark mode.
-set background=dark
-
-" This is set to 16 by default, meaning that Solarized will attempt to use the
-" standard 16 colors of your terminal emulator. You will need to set those
-" colors to the correct Solarized values either manually or by importing one
-" of the many colorscheme available for popular terminal emulators and
-" Xdefaults. If you cannot install the palette, change this to 256 which
-" will instruct solarized to use the 'degraded' 256 color scheme n.b. You
-" need a 256-color capable terminal to do that!
-let g_solarized_termcolors=16
-
-" Without this, links in the built-in help are illegible blue blocks.
-let g:solarized_underline=0
-
-" Not found a reason to suppress these yet.
-"let g:solarized_bold=0
-"let g_solarized_italic=0
-
-" Turn on trailing whitespace display?
-"let g:solarized_visibility=normal
-
-
-" Calling the color theme sets colors not just for code syntax but
-" for many other things such as cursors and status lines...
-colors solarized
-
-" ...so if you want to override them you have to do it after the color
-" theme is installed. "hi visual" determines how text is highlighted
-" in visual mode, it is difficult to see in console Vim without this.
-" The operative terms are ctermbg and ctermfg, the numbers after them
-" are color palette indexes (they exactly correspond to what you can
-" see in ConEmu's colors dialog page). Do ":verbose hi visual" to
-" determine where this is set. See ":help highlight" for details on how
-" to set highlights and ":help highlight-groups" for a list of the
-" things that you can highlight.
-highlight Visual term=reverse cterm=none ctermbg=13 ctermfg=15 guibg=#6c71c4 guifg=#fdf6e3
-highlight StatusLine ctermbg=7 ctermfg=4 guibg=#eee8d5 guifg=#268bd2
-highlight StatusLineNC ctermbg=4 ctermfg=7 guibg=#268bd2 guifg=#eee8d5
-
-" The first line turns on highlighting of the current line, but the second
-" line then cancels the highlighting effect by setting it to none. The third
-" line highlights the line number in the gutter column at the left; it needs
-" the first line to work!
-set cursorline
-highlight CursorLine ctermbg=none guibg=NONE
-highlight CursorLineNr term=bold ctermfg=4 gui=bold guifg=#268bd2
-
-" You can also highlight the current column in the same way.
-"set cursorcolumn
-
-" Allow quick toggle between light and dark solarized.
-call togglebg#map("<F12>")
-
-" This is used to highlight long lines, it draws a subdued (in solarized)
-" vertical line at the 80th column.
-set colorcolumn=80
-
-" ************** END COLOR SETUP **************  
-
-
 " When Ctrl-P starts, run in mixed mode by default (searches files, buffers
-" and MRU lists). c-m is also the escape code for the enter key...
-let g:ctrlp_map = '<c-m>'
+" and MRU lists) and bind to the key M-p. You need to restart Vim if you
+" change either of these settings, sourcing this file is not enough.
+let g:ctrlp_map = '<M-p>'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Ignore these things when searching for matches. This is from the help.
@@ -134,7 +64,6 @@ let g:ctrlp_custom_ignore = {
     \ 'dir':  '\.git$\|\.hg$\|\.svn$',
     \ 'file': '\.exe$\|\.so$\|\.dll$|\.o$'
     \ }
-
 
 " Turn on automatic indentation. The Wiki says only do this manually if
 " filetype indentation is not working.
@@ -147,97 +76,9 @@ set backspace=indent,eol,start whichwrap+=<,>,[,]
 " Backspace in Visual mode deletes selection
 vnoremap <BS> d
 
-
-" ********** Keymapping **********
-" http://vim.wikia.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)
-" :h keycodes, :h <C-, :h map-special-chars, :h map-which-keys
-" Avoid things like C-HIJKLM[ as they have special meaning.
-
-" Buffer and tab navigation.
-map <silent> <C-o> :bnext<CR>
-map <silent> <C-i> :tabn<CR>
-
-" Make F2 and F3 run the macros stored in the 'q' and 'w' registers
-" and Shift F2/F3 run the macros until a blank line is encountered.
-map <F2> @q
-map <F3> @w
-map <silent> <S-F2> :call RunMacroToBlankLine('q')<CR>
-map <silent> <S-F3> :call RunMacroToBlankLine('w')<CR>
-
-" Window resizing on function keys, +/- and the numeric keypad.
-map <S-F5> <C-W><
-map <S-F6> <C-W>>
-map <S-F7> <C-W>-
-map <S-F8> <C-W>+
-
-nnoremap <silent> _ :resize -1<CR>
-nnoremap <silent> + :resize +1<CR>
-
-" Quick access to NERDTree.
-map <C-n> :NERDTreeToggle<CR>
-
-" List of files to ignore.
+" List of files to ignore in NERDTree.
 let NERDTreeIgnore=['.o$[[file]]', '.exe$[[file]]']
 
-" ********** Compilation and Debugging **********
-" Required keybindings
-" Compile
-" Compile and Run.                             C-F5 (vs)
-" Compile with debug symbols, invoke Pyclewn.  F5 (vs)
-" Toggle breakpoint:  F9 (vs)
-" Step over:          F10 (vs)
-" Step in:            F11 (vs)
-" Step out:           S-F11 (vs)
-" Run to cursor:      C-F10 (vs)
-" Continue (run):     F-5 (vs)
-" Show call stack
-" Show locals, Show args
-" Watch variables
-
- 
-
-" Pyclewn
-"   Home: http://pyclewn.sourceforge.net/
-"   Docs: http://pyclewn.sourceforge.net/_static/pyclewn.html
-" -q means start gdb in quiet mode. The --background colors are the colors
-" to use for enabled breakpoint, disabled breakpoint and frame sign,
-" respectively.
-let g:pyclewn_args = "--args=-q --window=bottom --background=Red,Blue,Cyan"
-
-
-" ********** Function Definitions **********
-function! StripString(input_string)
-    " Remove leading and trailing whitespace from input_string.
-    return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
-endfunction
-
-function! RunMacroToBlankLine(registerName)
-    " Repeatedly run the macro stored in the registerName until the
-    " end of file or a blank line is reached. For this to work as you
-    " expect your macro should move down one line as part of its
-    " definition (typically it is the last thing it does).
-    let curLine = line(".")
-    let lastLine = line("$")
-    for line in getline(curLine, lastLine)
-        let sLine = StripString(line)
-        if (strlen(sLine) == 0)
-            break
-        endif
-        let cmd = '@' . a:registerName
-        execute "normal " . cmd
-    endfor
-endfunction
-
-function! FileSizeForStatusLine()
-    " Return file size in a format suitable for the status line.
-    let bytes = getfsize(expand("%:p"))
-    if bytes <= 0
-        return ""
-    endif
-    if bytes < 1024
-        return bytes
-    else
-        return (bytes / 1024) . "K"
-    endif
-endfunction
+" Seem to have to do this list for some reason...
+runtime _vimrc.theming
 

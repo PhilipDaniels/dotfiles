@@ -1,0 +1,184 @@
+" Terminology
+" -----------
+" Terminal keycodes (TKEY): the sequence of bytes sent by the terminal to Vim.
+"     Example: ^[[1;2A
+" Vim keycodes (VKEY): Vim's internal mnemonic name for a key.
+"     Example: <S-F9>
+"
+"
+" Introduction
+" ------------
+" The purpose of this file is to establish the TKEYS sent by my terminal and
+" map them to VKEYS, so that they can then have commands mapped to them.
+"
+" This file does not itself map any commands to keys, it just makes the keys
+" available for mapping in an easy way.
+"
+" For example, on Cygwin-mintty, the function keys modified with SHIFT or
+" CONTROL don't necessarily work because by default Vim doesn't understand
+" what the terminal is sending. Also, the Alt (Meta) key is particularly
+" problematic in Mintty because Mintty does not set the 8th bit, instead it
+" sends an escape sequence. As a consequence, even simple mappings such as
+" <M-u> won't work unless you first determine the escape sequence that is
+" being sent and map it to the appropriate VKEY.
+"
+" NB. This mainly applies to terminal Vim. gVim is generally able to determine
+" proper key codes by itself from the Window system. Terminal Vim has no such
+" luck, it is dependent on what the terminal sends.
+"
+"
+" References
+" ----------
+" 1) http://vim.wikia.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)
+" 2) http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
+" 3) http://stackoverflow.com/questions/2483849/detect-if-a-key-is-bound-to-something-in-vim
+"
+" 2 is the basis of this file, but 1 contains lots of useful information
+" about keymapping in general.
+"
+" :h keycodes - display the VKEY names.
+" :h <C-   - get help on a key.
+" :h map-special-chars
+" :h map-which-keys - guidance on mapping keys.
+" :h t_ku - list the VKEYS.
+" :set termcap - list the TKEYS
+" :h index - list all mapped keys in the various modes.
+" :map and :map! - list keys mapped by you or plugings.
+"
+"
+" Guidance
+" --------
+" * Avoid <M-Fn> because these keys are a problem on Windows, they tend to be
+"   grabbed by Windows itself.
+" * Avoid F1, it is reserved for HELP.
+" * On the function keys ut is probably best to stick to <S-Fn> and <C-Fn>.
+" * Many <C-letter> sequences are problematic because they have special meaning
+"   to either Vim (see ':help index') or the terminal. For example
+"     * C-a is the prefix character for GNU screen
+"     * C-l means 'redraw' to most terminals/shells
+"     * C-i is the TAB key
+"     * C-j is linefeed, which is used internally by Vim
+"     * C-h is the BACKSPACE key
+"     * C-[ is the ESC ket
+"     * C-m is the ENTER key
+"     * C-s/q are the terminal flow control keys
+"     * C-v is used for entering escaped characters or on Windows for pasting
+"     * C-Z is the shell 'suspend program' key
+"   IT'S BEST TO JUST AVOID <C-letter> combinations. Use <M-a> instead.
+"
+"
+" Determing TKEYS the terminal sends
+" ----------------------------------
+" In insert mode, do <Ctrl-v><key>, for example, <Ctrl-V><S-F9>.
+" The buffer will then contain the TKEYS that are being sent. You may use any
+" combination of modifiers. Note that the sequence is likely to be particular
+" to your terminal! Don't expect it to work everywhere.  Example output:
+"     [1;2Pv
+" 
+"
+" Mapping TKEY sequences to VKEYS
+" -------------------------------
+" If, and only if, Vim knows about a VKEY then you can use the 'set' command
+" to create the association VKEY = TKEY. For example:
+"     set <S-F9>=[1;2Pv
+" This works because Vim already 'knows about' <S-F9>. But it won't work for
+" <C-S-Down> because that VKEY is unknown to Vim. (This may explain why some
+" naive mappings won't work). This can be worked around by assigning TKEY
+" sequence to a VKEY that Vim knows about but that doesn't exist on your
+" keyboard, this can then be mapped to a Vim command in the normal way OR you
+" can introduce an alias back to something more meaningful. For example, to
+" assign to the F13 key:
+"     set <F13>=[1;2Pv
+" See :help t_ku for a list of known VKEYS **but** that doesn't seem complete,
+" for example I can map F37 even though it is not in that list. The "mapping
+" fast keys" help posits that the following unused VKEYS are availble:
+"     <F13> to <F37>
+"     <S-F13> to <S-F37>
+"     <xF1> to <xF4>
+"     <S-xF1> to <S-xF4>
+" There are caveats, see the link.
+"
+" As an example, to map the C-Fn keys the code below first sets them to F13...
+" and then aliases that back to <C-F2>. This avoids the delay due to "waiting
+" for the ESC to timeout".
+
+set timeout timeoutlen=1000 ttimeoutlen=100
+
+
+if !has("gui_running")
+    if &term == "screen256-color" || &term == "xterm-256color"
+        set <S-F1>=[1;2P
+        set <S-F2>=[1;2Q
+        set <S-F3>=[1;2R
+        set <S-F4>=[1;2S
+        set <S-F5>=[15;2~
+        set <S-F6>=[17;2~
+        set <S-F7>=[18;2~
+        set <S-F8>=[19;2~
+        set <S-F9>=[20;2~
+        set <S-F10>=[21;2~
+        set <S-F11>=[23;2~
+        set <S-F12>=[24;2~
+
+        " This is the result of pressing C-F1 to C-F12.
+        set <F13>=[1;5P
+        set <F14>=[1;5Q
+        set <F15>=[1;5R
+        set <F16>=[1;5S
+        set <F17>=[15;5~
+        set <F18>=[17;5~
+        set <F19>=[18;5~
+        set <F20>=[19;5~
+        set <F21>=[20;5~
+        set <F22>=[21;5~
+        set <F23>=[23;5~
+        set <F24>=[24;5~
+
+        " M-Fn is problematic, Windows tends to grab this, so avoid.
+        
+        " This is needed in mintty because it does not set the 8th bit,
+        " instead it sends an escape prefix.
+        set <M-a>=a
+        set <M-b>=b
+        set <M-c>=c
+        set <M-d>=d
+        set <M-e>=e
+        set <M-f>=f
+        set <M-g>=g
+        set <M-h>=h
+        set <M-i>=i
+        set <M-j>=j
+        set <M-k>=k
+        set <M-l>=l
+        set <M-m>=m
+        set <M-n>=n
+        set <M-o>=o
+        set <M-p>=p
+        set <M-q>=q
+        set <M-r>=r
+        set <M-s>=s
+        set <M-t>=t
+        set <M-u>=u
+        set <M-v>=v
+        set <M-w>=w
+        set <M-x>=x
+        set <M-y>=y
+        set <M-z>=z
+    endif
+
+    " Now introduce aliases back to the real key press.
+    " This makes it easier to use them in mappings.
+    map <F13> <C-F1>
+    map <F14> <C-F2>
+    map <F15> <C-F3>
+    map <F16> <C-F4>
+    map <F17> <C-F5>
+    map <F18> <C-F6>
+    map <F19> <C-F7>
+    map <F20> <C-F8>
+    map <F21> <C-F9>
+    map <F22> <C-F10>
+    map <F23> <C-F11>
+    map <F24> <C-F12>
+endif    
+

@@ -1,0 +1,40 @@
+" This file establishes most key mappings.
+" n.b. All comments must be on a line by themselves or they become a part of
+" the key mapping!
+
+" ******************* *Function keys ******************** 
+" F1 is HELP. Leave it alone.
+
+
+" Make F2 and F3 run the macros stored in the 'q' and 'w' registers
+" and Shift F2/F3 run the macros until a blank line is encountered.
+"map <F2> @q
+"map <F3> @w
+"map <silent> <S-F2> :call RunMacroToBlankLine('q')<CR>
+"map <silent> <S-F3> :call RunMacroToBlankLine('w')<CR>
+
+
+" Window resizing.
+map <F3> <C-W><
+map <S-F3> <C-W>>
+map <F4> <C-W>-
+map <S-F4> <c-w>+
+
+
+" The mappings for F5 are compatible with Visual Studio.
+noremap <silent> <special>   <F5> :call Debug(1)<CR>
+noremap <silent> <special> <S-F5> :call Compile()<CR>
+noremap <silent> <special> <C-F5> :call CompileAndRun()<CR>
+
+
+
+" ******************* Letter keys ******************** 
+" Quick access to NERDTree.
+map <C-n> :NERDTreeToggle<CR>
+
+" Buffer and tab navigation.
+map <silent> <C-o> :bnext<CR>
+map <silent> <M-o> :tabnext<CR>
+
+
+
