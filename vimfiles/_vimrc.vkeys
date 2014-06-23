@@ -36,5 +36,6 @@ map <C-n> :NERDTreeToggle<CR>
 map <silent> <C-o> :bnext<CR>
 map <silent> <M-o> :tabnext<CR>
 
-
+map <silent> <M-n> :cnext<CR>
+map <silent> <M-p> :cprev<CR>
 

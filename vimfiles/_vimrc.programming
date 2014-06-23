@@ -3,7 +3,7 @@
 
 
 " This is a dictionary of folder -> exe name. I only work on 1 C program, so:
-let g:proj_exes = { 'mintty' : 'mintty.exe' }
+let g:proj_exes = { 'mintty' : 'mintty.exe', 'vgud' : 'vgud.exe' }
 
 
 " Extra flags to pass to make (and gcc if you use that code path). You can use
