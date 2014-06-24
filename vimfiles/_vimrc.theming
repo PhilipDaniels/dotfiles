@@ -55,13 +55,13 @@ highlight StatusLineNC ctermbg=4 ctermfg=7 guibg=#268bd2 guifg=#eee8d5
 " the first line to work!
 set cursorline
 highlight CursorLine ctermbg=none guibg=NONE
-highlight CursorLineNr term=bold ctermfg=4 gui=bold guifg=#268bd2
+highlight CursorLineNr term=bold ctermfg=4 ctermbg=0 gui=bold guifg=#268bd2
 
 " You can also highlight the current column in the same way.
 "set cursorcolumn
 
 " Allow quick toggle between light and dark solarized.
-call togglebg#map("<F12>")
+" call togglebg#map("<F12>")
 
 " This is used to highlight long lines, it draws a subdued (in solarized)
 " vertical line at the 80th column.

@@ -51,4 +51,4 @@
 [push]
     default = simple
 #[http]
-#    proxy = http://somewhere:9999/
+#    proxy = http://rdproxy01:800/

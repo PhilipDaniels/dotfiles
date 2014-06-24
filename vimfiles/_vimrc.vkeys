@@ -26,7 +26,8 @@ noremap <silent> <special>   <F5> :call Debug(1)<CR>
 noremap <silent> <special> <S-F5> :call Compile()<CR>
 noremap <silent> <special> <C-F5> :call CompileAndRun()<CR>
 
-
+" Switch between .h and .c.
+map <F12> :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
 
 " ******************* Letter keys ******************** 
 " Quick access to NERDTree.
