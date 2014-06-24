@@ -141,8 +141,10 @@ alias l="ls $LSIGNORE -CF --color=auto"
 alias more='less'
 alias cls='printf "\033c"'
 
-# This will start an X server on Cygwin without displaying any startup windows.
 if [ "$OS" == "cygwin" ]; then
+    # This will start an X server on Cygwin without displaying any startup windows.
     alias startcygx="touch ~/.startxwinrc; startxwin.exe; export DISPLAY=:0.0"
+    # To fix 'Failed to connect to server' errors.
+    alias tmux="rm -rf /tmp/tmux* && tmux"
 fi
 
