@@ -142,8 +142,11 @@ alias more='less'
 alias cls='printf "\033c"'
 
 if [ "$OS" == "cygwin" ]; then
+    # Always export this so that an X server started from one Cygwin terminal
+    # is available from another.
+    export DISPLAY=:0.0
     # This will start an X server on Cygwin without displaying any startup windows.
-    alias startcygx="touch ~/.startxwinrc; startxwin.exe; export DISPLAY=:0.0"
+    alias startcygx="touch ~/.startxwinrc; startxwin.exe &> /dev/null;"
     # To fix 'Failed to connect to server' errors.
     alias tmux="rm -rf /tmp/tmux* && tmux"
 fi
