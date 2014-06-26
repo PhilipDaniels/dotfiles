@@ -1,5 +1,5 @@
 " To reload this file while editing it use :so % (source current file)
-runtime _vimrc.tkeys
+" runtime _vimrc.tkeys  REPLACED by the fix-keys script.
 runtime _vimrc.vkeys
 runtime _vimrc.functions
 runtime _vimrc.programming
@@ -45,7 +45,7 @@ filetype plugin indent on
 au BufRead,BufNewFile *.md set filetype=markdown
 
 " Enable visual line wrapping. nowrap turns this off.
-set wrap
+set nowrap
 
 " Turn off the automatic insertion of new lines.
 set textwidth=0 wrapmargin=0

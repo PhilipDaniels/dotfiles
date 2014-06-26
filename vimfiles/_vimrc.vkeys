@@ -38,5 +38,5 @@ noremap <silent> <C-o> :bnext<CR>
 noremap <silent> <M-o> :tabnext<CR>
 
 noremap <silent> <M-n> :cnext<CR>
-noremap <silent> <M-p> :cprev<CR>
+noremap <silent> <M-b> :cprev<CR>
 
