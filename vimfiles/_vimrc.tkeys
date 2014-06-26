@@ -67,14 +67,21 @@
 "   IT'S BEST TO JUST AVOID <C-letter> combinations. Use <M-a> instead.
 "
 "
-" Determing TKEYS the terminal sends
-" ----------------------------------
+" Determing TKEYS the terminal sends (in Vim)
+" -------------------------------------------
 " In insert mode, do <Ctrl-v><key>, for example, <Ctrl-V><S-F9>.
 " The buffer will then contain the TKEYS that are being sent. You may use any
 " combination of modifiers. Note that the sequence is likely to be particular
 " to your terminal! Don't expect it to work everywhere.  Example output:
 "     [1;2Pv
 " 
+" Determing TKEYS the termainal sends (in the terminal itself)
+" ------------------------------------------------------------
+" a) You can try just typing <Ctrl-V><key>.
+" b) Type 'sed -n l' (ell). Then type the key followed by ENTER. The codes
+"    will be printed out - ignore the $ that is just sed's end-of-line.
+" c) 'cat -v' appears to do the same.
+"
 "
 " Mapping TKEY sequences to VKEYS
 " -------------------------------
@@ -106,7 +113,18 @@ set timeout timeoutlen=1000 ttimeoutlen=100
 
 
 if !has("gui_running")
-    if &term == "screen256-color" || &term == "xterm-256color"
+    if &term == "screen256-color"
+        " This requires you to set this terminal type in .tmux.conf
+        " and to have the 'xterm-keys' option on.
+        set <S-F1>=[25~
+        set <S-F2>=[26~
+        set <S-F3>=[28~
+        set <S-F4>=[29~
+        set <S-F5>=[31~
+        set <S-F6>=[32~
+        set <S-F7>=[33~
+        set <S-F8>=[34~
+    elseif &term == "xterm-256color"
         set <S-F1>=[1;2P
         set <S-F2>=[1;2Q
         set <S-F3>=[1;2R
@@ -115,8 +133,13 @@ if !has("gui_running")
         set <S-F6>=[17;2~
         set <S-F7>=[18;2~
         set <S-F8>=[19;2~
-        set <S-F9>=[20;2~
-        set <S-F10>=[21;2~
+    endif
+
+
+    if &term == "screen256-color" || &term == "xterm-256color"
+        " These appear to be common...who knew?
+        set <S-F9>=[20~;2~
+        set <S-F10>=21~;2~
         set <S-F11>=[23;2~
         set <S-F12>=[24;2~
 

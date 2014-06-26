@@ -15,10 +15,10 @@
 
 
 " Window resizing.
-map <F3> <C-W><
-map <S-F3> <C-W>>
-map <F4> <C-W>-
-map <S-F4> <c-w>+
+noremap <F3> <C-W><
+noremap <S-F3> <C-W>>
+noremap <F4> <C-W>-
+noremap <S-F4> <C-W>+
 
 
 " The mappings for F5 are compatible with Visual Studio.
@@ -27,16 +27,16 @@ noremap <silent> <special> <S-F5> :call Compile()<CR>
 noremap <silent> <special> <C-F5> :call CompileAndRun()<CR>
 
 " Switch between .h and .c.
-map <F12> :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
+noremap <F12> :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
 
 " ******************* Letter keys ******************** 
 " Quick access to NERDTree.
-map <C-n> :NERDTreeToggle<CR>
+noremap <C-n> :NERDTreeToggle<CR>
 
 " Buffer and tab navigation.
-map <silent> <C-o> :bnext<CR>
-map <silent> <M-o> :tabnext<CR>
+noremap <silent> <C-o> :bnext<CR>
+noremap <silent> <M-o> :tabnext<CR>
 
-map <silent> <M-n> :cnext<CR>
-map <silent> <M-p> :cprev<CR>
+noremap <silent> <M-n> :cnext<CR>
+noremap <silent> <M-p> :cprev<CR>
 
