@@ -9,9 +9,9 @@ sudo apt-get update
 # are required to compile node.
 sudo apt-get install samba winbind smbclient cifs-utils vim cscope \
 automake bc bison build-essential checkinstall libtool rsync \
-flex exuberant-ctags g++ gcc gdb gettext git git-core htop make \
-strace sudo usbutils links2 git git-doc ssh apt-file curl vim \
-libssl-dev apache2-utils mc ncdu tree dos2unix screen fortune \
+flex exuberant-ctags g++ gcc gdb gettext git git-core htop make cmake \
+strace sudo usbutils links2 git git-doc ssh apt-file curl vim cgdb \
+libssl-dev apache2-utils mc ncdu tree dos2unix screen fortune tmux \
 ttf-bitstream-vera ttf-dejavu fonts-droid ttf-liberation \
 fonts-inconsolata fonts-jura fonts-linuxlibertine fonts-quattrocento \
 ttf-adf-gillius ttf-adf-ikarius ttf-adf-romande ttf-adf-switzera \
