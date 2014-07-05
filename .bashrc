@@ -153,3 +153,9 @@ if [ "$OS" == "cygwin" ]; then
     alias tmux="rm -rf /tmp/tmux* && tmux"
 fi
 
+# Setup nvm (Node Version Manager) to use a folder in my home directory.
+if [ -s ~/.nvm/nvm.sh ]; then
+	NVM_DIR=~/.nvm
+	source ~/.nvm/nvm.sh
+fi
+
