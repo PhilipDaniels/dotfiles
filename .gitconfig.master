@@ -48,6 +48,9 @@
     # (Linux, MSysGit, Cygwin). It requires Windows machines to know
     # about and preserve files with LF endings, which most modern tools do.
     # See http://stackoverflow.com/questions/170961 and 13960696
+    # In practice THIS SHOULD BE IGNORED because you should create a
+    # .gitattributes file in every repo. See my question & answer at
+    # http://stackoverflow.com/questions/24577629/git-line-endings-after-normalization
     autocrlf = false
     # Stop git whining about CRLF/LF conversions on Windows.
     safecrlf = false
