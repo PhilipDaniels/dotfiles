@@ -61,6 +61,17 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Setup nvm (Node Version Manager) to use a folder in my home directory.
+if [ -s ~/.nvm/nvm.sh ]; then
+	NVM_DIR=~/.nvm
+	source ~/.nvm/nvm.sh
+fi
+
+# Where I keep my Go-lang code.
+export GOPATH=$HOME/repos/go
+export PATH=$PATH:$GOPATH/bin
+
+
 #######################################################################
 # Setup ssh-agent.
 # Run the keychain program to cache ssh keys. Keychain comes with Cygwin
@@ -151,11 +162,5 @@ if [ "$OS" == "cygwin" ]; then
     alias startcygx="touch ~/.startxwinrc; startxwin.exe &> /dev/null;"
     # To fix 'Failed to connect to server' errors.
     alias tmux="rm -rf /tmp/tmux* && tmux"
-fi
-
-# Setup nvm (Node Version Manager) to use a folder in my home directory.
-if [ -s ~/.nvm/nvm.sh ]; then
-	NVM_DIR=~/.nvm
-	source ~/.nvm/nvm.sh
 fi
 

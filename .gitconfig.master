@@ -28,8 +28,11 @@
     # If two colours are given the first is the foreground and the second is the background.
     lg = log --graph --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold red) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(blue)%an'
     lg2 = log --graph --abbrev-commit --date=short --pretty=format:'%C(yellow)%h%C(bold red) %cd %C(reset)%s %C(blue)%an'
-    #lg = log --graph --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold magenta) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(blue)%an'
-    #lg2 = log --graph --abbrev-commit --date=short --pretty=format:'%C(yellow)%h%C(bold magenta) %cd %C(reset)%s %C(blue)%an'
+    
+    # Convert all text files (except those in the .git folder) to the
+    # requested line endings.
+    godos = !find . -path ./.git -prune -o -type f -exec unix2dos {} "\\;" 
+    gounix = !find . -path ./.git -prune -o -type f -exec dos2unix {} "\\;" 
 [merge]
     tool = p4merge
 [diff]
@@ -45,6 +48,9 @@
     # (Linux, MSysGit, Cygwin). It requires Windows machines to know
     # about and preserve files with LF endings, which most modern tools do.
     # See http://stackoverflow.com/questions/170961 and 13960696
+    # In practice THIS SHOULD BE IGNORED because you should create a
+    # .gitattributes file in every repo. See my question & answer at
+    # http://stackoverflow.com/questions/24577629/git-line-endings-after-normalization
     autocrlf = false
     # Stop git whining about CRLF/LF conversions on Windows.
     safecrlf = false

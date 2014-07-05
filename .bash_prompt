@@ -51,12 +51,12 @@ function f_SetPrompt()
     # the \uFFFF syntax, so you have to use the hexadecimal escape syntax, \xFF
     # for each byte in the character. Use 'echo <uchars> | hexdump -C' in a
     # Unicode terminal to see the bytes you need.
-    if [ ! -z $STY ]; then
-        SCREEN="\[${FC[13]}\][SCR]\[$R_All\] "
-    fi
+#    if [ ! -z $STY ]; then
+#        SCREEN="\[${FC[13]}\][SCR]\[$R_All\] "
+#    fi
 
     # User@hostname (OS, ROOTINDICATOR)
-    PS1="${SCREEN}\[${FC[6]}\]\u@\h (${OS}${ROOTINDICATOR})\[$R_All\]"
+    PS1="\[${FC[6]}\]\u@\h (${OS}${ROOTINDICATOR})\[$R_All\]"
 
     # Current directory.
     PS1="${PS1} \[${FC[2]}\]\w\[$R_All\]"

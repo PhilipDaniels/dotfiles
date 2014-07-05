@@ -1,0 +1,44 @@
+# Based on my question and answer at
+# http://stackoverflow.com/questions/24577629/git-line-endings-after-normalization
+
+#############################################################################
+# Turn off line ending normalization. Because this pattern matches all files
+# it is unnecessary to mark particular files (*.png etc.) as binary.
+* -text
+
+# As an alternative to the above
+#    * eol=lf     # force all line endings to LF
+#    * eol=crlf   # force all line endings to CRLF
+
+# See the .gitconfig.master in this repo for two aliases to convert between
+# the two different line endings. There is also a function in the file
+# .bash_functions to do the same in the current working directory.
+
+
+#############################################################################
+# Prevent git-diff and git-apply from reporting a trailing CR as a whitespace
+# error. You need this if your files have a CRLF ending, otherwise ^M will
+# show up in your git diffs (not as a difference, but as an "error").
+# This is safe to use even if you are working in a LF-only repository.
+* whitespace=cr-at-eol
+
+
+#############################################################################
+# Try and show better context in the diff header when diffing C# files.
+# This is merely presentational.
+*.cs diff=csharp
+
+
+#############################################################################
+# See the git-attributes man page for more info, but as a quick guide the lines
+# in this file are of the form
+#
+# pattern attr1 attr2 ...
+#
+# where the attr expressions can be one of
+#
+# attr set (to bool)  : foo
+# attr set (to value) : foo=x
+# attr unset          : -foo
+# attr unspecified    : !foo
+
