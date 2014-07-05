@@ -28,3 +28,17 @@
 # This is merely presentational.
 *.cs diff=csharp
 
+
+#############################################################################
+# See the git-attributes man page for more info, but as a quick guide the lines
+# in this file are of the form
+#
+# pattern attr1 attr2 ...
+#
+# where the attr expressions can be one of
+#
+# attr set (to bool)  : foo
+# attr set (to value) : foo=x
+# attr unset          : -foo
+# attr unspecified    : !foo
+
