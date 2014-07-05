@@ -64,6 +64,8 @@
 # and Windows. It needs to be on your path, or you can edit the 'cmd' lines.
 [merge]
     tool = p4merge
+[mergetool]
+    keepBackup = false
 [mergetool "p4merge"]
     cmd = "p4merge $BASE $LOCAL $REMOTE $MERGED"
     keepTemporaries = false
