@@ -59,11 +59,21 @@
     # See my answer at http://stackoverflow.com/questions/24038147/managing-third-party-assets/
     # mupull = subtree pull --prefix MiscUtils --squash git@github.com:PhilipDaniels/MiscUtils.git master
     # mupush = subtree push --prefix MiscUtils git@github.com:PhilipDaniels/MiscUtils.git master
+
+# Setup the GUI diff and mergetools to use p4merge. p4merge is free for Linux
+# and Windows. It needs to be on your path, or you can edit the 'cmd' lines.
 [merge]
     tool = p4merge
+[mergetool "p4merge"]
+    cmd = "p4merge $BASE $LOCAL $REMOTE $MERGED"
+    keepTemporaries = false
+    trustExitCode = false
+    keepBackup = false
 [diff]
     guitool = p4merge
     tool = p4merge
 [difftool]
     prompt = false
+[difftool "p4merge"]
+    cmd = "p4merge $LOCAL $REMOTE"
 
