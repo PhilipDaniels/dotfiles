@@ -153,3 +153,8 @@ if [ "$OS" == "cygwin" ]; then
     alias tmux="rm -rf /tmp/tmux* && tmux"
 fi
 
+# Where I keep my Go-lang code.
+export GOPATH=$HOME/repos/go
+export PATH=$PATH:$GOPATH/bin
+
+

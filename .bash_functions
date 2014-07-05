@@ -147,6 +147,20 @@ f_IsCmd()
     command -v >&- "$@"
 }
 
+f_GoDos()
+{
+    # Convert all text files in the current folder and any child
+    # folders to DOS (CRLF) line endings.
+    find . -type f -exec unix2dos {} \;
+}
+
+f_GoUnix()
+{
+    # Convert all text files in the current folder and any child
+    # folders to Unix (LF) line endings.
+    find . -type f -exec dos2unix {} \;
+}
+
 ########################################################################
 # Support for using ssh-agent because keychain doesn't seem to work
 # that well in MSysGit.

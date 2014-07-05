@@ -7,6 +7,7 @@ runtime _vimrc.programming
 set nocompatible    " Don't care about being compatible with vi.
 set number          " Turn on line numbers
 set vb t_vb=        " Turn off bleeping and flashing
+set complete-=i     " Don't scan included files when completing (it's too slow)
 
 " Ensure tabs are always 4 spaces.
 set tabstop=4

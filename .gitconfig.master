@@ -28,8 +28,11 @@
     # If two colours are given the first is the foreground and the second is the background.
     lg = log --graph --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold red) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(blue)%an'
     lg2 = log --graph --abbrev-commit --date=short --pretty=format:'%C(yellow)%h%C(bold red) %cd %C(reset)%s %C(blue)%an'
-    #lg = log --graph --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold magenta) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(blue)%an'
-    #lg2 = log --graph --abbrev-commit --date=short --pretty=format:'%C(yellow)%h%C(bold magenta) %cd %C(reset)%s %C(blue)%an'
+    
+    # Convert all text files (except those in the .git folder) to the
+    # requested line endings.
+    godos = !find . -path ./.git -prune -o -type f -exec unix2dos {} "\\;" 
+    gounix = !find . -path ./.git -prune -o -type f -exec dos2unix {} "\\;" 
 [merge]
     tool = p4merge
 [diff]
