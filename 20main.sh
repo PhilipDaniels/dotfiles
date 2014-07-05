@@ -8,8 +8,8 @@ sudo apt-get update
 # Non-X stuff. The fonts don't require X. libssl-dev and apache2-utils
 # are required to compile node.
 sudo apt-get install samba winbind smbclient cifs-utils vim cscope \
-automake bc bison build-essential checkinstall libtool rsync \
-flex exuberant-ctags g++ gcc gdb gettext git git-core htop make cmake \
+automake bc bison build-essential checkinstall libtool rsync wcd \
+flex exuberant-ctags g++ gcc gdb gettext git git-core tig htop make cmake \
 strace sudo usbutils links2 git git-doc ssh apt-file curl vim cgdb \
 libssl-dev apache2-utils mc ncdu tree dos2unix screen fortune tmux \
 ttf-bitstream-vera ttf-dejavu fonts-droid ttf-liberation \
