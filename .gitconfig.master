@@ -5,6 +5,9 @@
     email = Philip.Daniels1971@gmail.com
 [color]
     ui = true
+[credential]
+    # Store passwords in RAM for 20 hours.
+    helper = cache --timeout=72000
 [core]
     editor = vim
     pager = less -x4
