@@ -24,34 +24,36 @@ noremap <S-F4> <C-W>+
 " Visual Studio compatible key mappings.
 " Requires _vimrc.programming. There is a global variable "g:make_flags"
 " which you can set to pass args to Compile().
-"       F5 = run/continue with debugging
-"     C-F5 = run without debugging
-"     S-F5 = stop debugging
-"    CS-F5 = restart
+"     F5 = run/continue with debugging
+"   C-F5 = run without debugging
+"   S-F5 = stop debugging
+"  CS-F5 = restart
 noremap <silent> <special>   <F5> :call Debug(1)<CR>
 noremap <silent> <special> <C-F5> :call CompileAndRun()<CR>
-"       F6 = build solution
-"     S-F6 = build current project
-"     C-F6 = no VS equivalent, let's map to make clean.
+"     F6 = build solution
+"   S-F6 = build current project
+"   C-F6 = no VS equivalent, let's map to make clean.
 noremap <silent> <special>   <F6> :call Compile()<CR>
 noremap <silent> <special> <S-F6> :call Compile()<CR>
 noremap <silent> <special> <C-F6> :call Clean()<CR>
-"       F7 = View.ToggleDesigner
-"     C-F7 = build current file
-noremap <F7> :e %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
-noremap <silent> <special> <C-F7> :call Compile()<CR>
-"       F8 = next thing in list
-"     S-F8 = prev thing in list
+"     F7 = View.ToggleDesigner
+"   C-F7 = build current file. Ignore this. Use the FSwitch plugin on this key.
+let g:fsnonewfiles="true"
+noremap <silent> <special>   <F7> :FSHere<CR>
+noremap <silent> <special> <S-F7> :FSSplitRight<CR>
+noremap <silent> <special> <C-F7> :FSSplitBelow<CR>
+"     F8 = next thing in list
+"   S-F8 = prev thing in list
 noremap <silent>   <F8> :cnext<CR>
 noremap <silent> <S-F8> :cprev<CR>
-"       F9 = toggle breakpoint (gdb break, clear)
-"    CS-F9 = delete all breakpoints
-"      F10 = step over (gdb next)
-"    C-F10 = run to cursor (gdb advance)
-"   CS-F10 = set next statement
-"      F11 = step into (gdb = step)
-"    S-F11 = step out (gdb = finish)
-"  C-Break = cancel current build
+"     F9 = toggle breakpoint (gdb break, clear)
+"  CS-F9 = delete all breakpoints
+"    F10 = step over (gdb next)
+"  C-F10 = run to cursor (gdb advance)
+" CS-F10 = set next statement
+"    F11 = step into (gdb = step)
+"  S-F11 = step out (gdb = finish)
+"  C-Brk = cancel current build
 
 
 " ******************* Letter keys ******************** 
