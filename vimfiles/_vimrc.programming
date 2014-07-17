@@ -26,6 +26,7 @@ func! Compile()
     " links project directories to executable names.
     if filereadable("Makefile")
         " If the current directory contains a Makefile, compile using 'make'
+        echo "make starting..."
 
         " If a file is bound to the current buffer, write it first
         if expand("%") != "" | w | endif
@@ -47,7 +48,6 @@ func! Compile()
             echoerr "No executable set for directory '".proj_dir."'"
             return [0, ""]
         endif
-
     else
         " If the current directory contains no Makefile, compile just the file
         " bound to the current buffer
@@ -56,6 +56,7 @@ func! Compile()
             echoerr "No file bound to buffer"
             return [0, ""]
         endif
+        echo "No makefile, so compiling current file..."
 
         " Write before compiling
         w
@@ -101,6 +102,8 @@ func! Compile()
         return [0, ""]
     endif
 
+    " This redraw stops the stupid 'Press ENTER to continue" message.
+    redraw
     echo "Compilation completed."
 
     return [succeeded, out_file]
@@ -115,6 +118,33 @@ func! CompileAndRun()
     endif
 endfunc
 
+func! Clean()
+    if filereadable("Makefile")
+        echo "make clean starting..."
+        " If the current directory contains a Makefile, assume it
+        " has a "clean" target and invoke it.
+
+        " If a file is bound to the current buffer, write it first
+        if expand("%") != "" | w | endif
+
+        let messages = system("make clean")
+        let succeeded = (v:shell_error == 0)
+
+        " Look up the current directory to see if an executable has been
+        " registered for it
+        if !succeeded
+            echoerr "make clean failed."
+            return [0, ""]
+        else
+            " This redraw stops the stupid 'Press ENTER to continue" message.
+            redraw
+            echo "make clean starting...done."
+        endif
+    else
+        echoerr "No Makefile, so can't make clean."
+        return [0, ""]
+    endif
+endfunc
 
 
 " Pyclewn
