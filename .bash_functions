@@ -163,6 +163,7 @@ f_GoUnix()
 
 f_ShowTerminalColors()
 {
+    # Display the standard 16 terminal colors.
     echo -e "Color  0 ('Black')          : $F_Black Text $F_Default"
     echo -e "Color  1 ('Red')            : $F_Red Text $F_Default"
     echo -e "Color  2 ('Green')          : $F_Green Text $F_Default"
