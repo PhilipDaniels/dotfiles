@@ -161,6 +161,18 @@ f_GoUnix()
     find . -type f -exec dos2unix {} \;
 }
 
+f_DuplicateFile()
+{
+    local file=$1
+    local x=$2
+    local y=$3
+
+    for num in $(seq $x $y)
+    do
+        cp "$file" "$num$file"
+    done
+}
+
 ########################################################################
 # Support for using ssh-agent because keychain doesn't seem to work
 # that well in MSysGit.

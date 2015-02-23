@@ -12,6 +12,7 @@ f_CopyFileWithBackup .gitconfig.master ~/.gitconfig
 if [ "$OS" == "linux" ] ; then
   f_Relink ~/repos/dotfiles/.bash_logout ~/.bash_logout
   f_Relink ~/repos/dotfiles/.bash_profile ~/.bash_profile
+  f_Relink ~/repos/dotfiles/.bash_functions ~/.bash_functions
   f_Relink ~/repos/dotfiles/.bashrc ~/.bashrc
   f_Relink ~/repos/dotfiles/.profile ~/.profile
   f_Relink ~/repos/dotfiles/.gvimrc ~/.gvimrc
@@ -24,6 +25,7 @@ else
   # Windows does not support symbolic links so we must copy files into place.
   f_CopyFileWithBackup .bash_logout ~/.bash_logout
   f_CopyFileWithBackup .bash_profile ~/.bash_profile
+  f_CopyFileWithBackup .bash_functions ~/.bash_functions
   f_CopyFileWithBackup .bashrc ~/.bashrc
   f_CopyFileWithBackup .profile ~/.profile
   f_CopyFileWithBackup .gvimrc ~/.gvimrc
