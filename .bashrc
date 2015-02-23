@@ -84,6 +84,9 @@ export PATH=$PATH:$GOPATH/bin
 #    keychain --eval id_phil
 #fi
 
+# Remove old credential cache files.
+find ~/.git-credential-cache -mmin +1200 -delete
+
 # Note: ~/.ssh/environment should not be used, as it already has a
 # different purpose in SSH.
 env=~/.ssh/agent.env

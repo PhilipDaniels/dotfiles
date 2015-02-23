@@ -173,6 +173,27 @@ f_DuplicateFile()
     done
 }
 
+f_ShowTerminalColors()
+{
+    # Display the standard 16 terminal colors.
+    echo -e "Color  0 ('Black')          : $F_Black Text $F_Default"
+    echo -e "Color  1 ('Red')            : $F_Red Text $F_Default"
+    echo -e "Color  2 ('Green')          : $F_Green Text $F_Default"
+    echo -e "Color  3 ('Yellow')         : $F_Yellow Text $F_Default"
+    echo -e "Color  4 ('Blue')           : $F_Blue Text $F_Default"
+    echo -e "Color  5 ('Magenta')        : $F_Magenta Text $F_Default"
+    echo -e "Color  6 ('Cyan')           : $F_Cyan Text $F_Default"
+    echo -e "Color  7 ('White')          : $F_White Text $F_Default"
+    echo -e "Color  8 ('Bright Black')   : $F_BrightBlack Text $F_Default"
+    echo -e "Color  9 ('Bright Red')     : $F_BrightRed Text $F_Default"
+    echo -e "Color 10 ('Bright Green')   : $F_BrightGreen Text $F_Default"
+    echo -e "Color 11 ('Bright Yellow')  : $F_BrightYellow Text $F_Default"
+    echo -e "Color 12 ('Bright Blue')    : $F_BrightBlue Text $F_Default"
+    echo -e "Color 13 ('Bright Magenta') : $F_BrightMagenta Text $F_Default"
+    echo -e "Color 14 ('Bright Cyan')    : $F_BrightCyan Text $F_Default"
+    echo -e "Color 15 ('Bright White')   : $F_BrightWhite Text $F_Default"
+}
+
 ########################################################################
 # Support for using ssh-agent because keychain doesn't seem to work
 # that well in MSysGit.
