@@ -1,9 +1,10 @@
 ﻿$scriptDir = Split-Path $MyInvocation.MyCommand.Path -Parent
+$myDocs = [Environment]::GetFolderPath("mydocuments")  # Differs on Win7/8.
 
 foreach ($vsVer in 2012,2013,2015)
 {
     $sourceDir = "$scriptDir\Code Snippets"
-    $snippetDir = "{0}\My Documents\Visual Studio {1}\Code Snippets" -f $env:UserProfile, $vsVer
+    $snippetDir = "{0}\Visual Studio {1}\Code Snippets" -f $myDocs, $vsVer
     #$snippetDir = "C:\temp\tst"
 
     if (Test-Path $snippetDir)
