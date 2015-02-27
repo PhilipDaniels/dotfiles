@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>eqc</Title>
+			<Shortcut>eqc</Shortcut>
+			<Description>Implement the IEquatable, IComparable&lt;T&gt; and IComparable interfaces</Description>
+			<Author>Philip Daniels</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+      <Declarations>
+        <Literal Editable="false">
+          <ID>classname</ID>
+          <ToolTip>Class name</ToolTip>
+          <Function>ClassName()</Function>
+          <Default>ClassNamePlaceholder</Default>
+        </Literal>
+      </Declarations>
+			<Code Language="csharp">
+				<![CDATA[		#region IEquatable, IComparable<T> and IComparable Implementation
+    // Note: use of object.ReferenceEquals() is to prevent recursive loops,
+    // otherwise a cast is required: (object)lhs == null....
+    
+    public int CompareTo(object obj) {
+        return CompareTo(($classname$)obj);
+    }
+    
+    public int CompareTo($classname$ other) {
+        // other == null   --> return 1 (because this must exist)
+        // this < other    --> return negative number
+        // this == other   --> return 0
+        // this > other    --> return positive number
+
+        if ((object)other == null)
+            return 1;
+
+        throw new NotImplementedException("Remember to write $classname$.CompareTo()!!!");
+        // Place the type into a partial order based upon the ordering of its fields.
+        //int comp;
+        //comp = m_Int.CompareTo(other.m_Int);
+        //if (comp != 0) return comp;
+        //comp = m_String.CompareTo(other.m_String);
+        //return comp;
+
+        //If this type is derived from object just return the final comp,
+        //otherwise return base.CompareTo(other).
+    }
+
+    public override int GetHashCode() {
+        throw new NotImplementedException("Remember to write $classname$.GetHashCode()!!!");
+        return base.GetHashCode();
+    }
+
+    public override bool Equals(object obj) {
+        return Equals(($classname$)obj);
+    }
+
+    public bool Equals($classname$ other) {
+        if (object.ReferenceEquals(other, null))
+            return false;
+
+        // First check for an exact type match.
+        if (!object.ReferenceEquals(GetType(), other.GetType()))
+            return false;
+
+        int comp = CompareTo(other);
+        return comp == 0;
+    }
+
+    public static bool operator ==($classname$ lhs, $classname$ rhs) {
+        if (object.ReferenceEquals(lhs, null))
+            return object.ReferenceEquals(rhs, null);
+        else
+            return lhs.Equals(rhs);
+    }
+
+    public static bool operator !=($classname$ lhs, $classname$ rhs) {
+        return !(lhs == rhs);
+    }
+
+    public static bool operator <($classname$ lhs, $classname$ rhs) {
+        if (object.ReferenceEquals(lhs, null))
+            return !object.ReferenceEquals(rhs, null);
+        else {
+            int comp = lhs.CompareTo(rhs);
+            return comp < 0;
+        }
+    }
+
+    public static bool operator <=($classname$ lhs, $classname$ rhs) {
+        if (object.ReferenceEquals(lhs, null))
+            return true;
+        else {
+            int comp = lhs.CompareTo(rhs);
+            return comp <= 0;
+        }
+    }
+
+    public static bool operator >($classname$ lhs, $classname$ rhs) {
+        if (object.ReferenceEquals(lhs, null))
+            return false;
+        else {
+            int comp = lhs.CompareTo(rhs);
+            return comp > 0;
+        }
+    }
+
+    public static bool operator >=($classname$ lhs, $classname$ rhs) {
+        if (object.ReferenceEquals(lhs, null))
+            return object.ReferenceEquals(rhs, null);
+        else {
+            int comp = lhs.CompareTo(rhs);
+            return comp >= 0;
+        }
+    }
+    #endregion
+		 $end$]]>
+		</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

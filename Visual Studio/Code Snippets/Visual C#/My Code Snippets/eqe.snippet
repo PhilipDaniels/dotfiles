@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>eqe</Title>
+			<Shortcut>eqe</Shortcut>
+			<Description>Implement the IEquatable interface</Description>
+			<Author>Philip Daniels</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+      <Declarations>
+        <Literal Editable="false">
+          <ID>classname</ID>
+          <ToolTip>Class name</ToolTip>
+          <Function>ClassName()</Function>
+          <Default>ClassNamePlaceholder</Default>
+        </Literal>
+      </Declarations>
+			<Code Language="csharp">
+				<![CDATA[		#region IEquatable Implementation
+    // Note: use of object.ReferenceEquals() is to prevent recursive loops,
+    // otherwise a cast is required: (object)lhs == null....
+
+    public override int GetHashCode() {
+        // See Jon Skeet: http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode/263416#263416
+		unchecked // Overflow is fine, just wrap
+		{
+			int hash = 17;
+			// Suitable nullity checks etc, of course :)
+			hash = hash * 23 + field1.GetHashCode();
+			hash = hash * 23 + field2.GetHashCode();
+			hash = hash * 23 + field3.GetHashCode();
+			return hash;
+		}
+    }
+
+    public override bool Equals(object obj) {
+        return Equals(($classname$)obj);
+    }
+
+    public bool Equals($classname$ other) {
+        if (object.ReferenceEquals(other, null))
+            return false;
+        
+        // First check for an exact type match.
+        if (!object.ReferenceEquals(GetType(), other.GetType()))
+            return false;
+
+        throw new NotImplementedException("Remember to write $classname$.Equals()!!!");
+        //return m_Int == other.m_Int &&
+        //    m_String == other.m_String && ...
+        // If this type does not derive from object then add a call to base.Equals()
+        // as the last line of this expression.
+    }
+
+    public static bool operator ==($classname$ lhs, $classname$ rhs) {
+        if (object.ReferenceEquals(lhs, null))
+            return object.ReferenceEquals(rhs, null);
+        else
+            return lhs.Equals(rhs);
+    }
+
+    public static bool operator !=($classname$ lhs, $classname$ rhs) {
+        return !(lhs == rhs);
+    }
+    #endregion
+		 $end$]]>
+		</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

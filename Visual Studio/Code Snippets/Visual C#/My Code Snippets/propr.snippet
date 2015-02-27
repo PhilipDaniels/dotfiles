@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>propr</Title>
+			<Shortcut>propr</Shortcut>
+			<Description>Code snippet for a readonly property
+Language Version: C# 2.0 or higher</Description>
+			<Author>Philip Daniels</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>type</ID>
+					<ToolTip>Property type</ToolTip>
+					<Default>int</Default>
+				</Literal>
+				<Literal>
+					<ID>property</ID>
+					<ToolTip>Property name</ToolTip>
+					<Default>MyProperty</Default>
+				</Literal>
+        <Literal>
+          <ID>field</ID>
+          <ToolTip>Backing field name</ToolTip>
+          <Default>backingField</Default>
+        </Literal>
+			</Declarations>
+			<Code Language="csharp">
+        <![CDATA[/// <summary>
+        /// $end$
+        /// </summary>
+        public $type$ $property$ { get { return $field$; } }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        readonly $type$ $field$;
+        ]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

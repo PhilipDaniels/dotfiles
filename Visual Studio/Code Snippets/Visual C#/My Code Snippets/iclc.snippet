@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>iclc</Title>
+			<Shortcut>iclc</Shortcut>
+			<Description>ICloneable (copy constructor) implementation</Description>
+			<Author>Philip Daniels</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+      <Declarations>
+        <Literal Editable="false">
+          <ID>classname</ID>
+          <ToolTip>Class name</ToolTip>
+          <Function>ClassName()</Function>
+          <Default>ClassNamePlaceholder</Default>
+        </Literal>
+      </Declarations>
+			<Code Language="csharp">
+		<![CDATA[#region ICloneable Implementation (Copy constructor style)
+    // Copy constructor makes implementing Clone() trivial.
+    public $classname$($classname$ rhs) : base(rhs) {
+        m_DerivedState = rhs.m_DerivedState;
+    }
+
+    object ICloneable.Clone() {
+        return Clone();
+    }
+
+    public $classname$ Clone() { 
+        return new $classname$(this);
+    }
+    #endregion$end$]]>
+		</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
