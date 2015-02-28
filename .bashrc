@@ -159,6 +159,9 @@ alias cls='printf "\033c"'
 alias wcd='wcd -q iicolor'
 alias quit='exit'
 
+alias s='git status'
+alias b='git branch -a -vv'
+
 if [ "$OS" == "cygwin" ]; then
     # Always export this so that an X server started from one Cygwin terminal
     # is available from another.
