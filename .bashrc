@@ -87,7 +87,7 @@ export PATH=$PATH:$GOPATH/bin
 # Remove credential cache files older than 12 hours, which essentially means
 # that they date from yesterday (the file may get updated during the day).
 # This only affects work, at home I use ssh.
-find ~/.git-credential-cache -mmin +720 -delete
+find ~/.git-credential-cache -mmin +720 -delete 2> /dev/null
 
 # Note: ~/.ssh/environment should not be used, as it already has a
 # different purpose in SSH.
