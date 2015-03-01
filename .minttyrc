@@ -1,5 +1,5 @@
 Term=xterm-256color
-ThemeFile=Solarized Dark
+ThemeFile=SolarizedDark
 Font=Cousine
 FontHeight=10
 CursorType=block
