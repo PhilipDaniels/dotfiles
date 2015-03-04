@@ -4,10 +4,13 @@
 source .bash_functions
 f_DetermineOS
 
-# Always copy this. It can get tricky having a file called
-# .gitconfig in the repo, because that affects the behaviour
-# of git in this repo!
+# Always copy this. It can get tricky having a file called .gitconfig in the
+# repo, because that affects the behaviour of git in this repo!
 f_CopyFileWithBackup .gitconfig.master ~/.gitconfig
+if [[ "$HOSTNAME" == RDL* ]]; then
+    echo "It looks like you are at Landmark, updating ~/.gitconfig..."
+    sed -i.bak 's/email = Philip.Daniels1971@gmail.com/email = Philip.Daniels@landmark.co.uk/g' ~/.gitconfig
+fi
 
 if [ "$OS" == "linux" ] ; then
   f_Relink ~/repos/dotfiles/.bash_logout ~/.bash_logout
@@ -35,5 +38,5 @@ else
 fi
 
 echo "Installation complete."
-echo "Remember to check your ~/.gitconfig email address and proxy."
+echo "Remember to check your ~/.gitconfig email address and proxy by typing f_GitShowConfig."
 
