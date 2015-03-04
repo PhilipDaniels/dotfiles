@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+	<Header>
+		<Title>ADD/ALTER template for a NULL column.</Title>
+        <Shortcut></Shortcut>
+	<Description>ADD/ALTER template for a NULL column.</Description>
+	<Author>Philip Daniels</Author>
+	<SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+	</SnippetTypes>
+	</Header>
+	<Snippet>
+		<Declarations>
+			<Literal>
+				<ID>SchemaName</ID>
+				<ToolTip>Name of the schema</ToolTip>
+				<Default>dbo</Default>
+			</Literal>
+			<Literal>
+				<ID>TableName</ID>
+				<ToolTip>Name of the table</ToolTip>
+				<Default>MyTable</Default>
+			</Literal>
+      <Literal>
+        <ID>ColumnName</ID>
+        <ToolTip>Name of the column</ToolTip>
+        <Default>MyColumn</Default>
+      </Literal>
+      <Literal>
+        <ID>DataType</ID>
+        <ToolTip>Data type of the column</ToolTip>
+        <Default>INT</Default>
+      </Literal>
+    </Declarations>
+		<Code Language="SQL_SSDT">
+			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NOT NULL BEGIN
+    ALTER TABLE $SchemaName$.$TableName$ ADD $ColumnName$ $DataType$ NULL;$end$
+END ELSE BEGIN
+    ALTER TABLE $SchemaName$.$TableName$ ALTER COLUMN $ColumnName$ $DataType$ NULL;
+END
+]]>
+		</Code>
+	</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
+

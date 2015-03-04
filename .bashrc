@@ -168,6 +168,7 @@ if [ "$OS" == "cygwin" ]; then
     export DISPLAY=:0.0
     # This will start an X server on Cygwin without displaying any startup windows.
     alias startcygx="echo sleep inf > ~/.startxwinrc; startxwin &> /dev/null;"
+    alias runx="run xwin -multiwindow"
     # To fix 'Failed to connect to server' errors.
     alias tmux="rm -rf /tmp/tmux* && tmux"
 fi

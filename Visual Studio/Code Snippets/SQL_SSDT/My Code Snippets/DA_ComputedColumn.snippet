@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+	<Header>
+		<Title>DROP/ADD template for a computed column.</Title>
+        <Shortcut></Shortcut>
+	<Description>DROP/ADD template for a computed column.</Description>
+	<Author>Philip Daniels</Author>
+	<SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+	</SnippetTypes>
+	</Header>
+	<Snippet>
+		<Declarations>
+			<Literal>
+				<ID>SchemaName</ID>
+				<ToolTip>Name of the schema</ToolTip>
+				<Default>dbo</Default>
+			</Literal>
+			<Literal>
+				<ID>TableName</ID>
+				<ToolTip>Name of the table</ToolTip>
+				<Default>MyTable</Default>
+			</Literal>
+      <Literal>
+        <ID>ColumnName</ID>
+        <ToolTip>Name of the column</ToolTip>
+        <Default>MyColumn</Default>
+      </Literal>
+    </Declarations>
+		<Code Language="SQL_SSDT">
+			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NOT NULL BEGIN
+    ALTER TABLE $SchemaName$.$TableName$ DROP COLUMN $ColumnName$;
+END
+ALTER TABLE $SchemaName$.$TableName$ ADD $ColumnName$ AS 'Hello ' + cast(ID AS VARCHAR);
+END
+]]>
+		</Code>
+	</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

@@ -35,4 +35,5 @@ else
 fi
 
 echo "Installation complete."
+echo "Remember to check your ~/.gitconfig email address and proxy."
 

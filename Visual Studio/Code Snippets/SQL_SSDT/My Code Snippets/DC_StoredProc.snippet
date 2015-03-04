@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+	<Header>
+		<Title>DROP/CREATE template for a new stored procedure.</Title>
+        <Shortcut></Shortcut>
+	<Description>The DROP/CREATE syntax for a new stored procedure.</Description>
+	<Author>Philip Daniels</Author>
+	<SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+	</SnippetTypes>
+	</Header>
+	<Snippet>
+		<Declarations>
+			<Literal>
+				<ID>SchemaName</ID>
+				<ToolTip>Name of the schema</ToolTip>
+				<Default>dbo</Default>
+			</Literal>
+			<Literal>
+				<ID>StoredProcName</ID>
+				<ToolTip>Name of the stored procedure</ToolTip>
+				<Default>MyProc</Default>
+			</Literal>
+		</Declarations>
+		<Code Language="SQL">
+			<![CDATA[IF OBJECT_ID('$SchemaName$.$StoredProcName$', 'P') IS NOT NULL BEGIN
+    EXEC('DROP PROCEDURE $SchemaName$.$StoredProcName$');
+END
+GO
+
+CREATE PROCEDURE $SchemaName$.$StoredProcName$ 
+AS
+/*
+ * DESCRIPTION HERE.
+ *
+ * Usage:
+ *   exec $SchemaName$.$StoredProcName$
+ *
+ * Date       Author            Description
+ * 27-04-2014 Philip Daniels    Initial version. 
+ */
+SELECT 'hello' as Msg;
+$end$]]>
+		</Code>
+	</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
+
