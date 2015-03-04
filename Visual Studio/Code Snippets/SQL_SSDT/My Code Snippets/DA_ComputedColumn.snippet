@@ -9,9 +9,9 @@
 </_locDefinition>
 	<CodeSnippet Format="1.0.0">
 	<Header>
-		<Title>DROP/ADD template for a computed column.</Title>
+		<Title>Column - DROP/ADD template for a computed column.</Title>
         <Shortcut></Shortcut>
-	<Description>DROP/ADD template for a computed column.</Description>
+	<Description>Column - DROP/ADD template for a computed column.</Description>
 	<Author>Philip Daniels</Author>
 	<SnippetTypes>
 		<SnippetType>Expansion</SnippetType>
@@ -39,7 +39,7 @@
 			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NOT NULL BEGIN
     ALTER TABLE $SchemaName$.$TableName$ DROP COLUMN $ColumnName$;
 END
-ALTER TABLE $SchemaName$.$TableName$ ADD $ColumnName$ AS 'Hello ' + cast(ID AS VARCHAR);
+ALTER TABLE $SchemaName$.$TableName$ ADD $ColumnName$ AS 'Hello ' + cast(Id AS VARCHAR);
 END
 ]]>
 		</Code>

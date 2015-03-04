@@ -9,9 +9,9 @@
 </_locDefinition>
 	<CodeSnippet Format="1.0.0">
 	<Header>
-		<Title>ADD template for a NON-NULL column with a named default.</Title>
+		<Title>Column - ADD template for a NON-NULL column with a named default.</Title>
         <Shortcut></Shortcut>
-	<Description>ADD template for a NON-NULL column with a named default.</Description>
+	<Description>Column - ADD template for a NON-NULL column with a named default.</Description>
 	<Author>Philip Daniels</Author>
 	<SnippetTypes>
 		<SnippetType>Expansion</SnippetType>
@@ -43,7 +43,7 @@
 		<Code Language="SQL_SSDT">
 			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NULL BEGIN
     ALTER TABLE $SchemaName$.$TableName$ ADD $ColumnName$ $DataType$ NOT NULL
-        CONSTRAINT [DF_$SchemaName$_$TableName$_$ColumnName$] DEFAULT '42';
+        CONSTRAINT DF_$SchemaName$_$TableName$_$ColumnName$ DEFAULT '42';
 END
 ]]>
 		</Code>

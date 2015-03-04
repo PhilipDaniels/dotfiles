@@ -9,9 +9,9 @@
 </_locDefinition>
 	<CodeSnippet Format="1.0.0">
 	<Header>
-		<Title>Column - ADD/ALTER template for a NULL column.</Title>
+		<Title>Column - DROP a column.</Title>
         <Shortcut></Shortcut>
-	<Description>Column - ADD/ALTER template for a NULL column.</Description>
+	<Description>Column - DROP a column.</Description>
 	<Author>Philip Daniels</Author>
 	<SnippetTypes>
 		<SnippetType>Expansion</SnippetType>
@@ -41,10 +41,9 @@
       </Literal>
     </Declarations>
 		<Code Language="SQL_SSDT">
-			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NULL BEGIN
-    ALTER TABLE $SchemaName$.$TableName$ ADD $ColumnName$ $DataType$ NULL;$end$
-END ELSE BEGIN
-    ALTER TABLE $SchemaName$.$TableName$ ALTER COLUMN $ColumnName$ $DataType$ NULL;
+			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NOT NULL BEGIN
+    -- WARNING: This will fail if the column has indexes or constraints.
+    ALTER TABLE $SchemaName$.$TableName$ DROP COLUMN $ColumnName$;$end$
 END
 ]]>
 		</Code>

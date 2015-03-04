@@ -9,9 +9,9 @@
 </_locDefinition>
 	<CodeSnippet Format="1.0.0">
 	<Header>
-		<Title>Column - ADD/ALTER template for a NULL column.</Title>
+		<Title>Index - DROP_EXISTING/CREATE template for an index.</Title>
         <Shortcut></Shortcut>
-	<Description>Column - ADD/ALTER template for a NULL column.</Description>
+	<Description>Index - DROP_EXISTING/CREATE template for an index.</Description>
 	<Author>Philip Daniels</Author>
 	<SnippetTypes>
 		<SnippetType>Expansion</SnippetType>
@@ -29,26 +29,21 @@
 				<ToolTip>Name of the table</ToolTip>
 				<Default>MyTable</Default>
 			</Literal>
-      <Literal>
-        <ID>ColumnName</ID>
-        <ToolTip>Name of the column</ToolTip>
-        <Default>MyColumn</Default>
-      </Literal>
-      <Literal>
-        <ID>DataType</ID>
-        <ToolTip>Data type of the column</ToolTip>
-        <Default>INT</Default>
-      </Literal>
-    </Declarations>
+			<Literal>
+				<ID>IndexName</ID>
+				<ToolTip>Name of the index</ToolTip>
+				<Default>MyIndex</Default>
+			</Literal>
+		</Declarations>
 		<Code Language="SQL_SSDT">
-			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NULL BEGIN
-    ALTER TABLE $SchemaName$.$TableName$ ADD $ColumnName$ $DataType$ NULL;$end$
+			<![CDATA[-- Recommended naming standard is IX_SCHEMA_TABLE_COLUMN (or "UX_" for unique indexes).
+IF EXISTS(SELECT * FROM sys.indexes WHERE name = '$IndexName$' AND object_id = OBJECT_ID('$SchemaName$.$TableName$')) BEGIN
+	CREATE UNIQUE INDEX $IndexName$ ON $SchemaName$.$TableName$(Col1, Col2, Col3) WITH (DROP_EXISTING = ON, ONLINE = ON);
 END ELSE BEGIN
-    ALTER TABLE $SchemaName$.$TableName$ ALTER COLUMN $ColumnName$ $DataType$ NULL;
+    CREATE UNIQUE INDEX $IndexName$ ON $SchemaName$.$TableName$(Col1, Col2, Col3);
 END
 ]]>
 		</Code>
 	</Snippet>
 	</CodeSnippet>
 </CodeSnippets>
-

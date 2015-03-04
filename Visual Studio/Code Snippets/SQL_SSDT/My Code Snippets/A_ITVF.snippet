@@ -9,9 +9,9 @@
 </_locDefinition>
 	<CodeSnippet Format="1.0.0">
 	<Header>
-		<Title>View - DROP/CREATE template for a new view.</Title>
+		<Title>Function - ALTER template for a new or existing table valued function.</Title>
         <Shortcut></Shortcut>
-	<Description>View - DROP/CREATE template for a new view.</Description>
+	<Description>Function - ALTER template for a new or existing inline table valued function.</Description>
 	<Author>Philip Daniels</Author>
 	<SnippetTypes>
 		<SnippetType>Expansion</SnippetType>
@@ -25,30 +25,33 @@
 				<Default>dbo</Default>
 			</Literal>
 			<Literal>
-				<ID>ViewName</ID>
-				<ToolTip>Name of the view</ToolTip>
-				<Default>vMyView</Default>
+				<ID>FunctionName</ID>
+				<ToolTip>Name of the function</ToolTip>
+				<Default>MyFunc</Default>
 			</Literal>
 		</Declarations>
-		<Code Language="SQL_SSDT">
-			<![CDATA[IF OBJECT_ID('$SchemaName$.$ViewName$', 'V') IS NOT NULL BEGIN
-    EXEC('DROP VIEW $SchemaName$.$ViewName$');
+		<Code Language="SQL">
+			<![CDATA[IF OBJECT_ID('$SchemaName$.$FunctionName$', 'IF') IS NULL BEGIN
+    EXEC('CREATE FUNCTION $SchemaName$.$FunctionName$ RETURNS TABLE AS RETURN (SELECT 1 as Id)');
 END
 GO
 
-CREATE VIEW $SchemaName$.$ViewName$ 
-AS
+ALTER FUNCTION $SchemaName$.$FunctionName$()
+RETURNS TABLE AS
 /*
  * DESCRIPTION HERE.
  *
  * Usage:
- *   exec $SchemaName$.$ViewName$
+ *   select * from $SchemaName$.$FunctionName$()
  *
  * Date       Author            Description
  * 27-04-2014 Philip Daniels    Initial version. 
  */
-SELECT 'hello' as Msg;
-$end$]]>
+RETURN
+(
+    $end$SELECT 'hello' as Msg 
+);
+]]>
 		</Code>
 	</Snippet>
 	</CodeSnippet>

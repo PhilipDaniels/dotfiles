@@ -9,9 +9,9 @@
 </_locDefinition>
 	<CodeSnippet Format="1.0.0">
 	<Header>
-		<Title>Column - ADD/ALTER template for a NULL column.</Title>
+		<Title>Constraint - DROP/ADD template for a CHECK constraint.</Title>
         <Shortcut></Shortcut>
-	<Description>Column - ADD/ALTER template for a NULL column.</Description>
+	<Description>Constraint - DROP/ADD template for a CHECK constraint.</Description>
 	<Author>Philip Daniels</Author>
 	<SnippetTypes>
 		<SnippetType>Expansion</SnippetType>
@@ -29,26 +29,19 @@
 				<ToolTip>Name of the table</ToolTip>
 				<Default>MyTable</Default>
 			</Literal>
-      <Literal>
-        <ID>ColumnName</ID>
-        <ToolTip>Name of the column</ToolTip>
-        <Default>MyColumn</Default>
-      </Literal>
-      <Literal>
-        <ID>DataType</ID>
-        <ToolTip>Data type of the column</ToolTip>
-        <Default>INT</Default>
-      </Literal>
-    </Declarations>
+			 <Literal>
+				<ID>ConstraintName</ID>
+				<ToolTip>Name of the constraint</ToolTip>
+				<Default>MyCons</Default>
+			 </Literal>
+		</Declarations>
 		<Code Language="SQL_SSDT">
-			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NULL BEGIN
-    ALTER TABLE $SchemaName$.$TableName$ ADD $ColumnName$ $DataType$ NULL;$end$
-END ELSE BEGIN
-    ALTER TABLE $SchemaName$.$TableName$ ALTER COLUMN $ColumnName$ $DataType$ NULL;
+			<![CDATA[IF EXISTS(SELECT * FROM sys.check_constraints WHERE name = 'CK_$SchemaName$_$TableName$_$ConstraintName$' AND parent_object_id = OBJECT_ID('$SchemaName$.$TableName$')) BEGIN
+	ALTER TABLE $SchemaName$.$TableName$ DROP CONSTRAINT CK_$SchemaName$_$TableName$_$ConstraintName$;
 END
+ALTER TABLE $SchemaName$.$TableName$ WITH CHECK ADD CONSTRAINT CK_$SchemaName$_$TableName$_$ConstraintName$ CHECK (ColumnName >= 10);$end$
 ]]>
 		</Code>
 	</Snippet>
 	</CodeSnippet>
 </CodeSnippets>
-

@@ -9,9 +9,9 @@
 </_locDefinition>
 	<CodeSnippet Format="1.0.0">
 	<Header>
-		<Title>Comment - a standard comment header.</Title>
+		<Title>Proc - ALTER template for a new or existing stored procedure.</Title>
         <Shortcut></Shortcut>
-	<Description>Comment - a standard comment header.</Description>
+	<Description>Proc - ALTER template for a new or existing stored procedure</Description>
 	<Author>Philip Daniels</Author>
 	<SnippetTypes>
 		<SnippetType>Expansion</SnippetType>
@@ -19,18 +19,36 @@
 	</Header>
 	<Snippet>
 		<Declarations>
+			<Literal>
+				<ID>SchemaName</ID>
+				<ToolTip>Name of the schema</ToolTip>
+				<Default>dbo</Default>
+			</Literal>
+			<Literal>
+				<ID>StoredProcName</ID>
+				<ToolTip>Name of the stored procedure</ToolTip>
+				<Default>MyProc</Default>
+			</Literal>
 		</Declarations>
-		<Code Language="SQL_SSDT">
-			<![CDATA[/*
- * $end$DESCRIPTION HERE.
+		<Code Language="SQL">
+			<![CDATA[IF OBJECT_ID('$SchemaName$.$StoredProcName$', 'P') IS  NULL BEGIN
+    EXEC('CREATE PROCEDURE $SchemaName$.$StoredProcName$ AS SELECT 1 AS Id');
+END
+GO
+
+ALTER PROCEDURE $SchemaName$.$StoredProcName$ 
+AS
+/*
+ * DESCRIPTION HERE.
  *
  * Usage:
- *   exec dbo.Something
+ *   exec $SchemaName$.$StoredProcName$
  *
  * Date       Author            Description
  * 27-04-2014 Philip Daniels    Initial version. 
  */
-]]>
+SELECT 'hello' as Msg;
+$end$]]>
 		</Code>
 	</Snippet>
 	</CodeSnippet>

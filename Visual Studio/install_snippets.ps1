@@ -20,6 +20,7 @@
 # 4. The installation for VS is done in the loop below, which detects the snippets in the
 #    SQL_SSDT folder and flips the language to SQL_SSDT before copying them to the folder.
 
+# To use these snippets in Visual Studio and SSMS, the shortcut is Ctrl-K, X.
 
 $scriptDir = Split-Path $MyInvocation.MyCommand.Path -Parent
 $myDocs = [Environment]::GetFolderPath("mydocuments")  # Differs on Win7/8.
