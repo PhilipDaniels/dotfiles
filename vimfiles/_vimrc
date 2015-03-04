@@ -80,6 +80,6 @@ vnoremap <BS> d
 " List of files to ignore in NERDTree.
 let NERDTreeIgnore=['.o$[[file]]', '.exe$[[file]]']
 
-" Seem to have to do this list for some reason...
+" Seem to have to do this last for some reason...
 runtime _vimrc.theming
 
