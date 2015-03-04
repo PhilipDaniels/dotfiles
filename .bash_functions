@@ -194,6 +194,43 @@ f_ShowTerminalColors()
     echo -e "Color 15 ('Bright White')   : $F_BrightWhite Text $F_Default"
 }
 
+f_GitAuthorRewrite()
+{
+    local oldemail=$1
+    local newemail=$2
+    local newname=$3
+
+    if [ -z "$oldemail" ] | [ -z "$newemail" ] | [ -z "$newname" ]; then
+        echo "Usage: f_GitAuthorRewrite old.address@email.com new@gmail.com 'New HumanName'"
+        return 1
+    fi
+
+    local filtercmd="
+    OLD_EMAIL=\"$oldemail\"
+    CORRECT_EMAIL=\"$newemail\"
+    CORRECT_NAME=\"$newname\"
+    
+    if [ \"\$GIT_COMMITTER_EMAIL\" = \"\$OLD_EMAIL\" ]; then
+        export GIT_COMMITTER_NAME=\"\$CORRECT_NAME\"
+        export GIT_COMMITTER_EMAIL=\"\$CORRECT_EMAIL\"
+    fi
+    
+    if [ \"\$GIT_AUTHOR_EMAIL\" = \"\$OLD_EMAIL\" ]; then
+        export GIT_AUTHOR_NAME=\"\$CORRECT_NAME\"
+        export GIT_AUTHOR_EMAIL=\"\$CORRECT_EMAIL\"
+    fi
+    "
+
+    git filter-branch --env-filter "$filtercmd" --tag-name-filter cat -- --branches --tags
+}
+
+f_GitShowConfig()
+{
+    # Lists critical git configuration which I am always getting wrong
+    # when moving from work to home.
+    git config --list | grep 'user.email\|proxy' | sort
+}
+
 ########################################################################
 # Support for using ssh-agent because keychain doesn't seem to work
 # that well in MSysGit.
