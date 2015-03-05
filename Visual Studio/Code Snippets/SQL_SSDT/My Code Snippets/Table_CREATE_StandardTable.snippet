@@ -43,6 +43,13 @@ CREATE TABLE $SchemaName$.$TableName$
 	Size INT$end$
 	);
 
+/* Memory aid: for decimal fields, decimal(p,s),
+ *   if p is   1-9 then  5 bytes are required
+ *   if p is 10-19 then  9 bytes are required
+ *   if p is 20-28 then 13 bytes are required
+ *   if p is 29-38 then 17 bytes are required
+ */
+
 -- Primary keys should be named to aid in database compares.
 ALTER TABLE $SchemaName$.$TableName$ ADD CONSTRAINT PK_$SchemaName$_$TableName$ PRIMARY KEY CLUSTERED(Id);
 
@@ -53,19 +60,16 @@ CREATE UNIQUE INDEX NK_$SchemaName$_$TableName$ ON $SchemaName$.$TableName$(Name
 ALTER TABLE $SchemaName$.$TableName$ ADD CONSTRAINT DF_$SchemaName$_$TableName$_Size DEFAULT (10.0) FOR Size;
 ALTER TABLE $SchemaName$.$TableName$ ADD CONSTRAINT CK_$SchemaName$_$TableName$_Size CHECK (Size >= 10);
 
--- Indexes should be named like this. If more than 1 column, can use a
--- descriptive name instead of the column name.
-CREATE INDEX IDX_$SchemaName$_$TableName$_Size ON $SchemaName$.$TableName$(Size);
+-- Indexes should be named like this. If more than 1 column, can use a descriptive name
+-- instead of the column name. For Unique indexes, use a "UX" prefix.
+CREATE INDEX IX_$SchemaName$_$TableName$_Size ON $SchemaName$.$TableName$(Size);
 
-/* Memory aid: for decimal fields, decimal(p,s),
- *   if p is   1-9 then  5 bytes are required
- *   if p is 10-19 then  9 bytes are required
- *   if p is 20-28 then 13 bytes are required
- *   if p is 29-38 then 17 bytes are required
- */
+-- Foreign keys are created by issuing an ALTER against the DETAIL table.
+ALTER TABLE $SchemaName$.$TableName$ WITH CHECK ADD CONSTRAINT FK_$SchemaName$_$TableName$_MasterSchema_MasterTableName
+    FOREIGN KEY(ChildId)
+    REFERENCES MasterSchemaName.MasterTableName(Id);
 ]]>
 		</Code>
 	</Snippet>
 	</CodeSnippet>
 </CodeSnippets>
-

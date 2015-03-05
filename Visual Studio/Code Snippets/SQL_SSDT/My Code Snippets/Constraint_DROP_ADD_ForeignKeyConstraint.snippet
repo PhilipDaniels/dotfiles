@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+	<Header>
+		<Title>Constraint - DROP/ADD template for a FOREIGN KEY constraint.</Title>
+        <Shortcut></Shortcut>
+	<Description>Constraint - DROP/ADD template for a FOREIGN KEY constraint.</Description>
+	<Author>Philip Daniels</Author>
+	<SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+	</SnippetTypes>
+	</Header>
+	<Snippet>
+		<Declarations>
+			<Literal>
+				<ID>MasterSchemaName</ID>
+				<ToolTip>Name of the schema of the Master table.</ToolTip>
+				<Default>dbo</Default>
+			</Literal>
+			<Literal>
+				<ID>MasterTableName</ID>
+				<ToolTip>Name of the Master table.</ToolTip>
+				<Default>MasterTable</Default>
+			</Literal>
+      <Literal>
+        <ID>DetailSchemaName</ID>
+        <ToolTip>Name of the schema of the Detail table.</ToolTip>
+        <Default>dbo</Default>
+      </Literal>
+      <Literal>
+        <ID>DetailTableName</ID>
+        <ToolTip>Name of the Detail table.</ToolTip>
+        <Default>DetailTable</Default>
+      </Literal>
+		</Declarations>
+		<Code Language="SQL">
+      <![CDATA[IF OBJECT_ID('FK_$DetailSchemaName$_$DetailTableName$_$MasterSchemaName$_$MasterTableName$', 'F') IS NOT NULL BEGIN
+	ALTER TABLE $DetailSchemaName$.$DetailTableName$ DROP CONSTRAINT FK_$DetailSchemaName$_$DetailTableName$_$MasterSchemaName$_$MasterTableName$;
+END
+ALTER TABLE $DetailSchemaName$.$DetailTableName$ WITH CHECK ADD CONSTRAINT FK_$DetailSchemaName$_$DetailTableName$_$MasterSchemaName$_$MasterTableName$
+    FOREIGN KEY($MasterTableName$Id)
+    REFERENCES $MasterSchemaName$.$MasterTableName$(Id);$end$
+]]>
+		</Code>
+	</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
