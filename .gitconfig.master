@@ -54,11 +54,6 @@
     lg2 = log --graph --abbrev-commit --date=short --pretty=format:'%C(yellow)%h%C(bold red) %cd %C(reset)%s %C(blue)%an'
     l = log -25 --graph --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold red) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(blue)%an'
 
-    # Convert all text files (except those in the .git folder) to the
-    # requested line endings.
-    godos = !find . -path ./.git -prune -o -type f -exec unix2dos {} "\\;" 
-    gounix = !find . -path ./.git -prune -o -type f -exec dos2unix {} "\\;" 
-
     # An example of how to setup aliases for git subtree pull and push commands.
     # See my answer at http://stackoverflow.com/questions/24038147/managing-third-party-assets/
     # mupull = subtree pull --prefix MiscUtils --squash git@github.com:PhilipDaniels/MiscUtils.git master

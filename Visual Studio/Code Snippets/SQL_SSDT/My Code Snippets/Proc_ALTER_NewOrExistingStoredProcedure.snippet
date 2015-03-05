@@ -31,7 +31,7 @@
 			</Literal>
 		</Declarations>
 		<Code Language="SQL">
-			<![CDATA[IF OBJECT_ID('$SchemaName$.$StoredProcName$', 'P') IS  NULL BEGIN
+			<![CDATA[IF OBJECT_ID('$SchemaName$.$StoredProcName$', 'P') IS NULL BEGIN
     EXEC('CREATE PROCEDURE $SchemaName$.$StoredProcName$ AS SELECT 1 AS Id');
 END
 GO
