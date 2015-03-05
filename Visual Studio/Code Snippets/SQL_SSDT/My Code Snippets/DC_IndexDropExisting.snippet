@@ -35,7 +35,7 @@
 				<Default>MyIndex</Default>
 			</Literal>
 		</Declarations>
-		<Code Language="SQL_SSDT">
+		<Code Language="SQL">
 			<![CDATA[-- Recommended naming standard is IX_SCHEMA_TABLE_COLUMN (or "UX_" for unique indexes).
 IF EXISTS(SELECT * FROM sys.indexes WHERE name = '$IndexName$' AND object_id = OBJECT_ID('$SchemaName$.$TableName$')) BEGIN
 	CREATE UNIQUE INDEX $IndexName$ ON $SchemaName$.$TableName$(Col1, Col2, Col3) WITH (DROP_EXISTING = ON, ONLINE = ON);

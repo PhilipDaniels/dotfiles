@@ -40,7 +40,7 @@
         <Default>INT</Default>
       </Literal>
     </Declarations>
-		<Code Language="SQL_SSDT">
+		<Code Language="SQL">
 			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NULL BEGIN
     ALTER TABLE $SchemaName$.$TableName$ ADD $ColumnName$ $DataType$ NULL;
 END

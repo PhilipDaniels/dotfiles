@@ -35,7 +35,7 @@
         <Default>MyColumn</Default>
       </Literal>
     </Declarations>
-		<Code Language="SQL_SSDT">
+		<Code Language="SQL">
 			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NOT NULL BEGIN
     ALTER TABLE $SchemaName$.$TableName$ DROP COLUMN $ColumnName$;
 END

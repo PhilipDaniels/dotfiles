@@ -40,7 +40,7 @@
         <Default>INT</Default>
       </Literal>
     </Declarations>
-		<Code Language="SQL_SSDT">
+		<Code Language="SQL">
 			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NOT NULL BEGIN
     -- WARNING: This will fail if the column has indexes or constraints.
     ALTER TABLE $SchemaName$.$TableName$ DROP COLUMN $ColumnName$;$end$

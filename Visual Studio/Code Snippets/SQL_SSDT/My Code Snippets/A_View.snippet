@@ -30,7 +30,7 @@
 				<Default>vMyView</Default>
 			</Literal>
 		</Declarations>
-		<Code Language="SQL_SSDT">
+		<Code Language="SQL">
 			<![CDATA[IF OBJECT_ID('$SchemaName$.$ViewName$', 'V') IS NULL BEGIN
     EXEC('CREATE VIEW $SchemaName$.$ViewName$ AS SELECT 1 AS Id');
 END

@@ -35,7 +35,7 @@
 				<Default>MyCons</Default>
 			 </Literal>
 		</Declarations>
-		<Code Language="SQL_SSDT">
+		<Code Language="SQL">
 			<![CDATA[IF EXISTS(SELECT * FROM sys.check_constraints WHERE name = 'CK_$SchemaName$_$TableName$_$ConstraintName$' AND parent_object_id = OBJECT_ID('$SchemaName$.$TableName$')) BEGIN
 	ALTER TABLE $SchemaName$.$TableName$ DROP CONSTRAINT CK_$SchemaName$_$TableName$_$ConstraintName$;
 END

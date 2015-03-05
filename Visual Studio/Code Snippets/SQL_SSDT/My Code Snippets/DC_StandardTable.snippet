@@ -57,7 +57,7 @@ ALTER TABLE $SchemaName$.$TableName$ ADD CONSTRAINT CK_$SchemaName$_$TableName$_
 -- descriptive name instead of the column name.
 CREATE INDEX IDX_$SchemaName$_$TableName$_Size ON $SchemaName$.$TableName$(Size);
 
-/* Memory aide: for decimal fields, decimal(p,s),
+/* Memory aid: for decimal fields, decimal(p,s),
  *   if p is   1-9 then  5 bytes are required
  *   if p is 10-19 then  9 bytes are required
  *   if p is 20-28 then 13 bytes are required
