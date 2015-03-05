@@ -1,9 +1,10 @@
 ﻿# For Visual Studio, these are the folders where snippets are stored.
-# Default snippets : C:\Program Files (x86)\Microsoft Visual Studio {0}\LANGUAGE\Snippets   (varies by VS version SQL_SSDT affects SQL files)
+# Default snippets : C:\Program Files (x86)\Microsoft Visual Studio {0}\LANGUAGE\Snippets   (varies by VS version, SQL_SSDT affects SQL files)
 # User snippets    : %MYDOCUMENTS%\Visual Studio {0}\Code Snippets                          (varies by VS version)
 
-# For SSMS you have to manually register the snippets. Just dropping them into this folder doesn't seem to work:
-# User snippets    : %MYDOCUMENTS%\SQL Server Management Studio\Code Snippets\SQL\My Code Snippets                     (not versioned)
+# For SSMS you first have to register the folder where you are storing the snippets using the "Add..." button
+# to be found under the Tools -> Code Snippets Manager menu item.
+# After that, it will pick up any changes automatically via a File-Watch.
 # Default snippets : C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\SQL\Snippets\1033     (varies by SSMS version)
 
 
