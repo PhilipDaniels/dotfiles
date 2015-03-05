@@ -32,7 +32,7 @@
 		</Declarations>
 		<Code Language="SQL">
 			<![CDATA[IF OBJECT_ID('$SchemaName$.$FunctionName$', 'IF') IS NULL BEGIN
-    EXEC('CREATE FUNCTION $SchemaName$.$FunctionName$ RETURNS TABLE AS RETURN (SELECT 1 as Id)');
+    EXEC('CREATE FUNCTION $SchemaName$.$FunctionName$() RETURNS TABLE AS RETURN (SELECT 1 as Id)');
 END
 GO
 

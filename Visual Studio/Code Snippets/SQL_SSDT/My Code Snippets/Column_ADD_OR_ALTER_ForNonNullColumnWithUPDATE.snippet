@@ -44,6 +44,7 @@
 			<![CDATA[IF COL_LENGTH('$SchemaName$.$TableName$', '$ColumnName$') IS NULL BEGIN
     ALTER TABLE $SchemaName$.$TableName$ ADD $ColumnName$ $DataType$ NULL;
 END
+GO
 UPDATE $SchemaName$.$TableName$ SET $ColumnName$ = 1;
 ALTER TABLE $SchemaName$.$TableName$ ALTER COLUMN $ColumnName$ $DataType$ NOT NULL;
 $END

@@ -41,7 +41,7 @@
       </Literal>
 		</Declarations>
 		<Code Language="SQL">
-      <![CDATA[IF OBJECT_ID('FK_$DetailSchemaName$_$DetailTableName$_$MasterSchemaName$_$MasterTableName$', 'F') IS NOT NULL BEGIN
+      <![CDATA[IF EXISTS (SELECT * FROM sys.objects WHERE name = 'FK_$DetailSchemaName$_$DetailTableName$_$MasterSchemaName$_$MasterTableName$' and type = 'F') BEGIN
 	ALTER TABLE $DetailSchemaName$.$DetailTableName$ DROP CONSTRAINT FK_$DetailSchemaName$_$DetailTableName$_$MasterSchemaName$_$MasterTableName$;
 END
 ALTER TABLE $DetailSchemaName$.$DetailTableName$ WITH CHECK ADD CONSTRAINT FK_$DetailSchemaName$_$DetailTableName$_$MasterSchemaName$_$MasterTableName$

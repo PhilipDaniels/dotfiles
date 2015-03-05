@@ -31,9 +31,9 @@
 			</Literal>
 		</Declarations>
 		<Code Language="SQL">
-			<![CDATA[IF OBJECT_ID('$SchemaName$.$TableName$', 'U') IS NOT NULL BEGIN
-    EXEC('DROP TABLE $SchemaName$.$TableName$');
-END
+			<![CDATA[--IF OBJECT_ID('$SchemaName$.$TableName$', 'U') IS NOT NULL BEGIN
+    --EXEC('DROP TABLE $SchemaName$.$TableName$');
+--END
 GO
 
 CREATE TABLE $SchemaName$.$TableName$

@@ -36,7 +36,7 @@
 			 </Literal>
 		</Declarations>
 		<Code Language="SQL">
-			<![CDATA[IF EXISTS(SELECT * FROM sys.check_constraints WHERE name = 'CK_$SchemaName$_$TableName$_$ConstraintName$' AND parent_object_id = OBJECT_ID('$SchemaName$.$TableName$')) BEGIN
+      <![CDATA[IF EXISTS (SELECT * FROM sys.objects WHERE name = 'CK_$SchemaName$_$TableName$_$ConstraintName$' and type = 'C') BEGIN      
 	ALTER TABLE $SchemaName$.$TableName$ DROP CONSTRAINT CK_$SchemaName$_$TableName$_$ConstraintName$;
 END
 ALTER TABLE $SchemaName$.$TableName$ WITH CHECK ADD CONSTRAINT CK_$SchemaName$_$TableName$_$ConstraintName$ CHECK (ColumnName >= 10);$end$

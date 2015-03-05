@@ -36,8 +36,8 @@
 			 </Literal>
 		</Declarations>
 		<Code Language="SQL">
-			<![CDATA[IF EXISTS(SELECT * FROM sys.default_constraints WHERE name = 'DF_$SchemaName$_$TableName$_$ConstraintName$' AND parent_object_id = OBJECT_ID('$SchemaName$.$TableName$')) BEGIN
-	ALTER TABLE $SchemaName$.$TableName$ DROP CONSTRAINT DF_$SchemaName$_$TableName$_$ConstraintName$;
+      <![CDATA[IF EXISTS (SELECT * FROM sys.objects WHERE name = 'DF_$SchemaName$_$TableName$_$ConstraintName$' and type = 'D') BEGIN
+    ALTER TABLE $SchemaName$.$TableName$ DROP CONSTRAINT DF_$SchemaName$_$TableName$_$ConstraintName$;
 END
 ALTER TABLE $SchemaName$.$TableName$ WITH CHECK ADD CONSTRAINT DF_$SchemaName$_$TableName$_$ConstraintName$ DEFAULT(10.0) FOR ColumnName;$end$
 ]]>
