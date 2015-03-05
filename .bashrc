@@ -153,6 +153,7 @@ alias ls="ls $LSIGNORE -hF --color=auto"
 alias ll="ls $LSIGNORE -lA --color=auto"
 alias la="ls $LSIGNORE -A --color=auto"
 alias l="ls $LSIGNORE -CF --color=auto"
+alias lt="ls $LSIGNORE -lA --color=auto --sort=time"
 
 alias more='less'
 alias cls='printf "\033c"'
