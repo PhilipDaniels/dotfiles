@@ -194,6 +194,18 @@ f_ShowTerminalColors()
     echo -e "Color 15 ('Bright White')   : $F_BrightWhite Text $F_Default"
 }
 
+f_GitSetProxy()
+{
+    export http_proxy=http://rdproxy01:800/
+    export https_proxy=http://rdproxy01:800/
+}
+
+f_GitUnsetProxy()
+{
+    unset http_proxy
+    unset https_proxy
+}
+
 f_GitAuthorRewrite()
 {
     local oldemail=$1
