@@ -73,8 +73,10 @@ export PATH=$PATH:$GOPATH/bin
 
 # If I am at work then set my proxy for Git. Doing it in an environment
 # variable means I no longer need to mess with ~/.gitconfig.
+# In contrast to ~/.gitconfig, you need to set both variables in here.
 if [[ "$HOSTNAME" == RDL* ]]; then
     export http_proxy=http://rdproxy01:800/
+    export https_proxy=http://rdproxy01:800/
 fi
 
 
