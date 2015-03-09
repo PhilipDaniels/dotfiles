@@ -71,6 +71,12 @@ fi
 export GOPATH=$HOME/repos/go
 export PATH=$PATH:$GOPATH/bin
 
+# If I am at work then set my proxy for Git. Doing it in an environment
+# variable means I no longer need to mess with ~/.gitconfig.
+if [[ "$HOSTNAME" == RDL* ]]; then
+    export http_proxy=http://rdproxy01:800/
+fi
+
 
 #######################################################################
 # Setup ssh-agent.

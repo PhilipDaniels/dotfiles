@@ -24,8 +24,8 @@
     safecrlf = false
 [push]
     default = simple
-[http]
-    proxy = http://rdproxy01:800/
+#[http]  Now done in an environment variable in ~/.bashrc.
+#    proxy = http://rdproxy01:800/
 [alias]
     s = status
     ss = status --short
