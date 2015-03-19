@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>canex</Title>
+			<Shortcut>canex</Shortcut>
+			<Description>Canonical Exception implementation</Description>
+			<Author>Philip Daniels</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+      <Declarations>
+        <Literal>
+          <ID>exname</ID>
+          <ToolTip>Exception Name</ToolTip>
+          <Default>Something</Default>
+        </Literal>
+      </Declarations>
+			<Code Language="csharp">
+		<![CDATA[/// <summary>
+        /// This class demonstrates the canonical form of an application-specific exception.
+        /// If you add further members you should ensure that they are serialized properly.
+        /// See http://stackoverflow.com/questions/94488/what-is-the-correct-way-to-make-a-custom-net-exception-serializable?lq=1
+        /// </summary>
+        [Serializable]
+        public class $exname$Exception : Exception
+        {
+            /// <summary>
+            /// Construct a new $exname$Exception.
+            /// </summary>
+            public $exname$Exception()
+            {
+            }
+
+            /// <summary>
+            /// Construct a new $exname$Exception.
+            /// </summary>
+            /// <param name="message">Message to use.</param>
+            public $exname$Exception(string message)
+                : base(message)
+            {
+            }
+
+            /// <summary>
+            /// Construct a new $exname$Exception with formatted message.
+            /// </summary>
+            /// <param name="format">Format string.</param>
+            /// <param name="args">Optional arguments for message.</param>
+            public $exname$Exception(string format, params object[] args)
+                : base(String.Format(CultureInfo.InvariantCulture, format, args))
+            {
+            }
+
+            /// <summary>
+            /// Construct a new $exname$Exception.
+            /// </summary>
+            /// <param name="message">Message to use.</param>
+            /// <param name="innerException">Inner exception.</param>
+            public $exname$Exception(string message, Exception innerException)
+                : base(message, innerException)
+            {
+            }
+
+            /// <summary>
+            /// Construct a new $exname$Exception with formatted message.
+            /// </summary>
+            /// <param name="format">Format string.</param>
+            /// <param name="innerException">Inner exception.</param>
+            /// <param name="args">Optional arguments for message.</param>
+            public $exname$Exception(string format, Exception innerException, params object[] args)
+                : base(String.Format(CultureInfo.InvariantCulture, format, args), innerException)
+            {
+            }
+            
+            /// <summary>
+            /// Construct a new $exname$Exception using a serialization context.
+            /// </summary>
+            /// <param name="info">Serialization info.</param>
+            /// <param name="context">Streaing context.</param>
+            protected $exname$Exception(SerializationInfo info, StreamingContext context)
+                : base(info, context)
+            {
+            }
+        }
+        $end$]]>
+		</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

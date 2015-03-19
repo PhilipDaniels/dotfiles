@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>canev</Title>
+			<Shortcut>canev</Shortcut>
+			<Description>Canonical Event implementation</Description>
+			<Author>Philip Daniels</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+      <Declarations>
+        <Literal>
+          <ID>eventname</ID>
+          <ToolTip>Event Name</ToolTip>
+          <Default>SomethingHappened</Default>
+        </Literal>
+      </Declarations>
+			<Code Language="csharp">
+		<![CDATA[public class $eventname$EventArgs : EventArgs
+        {
+            public string Stuff { get; private set; }
+    
+            public $eventname$EventArgs(string stuff)
+            {
+                Stuff = stuff.ThrowIfNull("stuff");
+            }
+        }
+    
+        public event EventHandler<$eventname$EventArgs> $eventname$;
+    
+        /// <summary>
+        /// Raise the <code>$eventname$</code> event if there are any subscribers.
+        /// </summary>
+        /// <param name="args">Arguments to pass to subscribers.</param>
+        protected virtual void On$eventname$($eventname$EventArgs args)
+        {
+            var evt = $eventname$;
+            if (evt != null)
+                evt(this, args);
+        }
+        $end$]]>
+		</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

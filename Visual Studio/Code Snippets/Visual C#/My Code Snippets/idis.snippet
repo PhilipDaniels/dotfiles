@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>idis</Title>
+			<Shortcut>idis</Shortcut>
+			<Description>IDisposable Implementation (for base classes) </Description>
+			<Author>Philip Daniels</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+      <Declarations>
+        <Literal Editable="false">
+          <ID>classname</ID>
+          <ToolTip>Class name</ToolTip>
+          <Function>ClassName()</Function>
+          <Default>ClassNamePlaceholder</Default>
+        </Literal>
+      </Declarations>
+			<Code Language="csharp">
+		<![CDATA[#region IDisposable Implementation
+        bool Disposed;
+        
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);    
+        }
+
+        ~$classname$()
+        {
+            Dispose(false);
+        }
+        
+        protected virtual void Dispose(bool disposing)
+        {
+            if (Disposed) return;
+            
+            if (disposing)
+            {
+                // Free managed resources that implement IDisposable.
+                if (managedResource != null)
+                {
+                    managedResource.Dispose();
+                    managedResource = null;
+                }
+            }
+            
+            // Free native resources if there are any.
+            //if (nativeResource != IntPtr.Zero) 
+            //{
+            //    Marshal.FreeHGlobal(nativeResource);
+            //    nativeResource = IntPtr.Zero;
+            //}
+            
+            Disposed = true;
+        }
+
+        /// <summary>
+        /// CheckDisposed should be called at the beginning of every public method.
+        /// [Optional: only do this in methods which need access to the owned resources to succeed.]
+        /// </summary>
+        void CheckDisposed() {
+            if (Disposed)
+                throw new ObjectDisposedException(GetType().FullName);
+        }
+        #endregion$end$]]>
+		</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
