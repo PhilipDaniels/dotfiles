@@ -7,7 +7,7 @@ f_DetermineOS
 # Always copy this. It can get tricky having a file called .gitconfig in the
 # repo, because that affects the behaviour of git in this repo!
 f_CopyFileWithBackup .gitconfig.master ~/.gitconfig
-if [[ "$HOSTNAME" == RDL* ]]; then
+if f_AtWork; then
     echo "It looks like you are at Landmark, updating ~/.gitconfig..."
     sed -i.bak 's/email = Philip.Daniels1971@gmail.com/email = Philip.Daniels@landmark.co.uk/g' ~/.gitconfig
 fi

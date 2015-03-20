@@ -51,6 +51,20 @@ f_IsRoot()
     fi
 }
 
+f_AtHome()
+{
+    # Determine if I am at home or at work.
+    case $HOSTNAME in
+        RDL*) false ;;
+        *)    true ;;
+    esac
+}
+
+f_AtWork()
+{
+    ! f_AtHome
+}
+
 f_GetTimestamp()
 {
     # Return the current date and time as a string suitable for timestamping.
@@ -240,7 +254,10 @@ f_GitShowConfig()
 {
     # Lists critical git configuration which I am always getting wrong
     # when moving from work to home.
-    git config --list | grep 'user.email\|proxy' | sort
+    echo -e "${F_Red}Global config:${F_Default}"
+    git config --list --global | grep 'user.email\|proxy' | sort
+    echo -e "\n${F_Red}Local config (takes priority):${F_Default}"
+    git config --list --local | grep 'user.email\|proxy' | sort
 }
 
 ########################################################################

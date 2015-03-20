@@ -89,22 +89,26 @@ export PATH=$PATH:$GOPATH/bin
 # This only affects work, at home I use ssh.
 find ~/.git-credential-cache -mmin +720 -delete 2> /dev/null
 
-# Note: ~/.ssh/environment should not be used, as it already has a
-# different purpose in SSH.
-env=~/.ssh/agent.env
+if f_AtHome; then
+    echo "You are at home, setting up ssh..."
 
-if ! f_AgentIsRunning; then
-    f_AgentLoadEnv
+    # Note: ~/.ssh/environment should not be used, as it already has a
+    # different purpose in SSH.
+    env=~/.ssh/agent.env
+
+    if ! f_AgentIsRunning; then
+        f_AgentLoadEnv
+    fi
+
+    if ! f_AgentIsRunning; then
+        f_AgentStart
+        ssh-add ~/.ssh/id_phil
+    elif ! f_AgentHasKeys; then
+        ssh-add ~/.ssh/id_phil
+    fi
+
+    unset env
 fi
-
-if ! f_AgentIsRunning; then
-    f_AgentStart
-    ssh-add ~/.ssh/id_phil
-elif ! f_AgentHasKeys; then
-    ssh-add ~/.ssh/id_phil
-fi
-
-unset env
 
 
 ########################################################################
@@ -164,12 +168,13 @@ alias s='git status'
 alias b='git branch -a -vv'
 alias bs='git branch -a -vv;echo "";git status'
 
+
 if [ "$OS" == "cygwin" ]; then
     # Always export this so that an X server started from one Cygwin terminal
     # is available from another.
     export DISPLAY=:0.0
     # This will start an X server on Cygwin without displaying any startup windows.
-    alias startcygx="echo sleep inf > ~/.startxwinrc; startxwin &> /dev/null;"
+    #alias startcygx="echo sleep inf > ~/.startxwinrc; startxwin &> /dev/null;"
     alias runx="run xwin -multiwindow"
     # To fix 'Failed to connect to server' errors.
     alias tmux="rm -rf /tmp/tmux* && tmux"
