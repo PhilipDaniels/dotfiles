@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>icomp</Title>
+			<Shortcut>icomp</Shortcut>
+			<Description>Implement the IEquatable, IComparable&lt;T&gt; and IComparable interfaces</Description>
+			<Author>Philip Daniels</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+      <Declarations>
+        <Literal Editable="false">
+          <ID>classname</ID>
+          <ToolTip>Class name</ToolTip>
+          <Function>ClassName()</Function>
+          <Default>ClassNamePlaceholder</Default>
+        </Literal>
+      </Declarations>
+			<Code Language="csharp">
+				<![CDATA[
+    /// <summary>
+    /// Compares this instance with <paramref name="value"/> and returns an integer that indicates whether this
+    /// instance precedes, follows, or appears in the same position in the sort order as the specified
+    /// <paramref name="value"/>.
+    /// </summary>
+    /// <param name="value">The value to compare.</param>
+    /// <returns>Less than zero if this instance precedes value. 0 if they are equal. More than zero if
+    /// this instance follows value or value is null.</returns>        
+    public int CompareTo(object value) {
+        return CompareTo(($classname$)value);
+    }
+    
+    /// <summary>
+    /// Compares this instance with <paramref name="value"/> and returns an integer that indicates whether this
+    /// instance precedes, follows, or appears in the same position in the sort order as the specified
+    /// <paramref name="value"/>.
+    /// </summary>
+    /// <param name="value">The value to compare.</param>
+    /// <returns>Less than zero if this instance precedes value. 0 if they are equal. More than zero if
+    /// this instance follows value or value is null.</returns>
+    public int CompareTo($classname$ value) {
+        // value == null   --> return 1 (because this must exist)
+        // this < value    --> return negative number
+        // this == value   --> return 0
+        // this > value    --> return positive number
+
+        if ((object)value == null)
+            return 1;
+
+        throw new NotImplementedException("Remember to write $classname$.CompareTo()!!!");
+        // Place the type into a partial order based upon the ordering of its fields/properties.
+        //int comp;
+        //comp = Field1.CompareTo(value.Field1);
+        //if (comp != 0) return comp;
+        //comp = Field2.CompareTo(value.Field2);
+        //return comp;
+
+        //If this type is derived from object just return the final comp,
+        //otherwise return base.CompareTo(value).
+    }
+
+    /// <summary>
+    /// Returns the hash code of the object.
+    /// </summary>
+    /// <returns>Hash code.</returns>
+    public override int GetHashCode() {
+        // See Jon Skeet: http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode/263416#263416
+        // Overflow is fine, just wrap.
+        // If writing this seems hard, try: https://bitbucket.org/JonHanna/spookilysharp/src, but check the licence.
+        // Warning: GetHashCode *should* be implemented only on immutable fields to guard against the
+        // case where you mutate an object that has been used as a key in a collection. In practice,
+        // you probably don't need to worry about that since it is a dumb thing to do.
+		    unchecked
+        {
+            int hash = 17;
+            // Remember to check for nulls.
+            $end$hash = hash * 23 + field1.GetHashCode();
+            hash = hash * 23 + (OtherString ?? "").GetHashCode();
+            return hash;
+        }
+    }
+
+    /// <summary>
+    /// Returns true if <paramref name="value"/> is equal to this $classname$.
+    /// </summary>
+    /// <param name="value">The object to check for equality.</param>
+    /// <returns>True if the object is equal to this one.</returns>
+    public override bool Equals(object value) {
+        return Equals(($classname$)value);
+    }
+
+    /// <summary>
+    /// Returns true if <paramref name="value"/> is equal to this $classname$.
+    /// </summary>
+    /// <param name="value">The object to check for equality.</param>
+    /// <returns>True if the object is equal to this one.</returns>
+    public bool Equals($classname$ value) {
+        if (object.ReferenceEquals(value, null))
+            return false;
+
+        // First check for an exact type match.
+        if (!object.ReferenceEquals(GetType(), value.GetType()))
+            return false;
+
+        int comp = CompareTo(value);
+        return comp == 0;
+    }
+
+    /// <summary>
+    /// Returns true if the two $classname$ instances are equal.
+    /// </summary>
+    /// <param name="first">First object.</param>
+    /// <param name="second">Second object.</param>
+    /// <returns>True if the two objects are equal.</returns>
+    public static bool operator ==($classname$ first, $classname$ second) {
+        // Use object.ReferenceEquals to avoid infinite loops.
+        if (object.ReferenceEquals(first, null))
+            return object.ReferenceEquals(second, null);
+        else
+            return first.Equals(second);
+    }
+
+    /// <summary>
+    /// Returns true if the two $classname$ instances are not equal.
+    /// </summary>
+    /// <param name="first">First object.</param>
+    /// <param name="second">Second object.</param>
+    /// <returns>True if the two objects are equal.</returns>
+    public static bool operator !=($classname$ first, $classname$ second) {
+        return !(first == second);
+    }
+
+    /// <summary>
+    /// Returns true if <paramref name="first"/> is less than <paramref name="second"/>.
+    /// </summary>
+    /// <param name="first">First object.</param>
+    /// <param name="second">Second object.</param>
+    /// <returns>True if first is less than second.</returns>
+    public static bool operator <($classname$ first, $classname$ second) {
+        if (object.ReferenceEquals(first, null))
+            return !object.ReferenceEquals(second, null);
+        int comp = first.CompareTo(second);
+        return comp < 0;
+    }
+
+    /// <summary>
+    /// Returns true if <paramref name="first"/> is less than or equal to <paramref name="second"/>.
+    /// </summary>
+    /// <param name="first">First object.</param>
+    /// <param name="second">Second object.</param>
+    /// <returns>True if first is less than or equal to second.</returns>
+    public static bool operator <=($classname$ first, $classname$ second) {
+        if (object.ReferenceEquals(first, null))
+            return true;
+        int comp = first.CompareTo(second);
+        return comp <= 0;
+    }
+
+    /// <summary>
+    /// Returns true if <paramref name="first"/> is greater than <paramref name="second"/>.
+    /// </summary>
+    /// <param name="first">First object.</param>
+    /// <param name="second">Second object.</param>
+    /// <returns>True if first is greater than second.</returns>
+    public static bool operator >($classname$ first, $classname$ second) {
+        if (object.ReferenceEquals(first, null))
+            return false;
+        int comp = first.CompareTo(second);
+        return comp > 0;
+    }
+
+    /// <summary>
+    /// Returns true if <paramref name="first"/> is greater than or equal to <paramref name="second"/>.
+    /// </summary>
+    /// <param name="first">First object.</param>
+    /// <param name="second">Second object.</param>
+    /// <returns>True if first is greater than or equal to second.</returns>
+    public static bool operator >=($classname$ first, $classname$ second) {
+        if (object.ReferenceEquals(first, null))
+            return object.ReferenceEquals(second, null);
+        int comp = first.CompareTo(second);
+        return comp >= 0;
+    }
+    ]]>
+		</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

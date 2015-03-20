@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>ieq</Title>
+			<Shortcut>ieq</Shortcut>
+			<Description>Implement the IEquatable interface</Description>
+			<Author>Philip Daniels</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+      <Declarations>
+        <Literal Editable="false">
+          <ID>classname</ID>
+          <ToolTip>Class name</ToolTip>
+          <Function>ClassName()</Function>
+          <Default>ClassNamePlaceholder</Default>
+        </Literal>
+      </Declarations>
+			<Code Language="csharp">
+				<![CDATA[/// <summary>
+    /// Returns the hash code of the object.
+    /// </summary>
+    /// <returns>Hash code.</returns>
+    public override int GetHashCode() {
+        // See Jon Skeet: http://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-an-overridden-system-object-gethashcode/263416#263416
+        // Overflow is fine, just wrap.
+        // If writing this seems hard, try: https://bitbucket.org/JonHanna/spookilysharp/src, but check the licence.
+        // Warning: GetHashCode *should* be implemented only on immutable fields to guard against the
+        // case where you mutate an object that has been used as a key in a collection. In practice,
+        // you probably don't need to worry about that since it is a dumb thing to do.
+		    unchecked
+        {
+            int hash = 17;
+            // Remember to check for nulls.
+            $end$hash = hash * 23 + field1.GetHashCode();
+            hash = hash * 23 + (OtherString ?? "").GetHashCode();
+            return hash;
+        }
+    }
+
+    /// <summary>
+    /// Returns true if <paramref name="value"/> is equal to this $classname$.
+    /// </summary>
+    /// <param name="value">The object to check for equality.</param>
+    /// <returns>True if the object is equal to this one.</returns>
+    public override bool Equals(object value) {
+        return Equals(($classname$)value);
+    }
+
+    /// <summary>
+    /// Returns true if <paramref name="value"/> is equal to this $classname$.
+    /// </summary>
+    /// <param name="value">The object to check for equality.</param>
+    /// <returns>True if the object is equal to this one.</returns>
+    public bool Equals($classname$ value) {
+        // Use object.ReferenceEquals to avoid infinite loops.
+        if (object.ReferenceEquals(value, null))
+            return false;
+        
+        // First check for an exact type match.
+        if (!object.ReferenceEquals(GetType(), value.GetType()))
+            return false;
+
+        throw new NotImplementedException("Remember to write $classname$.Equals()!!!");
+        //return Property1 == value.Property1 &&
+        //       Property2 == value.Property2 && ...
+        // If this type does not derive from object then add a call to base.Equals()
+        // as the last line of this expression.
+    }
+
+    /// <summary>
+    /// Returns true if the two $classname$ instances are equal.
+    /// </summary>
+    /// <param name="first">First object.</param>
+    /// <param name="second">Second object.</param>
+    /// <returns>True if the two objects are equal.</returns>
+    public static bool operator ==($classname$ first, $classname$ second) {
+        // Use object.ReferenceEquals to avoid infinite loops.
+        if (object.ReferenceEquals(first, null))
+            return object.ReferenceEquals(second, null);
+        else
+            return first.Equals(second);
+    }
+
+    /// <summary>
+    /// Returns true if the two $classname$ instances are not equal.
+    /// </summary>
+    /// <param name="first">First object.</param>
+    /// <param name="second">Second object.</param>
+    /// <returns>True if the two objects are equal.</returns>
+    public static bool operator !=($classname$ first, $classname$ second) {
+        return !(first == second);
+    }
+		]]>
+		</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
