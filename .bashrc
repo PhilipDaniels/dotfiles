@@ -167,7 +167,7 @@ alias quit='exit'
 alias s='git status'
 alias b='git branch -a -vv'
 alias bs='git branch -a -vv;echo "";git status'
-
+alias q='git branch -a -vv; echo "";git status;echo "";git l -5'
 
 if [ "$OS" == "cygwin" ]; then
     # Always export this so that an X server started from one Cygwin terminal
