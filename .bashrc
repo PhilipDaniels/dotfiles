@@ -108,6 +108,8 @@ if f_AtHome; then
     fi
 
     unset env
+else
+    f_GitSetProxy
 fi
 
 
