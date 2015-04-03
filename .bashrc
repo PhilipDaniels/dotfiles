@@ -176,9 +176,12 @@ if [ "$OS" == "cygwin" ]; then
     # Always export this so that an X server started from one Cygwin terminal
     # is available from another.
     export DISPLAY=:0.0
+
     # This will start an X server on Cygwin without displaying any startup windows.
-    #alias startcygx="echo sleep inf > ~/.startxwinrc; startxwin &> /dev/null;"
+    # If this is not working, you probably forgot to install the "xinit" package.
+    # http://x.cygwin.com/docs/faq/cygwin-x-faq.html#q-whereis-startxwin-bat
     alias runx="run xwin -multiwindow"
+
     # To fix 'Failed to connect to server' errors.
     alias tmux="rm -rf /tmp/tmux* && tmux"
 fi
