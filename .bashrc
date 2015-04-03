@@ -49,6 +49,7 @@ f_AddToPath "/sbin"
 f_AddToPath "/usr/sbin"
 f_AddToPath "$HOME/bin"
 f_AddToPath "$HOME/bin/p4merge/bin"
+f_AddToPath "$HOME/repos/nim/bin"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
