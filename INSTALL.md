@@ -176,10 +176,35 @@ recommended for practical use. My dotfiles bashrc now does this.
 Also create the file ~/.ssh/config and add "ForwardAgent yes"
 
   echo "ForwardAgent yes" > ~/.ssh/config
+  echo "ForwardX11Trusted yes" > ~/.ssh/config
 
 This will allow you to SSH into a remote machine to pull from there without
 having to place your private key in the remote machine for it to work with your
-SSH credentials.
+SSH credentials. The second line enables trusted X11 forwarding by default (it
+is the same as always using the -Y option).
+
+Using X11 Forwarding
+====================
+To forward X:
+
+  ssh [-v] -Y phil@deb1
+
+  * The -Y option supercedes the -X option.
+  * The -v is verbose help. To confirm that ssh is forwarding X11, check for a
+    line containing "Requesting X11 forwarding" in the output.
+
+On the server:
+  cat /etc/ssh/sshd_config | grep X11
+There must be a line "X11Forwarding yes"
+
+So, step by step to forward X11 from my deb1 box to Cygwin
+
+  1. [Cygwin] runx               # Start the X server on my Windows box
+  2. [Cygwin] DISPLAY=:0.0 ssh -Y phil@deb1
+  3. [deb1] xeyes &
+
+Debugging: http://x.cygwin.com/docs/faq/cygwin-x-faq.html#q-ssh-no-x11forwarding
+           http://unix.stackexchange.com/questions/12755/how-to-forward-x-over-ssh-from-ubuntu-machine
 
 Using your Key with FileZilla or WinSCP
 =======================================
