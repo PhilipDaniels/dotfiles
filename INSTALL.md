@@ -6,8 +6,9 @@ Assuming you follow the paths in this document, you need to setup 3 environment
 variables. These are used by some functions in my bash setup and by tasks in
 ConEmu.
 
-    PORTABLEAPPSROOT = C:\PortableApps
+    CYGROOT = C:\Cygwin
     FARROOT = C:\Public\Apps\Far30b4242.x64.20150117
+    PORTABLEAPPSROOT = C:\PortableApps
     PUBLICROOT = C:\Public
 
 Do not set a HOME variable, Cygwin, MSys and Windows are all capable of
@@ -42,6 +43,12 @@ folder is wrong in /etc/passwd.
 Use the "apt-cyg" script to install packages; a version is in ~/OtherApps
 so it should be on your path (adding that folder to the path is part of the
 general setup instructions).
+
+MyMintty
+========
+You will need a compiled mymintty.exe in order to use the Cygwin terminals
+I have defined in ConEmu.xml. Available from my Github repo, it needs to be
+compiled in Cygwin and the themes copied to /usr/share/mintty/themes.
 
 SSH Setup
 =========

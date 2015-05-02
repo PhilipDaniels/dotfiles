@@ -85,7 +85,7 @@ fi
 find ~/.git-credential-cache -mmin +720 -delete 2> /dev/null
 
 if f_AtHome; then
-    echo "You are at home, setting up ssh..."
+    #echo "You are at home, setting up ssh..."
     f_SetupSSH
 fi
 
