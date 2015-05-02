@@ -92,24 +92,10 @@ find ~/.git-credential-cache -mmin +720 -delete 2> /dev/null
 
 if f_AtHome; then
     echo "You are at home, setting up ssh..."
+    f_SetupSSH
+fi
 
-    # Note: ~/.ssh/environment should not be used, as it already has a
-    # different purpose in SSH.
-    env=~/.ssh/agent.env
-
-    if ! f_AgentIsRunning; then
-        f_AgentLoadEnv
-    fi
-
-    if ! f_AgentIsRunning; then
-        f_AgentStart
-        ssh-add ~/.ssh/id_phil
-    elif ! f_AgentHasKeys; then
-        ssh-add ~/.ssh/id_phil
-    fi
-
-    unset env
-else
+if f_AtWork; then
     f_GitSetProxy
 fi
 
