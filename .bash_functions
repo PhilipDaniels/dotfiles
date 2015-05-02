@@ -260,6 +260,24 @@ f_GitShowConfig()
     git config --list --local | grep 'user.email\|proxy' | sort
 }
 
+function gv()
+{
+    # Favour native Windows gvim when in Windows, even if an X server is
+    # running. This is because it understands Windows paths better.
+    # If you want the Cygwin gvim just do /bin/gvim.
+
+    local filename="$1"
+    if [ "$filename" ]; then
+        filename=`cygpath -w "$filename"`
+    fi
+
+    "$PORTABLEROOT/gVimPortable/App/vim/vim74/gvim.exe" -T win32 "$filename"
+}
+
+
+
+
+
 ########################################################################
 # Support for using ssh-agent because keychain doesn't seem to work
 # that well in MSysGit.

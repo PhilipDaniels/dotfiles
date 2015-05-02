@@ -24,6 +24,11 @@ fi
 . ~/repos/dotfiles/.bash_controlcodes
 . ~/repos/dotfiles/.bash_prompt
 
+# Where the clone of my Public repo is, in Cygwin terms.
+if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
+    export PUBLICROOT=/c/Public
+    export PORTABLEROOT=/c/PortableApps
+fi
 
 # This is probably not needed.
 # EDITOR="vim"
@@ -94,7 +99,6 @@ if f_AtWork; then
     f_GitSetProxy
 fi
 
-
 ########################################################################
 # Do aliases last.
 if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
@@ -108,11 +112,6 @@ if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
     # Ignore case while completing.
     set completion-ignore-case on
 
-    if [ $OS == "cygwin" ] || [ $OS == "msys"]; then
-        # Favour native Windows gvim when in Windows, even if an
-        # X server is running. If you want the Cygwin gvim just do /bin/gvim.
-        alias gvim="~/OtherApps/gvim7.4/gvim.exe"
-    fi
     if [ $OS == "msys" ]; then
         # MSys does not have a good console, so use this Vim which
         # plays nice with ConEmu.

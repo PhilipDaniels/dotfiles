@@ -19,14 +19,15 @@ set background=dark
 " Xdefaults. If you cannot install the palette, change this to 256 which
 " will instruct solarized to use the 'degraded' 256 color scheme n.b. You
 " need a 256-color capable terminal to do that!
-
-if !empty($ConEmuDrive)
-    "echom "Running in ConEmu"
-	set termencoding=uft8
-    set term=xterm-256color
-    set t_Co=256
-else
-    let g_solarized_termcolors=16
+if !has("gui_running")
+    if !empty($ConEmuDrive)
+        "echom "Running in ConEmu"
+        set termencoding=uft8
+        set term=xterm-256color
+        set t_Co=256
+    else
+        let g_solarized_termcolors=16
+    endif
 endif
 
 
