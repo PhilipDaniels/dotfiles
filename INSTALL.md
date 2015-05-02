@@ -1,38 +1,23 @@
 This document should be gone through in order.
 
-Initial Installation
-====================
-* Setup will be to %UserProfile%, typically C:\Users\Phil.
-Do NOT set a HOME variable, Cygwin and MSysGit will use this folder by default
-without it. It is known as ~ in this document.
+Environment Variables
+=====================
+Assuming you follow the paths in this document, you need to setup 3 environment
+variables. These are used by some functions in my bash setup and by tasks in
+ConEmu.
 
-* Restore zips/copy from another machine, you should end up with
-	~\Backups                     - backup scripts
-    ~\OtherApps                   - portable binaries
-    ~\PortableApps                - my PortableApps installation
-    ~\Public                      - things I don't mind being copied
-    ~\Autorun.inf, ~\Start.exe    - PortableApps files.
+    PORTABLEAPPSROOT = C:\PortableApps
+    FARROOT = C:\Public\Apps\Far30b4242.x64.20150117
+    PUBLICROOT = C:\Public
 
-	NOTE THAT MY "DOCUMENTS" FOLDER IS PRIVATE AND SHOULD NOT BE COPIED.
+Do not set a HOME variable, Cygwin, MSys and Windows are all capable of
+figuring it out by themselves. We use the same HOME as Windows does, typically
+C:\UsersPhil, for example.
 
-* Start menu setup
-Your profile is at: %UserProfile%\AppData\Roaming\Microsoft\Windows
-Open your Windows Start Menu folder and create shortcuts to the apps that you
-will be using frequently. This makes them available by searching by pressing
-the "Win" key. Defaults, assuming you used %UserProfile% as mentioned in step
-1, are in this folder.
-
-* Path Setup
-Use the PathEditor.exe (in the OtherApps folder) to edit your Windows path to
-add useful folders to your path. Most things you might want to run from the
-command line are available in a Cygwin-bash so typically this is just a small
-selection of utilities from the OtherApps folder itself
-
-* Fonts setup
-Install fonts from the ~\Public\Fonts folder
-
-* gVim
-Check the .reg file and run it to create an "Edit With Vim" Explorer shortcut. 
+Portable Apps Setup
+===================
+Install to C:\PortableApps. Ensure you get gVim, it will be needed for the 'gv'
+bash function.
 
 Cygwin
 ======
@@ -50,7 +35,9 @@ Edit /etc/fstab so it looks like this, to remove the cygdrive prefix:
 After installation, your home dir will probably be in /home/name, rather
 than C:\Users\Phil. The easiest way to change this is to just edit /etc/passwd
 in vim, for example to set it to /cygdrive/c/Users/Phil, or /c/Users/Phil
-if you have adjusted the cygdrive prefix.
+if you have adjusted the cygdrive prefix. CHECK THE /etc/passwd FILE ANYWAY.
+Especially if SSH is complaining about /cydrive/c... this indicates the home
+folder is wrong in /etc/passwd.
 
 Use the "apt-cyg" script to install packages; a version is in ~/OtherApps
 so it should be on your path (adding that folder to the path is part of the
@@ -64,12 +51,41 @@ Repos + dotfiles itself
 =======================
 mkdir ~/repos
 git clone git@github.com:PhilipDaniels/dotfiles.git
-Run the 00install.sh script to setup .bashrc rc. 
+Run the 00install.sh script to setup .bashrc. 
 
   If you are installing a Linux box then 20main.sh has some frequently
   desired programs. Otherwise, see the install_snippets.ps1 script in the
   Visual Studio folder to install C# and SQL snippets.
 
+Public Folder Setup
+===================
+* Open a Cygwin prompt.
+
+    cd /
+    git clone git@philipdaniels.com:Public.git
+
+This will take a while, it is several Gb. You should end up with a folder
+called C:\Public.
+
+* Start menu setup
+Your profile is at: %UserProfile%\AppData\Roaming\Microsoft\Windows
+Open your Windows Start Menu folder and create shortcuts to the apps that you
+will be using frequently. This makes them available by searching by pressing
+the "Win" key. Defaults, assuming you used the paths specified in this guide,
+are available in the C:\Public\Setup\DefaultShortcuts folder.
+
+* Path Setup
+Use the PathEditor.exe (in the C:\Public\Apps folder) to edit your Windows path
+to add useful folders to your path. Most things you might want to run from the
+command line are available in a Cygwin-bash so typically this is just a small
+selection of utilities from the Apps folder itself.
+
+* Fonts setup
+Install fonts from the C:\Public\Fonts folder
+
+* gVim Explorer integration
+Check the .reg file in C:\Public\Setup and run it to create an "Edit With Vim"
+Explorer shortcut. 
   
   
   

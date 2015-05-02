@@ -271,7 +271,7 @@ function gv()
         filename=`cygpath -w "$filename"`
     fi
 
-    "$PORTABLEROOT/gVimPortable/App/vim/vim74/gvim.exe" -T win32 "$filename"
+    "$PORTABLEAPPSROOT/gVimPortable/App/vim/vim74/gvim.exe" -T win32 "$filename"
 }
 
 

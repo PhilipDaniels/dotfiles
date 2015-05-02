@@ -24,12 +24,6 @@ fi
 . ~/repos/dotfiles/.bash_controlcodes
 . ~/repos/dotfiles/.bash_prompt
 
-# Where the clone of my Public repo is, in Cygwin terms.
-if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
-    export PUBLICROOT=/c/Public
-    export PORTABLEROOT=/c/PortableApps
-fi
-
 # This is probably not needed.
 # EDITOR="vim"
 
@@ -115,7 +109,7 @@ if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
     if [ $OS == "msys" ]; then
         # MSys does not have a good console, so use this Vim which
         # plays nice with ConEmu.
-        alias vim="~/OtherApps/gvim7.4/vim.exe"
+        alias vim="$PORTABLEAPPSROOT/gVimPortable/App/vim/vim7.4/vim.exe"
     fi
 fi
 
