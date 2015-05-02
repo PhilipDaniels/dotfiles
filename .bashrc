@@ -67,10 +67,6 @@ if [ -s ~/.nvm/nvm.sh ]; then
 	source ~/.nvm/nvm.sh
 fi
 
-# Where I keep my Go-lang code.
-export GOPATH=$HOME/repos/go
-export PATH=$PATH:$GOPATH/bin
-
 
 #######################################################################
 # Setup ssh-agent.
