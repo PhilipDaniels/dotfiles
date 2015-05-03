@@ -44,6 +44,19 @@ Use the "apt-cyg" script to install packages; a version is in ~/OtherApps
 so it should be on your path (adding that folder to the path is part of the
 general setup instructions).
 
+Cygwin Ports
+============
+See http://cygwinports.org/
+You want to get the fonts, because Cygwin gvim is configured to use one of
+them. You can also add extra fonts by
+
+  mkdir /usr/share/fonts/TTF
+  ln -s /c/Windows/Fonts/arial.ttf /usr/share/fonts/TTF/
+
+  or just copy the fonts over from your Windows directory.
+  But unfortunately the TTF fonts still look a bit blurry in Cygwin gvim.
+  Windows gvim is much better.
+
 MyMintty
 ========
 You will need a compiled mymintty.exe in order to use the Cygwin terminals
