@@ -1,3 +1,10 @@
+TODO
+====
+* Vim airline + powerline fonts.
+
+
+
+
 This document should be gone through in order.
 
 Environment Variables
@@ -40,7 +47,7 @@ if you have adjusted the cygdrive prefix. CHECK THE /etc/passwd FILE ANYWAY.
 Especially if SSH is complaining about /cydrive/c... this indicates the home
 folder is wrong in /etc/passwd.
 
-Use the "apt-cyg" script to install packages; a version is in ~/OtherApps
+Use the "apt-cyg" script to install packages; a version is in %PUBLICROOT%\Apps
 so it should be on your path (adding that folder to the path is part of the
 general setup instructions).
 
