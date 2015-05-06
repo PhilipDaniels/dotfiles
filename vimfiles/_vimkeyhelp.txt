@@ -1,29 +1,29 @@
 ===== FILES, WINDOWS AND BUFFERS ======|=============== MOVEMENT ==============
-C-o           - bnext                  |*, #    - search for word under cursor
-M-o           - tabnext                |b, e    - beg/end of word
+C-o           - bnext                  |b, e    - beg/end of word
+M-o           - tabnext                |0, $    - beg/end of line
 C-p           - built-in Ctrl-P        |gg, G   - beg/end of file
-M-p           - Ctrl-P plugin          |%       - matching paren
-C-n           - toggle NERDTree        |g;      - last edited position
-:e!           - revert file to saved   |
-                                       |
-F3, C-W <>    - adjust window width    |
-F4, C-W -+    - adjust window height   |
-z N           - set height to N        |
-C-W s         - split window           |
-C-W v         - vsplit window          |
-C-W ]         - open tag in new window |
-C-W f         - open file new window   |
+M-p           - Ctrl-P plugin          |(, )    - beg/end of sentence
+C-n           - toggle NERDTree        |{, }    - beg/end of paragraph
+:e!           - revert file to saved   |ma      - set mark a
+C-^           - prev file              |`a      - go to mark a
+F3, C-W <>    - adjust window width    |48G     - go to line 48
+F4, C-W -+    - adjust window height   |/pat    - search forward for pat
+z N           - set height to N        |?pat    - search backward for pat
+C-W s         - split window           |n, N    - repeat search (other dir)
+C-W v         - vsplit window          |*, #    - search for/back for word
+C-W ]         - open tag in new window |fx, Fx  - search in line for 'x'
+C-W f         - open file new window   |%       - go to matching paren
 C-W arrow     - move between windows   |
-C-W C-W       - move between windows   |
-C-W =         - make all equal size    |
-C-W _         - maximize current       |
+C-W C-W       - move between windows   |g;      - last edited position
+C-W =         - make all equal size    |gi      - back to last edit location
+C-W _         - maximize current       |``      - return to previous position
 C-W r | R     - rotate windows         |
-:[v]split file- split and load file    |
-:hide         - hide current           |
-:only         - hide all others        |
+:[v]split file- split and load file    |z.      - current line to center
+:hide         - hide current           |z       - current line to top
+:only         - hide all others        |z-      - current line to bottom
 :b 2          - go to buffer 2         |
-:ls           - list buffers           |
-                                       |
+:ls           - list buffers           |-, +    - first char of prev/next line
+:x            - save if needed and quit|^       - first non-blank of line
 ================ TAGS =================|
 C-]             - go to tag            |
 C-W ]           - go to tag new window |
@@ -37,28 +37,87 @@ C-t             - return from tag      |
 :tabedit [file] - open file in new tab |
 :tabnew         - create a new tab     |
 :tabclose!      - close current tab    |
-:tabonly        - close all other tabs |
+i:tabonly       - close all other tabs |
 C-W gf          - edit file in new tab |
+                                       |
+=============== NERDTree ==============|
+I        - show hidden files           |
+r, R     - refresh (Root refresh       |
+?        - toggle NERDTree help        |
+o, CR    - open file                   |
+i        - open split                  |
+s        - open vsplit                 |
+t        - open tabsplit               |
+o, O     - (recursively) toggle        |
+m        - open menu (mov/create/del)  |
+ESC      - exit the menu               |
+                                       |
+=============== EDITING ===============|
+.        - repeat last cmd
+u        - undo
+C-R      - redo
+C-A, C-X - inc/dec number under cursor
+==       - fix line indent
+>        - indent block (Visual mode)
+<        - unindent block (Vis. mode)
+
+The general form of a command is
+    (cmd)(text object)
+    (cmd)(num)(text object)
+    (num)(cmd)(text object)
+text object is a movement command. e.g.
+
+  d/pat    - delete up to "pat"
+  50i*ESC  - insert 50 *
+
+:% s/old/new/g  - replace all
 
 
+Macros
+======
+qa <cmds> q - record <cmds> as macro a
+@a          - execute macro a
+@@          - repeat last macro
 
-NERDTree
-========
-I               - show hidden files
-r, R            - refresh (Root refresh
-?               - toggle NERDTree help
-o, CR           - open file
-i               - open split
-s               - open vsplit
-t               - open tabsplit
-o, O            - (recursively) toggle
-m               - open menu (move, create, delete)
-ESC             - exit the menu
 
-Commands
-========
+Registers (" prefix)
+=========
+a     - register a..z
+A     - append to register a..z
+1..9  - delete ring (1 = most recent)
+"     - unnamed register (last delete or yank)
+%     - current filename
+*, +  - (X11) clipboard
+"dyy  - yank current line into register d
+
+
+External Commands
+=================
 :!cmd           - run external command
 :read !cmd      - run external command and capture output
 
-Replace text
+
+ex Ranges
+=========
+12,30 - lines 12 to 30 inc
+'a,'z - lines between marks
+.     - current line
+$     - last line
++, -  - line relative to current
+%     - all lines (same as 1,$)
+:....g - apply globally
+:....v - apply globally conVerse
+e.g. :.,$v/bar/d - from cur to end, delete lines NOT containing bar
+
+Folding
+=======
+za  - toggle fold
+zA  - toggle folds, recursively
+zE  - eliminate all folds
+zf  - create fold to next movement
+zf} - fold this paragraph
+zf% - fold to matching paren
+zfgg - fold to start of file
+:set foldcolumn=4   - display markers
+
 
