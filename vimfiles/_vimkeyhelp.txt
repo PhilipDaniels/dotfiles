@@ -1,45 +1,46 @@
-Windows and Buffers
-===================
-C-o             - bnext
-M-o             - tabnext
-C-p             - built-in Ctrl-P shortcut matching
-M-p             - Ctrl-P plugin
-C-n             - toggle NERDTree
+===== FILES, WINDOWS AND BUFFERS ======|=============== MOVEMENT ==============
+C-o           - bnext                  |*, #    - search for word under cursor
+M-o           - tabnext                |b, e    - beg/end of word
+C-p           - built-in Ctrl-P        |gg, G   - beg/end of file
+M-p           - Ctrl-P plugin          |%       - matching paren
+C-n           - toggle NERDTree        |g;      - last edited position
+:e!           - revert file to saved   |
+                                       |
+F3, C-W <>    - adjust window width    |
+F4, C-W -+    - adjust window height   |
+z N           - set height to N        |
+C-W s         - split window           |
+C-W v         - vsplit window          |
+C-W ]         - open tag in new window |
+C-W f         - open file new window   |
+C-W arrow     - move between windows   |
+C-W C-W       - move between windows   |
+C-W =         - make all equal size    |
+C-W _         - maximize current       |
+C-W r | R     - rotate windows         |
+:[v]split file- split and load file    |
+:hide         - hide current           |
+:only         - hide all others        |
+:b 2          - go to buffer 2         |
+:ls           - list buffers           |
+                                       |
+================ TAGS =================|
+C-]             - go to tag            |
+C-W ]           - go to tag new window |
+C-t             - return from tag      |
+:tnext, tprev   - next/previous tag    |
+:!ctags *.[ch]  - generate tags        |
+:tags           - display tags stack   |
+:tag name       - go to name           |
+                                       |
+================ TABS =================|
+:tabedit [file] - open file in new tab |
+:tabnew         - create a new tab     |
+:tabclose!      - close current tab    |
+:tabonly        - close all other tabs |
+C-W gf          - edit file in new tab |
 
-[S-]F3, C-W <>  - adjust window width
-[S-]F4, C-W -+  - adjust window height
-z N             - set height to N
-C-W s           - split window
-C-W v           - vsplit window
-C-W ]           - open tag in new window
-C-W f           - open file under cursor in new window
-C-W arrow       - move between windows
-C-W C-W         - move between windows
-C-W =           - make all equal size
-C-W _           - maximize current
-C-W r | R       - rotate windows
-:[v]split file  - split and load file
-:hide           - hide current
-:only           - hide all others
-:b 2            - open buffer 2 in this window
-:ls             - list buffers
 
-Tags
-====
-C-]             - go to tag
-C-W ]           - go to tag new window
-C-t             - return from tag
-:tnext, tprev   - next/previous tag math
-:!ctags *.[ch]  - generate tags
-:tags           - display the tags stack
-
-Tabs
-====
-:tabedit [file] - open file in new tab
-:tabnew         - create a new tab
-:tabclose!      - close current tab
-:tabonly        - close all other tabs
-C-W gf          - edit file under cursor in new tab
 
 NERDTree
 ========
@@ -58,4 +59,6 @@ Commands
 ========
 :!cmd           - run external command
 :read !cmd      - run external command and capture output
+
+Replace text
 
