@@ -24,100 +24,41 @@ C-W r | R     - rotate windows         |
 :b 2          - go to buffer 2         |
 :ls           - list buffers           |-, +    - first char of prev/next line
 :x            - save if needed and quit|^       - first non-blank of line
-================ TAGS =================|
-C-]             - go to tag            |
-C-W ]           - go to tag new window |
-C-t             - return from tag      |
-:tnext, tprev   - next/previous tag    |
-:!ctags *.[ch]  - generate tags        |
-:tags           - display tags stack   |
-:tag name       - go to name           |
-                                       |
-================ TABS =================|
-:tabedit [file] - open file in new tab |
-:tabnew         - create a new tab     |
-:tabclose!      - close current tab    |
-i:tabonly       - close all other tabs |
-C-W gf          - edit file in new tab |
-                                       |
-=============== NERDTree ==============|
-I        - show hidden files           |
-r, R     - refresh (Root refresh       |
-?        - toggle NERDTree help        |
-o, CR    - open file                   |
-i        - open split                  |
-s        - open vsplit                 |
-t        - open tabsplit               |
-o, O     - (recursively) toggle        |
-m        - open menu (mov/create/del)  |
-ESC      - exit the menu               |
-                                       |
-=============== EDITING ===============|
-.        - repeat last cmd
-u        - undo
-C-R      - redo
-C-A, C-X - inc/dec number under cursor
-==       - fix line indent
->        - indent block (Visual mode)
-<        - unindent block (Vis. mode)
-
-The general form of a command is
-    (cmd)(text object)
-    (cmd)(num)(text object)
-    (num)(cmd)(text object)
-text object is a movement command. e.g.
-
-  d/pat    - delete up to "pat"
-  50i*ESC  - insert 50 *
-
-:% s/old/new/g  - replace all
-
-
-Macros
-======
-qa <cmds> q - record <cmds> as macro a
-@a          - execute macro a
-@@          - repeat last macro
-
-
-Registers (" prefix)
-=========
-a     - register a..z
-A     - append to register a..z
-1..9  - delete ring (1 = most recent)
-"     - unnamed register (last delete or yank)
-%     - current filename
-*, +  - (X11) clipboard
-"dyy  - yank current line into register d
-
-
-External Commands
-=================
-:!cmd           - run external command
-:read !cmd      - run external command and capture output
-
-
-ex Ranges
-=========
-12,30 - lines 12 to 30 inc
-'a,'z - lines between marks
-.     - current line
-$     - last line
-+, -  - line relative to current
-%     - all lines (same as 1,$)
-:....g - apply globally
-:....v - apply globally conVerse
-e.g. :.,$v/bar/d - from cur to end, delete lines NOT containing bar
-
-Folding
-=======
-za  - toggle fold
-zA  - toggle folds, recursively
-zE  - eliminate all folds
-zf  - create fold to next movement
-zf} - fold this paragraph
-zf% - fold to matching paren
-zfgg - fold to start of file
-:set foldcolumn=4   - display markers
-
-
+================ TAGS =================|=============== EDITING ===============
+C-]             - go to tag            |.        - repeat last cmd             
+C-W ]           - go to tag new window |u        - undo                        
+C-t             - return from tag      |C-R      - redo                        
+:tnext, tprev   - next/previous tag    |C-A, C-X - inc/dec number under cursor 
+:!ctags *.[ch]  - generate tags        |==       - fix line indent             
+:tags           - display tags stack   |>        - indent block (Visual mode)  
+:tag name       - go to name           |<        - unindent block (Vis. mode)  
+================ TABS =================|:% s/old/new/gci  - replace all        
+:tabedit [file] - open file in new tab |                                       
+:tabnew         - create a new tab     |The general form of a command is       
+:tabclose!      - close current tab    |    (cmd)(text object)                 
+i:tabonly       - close all other tabs |    (cmd)(num)(text object)            
+C-W gf          - edit file in new tab |    (num)(cmd)(text object)            
+=============== NERDTREE ==============|text object is a movement command. e.g.
+I        - show hidden files           |  d/pat    - delete up to "pat"        
+r, R     - refresh (Root refresh       |  50i*ESC  - insert 50 *               
+?        - toggle NERDTree help        |=============== RANGES ================
+o, CR    - open file                   |%     - all lines (same as 1,$)        
+i        - open split                  |.     - current line                   
+s        - open vsplit                 |$     - last line                      
+t        - open tabsplit               |12,30 - lines 12 to 30 inclusive       
+o, O     - (recursively) toggle        |'a,'z - lines between marks            
+m        - open menu (mov/create/del)  |+, -  - line relative to current       
+ESC      - exit the menu               |:...g - apply globally                 
+=============== FOLDING ===============|:...v - apply globally conVerse        
+za   - toggle fold                     |======== REGISTERS (" PREFIX) =========
+zA   - toggle folds, recursively       |a     - register a..z                  
+zE   - eliminate all folds             |A     - append to register a..z        
+zf   - create fold to next movement    |1..9  - delete ring (1 = most recent)  
+zf}  - fold this paragraph             |"     - last delete or yank is in here 
+zf%  - fold to matching paren          |%     - current filename               
+zfgg - fold to start of file           |*, +  - (X11) clipboard                
+:set foldcolumn=4  - display markers   |"dyy  - yank current line into reg d   
+========== EXTERNAL COMMANDS ==========|=============== MACROS ================
+:!cmd       - run external command     |qa <cmds> q - record <cmds> as macro a
+:read !cmd  - capture output           |@a          - execute macro a        
+                                       |@@          - repeat last macro        

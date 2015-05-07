@@ -274,16 +274,16 @@ function gv()
     "$PORTABLEAPPSROOT/gVimPortable/App/vim/vim74/gvim.exe" -T win32 "$filename"
 }
 
-function vk()
+function vh()
 {
     # Displays my key help for Vim.
-    cat ~/repos/dotfiles/vimfiles/_vimkeyhelp.txt
+    less -FX ~/repos/dotfiles/vimfiles/_vimkeyhelp.txt
 }
 
 function vp()
 {
     # Displays my programming/compilation help for Vim.
-    cat ~/repos/dotfiles/vimfiles/_vimproghelp.txt
+    less -FX ~/repos/dotfiles/vimfiles/_vimproghelp.txt
 }
 
 
