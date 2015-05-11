@@ -18,8 +18,8 @@ C-W C-W       - move between windows   |g;      - last edited position
 C-W =         - make all equal size    |gi      - back to last edit location
 C-W _         - maximize current       |``      - return to previous position
 C-W r | R     - rotate windows         |
-:[v]split file- split and load file    |z.      - current line to center
-:hide         - hide current           |z       - current line to top
+:[v]split file- split and load file    |z<CR>   - current line to top
+:hide         - hide current           |z.      - current line to center
 :only         - hide all others        |z-      - current line to bottom
 :b 2          - go to buffer 2         |
 :ls           - list buffers           |-, +    - first char of prev/next line
