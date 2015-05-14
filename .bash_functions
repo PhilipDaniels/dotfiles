@@ -286,6 +286,10 @@ function vp()
     less -FX ~/repos/dotfiles/vimfiles/_vimproghelp.txt
 }
 
+function f_RescanWCD()
+{
+    wcd -xf ~/repos/dotfiles/.wcd.exclusions -S /c
+}
 
 ########################################################################
 # Support for using ssh-agent because keychain doesn't seem to work

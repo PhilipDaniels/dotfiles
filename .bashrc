@@ -146,6 +146,8 @@ alias b='git branch -a -vv'
 alias bs='git branch -a -vv;echo "";git status'
 alias q='git status;echo "";git branch -a -vv;echo "";git l -10'
 
+alias wcd='wcd -q'
+
 if [ "$OS" == "cygwin" ]; then
     # Always export this so that an X server started from one Cygwin terminal
     # is available from another.
