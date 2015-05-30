@@ -17,8 +17,6 @@ $cygDir = "C:\cygwin"
 
 Write-Host "Environment variables created"
 
-$cygDir = "C:\cygwin2"
-
 # Create cygwin directory.
 if(!(Test-Path -Path "$cygDir" -PathType Container)) {
     $null = New-Item -Type Directory -Path "$cygDir" -Force
