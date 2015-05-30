@@ -9,7 +9,7 @@ This document should be gone through in order.
 
 Environment Variables
 =====================
-Assuming you follow the paths in this document, you need to setup 3 environment
+Assuming you follow the paths in this document, you need to setup 4 environment
 variables. These are used by some functions in my bash setup and by tasks in
 ConEmu.
 
