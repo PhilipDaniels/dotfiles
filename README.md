@@ -5,7 +5,13 @@ Linux, Cygwin and MSysGit.
 
 See document INSTALL.md for full installation instructions for a new box.
 
-# To install Cygwin
-@powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/philipdaniels/dotfiles/master/install_cygwin.ps1'))"
+### To install everything
+```
+@powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/philipdaniels/dotfiles/master/setup.ps1'))"
+```
 
+### To install Cygwin (over an hour)
+```
+@powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/philipdaniels/dotfiles/master/setup_cygwin.ps1'))"
+```
 
