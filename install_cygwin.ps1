@@ -1,3 +1,5 @@
+param([Int32]$arch=64)
+
 # setup.ps1
 #   This is intended to...
 #   - Setup environment variables
@@ -23,9 +25,9 @@ if(!(Test-Path -Path "$cygDir" -PathType Container)) {
 }
 
 # Download Cygwin setup.
-$osArch = (gwmi win32_operatingsystem | select osarchitecture).osarchitecture
+#$osArch = (gwmi win32_operatingsystem | select osarchitecture).osarchitecture
 
-if($osArch -eq "32-bit") {
+if($arch -eq 32) {
     $downloadFile = "http://cygwin.com/setup-x86.exe";
     $targetFile = "$cygDir\setup-x86.exe"
 } else {
@@ -48,7 +50,7 @@ Write-Host $packageList
 Write-Host "==============================="
 
 
-Start-Process -wait -FilePath $targetFile -ArgumentList ("-q -g -n -l $cygDir -s " + $mirror + " -R " + $cygDir + " -P " + $packageList);
+Start-Process -wait -FilePath $targetFile -ArgumentList ("-q -g -n -l $cygDir\packages -s " + $mirror + " -R " + $cygDir + " -P " + $packageList);
 
 Write-Host "Cygwin should now be installed."
 
