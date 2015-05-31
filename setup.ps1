@@ -119,7 +119,7 @@ function Add-PathFolders
 Write-Host "Environment variables created"
 
 Add-PathFolders "C:\Public\Apps"
-Add-PathFolders "$d\chocolatey\bin"
+Add-PathFolders "C:\ProgramData\chocolatey\bin"
 
 
 # Install Chocolatey
@@ -127,9 +127,15 @@ Write-Host "Installing Chocolatey..."
 iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
 Write-Host "Chocolatey should be installed."
 choco install 7zip -y
+choco install 7zip.commandline -y
+choco install audacity -y
 choco install autoruns -y
 choco install blender -y
 choco install cpu-z -y
+choco install dependencywalker -y
+choco install dotpeek -y
+choco install eclipse -y
+choco install emacs -y
 choco install evince -y
 choco install fiddler4 -y
 choco install filezilla -y
@@ -141,14 +147,22 @@ choco install gimp -y
 choco install googlechrome -y
 choco install irfanview -y
 choco install irfanviewplugins -y
+choco install kdiff3 -y
 choco install keepass -y
 choco install libreoffice -y
+choco install linqpad4 -y
+choco install nugetpackageexplorer -y
 choco install notepadplusplus -y
 choco install opera -y
+choco install p4merge -y
+choco install paint.net -y
+choco install pdfcreator -y
 choco install pencil -y
+choco install pester -y
 choco install pidgin -y
 choco install procexp -y
 choco install putty -y
+choco install ransack -y
 choco install regshot -y
 choco install skype -y
 choco install sumatrapdf -y

@@ -635,7 +635,6 @@ libzzip0.13
 lighttpd
 links
 llvm
-llvm-debuginfo
 llvm-doc
 lndir
 login
