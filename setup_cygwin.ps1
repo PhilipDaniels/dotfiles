@@ -51,9 +51,9 @@ Write-Host "Downloading apt-cyg"
 C:\cygwin\bin\bash --noprofile -c "cd /tmp;/bin/lynx -source https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg > apt-cyg"
 Write-Host "Downloading apt-cyg completed"
 
-C:\cygwin\bin\bash --noprofile -c "/bin/install apt-cyg /bin"
+C:\cygwin\bin\bash --noprofile -c "cd /tmp; /bin/install apt-cyg /bin"
 Write-Host "apt-cyg installed"
-Remove-Item "apt-cyg"
+#Remove-Item "apt-cyg"
 
 
 # Edit fstab to remove the cygdrive prefix, so we can type
@@ -61,6 +61,10 @@ Remove-Item "apt-cyg"
 C:\cygwin\bin\bash --noprofile -c "/bin/sed -i.bak 's/\/cygdrive/\//g' /etc/fstab"
 Write-Host "Removed cygdrive prefix from /etc/fstab"
 
+# By default, Cygwin users /home/uid as your home directory. It's not nice. Change it
+# to be the same as the Windows profile.
+C:\cygwin\bin\bash --noprofile -c "sed -i.bak 's/# db_home.*$/db_home: windows/g' /etc/nsswitch.conf"
+Write-Host "Patched /etc/nsswitch.conf to set your Cygwin home directory to be the same as your Windows directory"
 
-# TODO: Check /etc/passwd to setup home correctly
+
 # TODO: Mymintty
