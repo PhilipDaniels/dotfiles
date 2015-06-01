@@ -38,8 +38,31 @@ Write-Host "Installing ===================="
 Write-Host $packageList
 Write-Host "==============================="
 
-Write-Host ("{0} Cygwin setup starting" -f (Get-Date -format s))
-$mirror = 'http://mirror.steadfast.net/cygwin/';
+
+#These are your 20 best choices
+#7.24918603897095 sec http://cygwin.cathedral-networks.org/
+#7.34770083427429 sec ftp://artfiles.org/cygwin.org/pub/cygwin/
+#7.69138693809509 sec http://ftp.fsn.hu/pub/cygwin/
+#7.70231890678406 sec http://artfiles.org/cygwin.org/pub/cygwin/
+#10.3307569026947 sec http://tweedo.com/mirror/cygwin/
+#11.5071229934692 sec ftp://ftp.fsn.hu/pub/cygwin/
+#13.2624759674072 sec ftp://ftp.mirrorservice.org/sites/sourceware.org/pub/cygwin/
+#13.3484349250793 sec http://mirrors-uk.go-parts.com/cygwin/
+#16.3633959293365 sec http://mirrors.chauf.net/cygwin/
+#16.9122979640961 sec http://cygwin.localhost.equipment/
+#17.7348029613495 sec ftp://mirrors-uk.go-parts.com/cygwin/
+#19.0100059509277 sec http://cygwin.mirror.uk.sargasso.net/
+#19.6677420139313 sec http://www.mirrorservice.org/sites/sourceware.org/pub/cygwin/
+#22.4730589389801 sec ftp://linux.rz.ruhr-uni-bochum.de/cygwin/
+#22.6440341472626 sec ftp://ftp-stud.hs-esslingen.de/pub/Mirrors/sources.redhat.com/cygwin/
+#22.9422221183777 sec http://ftp-stud.hs-esslingen.de/pub/Mirrors/sources.redhat.com/cygwin/
+#23.3495979309082 sec ftp://mirror.switch.ch/mirror/cygwin/
+#25.6568729877472 sec ftp://ftp.fit.vutbr.cz/pub/systems/cygwin/
+#27.3455760478973 sec ftp://mirror.easyname.at/cygwin/
+#28.6803359985352 sec http://bo.mirror.garr.it/mirrors/sourceware.org/cygwin/
+#$mirror = 'http://mirror.steadfast.net/cygwin/';   known to work but very slow.
+$mirror = 'http://cygwin.cathedral-networks.org/'
+Write-Host ("{0} Main Cygwin setup starting" -f (Get-Date -format s))
 Start-Process -wait -FilePath $targetFile -ArgumentList ("-q -l $cygDir\packages -s " + $mirror + " -R " + $cygDir + " -P " + $packageList);
 Write-Host ("{0} Main Cygwin should now be installed." -f (Get-Date -format s))
 
