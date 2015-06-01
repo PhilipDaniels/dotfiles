@@ -36,7 +36,7 @@ Write-Host "Installing ===================="
 Write-Host $packageList
 Write-Host "==============================="
 
-$mirror = 'http://mirror.steadfast.net/cygwin/';
+$mirror = 'http://mirrors.kernel.org/cygwin/';
 Start-Process -wait -FilePath $targetFile -ArgumentList ("-q -l $cygDir\packages -s " + $mirror + " -R " + $cygDir + " -P " + $packageList);
 Write-Host "Main Cygwin should now be installed."
 
