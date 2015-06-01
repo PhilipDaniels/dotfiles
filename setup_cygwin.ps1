@@ -4,6 +4,8 @@ param([Int32]$arch=64)
 # Installs Cygwin into C:\cywgin. Normally installs the 64-bit version,
 # but you can specify another one by passing 32 as a parameter.
 
+Write-Host ("{0} Cygwin setup starting" -f (Get-Date -format s))
+
 $cygDir = "C:\cygwin"
 
 # Create cygwin directory.
@@ -36,13 +38,15 @@ Write-Host "Installing ===================="
 Write-Host $packageList
 Write-Host "==============================="
 
+Write-Host ("{0} Cygwin setup starting" -f (Get-Date -format s))
 $mirror = 'http://mirror.steadfast.net/cygwin/';
 Start-Process -wait -FilePath $targetFile -ArgumentList ("-q -l $cygDir\packages -s " + $mirror + " -R " + $cygDir + " -P " + $packageList);
-Write-Host "Main Cygwin should now be installed."
+Write-Host ("{0} Main Cygwin should now be installed." -f (Get-Date -format s))
+
 
 $mirror = 'ftp://ftp.cygwinports.org/pub/cygwinports/';
 Start-Process -wait -FilePath $targetFile -ArgumentList ("-q -l $cygDir\packages -K http://cygwinports.org/ports.gpg -s " + $mirror + " -R " + $cygDir + " -P " + $packageList);
-Write-Host "Cygports should now be installed."
+Write-Host ("{0} Cygports should now be installed." -f (Get-Date -format s))
 
 
 # Download apt-cyg and put it in the bin folder.
@@ -65,6 +69,10 @@ Write-Host "Removed cygdrive prefix from /etc/fstab"
 # to be the same as the Windows profile.
 C:\cygwin\bin\bash --noprofile -c "/bin/sed -i.bak 's/# db_home.*$/db_home: windows/g' /etc/nsswitch.conf"
 Write-Host "Patched /etc/nsswitch.conf to set your Cygwin home directory to be the same as your Windows directory"
+
+C:\cygwin\bin\bash --noprofile -c "cd; pwd"
+
+Write-Host ("{0} Cygwin setup complete." -f (Get-Date -format s))
 
 
 # TODO: Mymintty
