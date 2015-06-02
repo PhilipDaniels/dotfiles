@@ -39,6 +39,7 @@ Write-Host $packageList
 Write-Host "==============================="
 
 
+# The following list was created using the cygwin_mirror_test.pl script.
 #These are your 20 best choices
 #7.24918603897095 sec http://cygwin.cathedral-networks.org/
 #7.34770083427429 sec ftp://artfiles.org/cygwin.org/pub/cygwin/
