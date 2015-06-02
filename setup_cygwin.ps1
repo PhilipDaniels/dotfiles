@@ -93,9 +93,4 @@ Write-Host "Removed cygdrive prefix from /etc/fstab"
 C:\cygwin\bin\bash --noprofile -c "/bin/sed -i.bak 's/# db_home.*$/db_home: windows/g' /etc/nsswitch.conf"
 Write-Host "Patched /etc/nsswitch.conf to set your Cygwin home directory to be the same as your Windows directory"
 
-C:\cygwin\bin\bash --noprofile -c "cd; pwd"
-
 Write-Host ("{0} Cygwin setup complete." -f (Get-Date -format s))
-
-
-# TODO: Mymintty
