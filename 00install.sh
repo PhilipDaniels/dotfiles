@@ -12,6 +12,15 @@ if f_AtWork; then
     sed -i.bak 's/email = Philip.Daniels1971@gmail.com/email = Philip.Daniels@landmark.co.uk/g' ~/.gitconfig
 fi
 
+# Download apt-cyg if it does not exist
+if [ "$OS" == "cygwin" ] ; then
+    if [ ! -f /bin/apt-cyg ] ; then
+        echo "Downloading apt-cyg to /bin"
+        lynx -source https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg > /bin/apt-cyg
+        chmod ugo+rx /bin/apt-cyg
+    fi
+fi
+
 if [ "$OS" == "linux" ] ; then
   f_Relink ~/repos/dotfiles/.bash_logout ~/.bash_logout
   f_Relink ~/repos/dotfiles/.bash_profile ~/.bash_profile
