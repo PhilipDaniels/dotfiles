@@ -75,9 +75,9 @@ Write-Host ("{0} Cygports should now be installed." -f (Get-Date -format s))
 
 # Download apt-cyg and put it in the bin folder.
 # Download into our home dir to avoid permissions problems.
-Write-Host "Downloading apt-cyg"
-C:\cygwin\bin\bash --noprofile -c "/bin/lynx -source https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg > /bin/apt-cyg;/usr/bin/chmod ugo+rx /bin/apt-cyg"
-Write-Host "Downloading apt-cyg completed"
+#Write-Host "Downloading apt-cyg"
+#C:\cygwin\bin\bash --noprofile -c "/bin/lynx -source https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg > /bin/apt-cyg;/usr/bin/chmod ugo+rx /bin/apt-cyg"
+#Write-Host "Downloading apt-cyg completed"
 
 #C:\cygwin\bin\bash --noprofile -c "cd /tmp; /bin/install apt-cyg /bin"
 #Write-Host "apt-cyg installed"
