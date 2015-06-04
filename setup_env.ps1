@@ -1,7 +1,6 @@
-﻿# Sets up the main environment.
+# Sets up the main environment.
 
 #$scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
-
 <#
 .SYNOPSIS
 Adds one or more folders to the Path environment variable.
@@ -22,7 +21,7 @@ function Add-PathFolders
     [parameter(Mandatory = $true, ValueFromPipeline = $true)]
     [string[]] $Folders,
     [string] $EnvironmentVariableTarget = "User")
-    
+
     begin
     {
         Set-StrictMode -Version Latest
@@ -33,7 +32,7 @@ function Add-PathFolders
         [bool] $isInputFromPipeline =
             ($PSBoundParameters.ContainsKey("Folders") -eq $false)
 
-        [int] $foldersAdded = 0
+			[int] $foldersAdded = 0
 
         [string[]] $pathFolders = [Environment]::GetEnvironmentVariable(
             "Path",
@@ -79,7 +78,6 @@ function Add-PathFolders
                     + " variable...")
 
                 $folderList.Add($folder) | Out-Null
-
                 $foldersAdded++
             }
         }
@@ -91,7 +89,6 @@ function Add-PathFolders
         {
             Write-Verbose ("No changes to the Path environment variable are" `
                 + " necessary.")
-
             return
         }
 
@@ -123,4 +120,3 @@ Add-PathFolders "C:\Public\Apps"
 Add-PathFolders "C:\ProgramData\chocolatey\bin"
 
 Write-Host ("{0} Completed setup_env.ps1" -f (Get-Date -format s))
-
