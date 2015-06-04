@@ -4,7 +4,7 @@ param([Int32]$arch=64)
 # Installs Cygwin into C:\cywgin. Normally installs the 64-bit version,
 # but you can specify another one by passing 32 as a parameter.
 
-Write-Host ("{0} Cygwin setup starting" -f (Get-Date -format s))
+Write-Host ("{0} Starting setup_cygwin.ps1" -f (Get-Date -format s))
 
 $cygDir = "C:\cygwin"
 
@@ -73,17 +73,6 @@ Start-Process -wait -FilePath $targetFile -ArgumentList ("-q -l $cygDir\packages
 Write-Host ("{0} Cygports should now be installed." -f (Get-Date -format s))
 
 
-# Download apt-cyg and put it in the bin folder.
-# Download into our home dir to avoid permissions problems.
-#Write-Host "Downloading apt-cyg"
-#C:\cygwin\bin\bash --noprofile -c "/bin/lynx -source https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg > /bin/apt-cyg;/usr/bin/chmod ugo+rx /bin/apt-cyg"
-#Write-Host "Downloading apt-cyg completed"
-
-#C:\cygwin\bin\bash --noprofile -c "cd /tmp; /bin/install apt-cyg /bin"
-#Write-Host "apt-cyg installed"
-#Remove-Item "apt-cyg"
-
-
 # Edit fstab to remove the cygdrive prefix, so we can type
 # /c/Users rather than /cygdrive/c/Users.
 C:\cygwin\bin\bash --noprofile -c "/bin/sed -i.bak 's/\/cygdrive/\//g' /etc/fstab"
@@ -94,4 +83,5 @@ Write-Host "Removed cygdrive prefix from /etc/fstab"
 C:\cygwin\bin\bash --noprofile -c "/bin/sed -i.bak 's/# db_home.*$/db_home: windows/g' /etc/nsswitch.conf"
 Write-Host "Patched /etc/nsswitch.conf to set your Cygwin home directory to be the same as your Windows directory"
 
-Write-Host ("{0} Cygwin setup complete." -f (Get-Date -format s))
+
+Write-Host ("{0} Completed setup_cygwin.ps1" -f (Get-Date -format s))

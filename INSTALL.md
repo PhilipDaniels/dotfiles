@@ -27,43 +27,6 @@ Portable Apps Setup
 Install to C:\PortableApps. Ensure you get gVim, it will be needed for the 'gv'
 bash function.
 
-Cygwin
-======
-THIS MUST BE INSTALLED ON EACH PC BECAUSE ITS INSTALLER DOES SPECIAL THINGS.
-
-Use 32 bit setup because it still has more packages than 64 bit.
-
-Install base packages: autoconf, automake, bison, clang, cmake, ctags, curl,
-cygport, g++, gcc, gdb, git, llvm, make, m4, patch, ping, rsync, screen,
-tig, tmux, tree, vim
-
-Edit /etc/fstab so it looks like this, to remove the cygdrive prefix:
-  none / cygdrive binary,posix=0,user 0 0
-
-After installation, your home dir will probably be in /home/name, rather
-than C:\Users\Phil. The easiest way to change this is to just edit /etc/passwd
-in vim, for example to set it to /cygdrive/c/Users/Phil, or /c/Users/Phil
-if you have adjusted the cygdrive prefix. CHECK THE /etc/passwd FILE ANYWAY.
-Especially if SSH is complaining about /cydrive/c... this indicates the home
-folder is wrong in /etc/passwd.
-
-Use the "apt-cyg" script to install packages; a version is in %PUBLICROOT%\Apps
-so it should be on your path (adding that folder to the path is part of the
-general setup instructions).
-
-Cygwin Ports
-============
-See http://cygwinports.org/
-You want to get the fonts, because Cygwin gvim is configured to use one of
-them. You can also add extra fonts by
-
-  mkdir /usr/share/fonts/TTF
-  ln -s /c/Windows/Fonts/arial.ttf /usr/share/fonts/TTF/
-
-  or just copy the fonts over from your Windows directory.
-  But unfortunately the TTF fonts still look a bit blurry in Cygwin gvim.
-  Windows gvim is much better.
-
 MyMintty
 ========
 You will need a compiled mymintty.exe in order to use the Cygwin terminals
