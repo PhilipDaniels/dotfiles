@@ -55,6 +55,8 @@ noremap <silent> <S-F8> :cprev<CR>
 "  S-F11 = step out (gdb = finish)
 "  C-Brk = cancel current build
 
+" Binds the "flip source/header" function to F12.
+noremap <F12> :FSHere<CR>
 
 " ******************* Letter keys ******************** 
 " Quick access to NERDTree.

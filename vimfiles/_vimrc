@@ -54,6 +54,10 @@ set textwidth=0 wrapmargin=0
 " ...and really stay off, sometimes I want to break the rules.
 au BufRead,BufNewFile * set textwidth=0 wrapmargin=0
 
+au! BufEnter *.cpp let b:fswitchdst = 'hpp,h' | let b:fswitchlocs = '.'
+au! BufEnter *.hpp let b:fswitchdst = 'cpp' | let b:fswitchlocs = '.'
+au! BufEnter *.h let b:fswitchdst = 'c,cpp' | let b:fswitchlocs = '.'
+
 " When Ctrl-P starts, run in mixed mode by default (searches files, buffers
 " and MRU lists) and bind to the key M-p. You need to restart Vim if you
 " change either of these settings, sourcing this file is not enough.

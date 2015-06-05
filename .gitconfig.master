@@ -30,6 +30,7 @@
     s = status
     ss = status --short
     m = commit -m
+    aamend = commit -a --amend --no-edit
     amend = commit --amend --no-edit
     a = add -A
     b = branch -a -vv
