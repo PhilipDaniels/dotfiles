@@ -1,53 +1,44 @@
 " From https://github.com/ulfalizer/Configuration-files/blob/master/.vimrc/
 " and slightly hacked.
 
-
-" This is a dictionary of folder -> exe name. I only work on 1 C program, so:
-let g:proj_exes = { 'mintty' : 'mintty.exe', 'vgud' : 'vgud.exe' }
-
-
-" Extra flags to pass to make (and gcc if you use that code path). You can use
-" this to make a debug build, for example. Exactly what to pass depends on the
-" Makefile in use. As an example, for mintty you would do this:
-"    :let g:make_flags="DEBUG=1"
-let g:make_flags = ""
-
-
-func! Compile()
+func! Compile(...)
     " Compiles a program. Uses 'make' if 'Makefile' exists in the current
     " directory. Otherwise, the program is assumed to consist of a single
     " translation unit and the language (C or C++) is inferred from the file
     " extension. 
-    "
-    " Returns a [succeeded, out_file] tuple, where 'succeeded' is 1 if compilation
-    " was successful (an executable was produced) and 0 otherwise, and where
-    " 'out_file' is the name of the produced executable. When building with
-    " 'make', the executable name is looked up in a dictionary 'proj_exes' that
-    " links project directories to executable names.
+
+    " Returns a [succeeded, out_file] tuple, where 'succeeded' is 1 if
+    " compilation was successful (an executable was produced) and 0 otherwise,
+    " and where 'out_file' is the name of the produced executable. When
+    " building with 'make', the executable name is found by looking for a file
+    " named "*.exe" in the current directory. 
+    
+    if a:0 == 0
+        let makeargs = ""
+    else
+        let makeargs = join(a:000, " ")
+    endif
+
     if filereadable("Makefile")
         " If the current directory contains a Makefile, compile using 'make'
-        echo "make starting..."
+        echom "make starting..."
 
         " If a file is bound to the current buffer, write it first
         if expand("%") != "" | w | endif
 
-        let messages = system("make ".g:make_flags)
+        let messages = system("make ".makeargs)
         let succeeded = (v:shell_error == 0)
 
-        " Look up the current directory to see if an executable has been
-        " registered for it
-        if !exists("g:proj_exes")
-            echoerr "g:proj_exes does not exist"
+        " Look for an executable in the current directory.
+        let exes = split(globpath('.', '*.exe'), '\n')
+        if len(exes) == 0
+            echoerr "No executable found"
             return [0, ""]
         endif
-
-        let proj_dir = expand("%:p:h:t")
-        let out_file = get(g:proj_exes, proj_dir, "")
-
-        if !strlen(out_file)
-            echoerr "No executable set for directory '".proj_dir."'"
-            return [0, ""]
+        if len(exes) > 1
+            echom "More than 1 executable found, taking first..."
         endif
+        let out_file = exes[0]
     else
         " If the current directory contains no Makefile, compile just the file
         " bound to the current buffer
@@ -63,9 +54,9 @@ func! Compile()
 
         " Determine compiler to use
         if &ft == "cpp"
-            let compiler = "g++ ".g:make_flags
+            let compiler = "g++ ".makeargs
         elseif &ft == "c"
-            let compiler = "gcc ".g:make_flags
+            let compiler = "gcc ".makeargs
         else
             echoerr "Unknown language for '".f."'"
             return [0, ""]
@@ -84,6 +75,7 @@ func! Compile()
 
     " Create quickfix list
     silent cexpr messages
+
     " Display the quickfix window if there are warnings or errors or if the
     " compilation failed; hide it otherwise.
     if succeeded
@@ -91,6 +83,7 @@ func! Compile()
     else
         copen
     endif
+
     " If we are in the quickfix window, press enter to jump to the first error
     if &buftype == "quickfix"
         exec "normal \<CR>"
@@ -104,7 +97,7 @@ func! Compile()
 
     " This redraw stops the stupid 'Press ENTER to continue" message.
     redraw
-    echo "Compilation completed."
+    echom "Compilation completed. out_file is ".out_file
 
     return [succeeded, out_file]
 endfunc
@@ -118,33 +111,13 @@ func! CompileAndRun()
     endif
 endfunc
 
-func! Clean()
-    if filereadable("Makefile")
-        echo "make clean starting..."
-        " If the current directory contains a Makefile, assume it
-        " has a "clean" target and invoke it.
+" Bind Compile to MM (MyMake). User command must start with an upper case.
+com! -nargs=* MM call Compile(<args>)
 
-        " If a file is bound to the current buffer, write it first
-        if expand("%") != "" | w | endif
 
-        let messages = system("make clean")
-        let succeeded = (v:shell_error == 0)
 
-        " Look up the current directory to see if an executable has been
-        " registered for it
-        if !succeeded
-            echoerr "make clean failed."
-            return [0, ""]
-        else
-            " This redraw stops the stupid 'Press ENTER to continue" message.
-            redraw
-            echo "make clean starting...done."
-        endif
-    else
-        echoerr "No Makefile, so can't make clean."
-        return [0, ""]
-    endif
-endfunc
+
+
 
 
 " Pyclewn
