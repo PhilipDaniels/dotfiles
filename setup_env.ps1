@@ -116,6 +116,11 @@ Write-Host ("{0} Starting setup_env.ps1" -f (Get-Date -format s))
 [Environment]::SetEnvironmentVariable("PUBLICROOT", "C:\Public", "User")
 Write-Host "Environment variables created"
 
+
+# Install chocolatey itself.
+iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+Write-Host ("{0} Chocolatey (but no apps) installed." -f (Get-Date -format s))
+
 Add-PathFolders "C:\Public\Apps"
 Add-PathFolders "C:\ProgramData\chocolatey\bin"
 

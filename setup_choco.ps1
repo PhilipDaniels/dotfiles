@@ -1,9 +1,5 @@
 Write-Host ("{0} Starting setup_choco.ps1" -f (Get-Date -format s))
 
-# Install chocolatey itself
-iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
-Write-Host ("{0} Chocolatey installed, moving onto the apps..." -f (Get-Date -format s))
-
 choco install 7zip -y
 choco install 7zip.commandline -y
 choco install audacity -y
