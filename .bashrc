@@ -41,7 +41,7 @@ HISTFILESIZE=2000
 shopt -s checkwinsize
 
 # List of directories to be searched by the cd command.
-CDPATH=.:~/repos
+# CDPATH=.:~/repos
 
 # Add these folders to the path (if they exist).
 f_AddToPath "/sbin"
