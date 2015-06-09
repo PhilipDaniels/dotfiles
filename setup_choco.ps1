@@ -20,7 +20,6 @@ choco install freefilesync -y
 choco install frhed -y
 choco install geany -y
 choco install gimp -y
-choco install git-credential-winstore -y
 choco install googlechrome -y
 choco install inkscape -y
 choco install irfanview -y
