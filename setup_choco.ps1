@@ -39,7 +39,6 @@ choco install pdfcreator -y
 choco install pencil -y
 choco install pester -y
 choco install pidgin -y
-choco install poshgit -y
 choco install procexp -y
 choco install putty -y
 choco install ransack -y
