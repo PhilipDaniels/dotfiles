@@ -14,6 +14,7 @@ choco install eclipse -y
 choco install evince -y
 choco install far -y
 choco install fiddler4 -y
+choco install filetypesman -y
 choco install filezilla -y
 choco install firefox -y
 choco install freefilesync -y
@@ -43,6 +44,7 @@ choco install procexp -y
 choco install putty -y
 choco install ransack -y
 choco install regshot -y
+choco install shmnview -y
 choco install skype -y
 choco install sumatrapdf -y
 choco install swissfileknife -y

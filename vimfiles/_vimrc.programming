@@ -102,6 +102,17 @@ func! Compile(...)
     return [succeeded, out_file]
 endfunc
 
+func! Clean()
+    let messages = system("make clean")
+    let succeeded = (v:shell_error == 0)
+    redraw
+    if succeeded
+        echo "clean succeeded"
+    else
+        echoerr "clean failed!!!"
+    endif
+endfunc
+
 func! CompileAndRun()
     " Compiles the current file/project and runs it if compilation succeeds
     let [succeeded, out_file] = Compile()
@@ -113,7 +124,7 @@ endfunc
 
 " Bind Compile to MM (MyMake). User command must start with an upper case.
 com! -nargs=* MM call Compile(<args>)
-
+com! -nargs=* MC call Clean(<args>)
 
 
 
