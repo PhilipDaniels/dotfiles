@@ -5,12 +5,14 @@ choco install 7zip.commandline -y
 choco install audacity -y
 choco install autoruns -y
 #choco install blender -y
+choco install conemu -y
 choco install cpu-z -y
 choco install dependencywalker -y
 choco install defaultprogramseditor -y
 choco install dotpeek -y
 choco install eclipse -y
 choco install evince -y
+choco install far -y
 choco install fiddler4 -y
 choco install filezilla -y
 choco install firefox -y
@@ -18,6 +20,7 @@ choco install freefilesync -y
 choco install frhed -y
 choco install geany -y
 choco install gimp -y
+choco install git-credential-winstore -y
 choco install googlechrome -y
 choco install inkscape -y
 choco install irfanview -y
@@ -36,6 +39,7 @@ choco install pdfcreator -y
 choco install pencil -y
 choco install pester -y
 choco install pidgin -y
+choco install poshgit -y
 choco install procexp -y
 choco install putty -y
 choco install ransack -y
