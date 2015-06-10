@@ -14,9 +14,9 @@ func! Compile(...)
     " named "*.exe" in the current directory. 
     
     if a:0 == 0
-        let makeargs = ""
+        let makeargs = "-j8"
     else
-        let makeargs = join(a:000, " ")
+        let makeargs = "-j8 ".join(a:000, " ")
     endif
 
     if filereadable("Makefile")
