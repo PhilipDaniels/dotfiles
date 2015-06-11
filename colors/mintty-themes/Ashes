@@ -1,0 +1,24 @@
+# Base16 Ashes (https://github.com/chriskempson/base16)
+# Scheme: Jannik Siebert (https://github.com/janniks)
+
+BackgroundColour=28,32,35
+ForegroundColour=199,149,149
+CursorColour=174,199,149
+
+Black=28,32,35
+Red=57,63,69
+Green=86,94,101
+Yellow=116,124,132
+Blue=173,179,186
+Magenta=199,204,209
+Cyan=223,226,229
+White=243,244,245
+BoldBlack=199,174,149
+BoldRed=199,199,149
+BoldGreen=174,199,149
+BoldYellow=149,199,174
+BoldBlue=149,174,199
+BoldMagenta=174,149,199
+BoldCyan=199,149,174
+BoldWhite=199,149,149
+

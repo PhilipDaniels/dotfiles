@@ -1,0 +1,24 @@
+# Base16 Default (https://github.com/chriskempson/base16)
+# Scheme: Chris Kempson (http://chriskempson.com)
+
+BackgroundColour=21,21,21
+ForegroundColour=143,85,54
+CursorColour=244,191,117
+
+Black=21,21,21
+Red=32,32,32
+Green=48,48,48
+Yellow=80,80,80
+Blue=176,176,176
+Magenta=208,208,208
+Cyan=224,224,224
+White=245,245,245
+BoldBlack=172,65,66
+BoldRed=210,132,69
+BoldGreen=244,191,117
+BoldYellow=144,169,89
+BoldBlue=117,181,170
+BoldMagenta=106,159,181
+BoldCyan=170,117,159
+BoldWhite=143,85,54
+

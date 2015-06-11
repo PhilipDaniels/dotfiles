@@ -1,0 +1,24 @@
+# Base16 Codeschool (https://github.com/chriskempson/base16)
+# Scheme: brettof86
+
+BackgroundColour=35,44,49
+ForegroundColour=201,131,68
+CursorColour=160,59,30
+
+Black=35,44,49
+Red=28,54,87
+Green=42,52,58
+Yellow=63,73,68
+Blue=132,137,140
+Magenta=158,167,166
+Cyan=167,207,163
+White=181,216,246
+BoldBlack=42,84,145
+BoldRed=67,130,13
+BoldGreen=160,59,30
+BoldYellow=35,121,134
+BoldBlue=176,47,48
+BoldMagenta=72,77,121
+BoldCyan=197,152,32
+BoldWhite=201,131,68
+

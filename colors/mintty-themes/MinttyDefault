@@ -1,0 +1,22 @@
+# Mintty default colours, from the source code, config.c.
+CursorColour=191,191,191
+ForegroundColour=191,191,191
+BackgroundColour=0,0,0
+
+Black=0,0,0
+Red=0,0,191
+Green=0,191,0
+Yellow=0,191,191
+Blue=191,0,0
+Magenta=191,0,191
+Cyan=191,191,0
+White=191,191,191
+BoldBlack=64,64,64
+BoldRed=64,64,255
+BoldGreen=64,255,64
+BoldYellow=64,255,255
+BoldBlue=255,96,96
+BoldMagenta=255,64,255
+BoldCyan=255,255,64
+BoldWhite=255,255,255
+

@@ -1,0 +1,24 @@
+# Base16 Embers (https://github.com/chriskempson/base16)
+# Scheme: Jannik Siebert (https://github.com/janniks)
+
+BackgroundColour=22,19,15
+ForegroundColour=130,87,87
+CursorColour=109,130,87
+
+Black=22,19,15
+Red=44,38,32
+Green=67,59,50
+Yellow=90,80,71
+Blue=138,128,117
+Magenta=163,154,144
+Cyan=190,182,174
+White=219,214,209
+BoldBlack=130,109,87
+BoldRed=130,130,87
+BoldGreen=109,130,87
+BoldYellow=87,130,109
+BoldBlue=87,109,130
+BoldMagenta=109,87,130
+BoldCyan=130,87,109
+BoldWhite=130,87,87
+

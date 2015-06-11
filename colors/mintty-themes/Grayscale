@@ -1,0 +1,24 @@
+# Base16 Grayscale (https://github.com/chriskempson/base16)
+# Scheme: Alexandre Gavioli (https://github.com/Alexx2/)
+
+BackgroundColour=16,16,16
+ForegroundColour=94,94,94
+CursorColour=160,160,160
+
+Black=16,16,16
+Red=37,37,37
+Green=70,70,70
+Yellow=82,82,82
+Blue=171,171,171
+Magenta=185,185,185
+Cyan=227,227,227
+White=247,247,247
+BoldBlack=124,124,124
+BoldRed=153,153,153
+BoldGreen=160,160,160
+BoldYellow=142,142,142
+BoldBlue=134,134,134
+BoldMagenta=104,104,104
+BoldCyan=116,116,116
+BoldWhite=94,94,94
+

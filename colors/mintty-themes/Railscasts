@@ -1,0 +1,24 @@
+# Base16 Railscasts (https://github.com/chriskempson/base16)
+# Scheme: Ryan Bates (http://railscasts.com)
+
+BackgroundColour=43,43,43
+ForegroundColour=188,148,88
+CursorColour=255,198,109
+
+Black=43,43,43
+Red=39,41,53
+Green=58,64,85
+Yellow=90,100,126
+Blue=212,207,201
+Magenta=230,225,220
+Cyan=244,241,237
+White=249,247,243
+BoldBlack=218,73,57
+BoldRed=204,120,51
+BoldGreen=255,198,109
+BoldYellow=165,194,97
+BoldBlue=81,159,80
+BoldMagenta=109,156,190
+BoldCyan=182,179,235
+BoldWhite=188,148,88
+

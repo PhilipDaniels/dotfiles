@@ -1,0 +1,24 @@
+# Base16 3024 (https://github.com/chriskempson/base16)
+# Scheme: Jan T. Sott (http://github.com/idleberg)
+
+BackgroundColour=9,3,0
+ForegroundColour=205,171,83
+CursorColour=253,237,2
+
+Black=9,3,0
+Red=58,52,50
+Green=74,69,67
+Yellow=92,88,85
+Blue=128,125,124
+Magenta=165,162,162
+Cyan=214,213,212
+White=247,247,247
+BoldBlack=219,45,32
+BoldRed=232,187,208
+BoldGreen=253,237,2
+BoldYellow=1,162,82
+BoldBlue=181,228,244
+BoldMagenta=1,160,228
+BoldCyan=161,106,148
+BoldWhite=205,171,83
+

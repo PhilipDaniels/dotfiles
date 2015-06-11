@@ -1,0 +1,24 @@
+# Base16 Bespin (https://github.com/chriskempson/base16)
+# Scheme: Jan T. Sott
+
+BackgroundColour=40,33,28
+ForegroundColour=147,113,33
+CursorColour=249,238,152
+
+Black=40,33,28
+Red=54,49,46
+Green=94,93,92
+Yellow=102,102,102
+Blue=121,121,119
+Magenta=138,137,134
+Cyan=157,155,151
+White=186,174,158
+BoldBlack=207,106,76
+BoldRed=207,125,52
+BoldGreen=249,238,152
+BoldYellow=84,190,13
+BoldBlue=175,196,219
+BoldMagenta=94,166,234
+BoldCyan=155,133,157
+BoldWhite=147,113,33
+

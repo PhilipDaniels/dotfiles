@@ -1,0 +1,24 @@
+# Base16 Twilight (https://github.com/chriskempson/base16)
+# Scheme: David Hart (http://hart-dev.com)
+
+BackgroundColour=30,30,30
+ForegroundColour=155,112,63
+CursorColour=249,238,152
+
+Black=30,30,30
+Red=50,53,55
+Green=70,75,80
+Yellow=95,90,96
+Blue=131,129,132
+Magenta=167,167,167
+Cyan=195,195,195
+White=255,255,255
+BoldBlack=207,106,76
+BoldRed=205,168,105
+BoldGreen=249,238,152
+BoldYellow=143,157,106
+BoldBlue=175,196,219
+BoldMagenta=117,135,166
+BoldCyan=155,133,157
+BoldWhite=155,112,63
+

@@ -110,8 +110,7 @@ function Add-PathFolders
 Write-Host ("{0} Starting setup_env.ps1" -f (Get-Date -format s))
 
 # Create the environment variables that various programs need.
-[Environment]::SetEnvironmentVariable("CYGROOT", $cygDir, "User")
-[Environment]::SetEnvironmentVariable("FARROOT", "C:\Public\Apps\Far30b4242.x64.20150117", "User")
+[Environment]::SetEnvironmentVariable("CYGROOT", "C:\cygwin", "User")
 [Environment]::SetEnvironmentVariable("PORTABLEAPPSROOT", "C:\PortableApps", "User")
 [Environment]::SetEnvironmentVariable("PUBLICROOT", "C:\Public", "User")
 Write-Host "Environment variables created"

@@ -1,0 +1,24 @@
+# Base16 Eighties (https://github.com/chriskempson/base16)
+# Scheme: Chris Kempson (http://chriskempson.com)
+
+BackgroundColour=45,45,45
+ForegroundColour=210,123,83
+CursorColour=255,204,102
+
+Black=45,45,45
+Red=57,57,57
+Green=81,81,81
+Yellow=116,115,105
+Blue=160,159,147
+Magenta=211,208,200
+Cyan=232,230,223
+White=242,240,236
+BoldBlack=242,119,122
+BoldRed=249,145,87
+BoldGreen=255,204,102
+BoldYellow=153,204,153
+BoldBlue=102,204,204
+BoldMagenta=102,153,204
+BoldCyan=204,153,204
+BoldWhite=210,123,83
+

@@ -1,0 +1,24 @@
+# Base16 London Tube (https://github.com/chriskempson/base16)
+# Scheme: Jan T. Sott
+
+BackgroundColour=35,31,32
+ForegroundColour=176,97,16
+CursorColour=255,210,4
+
+Black=35,31,32
+Red=28,63,149
+Green=90,87,88
+Yellow=115,113,113
+Blue=149,156,161
+Magenta=217,216,216
+Cyan=231,231,232
+White=255,255,255
+BoldBlack=238,46,36
+BoldRed=243,134,161
+BoldGreen=255,210,4
+BoldYellow=0,133,62
+BoldBlue=133,206,188
+BoldMagenta=0,157,220
+BoldCyan=152,0,93
+BoldWhite=176,97,16
+

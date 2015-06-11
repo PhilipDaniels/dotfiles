@@ -1,0 +1,24 @@
+# Base16 Google (https://github.com/chriskempson/base16)
+# Scheme: Seth Wright (http://sethawright.com)
+
+BackgroundColour=29,31,33
+ForegroundColour=57,113,237
+CursorColour=251,169,34
+
+Black=29,31,33
+Red=40,42,46
+Green=55,59,65
+Yellow=150,152,150
+Blue=180,183,180
+Magenta=197,200,198
+Cyan=224,224,224
+White=255,255,255
+BoldBlack=204,52,43
+BoldRed=249,106,56
+BoldGreen=251,169,34
+BoldYellow=25,136,68
+BoldBlue=57,113,237
+BoldMagenta=57,113,237
+BoldCyan=163,106,199
+BoldWhite=57,113,237
+

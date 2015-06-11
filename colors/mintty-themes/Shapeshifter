@@ -1,0 +1,24 @@
+# Base16 shapeshifter (https://github.com/chriskempson/base16)
+# Scheme: Tyler Benziger (http://tybenz.com)
+
+BackgroundColour=0,0,0
+ForegroundColour=105,84,45
+CursorColour=221,221,19
+
+Black=0,0,0
+Red=4,4,4
+Green=16,32,21
+Yellow=52,52,52
+Blue=85,85,85
+Magenta=171,171,171
+Cyan=224,224,224
+White=249,249,249
+BoldBlack=233,47,47
+BoldRed=224,148,72
+BoldGreen=221,221,19
+BoldYellow=14,216,57
+BoldBlue=35,237,218
+BoldMagenta=59,72,227
+BoldCyan=249,150,226
+BoldWhite=105,84,45
+

@@ -1,0 +1,24 @@
+# Base16 Mocha (https://github.com/chriskempson/base16)
+# Scheme: Chris Kempson (http://chriskempson.com)
+
+BackgroundColour=59,50,40
+ForegroundColour=187,149,132
+CursorColour=244,188,135
+
+Black=59,50,40
+Red=83,70,54
+Green=100,82,64
+Yellow=126,112,90
+Blue=184,175,173
+Magenta=208,200,198
+Cyan=233,225,221
+White=245,238,235
+BoldBlack=203,96,119
+BoldRed=210,139,113
+BoldGreen=244,188,135
+BoldYellow=190,181,91
+BoldBlue=123,189,164
+BoldMagenta=138,179,181
+BoldCyan=168,155,185
+BoldWhite=187,149,132
+

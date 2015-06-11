@@ -1,0 +1,24 @@
+# Base16 Brewer (https://github.com/chriskempson/base16)
+# Scheme: Timothée Poisot (http://github.com/tpoisot)
+
+BackgroundColour=12,13,14
+ForegroundColour=177,89,40
+CursorColour=220,160,96
+
+Black=12,13,14
+Red=46,47,48
+Green=81,82,83
+Yellow=115,116,117
+Blue=149,150,151
+Magenta=183,184,185
+Cyan=218,219,220
+White=252,253,254
+BoldBlack=227,26,28
+BoldRed=230,85,13
+BoldGreen=220,160,96
+BoldYellow=49,163,84
+BoldBlue=128,177,211
+BoldMagenta=49,130,189
+BoldCyan=117,107,177
+BoldWhite=177,89,40
+

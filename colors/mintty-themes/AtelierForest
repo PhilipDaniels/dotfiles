@@ -1,0 +1,24 @@
+# Base16 Atelier Forest (https://github.com/chriskempson/base16)
+# Scheme: Bram de Haan (http://atelierbram.github.io/syntax-highlighting/atelier-schemes/forest)
+
+BackgroundColour=27,25,24
+ForegroundColour=195,63,243
+CursorColour=213,145,26
+
+Black=27,25,24
+Red=44,36,33
+Green=104,97,94
+Yellow=118,110,107
+Blue=156,148,145
+Magenta=168,161,159
+Cyan=230,226,224
+White=241,239,238
+BoldBlack=242,44,64
+BoldRed=223,83,32
+BoldGreen=213,145,26
+BoldYellow=90,183,56
+BoldBlue=0,173,156
+BoldMagenta=64,126,231
+BoldCyan=102,102,234
+BoldWhite=195,63,243
+

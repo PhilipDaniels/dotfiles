@@ -1,0 +1,24 @@
+# Base16 Marrakesh (https://github.com/chriskempson/base16)
+# Scheme: Alexandre Gavioli (http://github.com/Alexx2/)
+
+BackgroundColour=32,22,2
+ForegroundColour=179,88,142
+CursorColour=168,131,57
+
+Black=32,22,2
+Red=48,46,0
+Green=95,91,23
+Yellow=108,104,35
+Blue=134,129,59
+Magenta=148,142,72
+Cyan=204,195,122
+White=250,240,165
+BoldBlack=195,83,89
+BoldRed=179,97,68
+BoldGreen=168,131,57
+BoldYellow=24,151,78
+BoldBlue=117,167,56
+BoldMagenta=71,124,161
+BoldCyan=136,104,179
+BoldWhite=179,88,142
+
