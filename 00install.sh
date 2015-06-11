@@ -46,6 +46,7 @@ else
   f_CopyFileWithBackup colors/.dircolors.solarized.ansi-universal ~/.dircolors
   f_CopyFileWithBackup .tmux.conf ~/.tmux.conf
   f_CopyFileWithBackup ./colors/mintty-themes/SolarizedDark ~/.minttyrc
+  f_CopyFileWithBackup ConEmu.xml ~/AppData/Roaming/ConEmu.xml
 fi
 
 echo "Installation complete."
