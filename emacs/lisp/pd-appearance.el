@@ -16,3 +16,10 @@
 ;(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 ;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
+(require 'fill-column-indicator)
+(setq fci-rule-width 2)
+(setq fci-rule-color "DodgerBlue1")
+(add-hook 'c-mode-common-hook 'fci-mode)
+(add-hook 'emacs-lisp-mode-hook 'fci-mode)
+
+

@@ -5,7 +5,8 @@
 
 
 ; ******************* Global Function keys ********************
-; F1 is HELP. Leave it alone.
+; Function key names must be in lower case, like f7, not F7.
+; f1 is HELP. Leave it alone.
 ; Make F2 and F3 run the macros stored in the 'q' and 'w' registers
 ; and Shift F2/F3 run the macros until a blank line is encountered.
 ;map <F2> @q
@@ -40,12 +41,12 @@
 ;  CS-F5 = restart
 ;noremap <silent> <special>   <F5> :call Debug(1)<CR>
 ;noremap <silent> <special> <C-F5> :call CompileAndRun()<CR>
-  (local-set-key (kbd "<F6>")   'compile)              ; interactive compile
-  (local-set-key (kbd "<S-F6>") 'compile)              ; save and compile
-  (local-set-key (kbd "<C-F6>") 'compile)              ; make clean
-  (local-set-key (kbd "<F7>")   'ff-find-other-file)   ; View.ToggleDesigner in VS.
-  (local-set-key (kbd "<S-F7>") 'ff-find-other-file t) ; View.ToggleDesigner in VS hsplit
-  (local-set-key (kbd "<C-F7>") 'ff-find-other-file t) ; View.ToggleDesigner in VS vsplit.
+  (local-set-key (kbd "<f6>")   'compile)              ; interactive compile
+  (local-set-key (kbd "<S-f6>") 'compile)              ; save and compile
+  (local-set-key (kbd "<C-f6>") 'compile)              ; make clean
+  (local-set-key (kbd "<f7>")   'ff-find-other-file)   ; View.ToggleDesigner in VS.
+  (local-set-key (kbd "<S-f7>") (lambda () (interactive) (ff-find-other-file t))) ; View.ToggleDesigner in VS hsplit
+  (local-set-key (kbd "<C-f7>") (lambda () (interactive) (ff-find-other-file t))) ; View.ToggleDesigner in VS vsplit.
   (local-set-key (kbd "<f8>")   'next-error)
   (local-set-key (kbd "<S-f8>") 'previous-error)
 ;"     F9 = toggle breakpoint (gdb break, clear)
