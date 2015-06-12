@@ -1,12 +1,15 @@
 #!/bin/bash
 
+# Determine the location of this script.
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
 # Sets up the bash environment.
-source .bash_functions
+source $DIR/.bash_functions
 f_DetermineOS
 
 # Always copy this. It can get tricky having a file called .gitconfig in the
 # repo, because that affects the behaviour of git in this repo!
-f_CopyFileWithBackup .gitconfig.master ~/.gitconfig
+f_CopyFileWithBackup $DIR/.gitconfig.master ~/.gitconfig
 if f_AtWork; then
     echo "It looks like you are at Landmark, updating ~/.gitconfig..."
     sed -i.bak 's/email = Philip.Daniels1971@gmail.com/email = Philip.Daniels@landmark.co.uk/g' ~/.gitconfig
@@ -14,6 +17,8 @@ fi
 
 # Download apt-cyg if it does not exist
 if [ "$OS" == "cygwin" ] ; then
+    f_CopyFileWithBackup $DIR/ConEmu.xml ~/AppData/Roaming/ConEmu.xml
+
     if [ ! -f /bin/apt-cyg ] ; then
         echo "Downloading apt-cyg to /bin"
         lynx -source https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg > /bin/apt-cyg
@@ -21,34 +26,28 @@ if [ "$OS" == "cygwin" ] ; then
     fi
 fi
 
-if [ "$OS" == "linux" ] ; then
-  f_Relink ~/repos/dotfiles/.bash_logout ~/.bash_logout
-  f_Relink ~/repos/dotfiles/.bash_profile ~/.bash_profile
-  f_Relink ~/repos/dotfiles/.bashrc ~/.bashrc
-  f_Relink ~/repos/dotfiles/.profile ~/.profile
-  f_Relink ~/repos/dotfiles/.gvimrc ~/.gvimrc
-  f_Relink ~/repos/dotfiles/.vimrc ~/.vimrc
-  f_Relink ~/repos/dotfiles/.screenrc ~/.screenrc
-  f_Relink ~/repos/dotfiles/.minttyrc ~/.minttyrc
-  f_Relink ~/repos/dotfiles/colors/.dircolors.solarized.ansi-universal ~/.dircolors
-  f_Relink ~/repos/dotfiles/.tmux.conf ~/.tmux.conf
-  f_Relink ~/repos/dotfiles/colors/mintty-themes/SolarizedDark ~/.minttyrc
-else
-  # Windows does not support symbolic links so we must copy files into place.
-  f_CopyFileWithBackup .bash_logout ~/.bash_logout
-  f_CopyFileWithBackup .bash_profile ~/.bash_profile
-  f_CopyFileWithBackup .bashrc ~/.bashrc
-  f_CopyFileWithBackup .profile ~/.profile
-  f_CopyFileWithBackup .gvimrc ~/.gvimrc
-  f_CopyFileWithBackup .vimrc ~/.vimrc
-  f_CopyFileWithBackup .screenrc ~/.screenrc
-  f_CopyFileWithBackup .minttyrc ~/.minttyrc
-  f_CopyFileWithBackup colors/.dircolors.solarized.ansi-universal ~/.dircolors
-  f_CopyFileWithBackup .tmux.conf ~/.tmux.conf
-  f_CopyFileWithBackup ./colors/mintty-themes/SolarizedDark ~/.minttyrc
-  f_CopyFileWithBackup ConEmu.xml ~/AppData/Roaming/ConEmu.xml
-fi
+function f_Inst()
+{
+    local src=$1
+    local dest=$2
+
+    if [ "$OS" == "linux" ] ; then
+	f_Relink $src $dest
+    else
+	f_CopyFileWithBackup $src $dest
+    fi
+}
+
+f_Inst $DIR/.bash_logout ~/.bash_logout
+f_Inst $DIR/.bash_profile ~/.bash_profile
+f_Inst $DIR/.bashrc ~/.bashrc
+f_Inst $DIR/.gvimrc ~/.gvimrc
+f_Inst $DIR/.profile ~/.profile
+f_Inst $DIR/.screenrc ~/.screenrc
+f_Inst $DIR/.tmux.conf ~/.tmux.conf
+f_Inst $DIR/.vimrc ~/.vimrc
+f_Inst $DIR/colors/.dircolors.solarized.ansi-universal ~/.dircolors
+f_Inst $DIR/colors/mintty-themes/SolarizedDark ~/.minttyrc
+f_Inst $DIR/emacs/.emacs ~/.emacs
 
 echo "Installation complete."
-echo "Remember to check your ~/.gitconfig email address and proxy by typing f_GitShowConfig."
-

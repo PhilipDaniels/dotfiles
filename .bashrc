@@ -140,6 +140,8 @@ alias more='less'
 alias cls='printf "\033c"'
 alias wcd='wcd -q iicolor'
 alias quit='exit'
+alias e='emacs -nw'
+alias ec='emacsclient'
 
 alias s='git status'
 alias b='git branch -a -vv'
