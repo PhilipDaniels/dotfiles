@@ -24,9 +24,6 @@ fi
 . ~/repos/dotfiles/.bash_controlcodes
 . ~/repos/dotfiles/.bash_prompt
 
-# This is probably not needed.
-# EDITOR="vim"
-
 # Don't put duplicate lines in the history. See bash(1) for more options
 HISTCONTROL=ignoredups:ignorespace
 
@@ -123,6 +120,15 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 
+# Emacs setup. NO_AT_BRIDGE suppresses a message from GUI Emacs when starting
+# under Cygwin.
+alias te='emacs -nw'
+alias ec='emacsclient'
+alias tec='emacsclient --tty'
+export NO_AT_BRIDGE=1
+# This is probably not needed.
+# EDITOR="vim"
+
 # MSysGit grep does not recognise the --color option.
 if [ "$OS" != "msys" ]; then
     alias grep="grep --color"
@@ -140,9 +146,6 @@ alias more='less'
 alias cls='printf "\033c"'
 alias wcd='wcd -q iicolor'
 alias quit='exit'
-alias te='emacs -nw'
-alias ec='emacsclient'
-alias tec='emacsclient --tty'
 
 alias s='git status'
 alias b='git branch -a -vv'

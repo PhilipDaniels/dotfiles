@@ -3,19 +3,27 @@
 
 (provide 'pd-appearance)
 
-(add-to-list 'load-path "~/repos/dotfiles/emacs/lisp/themes/emacs-color-theme-solarized")
-(require 'color-theme)
-(require 'color-theme-solarized)
-(color-theme-solarized)
+;;; There are two ways of loading themes in Emacs. The "built-in" way uses the
+;;; load-theme function, and the other way uses the color-theme package. Prefer
+;;; to use the built-in way. Many of my themes came from https://github.com/owainlewis/emacs-color-themes
+;;; which has previews.
+(add-to-list 'custom-theme-load-path "~/repos/dotfiles/emacs/themes")
+;(load-theme 'tango-dark t)
+(load-theme 'solarized-dark t)    ; Does not work properly on terminals.
 
-;(load-theme 'tango-dark)
+
+;;; But this is the other way to do it.
+;;;(add-to-list 'load-path "~/repos/dotfiles/emacs/lisp/themes/emacs-color-theme-solarized")
+;;;(require 'color-theme)
+;;;(require 'color-theme-solarized)
+;;;(color-theme-solarized)
 
 
-;(add-to-list 'default-frame-alist '(height . 50))
-;(add-to-list 'default-frame-alist '(width . 86))
-;(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-;(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+;;;(add-to-list 'default-frame-alist '(height . 50))
+;;;(add-to-list 'default-frame-alist '(width . 86))
+;;;(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+;;;(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+;;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
 (setq ring-bell-function nil)
 (setq visible-bell 1)
