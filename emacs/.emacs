@@ -4,7 +4,6 @@
 ;;; TODO
 ;;; Something like Ctrl-P (wildfinder)
 ;;; Window keybindings
-;;; Themes - solarized, dark theme, light theme.
 ;;; mode line customisation - change color. OVER indicator
 ;;; Trailing whitespace in some filetypes only
 
@@ -37,6 +36,14 @@
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Source Code Pro" :foundry "adobe" :slant normal :weight normal :height 106 :width normal)))))
+
+
 ;;; Do my stuff last. This is particularly important with respect to the themes,
 ;;; because we must call custom-safe-themes before loading my themes, otherwise
 ;;; we get prompted every time.
@@ -44,10 +51,3 @@
 (load-library "pd-variables")
 (load-library "pd-keys")
 
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Source Code Pro" :foundry "adobe" :slant normal :weight normal :height 106 :width normal)))))

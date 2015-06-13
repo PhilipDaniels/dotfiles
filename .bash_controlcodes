@@ -1,3 +1,4 @@
+# -*- mode: shell-script -*-
 # vim: set filetype=sh:
 
 # Control codes for bash. These are a mixture of formatting instructions (to
@@ -11,7 +12,7 @@
 #     alternate "linux-16color" that you can switch to to get the other 8 colors."
 # http://misc.flogisoft.com/bash/tip_colors_and_formatting#terminals_compatibility
 # http://ascii-table.com/ansi-escape-sequences.php
- 
+
 # These sequences are formatting instructions. Mnemonic: S = set, R = reset.
 R_All='\e[0m'             # Turns off all special formatting. Very handy.
 S_Bold='\e[1m'            # Bold, aka "bright".

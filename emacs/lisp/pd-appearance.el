@@ -9,14 +9,19 @@
 ;;; which has previews.
 (add-to-list 'custom-theme-load-path "~/repos/dotfiles/emacs/themes")
 ;(load-theme 'tango-dark t)
-(load-theme 'solarized-dark t)    ; Does not work properly on terminals.
-
+;(load-theme 'solarized-dark t)    ; Does not work properly on terminals.
 
 ;;; But this is the other way to do it.
 ;;;(add-to-list 'load-path "~/repos/dotfiles/emacs/lisp/themes/emacs-color-theme-solarized")
 ;;;(require 'color-theme)
 ;;;(require 'color-theme-solarized)
 ;;;(color-theme-solarized)
+
+(if (display-graphic-p)
+    (load-theme 'solarized-dark t)
+  (load-theme 'tsdh-dark t))
+;;; Decent: manoj-dark, tango-dark, misterioso, tsdh-dark, wheatgrass
+
 
 
 ;;;(add-to-list 'default-frame-alist '(height . 50))

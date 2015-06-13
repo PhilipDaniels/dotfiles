@@ -1,3 +1,4 @@
+# -*- mode: Shell-script; -*-
 # vim: set filetype=sh:
 
 # Boolean functions should return 0 for success, following the same
@@ -21,7 +22,7 @@ function f_AddToPath()
     fi
 }
 
-f_AptUpdateAndUpgrade() 
+f_AptUpdateAndUpgrade()
 {
   sudo apt-get update && \
     sudo apt-get -y dist-upgrade && \
@@ -235,12 +236,12 @@ f_GitAuthorRewrite()
     OLD_EMAIL=\"$oldemail\"
     CORRECT_EMAIL=\"$newemail\"
     CORRECT_NAME=\"$newname\"
-    
+
     if [ \"\$GIT_COMMITTER_EMAIL\" = \"\$OLD_EMAIL\" ]; then
         export GIT_COMMITTER_NAME=\"\$CORRECT_NAME\"
         export GIT_COMMITTER_EMAIL=\"\$CORRECT_EMAIL\"
     fi
-    
+
     if [ \"\$GIT_AUTHOR_EMAIL\" = \"\$OLD_EMAIL\" ]; then
         export GIT_AUTHOR_NAME=\"\$CORRECT_NAME\"
         export GIT_AUTHOR_EMAIL=\"\$CORRECT_EMAIL\"
