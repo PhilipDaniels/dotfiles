@@ -11,6 +11,7 @@ choco install dependencywalker -y
 choco install defaultprogramseditor -y
 choco install dotpeek -y
 choco install eclipse -y
+choco install emacs -y
 choco install evince -y
 choco install far -y
 choco install fiddler4 -y
