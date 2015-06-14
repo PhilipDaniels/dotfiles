@@ -3,34 +3,36 @@
 
 (provide 'pd-keys)
 
-
-; ******************* Global Function keys ********************
-; Function key names must be in lower case, like f7, not F7.
-; f1 is HELP. Leave it alone.
-; Make F2 and F3 run the macros stored in the 'q' and 'w' registers
-; and Shift F2/F3 run the macros until a blank line is encountered.
-;map <F2> @q
-;map <F3> @w
-;map <silent> <S-F2> :call RunMacroToBlankLine('q')<CR>
-;map <silent> <S-F3> :call RunMacroToBlankLine('w')<CR>
+;;; ******************* Global Function keys ********************
+;;; Function key names must be in lower case, like f7, not F7.
+;;; f1 is HELP. Leave it alone.
+;;; Make F2 and F3 run the macros stored in the 'q' and 'w' registers
+;;; and Shift F2/F3 run the macros until a blank line is encountered.
+;;;map <F2> @q
+;;;map <F3> @w
+;;;map <silent> <S-F2> :call RunMacroToBlankLine('q')<CR>
+;;;map <silent> <S-F3> :call RunMacroToBlankLine('w')<CR>
 
 (define-key global-map (kbd "<f2>")   'recentf-open-files)
 (define-key global-map (kbd "<S-f2>") 'menu-bar-open)
 (define-key global-map (kbd "<C-f2>") 'menu-bar-open)
-(define-key global-map (kbd "<f3>")   'enlarge-window)
-(define-key global-map (kbd "<S-f3>") (lambda() (interactive) (enlarge-window -1)))
-(define-key global-map (kbd "<f4>")   'enlarge-window-horizontally)
-(define-key global-map (kbd "<S-f4>") (lambda() (interactive) (enlarge-window-horizontally -1)))
-(define-key global-map (kbd "<C-f3>") 'balance-windows)
-(define-key global-map (kbd "<C-f4>") 'balance-windows)
 
-; ******************* Letter keys ********************
+
+;;; ******************* Letter keys ********************
 (define-key global-map (kbd "M-/") 'hippie-expand)
-; Make a buffer menu in the current window, not an "other" window.
+;; Make a buffer menu in the current window, not an "other" window.
 (define-key global-map (kbd "C-x C-b") 'buffer-menu)
 
 
-; ******************* C/C++ mode keys ********************
+;;; ******************* Arrow keys ********************
+(windmove-default-keybindings 'meta)
+(define-key global-map (kbd "S-M-<up>") 'shrink-window)
+(define-key global-map (kbd "S-M-<down>") 'enlarge-window)
+(define-key global-map (kbd "S-M-<left>") 'shrink-window-horizontally)
+(define-key global-map (kbd "S-M-<right>") 'enlarge-window-horizontally)
+
+
+;;; ******************* C/C++ mode keys ********************
 (defun pd-setup-vs-keys ()
   "Establishes Visual-Studio compatible local key bindings"
   (interactive)

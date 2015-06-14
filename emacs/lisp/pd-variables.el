@@ -18,6 +18,8 @@
 (setq recentf-max-menu-items 60)
 (setq-default fill-column 80)
 (add-hook 'before-save-hook 'time-stamp)
+(setq gdb-many-windows t)
+(setq gdb-show-main t)
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
