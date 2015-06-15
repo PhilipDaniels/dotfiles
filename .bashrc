@@ -127,8 +127,7 @@ alias te='emacs -nw'
 alias ec='emacsclient'
 alias tec='emacsclient --tty'
 export NO_AT_BRIDGE=1
-# This is probably not needed.
-# EDITOR="vim"
+EDITOR="emacsclient --tty"
 
 # MSysGit grep does not recognise the --color option.
 if [ "$OS" != "msys" ]; then
