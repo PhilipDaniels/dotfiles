@@ -20,6 +20,12 @@
 ;;  (load-theme 'tango-dark t))
 
 
+;; These colors are from solarized.
+(set-face-foreground 'mode-line "#268bd2")
+(set-face-background 'mode-line "#eee8d5")
+(set-face-foreground 'mode-line-inactive "#eee8d5")
+(set-face-background 'mode-line-inactive "#268bd2")
+
 
 
 ;;;(add-to-list 'default-frame-alist '(height . 50))
