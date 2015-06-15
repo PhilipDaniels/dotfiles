@@ -10,6 +10,9 @@
 (add-to-list 'custom-theme-load-path "~/repos/dotfiles/emacs/themes")
 (add-to-list 'custom-theme-load-path "~/repos/dotfiles/emacs/themes/emacs-color-theme-solarized")
 
+;; Setting the frame-background-mode before loading the theme stops Solarized
+;; from initially loading in light mode.
+(setq-default frame-background-mode 'dark)
 (load-theme 'solarized t)       ; sellout Solarized
 ;;(load-theme 'solarized-dark t)  ; bbatsov Solarized, no good in terminal
 
