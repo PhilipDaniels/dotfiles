@@ -1,7 +1,7 @@
 ; -*- mode: emacs-lisp -*-
 ; -*- coding: utf-8 -*-
 
-(provide 'pd-appearance)
+(provide 'pd-appearance) 
 
 ;;; There are two ways of loading themes in Emacs. The "built-in" way uses the
 ;;; load-theme function, and the other way uses the color-theme package. Prefer
@@ -39,7 +39,6 @@
 (setq visible-bell 1)
 (blink-cursor-mode -1)
 (show-paren-mode 1)
-(setq-default show-trailing-whitespace t)
 (global-linum-mode 1)
 (setq linum-format "%4d ")
 (setq column-number-mode 1)
@@ -47,10 +46,18 @@
 (display-time-mode 1)
 (size-indication-mode 1)
 
+
+
 (require 'fill-column-indicator)
 (setq fci-rule-width 2)
 (setq fci-rule-color "DodgerBlue1")
 (add-hook 'c-mode-common-hook 'fci-mode)
 (add-hook 'emacs-lisp-mode-hook 'fci-mode)
 (add-hook 'shell-script-mode-hook 'fci-mode)
+
+;; The show-trailing-whitespace mode is incompatible with FCI. This workaround
+;; is from the FCI documentation.
+;;(whitespace-mode nil)
+;;(setq-default show-trailing-whitespace t)
+;;(setq whitespace-style '(face trailing))
 
