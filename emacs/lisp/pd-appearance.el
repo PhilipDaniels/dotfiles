@@ -26,8 +26,6 @@
 (set-face-foreground 'mode-line-inactive "#eee8d5")
 (set-face-background 'mode-line-inactive "#268bd2")
 
-
-
 ;;;(add-to-list 'default-frame-alist '(height . 50))
 ;;;(add-to-list 'default-frame-alist '(width . 86))
 ;;;(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))

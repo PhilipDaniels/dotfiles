@@ -125,9 +125,9 @@ fi
 # under Cygwin.
 alias te='emacs -nw'
 alias ec='emacsclient'
-alias tec='emacsclient --tty'
+alias tec='emacsclient -nw'
 export NO_AT_BRIDGE=1
-EDITOR="emacsclient --tty"
+EDITOR="emacsclient --nw"
 
 # MSysGit grep does not recognise the --color option.
 if [ "$OS" != "msys" ]; then
