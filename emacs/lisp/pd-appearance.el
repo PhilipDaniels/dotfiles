@@ -49,4 +49,5 @@
 (setq fci-rule-color "DodgerBlue1")
 (add-hook 'c-mode-common-hook 'fci-mode)
 (add-hook 'emacs-lisp-mode-hook 'fci-mode)
+(add-hook 'shell-script-mode-hook 'fci-mode)
 

@@ -122,7 +122,9 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # Emacs setup. NO_AT_BRIDGE suppresses a message from GUI Emacs when starting
-# under Cygwin.
+# under Cygwin. n.b. EDITOR is not used by my Git setup, the editor is set
+# explicitly in my ~/.gitconfig.
+alias e='emacs'
 alias te='emacs -nw'
 alias ec='emacsclient'
 alias tec='emacsclient -nw'
