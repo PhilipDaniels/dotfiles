@@ -26,3 +26,13 @@
 (put 'eval-expression 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'erase-buffer 'disabled nil)
+
+;; Teach dired to unzip zip files (use the Z key)
+(eval-after-load "dired-aux"
+  '(add-to-list 'dired-compress-file-suffixes
+		'("\\.zip\\'" ".zip" "unzip")))
+
+
+;; C/C++ mode configuration
+(setq c-default-style "linux"
+      c-basic-offset 4)
