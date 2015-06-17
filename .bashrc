@@ -128,6 +128,7 @@ alias e='emacs'
 alias te='emacs -nw'
 alias ec='emacsclient'
 alias tec='emacsclient -nw'
+alias killemacs="emacsclient -e '(kill-emacs)'"
 export NO_AT_BRIDGE=1
 EDITOR="emacsclient --nw"
 
