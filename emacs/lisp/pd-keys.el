@@ -22,6 +22,7 @@
 (define-key global-map (kbd "M-/") 'hippie-expand)
 ;; Make a buffer menu in the current window, not an "other" window.
 (define-key global-map (kbd "C-x C-b") 'buffer-menu)
+(define-key global-map (kbd "C-=") 'fci-mode)
 
 
 ;;; ******************* Arrow keys ********************
