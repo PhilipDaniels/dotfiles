@@ -124,13 +124,21 @@ fi
 # Emacs setup. NO_AT_BRIDGE suppresses a message from GUI Emacs when starting
 # under Cygwin. n.b. EDITOR is not used by my Git setup, the editor is set
 # explicitly in my ~/.gitconfig.
-alias e='emacs'
-alias te='emacs -nw'
-alias ec='emacsclient'
-alias tec='emacsclient -nw'
-alias killemacs="emacsclient -e '(kill-emacs)'"
 export NO_AT_BRIDGE=1
 EDITOR="emacsclient --nw"
+
+# C = Cygwin Emacs. Terminal or X with Gtk.
+alias ce='emacs'
+alias cte='emacs -nw'
+alias cec='emacsclient'
+alias ctec='emacsclient -nw'
+alias killcemacs="emacsclient -e '(kill-emacs)'"
+
+# W = W32 Emacs. Also from Cygwin, but runs with W32 fonts and without X.
+alias we='emacs-w32'
+alias wec='emacsclient-w32'
+alias killwemacs="emacsclient-w32 -e '(kill-emacs)'"
+
 
 # MSysGit grep does not recognise the --color option.
 if [ "$OS" != "msys" ]; then

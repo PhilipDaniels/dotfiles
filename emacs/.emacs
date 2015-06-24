@@ -36,18 +36,12 @@
 	 (setq url-using-proxy proxy url-proxy-services proxy)))))
 
 
-(add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
-
-(autoload 'markdown-mode "markdown-mode"
-  "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
 ;;; Do my stuff last. This is particularly important with respect to the themes,
 ;;; because we must call custom-safe-themes before loading my themes, otherwise
 ;;; we get prompted every time.
+(add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 (load-library "pd-appearance")
 (load-library "pd-variables")
+(load-library "pd-mode-customizations")
 (load-library "pd-keys")
 

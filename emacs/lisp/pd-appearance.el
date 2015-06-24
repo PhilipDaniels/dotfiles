@@ -8,23 +8,28 @@
 (defvar pd-font-candidates '("Consolas-14" "Cousine-12")
   "Defines a list of fonts to be tried in order.")
 
+;; Make font setup work in daemon mode.
+;;(create-fontset-from-fontset-spec standard-fontset-spec)
+;;(dolist (font (reverse pd-font-candidates))
+;;  (set-fontset-font "fontset-standard" 'unicode font nil 'prepend))
+
 (defun pd-get-first-existing-font (&rest fonts)
   "Return the first font from FONTS which actually exists on this system."
   (loop for font in fonts when (find-font (font-spec :name font)) return font))
 
-(apply 'pd-get-first-existing-font pd-font-candidates)
+(let
+    ((chosen-font (apply 'pd-get-first-existing-font pd-font-candidates)))
+  (message "chosen-font = %s" chosen-font)
+  (message "pd-fonts = %s" pd-font-candidates)
+  (add-to-list 'initial-frame-alist `(font . ,chosen-font))
+  (add-to-list 'default-frame-alist `(font . ,chosen-font)))
 
-(cond
- ((string-equal window-system "w32")
-  (when (member "Consolas" (font-family-list))
-    (add-to-list 'initial-frame-alist '(font . "Consolas-14"))
-    (add-to-list 'default-frame-alist '(font . "Consolas-14"))
-    )))
+
 
 ;;; There are two ways of loading themes in Emacs. The "built-in" way uses the
 ;;; load-theme function, and the other way uses the color-theme package. Prefer
-;;; to use the built-in way. Many of my themes came from https://github.com/owainlewis/emacs-color-themes
-;;; which has previews.
+;;; to use the built-in way. Many of my themes came from
+;;; https://github.com/owainlewis/emacs-color-themes which has previews.
 (add-to-list 'custom-theme-load-path "~/repos/dotfiles/emacs/themes")
 (add-to-list 'custom-theme-load-path "~/repos/dotfiles/emacs/themes/emacs-color-theme-solarized")
 
@@ -65,7 +70,6 @@
 (setq line-number-mode 1)
 (display-time-mode 1)
 (size-indication-mode 1)
-
 
 
 (require 'fill-column-indicator)
