@@ -3,28 +3,23 @@
 
 (provide 'pd-appearance) 
 
-;;; Set default font. Based on http://ergoemacs.org/emacs/emacs_list_and_set_font.html
-;;; and http://emacswiki.org/emacs/SetFonts
-;(defvar pd-font-candidates '("Consolas-14" "Cousine-12")
-;  "Defines a list of fonts to be tried in order."
-;  )
+(require 'cl)
 
-;(require 'cl)
-;(defun pd-get-first-existing-font (&rest fonts)
-;  "Return the first font from FONTS which actually exists on this system."
-;   (loop for font in fonts when (find-font (font-spec :name font)) return font))
+(defvar pd-font-candidates '("Consolas-14" "Cousine-12")
+  "Defines a list of fonts to be tried in order.")
 
-;(apply 'pd-get-first-existing-font pd-font-candidates)
+(defun pd-get-first-existing-font (&rest fonts)
+  "Return the first font from FONTS which actually exists on this system."
+  (loop for font in fonts when (find-font (font-spec :name font)) return font))
 
+(apply 'pd-get-first-existing-font pd-font-candidates)
 
-;(cond
-; ((string-equal window-system "w32")
-;  (when (member "Consolas" (font-family-list))
-;    (add-to-list 'initial-frame-alist '(font . "Consolas-14"))
-;    (add-to-list 'default-frame-alist '(font . "Consolas-14"))
-;    )))
-
-	
+(cond
+ ((string-equal window-system "w32")
+  (when (member "Consolas" (font-family-list))
+    (add-to-list 'initial-frame-alist '(font . "Consolas-14"))
+    (add-to-list 'default-frame-alist '(font . "Consolas-14"))
+    )))
 
 ;;; There are two ways of loading themes in Emacs. The "built-in" way uses the
 ;;; load-theme function, and the other way uses the color-theme package. Prefer
@@ -33,10 +28,11 @@
 (add-to-list 'custom-theme-load-path "~/repos/dotfiles/emacs/themes")
 (add-to-list 'custom-theme-load-path "~/repos/dotfiles/emacs/themes/emacs-color-theme-solarized")
 
-(message "still running")
 ;; Setting the frame-background-mode before loading the theme stops Solarized
-;; from initially loading in light mode.
+;; from initially loading in light mode. The mapc is needed for w32 emacs, or
+;; else we still come up in light mode, no idea why.
 (setq-default frame-background-mode 'dark)
+(mapc 'frame-set-background-mode (frame-list))
 (load-theme 'solarized t)       ; sellout Solarized
 ;;(load-theme 'solarized-dark t)  ; bbatsov Solarized, no good in terminal
 
