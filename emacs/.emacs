@@ -1,6 +1,15 @@
 ; -*- mode: emacs-lisp -*-
 ; -*- coding: utf-8 -*-
 
+(defconst running-ms-windows
+  (string-match "windows" (prin1-to-string system-type)))
+(defconst running-gnu-linux
+  (string-match "linux" (prin1-to-string system-type)))
+(defconst running-cygwin
+  (string-match "cygwin" (prin1-to-string system-type)))
+(defconst running-w32
+  (string-match "w32" (prin1-to-string window-system)))
+
 ;;; TODO
 ;;; Something like Ctrl-P (wildfinder)
 ;;; Window keybindings
@@ -34,15 +43,6 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Source Code Pro" :foundry "adobe" :slant normal :weight normal :height 106 :width normal)))))
-
 
 ;;; Do my stuff last. This is particularly important with respect to the themes,
 ;;; because we must call custom-safe-themes before loading my themes, otherwise
