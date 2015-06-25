@@ -5,6 +5,38 @@
 
 (require 'cl)
 
+(defun pd-font-exists (font)
+  "Return a font if it exists, nil otherwise. Does not work in daemon mode."
+  (find-font (font-spec :name font)))
+
+
+(setq x-font-candidates '("Consolas-14" "blah" "Cousine-12"))
+;  "Defines a list of fonts to be tried in order.")
+
+(defun pd-set-next-font ()
+  "Selects the next available font from the list of candidates."
+  ;; We try the head of the list the next time we are called.
+  ;; num-seen is used to avoid looping forever if there are no valid candidates.
+  (let (
+	(num-fonts (length x-font-candidates))
+	(num-seen 0)
+	(next-font-is-valid nil)
+	)
+    (while (and (< num-seen num-fonts) (not next-font-is-valid))
+      ; Get head of list and rotate the list
+      (setq x-next-font (pop x-font-candidates))
+      (setq x-font-candidates (append x-font-candidates (list x-next-font)))
+      (setq num-seen (1+ num-seen))
+      ; Is it valid?
+      (setq next-font-is-valid (pd-font-exists x-next-font))
+      (if next-font-is-valid
+	  (message "setting font to %s" x-next-font)
+	(message "font %s does not exist, skipping" x-next-font)))
+    (if (not next-font-is-valid)
+	(message "No valid fonts found in candidates: %s" x-font-candidates))))
+
+
+
 (defvar pd-font-candidates '("Consolas-14" "Cousine-12")
   "Defines a list of fonts to be tried in order.")
 

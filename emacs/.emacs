@@ -40,6 +40,7 @@
 ;;; because we must call custom-safe-themes before loading my themes, otherwise
 ;;; we get prompted every time.
 (add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
+(load-library "pd-lisputils")
 (load-library "pd-appearance")
 (load-library "pd-variables")
 (load-library "pd-mode-customizations")
