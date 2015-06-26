@@ -10,13 +10,48 @@
   (find-font (font-spec :name font)))
 
 
-(setq x-font-candidates '("Consolas-14" "blah" "Cousine-12"))
+(setq x-font-candidates '("Cousine-12" "Consolas-14" "Source Code Pro-12" 
+			  "Liberation Mono-12" "Anonymous Pro-14"
+			  "Aurulent Sans Mono-12"
+			  "Calibri-12"))
 ;  "Defines a list of fonts to be tried in order.")
+(setq x-current-font-index 0)
+
+(defun pd-sfc (step)
+  "Selects the first valid candidate font, then moves forwards (if STEP is 1)
+or backwards (if STEP is -1) through the list of candidate fonts."
+  (interactive)
+  (let ((num-fonts (length x-font-candidates))
+	(num-seen 0)
+	(font-is-valid)
+	)
+    (while (and (< num-seen num-fonts) (not font-is-valid))
+      (setq next-font (nth x-current-font-index x-font-candidates)
+	    num-seen (1+ num-seen)
+	    x-current-font-index (+ x-current-font-index step)
+	    )
+      (cond ((< x-current-font-index 0) (setq x-current-font-index (- num-fonts 1)))
+	    ((= x-current-font-index num-fonts) (setq x-current-font-index 0)))
+	    
+      ; Is it valid?
+      (setq font-is-valid (pd-font-exists next-font))
+      (if font-is-valid
+	  (progn
+	    (message "Setting font to %s" next-font)
+	    (set-frame-font next-font))
+	(message "Font %s does not exist, skipping" next-font)))
+    (if (not font-is-valid)
+	(message "No valid fonts found in candidates: %s" x-font-candidates))
+  ))
+ 
+(pd-sfc -1)
+
 
 (defun pd-set-next-font ()
   "Selects the next available font from the list of candidates."
   ;; We try the head of the list the next time we are called.
   ;; num-seen is used to avoid looping forever if there are no valid candidates.
+  (interactive)
   (let (
 	(num-fonts (length x-font-candidates))
 	(num-seen 0)
@@ -30,8 +65,10 @@
       ; Is it valid?
       (setq next-font-is-valid (pd-font-exists x-next-font))
       (if next-font-is-valid
-	  (message "setting font to %s" x-next-font)
-	(message "font %s does not exist, skipping" x-next-font)))
+	  (progn
+	    (message "Setting font to %s" x-next-font)
+	    (set-frame-font x-next-font))
+	(message "Font %s does not exist, skipping" x-next-font)))
     (if (not next-font-is-valid)
 	(message "No valid fonts found in candidates: %s" x-font-candidates))))
 
