@@ -1,97 +1,67 @@
 ; -*- mode: emacs-lisp -*-
 ; -*- coding: utf-8 -*-
 
-(provide 'pd-appearance) 
+(provide 'pd-appearance)
 
 (require 'cl)
 
-(defun pd-font-exists (font)
+(defun pd-font-exists (font &optional frame)
   "Return a font if it exists, nil otherwise. Does not work in daemon mode."
-  (find-font (font-spec :name font)))
+  (find-font (font-spec :name font) frame))
 
-
-(setq x-font-candidates '("Cousine-12" "Consolas-14" "Source Code Pro-12" 
-			  "Liberation Mono-12" "Anonymous Pro-14"
-			  "Aurulent Sans Mono-12"
-			  "Calibri-12"))
-;  "Defines a list of fonts to be tried in order.")
-(setq x-current-font-index 0)
-
-(defun pd-sfc (step)
-  "Selects the first valid candidate font, then moves forwards (if STEP is 1)
-or backwards (if STEP is -1) through the list of candidate fonts."
-  (interactive)
-  (let ((num-fonts (length x-font-candidates))
-	(num-seen 0)
-	(font-is-valid)
-	)
-    (while (and (< num-seen num-fonts) (not font-is-valid))
-      (setq next-font (nth x-current-font-index x-font-candidates)
-	    num-seen (1+ num-seen)
-	    x-current-font-index (+ x-current-font-index step)
-	    )
-      (cond ((< x-current-font-index 0) (setq x-current-font-index (- num-fonts 1)))
-	    ((= x-current-font-index num-fonts) (setq x-current-font-index 0)))
-	    
-      ; Is it valid?
-      (setq font-is-valid (pd-font-exists next-font))
-      (if font-is-valid
-	  (progn
-	    (message "Setting font to %s" next-font)
-	    (set-frame-font next-font))
-	(message "Font %s does not exist, skipping" next-font)))
-    (if (not font-is-valid)
-	(message "No valid fonts found in candidates: %s" x-font-candidates))
-  ))
- 
-(pd-sfc -1)
-
-
-(defun pd-set-next-font ()
-  "Selects the next available font from the list of candidates."
-  ;; We try the head of the list the next time we are called.
-  ;; num-seen is used to avoid looping forever if there are no valid candidates.
-  (interactive)
-  (let (
-	(num-fonts (length x-font-candidates))
-	(num-seen 0)
-	(next-font-is-valid nil)
-	)
-    (while (and (< num-seen num-fonts) (not next-font-is-valid))
-      ; Get head of list and rotate the list
-      (setq x-next-font (pop x-font-candidates))
-      (setq x-font-candidates (append x-font-candidates (list x-next-font)))
-      (setq num-seen (1+ num-seen))
-      ; Is it valid?
-      (setq next-font-is-valid (pd-font-exists x-next-font))
-      (if next-font-is-valid
-	  (progn
-	    (message "Setting font to %s" x-next-font)
-	    (set-frame-font x-next-font))
-	(message "Font %s does not exist, skipping" x-next-font)))
-    (if (not next-font-is-valid)
-	(message "No valid fonts found in candidates: %s" x-font-candidates))))
-
-
-
-(defvar pd-font-candidates '("Consolas-14" "Cousine-12")
+(defvar pd-font-candidates '("Cousine-12" "Consolas-14" "Source Code Pro-12"
+			     "Liberation Mono-12" "Anonymous Pro-14"
+			     "Aurulent Sans Mono-12" "Calibri-12")
   "Defines a list of fonts to be tried in order.")
 
-;; Make font setup work in daemon mode.
-;;(create-fontset-from-fontset-spec standard-fontset-spec)
-;;(dolist (font (reverse pd-font-candidates))
-;;  (set-fontset-font "fontset-standard" 'unicode font nil 'prepend))
+(defvar pd-font-index nil
+  "Specifies the index of the candidate font that is currently selected.")
 
-(defun pd-get-first-existing-font (&rest fonts)
-  "Return the first font from FONTS which actually exists on this system."
-  (loop for font in fonts when (find-font (font-spec :name font)) return font))
+(defun pd-set-candidate-font (step &optional frame)
+  "Scans forwards (if STEP is 1) or backwards (if STEP is -1) through the list
+pd-font-candidates looking for a valid font. If STEP is 0, the current font is
+reset to the first font. The first time this function is called it starts the
+search at index 0."
+  (interactive)
+  (let ((num-fonts (length pd-font-candidates))
+	(num-seen 0)
+	(font-is-valid))
+    ;; Loop around the array; num-seen is used to avoid looping forever if
+    ;; all elements in pd-font-candidates are invalid.
+    (while (and (< num-seen num-fonts) (not font-is-valid))
+      (cond ((null pd-font-index) (setq pd-font-index 0))
+	    ((= step 0) (setq pd-font-index 0 step 1))
+	    ((< (+ pd-font-index step) 0) (setq pd-font-index (- num-fonts 1)))
+	    ((>= (+ pd-font-index step) num-fonts) (setq pd-font-index 0))
+	    (t (setq pd-font-index (+ pd-font-index step))))
 
-(let
-    ((chosen-font (apply 'pd-get-first-existing-font pd-font-candidates)))
-  (message "chosen-font = %s" chosen-font)
-  (message "pd-fonts = %s" pd-font-candidates)
-  (add-to-list 'initial-frame-alist `(font . ,chosen-font))
-  (add-to-list 'default-frame-alist `(font . ,chosen-font)))
+      (setq next-font (nth pd-font-index pd-font-candidates)
+	    num-seen (1+ num-seen)
+	    font-is-valid (pd-font-exists next-font frame))
+
+      (if font-is-valid
+	  (progn
+	    (message "Font set to %s" next-font)
+	    (set-frame-font next-font t (list frame)))
+	(message "Font %s does not exist, skipping" next-font)))
+    (if (not font-is-valid)
+	(message "No valid fonts found in candidates: %s" pd-font-candidates))
+  ))
+
+(define-key global-map (kbd "C-S-<prior>") (lambda () (interactive) (pd-set-candidate-font -1)))
+(define-key global-map (kbd "C-S-<next>") (lambda () (interactive) (pd-set-candidate-font 1)))
+
+(add-hook 'after-make-frame-functions (lambda (frame)
+					(message "frame is %s" frame)
+					(pd-set-candidate-font 0 frame)))
+
+
+;; (let
+;;     ((chosen-font (apply 'pd-get-first-existing-font pd-font-candidates)))
+;;   (message "chosen-font = %s" chosen-font)
+;;   (message "pd-fonts = %s" pd-font-candidates)
+;;   (add-to-list 'initial-frame-alist `(font . ,chosen-font))
+;;   (add-to-list 'default-frame-alist `(font . ,chosen-font)))
 
 
 
@@ -153,4 +123,3 @@ or backwards (if STEP is -1) through the list of candidate fonts."
 ;;(whitespace-mode nil)
 ;;(setq-default show-trailing-whitespace t)
 ;;(setq whitespace-style '(face trailing))
-

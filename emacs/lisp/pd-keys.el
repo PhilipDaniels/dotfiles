@@ -30,7 +30,6 @@
 (define-key global-map (kbd "S-M-<down>") 'enlarge-window)
 (define-key global-map (kbd "S-M-<left>") 'shrink-window-horizontally)
 (define-key global-map (kbd "S-M-<right>") 'enlarge-window-horizontally)
-(define-key global-map (kbd "C-<next>") 'pd-set-next-font)
 
 ;;; ******************* C/C++ mode keys ********************
 (defun pd-setup-vs-keys ()
@@ -62,4 +61,3 @@
   (local-set-key (kbd "<f12>") 'ff-find-other-file))
 
 (add-hook 'c-mode-common-hook 'pd-setup-vs-keys)
-
