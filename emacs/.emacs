@@ -41,6 +41,7 @@
 ;;; we get prompted every time.
 (add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 (load-library "pd-lisputils")
+(load-library "pd-functions")
 (load-library "pd-appearance")
 (load-library "pd-variables")
 (load-library "pd-mode-customizations")
