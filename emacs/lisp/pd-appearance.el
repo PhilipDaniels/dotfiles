@@ -17,7 +17,7 @@
 (defvar pd-font-index nil
   "Specifies the index of the candidate font that is currently selected.")
 
-(defun pd-set-candidate-font (step &optional frame)
+(defun pd-set-candidate-font (step frame &optional show-msg)
   "Scans forwards (if STEP is 1) or backwards (if STEP is -1) through the list
 pd-font-candidates looking for a valid font. If STEP is 0, the current font is
 reset to the first font. The first time this function is called it starts the
@@ -41,19 +41,24 @@ search at index 0."
 
       (if font-is-valid
 	  (progn
-	    (message "Font set to %s" next-font)
+	    (if show-msg
+		(message "Font set to %s" next-font))
 	    (set-frame-font next-font t (list frame)))
 	(message "Font %s does not exist, skipping" next-font)))
     (if (not font-is-valid)
 	(message "No valid fonts found in candidates: %s" pd-font-candidates))
   ))
 
-(define-key global-map (kbd "C-S-<prior>") (lambda () (interactive) (pd-set-candidate-font -1)))
-(define-key global-map (kbd "C-S-<next>") (lambda () (interactive) (pd-set-candidate-font 1)))
+(define-key global-map (kbd "C-S-<prior>") (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)))
+(define-key global-map (kbd "C-S-<next>") (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)))
 
-(add-hook 'after-make-frame-functions (lambda (frame)
-					(message "frame is %s" frame)
-					(pd-set-candidate-font 0 frame)))
+;; This ensures the right font is set when running in daemon mode.
+(add-hook 'after-make-frame-functions (lambda (frame) (pd-set-candidate-font 0 frame)))
+
+;; And this ensures the right font is set when running in non-daemon mode.
+(if (display-graphic-p)
+    (pd-set-candidate-font 0 (selected-frame)))
+
 
 
 ;; (let
