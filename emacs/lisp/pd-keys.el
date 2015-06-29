@@ -52,7 +52,7 @@
 ;; manager that is grabbing the key. Use the window manager's tools to free up
 ;; these keys so that they can be used in Emacs.
 ;;
-;; On Windows, this happens with the two; Windows keys: many WinKey+letter
+;; On Windows, this happens with the two Windows keys: many WinKey+letter
 ;; combinations are reserved, and the count goes up with each release of
 ;; Windows. To make these key combinations available a registry hack must be
 ;; used to disable all the default bindings - use a .reg file with this text:
@@ -61,6 +61,9 @@
 ;;
 ;;[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
 ;;"NoWinKeys"=dword:00000001
+;;
+;; The apps key is also stolen in mintty, though it seems to work ok in GUI
+;; Emacs.
 
 
 ;; Recommendations
@@ -70,7 +73,7 @@
 ;; a key in Windows to send super.
 ;;
 ;; A full size keyboard is CTRL    WIN ALT SPACE ALTGR WIN APPS CTRL
-;; My work laptop is       CTRL FN WIN ALT SPACE ALTGR          CTRL
+;; My work laptop is       CTRL FN WIN ALT SPACE ALTGR     APPS CTRL
 ;; So my prefixes          C-          M-                  s-   C-
 
 

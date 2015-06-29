@@ -1,3 +1,14 @@
+Term=xterm-256color
+Font=Cousine
+FontHeight=12
+CursorType=block
+Scrollbar=none
+SwitchShortcuts=no
+ZoomShortcuts=no
+AltFnShortcuts=no
+BoldAsFont=no
+BoldAsColour=yes
+
 ForegroundColour=101, 123, 131
 BackgroundColour=253, 246, 227
 CursorColour=    220,  50,  47

@@ -1,7 +1,7 @@
 # This is the Solarized Dark theme.
 Term=xterm-256color
 Font=Cousine
-FontHeight=10
+FontHeight=12
 CursorType=block
 Scrollbar=none
 SwitchShortcuts=no
