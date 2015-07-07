@@ -91,12 +91,30 @@ search at index 0."
 ;;    (load-theme 'solarized-dark t)
 ;;  (load-theme 'tango-dark t))
 
+;; Steal the solarized colors from its palette. Only works for dark mode.
+(setq sd-black (nth 1 (assoc 'base02 solarized-colors))
+      sd-red (nth 1 (assoc 'red solarized-colors))
+      sd-green (nth 1 (assoc 'green solarized-colors))
+      sd-yellow (nth 1 (assoc 'yellow solarized-colors))
+      sd-blue (nth 1 (assoc 'blue solarized-colors))
+      sd-magenta (nth 1 (assoc 'magenta solarized-colors))
+      sd-cyan (nth 1 (assoc 'cyan solarized-colors))
+      sd-white (nth 1 (assoc 'base2 solarized-colors))
+      sd-brblack (nth 1 (assoc 'base03 solarized-colors))
+      sd-brred (nth 1 (assoc 'orange solarized-colors))
+      sd-brgreen (nth 1 (assoc 'base01 solarized-colors))
+      sd-bryellow (nth 1 (assoc 'base00 solarized-colors))
+      sd-brblue (nth 1 (assoc 'base0 solarized-colors))
+      sd-brmagenta (nth 1 (assoc 'violet solarized-colors))
+      sd-brcyan (nth 1 (assoc 'base1 solarized-colors))
+      sd-brwhite (nth 1 (assoc 'base3 solarized-colors))
+      )
 
 ;; These colors are from solarized.
-(set-face-foreground 'mode-line "#268bd2")
-(set-face-background 'mode-line "#eee8d5")
-(set-face-foreground 'mode-line-inactive "#eee8d5")
-(set-face-background 'mode-line-inactive "#268bd2")
+(set-face-foreground 'mode-line sd-blue)
+(set-face-background 'mode-line sd-white)
+(set-face-foreground 'mode-line-inactive sd-white)
+(set-face-background 'mode-line-inactive sd-blue)
 
 ;;;(add-to-list 'default-frame-alist '(height . 50))
 ;;;(add-to-list 'default-frame-alist '(width . 86))
@@ -114,11 +132,11 @@ search at index 0."
 (setq line-number-mode 1)
 (display-time-mode 1)
 (size-indication-mode 1)
-
+(set-cursor-color sd-red)
 
 (require 'fill-column-indicator)
 (setq fci-rule-width 2)
-(setq fci-rule-color "DodgerBlue1")
+(setq fci-rule-color sd-blue)
 (add-hook 'c-mode-common-hook 'fci-mode)
 (add-hook 'emacs-lisp-mode-hook 'fci-mode)
 (add-hook 'shell-script-mode-hook 'fci-mode)
