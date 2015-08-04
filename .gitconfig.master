@@ -9,6 +9,7 @@
     # Store passwords in RAM for 20 hours.
     helper = cache --timeout=72000
 [core]
+    #editor = emacsclient-w32
     editor = emacsclient --tty
     pager = less -x4
     # Do not do any conversion. Always keep whatever the file was entered with.
