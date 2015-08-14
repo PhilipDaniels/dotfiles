@@ -40,6 +40,14 @@
 ;;; because we must call custom-safe-themes before loading my themes, otherwise
 ;;; we get prompted every time.
 (add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
+(add-to-list 'load-path "~/repos/dotfiles/emacs/lisp/magit/lisp")
+(require 'magit)
+
+(with-eval-after-load 'info
+  (info-initialize)
+  (add-to-list 'Info-directory-list
+	       "~/repos/dotfiles/emacs/lisp/magit/Documentation/"))
+
 (load-library "pd-lisputils")
 (load-library "pd-functions")
 (load-library "pd-appearance")
