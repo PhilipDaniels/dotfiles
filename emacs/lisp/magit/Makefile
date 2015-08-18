@@ -4,7 +4,7 @@ include default.mk
 .PHONY: lisp \
 	install install-lisp install-docs install-info \
 	test test-interactive \
-	clean clean-lisp clean-docs \
+	clean clean-lisp clean-docs clean-archives \
 	genstats \
 	dist magit-$(VERSION).tar.gz elpa $(ELPA_ARCHIVES)
 
@@ -81,17 +81,20 @@ test-interactive:
 	(load-file \"t/magit-tests.el\")\
 	(ert t))"
 
-clean: clean-lisp clean-docs
+clean: clean-lisp clean-docs clean-archives
 	@printf "Cleaning...\n"
 	@$(RM) $(ELCS) $(ELGS) # temporary cleanup kludge
-	@$(RM) git-commit-*.el *.tar.gz *.tar Documentation/*.texi~
-	@$(RMDIR) magit-$(VERSION)
+	@$(RM) Documentation/*.texi~
 
 clean-lisp:
 	@$(MAKE) -C lisp clean
 
 clean-docs:
 	@$(MAKE) -C Documentation clean
+
+clean-archives:
+	@$(RM) git-commit-*.el *.tar.gz *.tar
+	@$(RMDIR) magit-$(VERSION)
 
 # Release management
 
@@ -107,8 +110,8 @@ dist: magit-$(VERSION).tar.gz
 DIST_ROOT_FILES = COPYING default.mk Makefile README.md
 DIST_LISP_FILES = $(addprefix lisp/,$(ELS) magit-version.el Makefile)
 DIST_DOCS_FILES = $(addprefix Documentation/,$(TEXIPAGES) AUTHORS.md Makefile)
-ifneq ("$(wildcard RelNotes/$(VERSION).txt)","")
-  DIST_DOCS_FILES += RelNotes/$(VERSION).txt
+ifneq ("$(wildcard Documentation/RelNotes/$(VERSION).txt)","")
+  DIST_DOCS_FILES += Documentation/RelNotes/$(VERSION).txt
 endif
 
 magit-$(VERSION).tar.gz: lisp info
@@ -142,8 +145,9 @@ elpa: $(ELPA_ARCHIVES)
 define with_editor_pkg
 (define-package "with-editor" "$(VERSION)"
   "Use the Emacsclient as $$EDITOR"
-  '((emacs "24.4")
-    (dash "2.10.0")))
+  '((emacs "$(EMACS_VERSION)")
+    (async "$(ASYNC_VERSION)")
+    (dash "$(DASH_VERSION)")))
 endef
 # '
 export with_editor_pkg
@@ -166,8 +170,9 @@ git-commit-$(VERSION).el:
 define magit_popup_pkg
 (define-package "magit-popup" "$(VERSION)"
   "Define prefix-infix-suffix command combos"
-  '((emacs "24.4")
-    (dash "2.10.0")))
+  '((emacs "$(EMACS_VERSION)")
+    (async "$(ASYNC_VERSION)")
+    (dash "$(DASH_VERSION)")))
 endef
 # '
 export magit_popup_pkg
@@ -188,11 +193,12 @@ ELPA_DOCS_FILES = $(addprefix Documentation/,AUTHORS.md dir magit.info)
 define magit_pkg
 (define-package "magit" "$(VERSION)"
   "A Git porcelain inside Emacs"
-  '((emacs "24.4")
-    (dash "2.10.0")
-    (with-editor "2.1.0")
-    (git-commit "2.1.0")
-    (magit-popup "2.1.0")))
+  '((emacs "$(EMACS_VERSION)")
+    (async "$(ASYNC_VERSION)")
+    (dash "$(DASH_VERSION)")
+    (with-editor "$(VERSION)")
+    (git-commit "$(VERSION)")
+    (magit-popup "$(VERSION)")))
 endef
 # '
 export magit_pkg
