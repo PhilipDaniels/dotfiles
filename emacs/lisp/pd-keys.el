@@ -183,6 +183,7 @@
 (define-key global-map (kbd "s-=") 'text-scale-increase)
 
 (define-key global-map (kbd "C-x g") 'magit-status)
+(define-key global-map (kbd "C-x C-g") 'magit-status)
 
 ;;; ******************* Arrow keys ********************
 ;; Unbind the arrow keys! For hardcore users only.
