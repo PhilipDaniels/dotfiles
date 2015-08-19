@@ -140,6 +140,16 @@ search at index 0."
 (add-hook 'c-mode-common-hook 'fci-mode)
 (add-hook 'emacs-lisp-mode-hook 'fci-mode)
 (add-hook 'shell-script-mode-hook 'fci-mode)
+(add-hook 'find-file-hook 'pd-force-fci-mode)
+
+(defun pd-force-fci-mode ()
+  "Turns on fci mode for certain filenames."
+  (message "Running pd-force-fci")
+  (message "bfn = %s" buffer-file-name)
+  (message "fndbfn = %s" (file-name-nondirectory buffer-file-name))
+  (when (string= "COMMIT_EDITMSG" (file-name-nondirectory buffer-file-name))
+;    (message "Its true!")))
+    (fci-mode 1)))
 
 ;; The show-trailing-whitespace mode is incompatible with FCI. This workaround
 ;; is from the FCI documentation.
