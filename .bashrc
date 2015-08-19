@@ -60,8 +60,16 @@ fi
 
 # Setup nvm (Node Version Manager) to use a folder in my home directory.
 if [ -s ~/.nvm/nvm.sh ]; then
-	NVM_DIR=~/.nvm
-	source ~/.nvm/nvm.sh
+    NVM_DIR=~/.nvm
+    source ~/.nvm/nvm.sh
+fi
+
+# Start Emacs daemon if it is not already running.
+if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
+    ps cax | grep emacs-w32 > /dev/null
+    if [ $? -ne 0 ]; then
+	emacs-w32 --daemon
+    fi
 fi
 
 
@@ -125,18 +133,15 @@ fi
 # under Cygwin. n.b. EDITOR is not used by my Git setup, the editor is set
 # explicitly in my ~/.gitconfig.
 export NO_AT_BRIDGE=1
-EDITOR="emacsclient --nw"
 
-# C = Cygwin Emacs. Terminal or X with Gtk.
-alias ce='emacs'
-alias cte='emacs -nw'
-alias cec='emacsclient'
-alias ctec='emacsclient -nw'
+# Emacs aliases. W32 Emacs is also from Cygwin, but runs using native Windows fonts and without X.
+# For clients, arg -c means create a new window, -t means use current terminal.
+alias ce='emacs'                 # {C}ygwin{E}macs            Opens new window unless X is not running.
+alias we='emacs-w32'             # {W}indows{E}macs           Opens new window.
+alias cec='emacsclient'          # {C}ygwin{E}macs{C}lient    Tries to use current frame, including in the console.
+alias wec='emacsclient-w32'      # {W}indows{E}macs{C}lient   Tries to use current frame.
+
 alias killcemacs="emacsclient -e '(kill-emacs)'"
-
-# W = W32 Emacs. Also from Cygwin, but runs with W32 fonts and without X.
-alias we='emacs-w32'
-alias wec='emacsclient-w32'
 alias killwemacs="emacsclient-w32 -e '(kill-emacs)'"
 
 
