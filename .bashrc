@@ -99,6 +99,11 @@ if f_AtWork; then
     f_GitSetProxy
 fi
 
+
+GIT_PROMPT_ONLY_IN_REPO=1
+GIT_PROMPT_FETCH_REMOTE_STATUS=0   # uncomment to avoid fetching remote status
+
+
 ########################################################################
 # Do aliases last.
 if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
