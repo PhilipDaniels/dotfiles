@@ -23,6 +23,8 @@ REM To install chocolatey (and a large list of apps)
 ```
 
 ### Upgrade instructions
+Run this from a cmd prompt (not ConEmu because it is part of the choco install):
+
 ```
 choco upgrade all -y
 ```
