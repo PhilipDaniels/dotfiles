@@ -22,3 +22,9 @@ REM To install chocolatey (and a large list of apps)
 @powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/philipdaniels/dotfiles/master/setup_choco.ps1'))"
 ```
 
+### Upgrade instructions
+```
+choco upgrade all -y
+```
+
+or just run this script again to upgrade everything.
