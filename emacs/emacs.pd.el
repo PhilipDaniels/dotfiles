@@ -225,7 +225,7 @@ search at index 0."
 ;; trailing whitespace.
 (whitespace-mode nil)
 (setq-default show-trailing-whitespace t)
-(setq whitespace-style '(face trailing))   
+(setq whitespace-style '(face trailing))
 
 
 (message "APPEARANCE - END.")
@@ -457,8 +457,9 @@ search at index 0."
 
 ;;; ******************* Main number keys ********************
 ;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via C-u anyway.
-(define-key global-map (kbd "M-1") 'window-configuration-to-register)
-(define-key global-map (kbd "M-2") 'jump-to-register)
+(define-key global-map (kbd "M-1") 'jump-to-register)
+(define-key global-map (kbd "M-2") 'window-configuration-to-register)
+(define-key global-map (kbd "M-3") 'point-to-register)
 
 ;;; ******************* Letter/main section keys ********************
 (define-key global-map (kbd "M-/") 'hippie-expand)
