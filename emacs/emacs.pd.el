@@ -221,10 +221,11 @@ search at index 0."
 ;(add-hook 'shell-script-mode-hook 'fci-mode)
 
 ;; The show-trailing-whitespace mode is incompatible with FCI. This workaround
-;; is from the FCI documentation.
-;;(whitespace-mode nil)
-;;(setq-default show-trailing-whitespace t)
-;;(setq whitespace-style '(face trailing))
+;; is from the FCI documentation and produces a nice red rectangle only for
+;; trailing whitespace.
+(whitespace-mode nil)
+(setq-default show-trailing-whitespace t)
+(setq whitespace-style '(face trailing))   
 
 
 (message "APPEARANCE - END.")
