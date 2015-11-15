@@ -48,5 +48,5 @@
 ; Do my real initialization, safe in the knowledge that everything is loaded.
 (setq enable-local-variables t)
 (setq enable-local-eval t)
-(add-hook 'after-init-hook (lambda () (load "~/repos/dotfiles/emacs.pd.el")))
+(add-hook 'after-init-hook (lambda () (load "~/repos/dotfiles/emacs/emacs.pd.el")))
 
