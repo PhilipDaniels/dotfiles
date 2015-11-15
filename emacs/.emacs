@@ -1,57 +1,52 @@
-; -*- mode: emacs-lisp -*-
-; -*- coding: utf-8 -*-
-
-(defconst running-ms-windows
-  (string-match "windows" (prin1-to-string system-type)))
-(defconst running-gnu-linux
-  (string-match "linux" (prin1-to-string system-type)))
-(defconst running-cygwin
-  (string-match "cygwin" (prin1-to-string system-type)))
-(defconst running-w32
-  (string-match "w32" (prin1-to-string window-system)))
-
-;;; TODO
-;;; Something like Ctrl-P (wildfinder)
-;;; Window keybindings
-;;; mode line customisation - change color. OVER indicator
-;;; Trailing whitespace in some filetypes only
+;;; -*- mode: emacs-lisp -*-
+;;; -*- coding: utf-8 -*-
+;;; Local Variables:
+;;; eval: (outline-minor-mode)
+;;; End:
 
 
-;;; See http://www.emacswiki.org/emacs/ELPA
-;;; But package management does not seem to work in Cygwin.
-;;;(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-;;;			 ("marmalade" . "https://marmalade-repo.org/packages/")
-;;;			 ("melpa" . "http://melpa.org/packages/")))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+(quote
+ ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 
-;;; The above won't work from work due to proxy issues. Suggested method of
-;;; getting Emacs to use the IE proxy settings is below.
-(eval-after-load "url"
-  '(progn
-     (require 'w32-registry)
-     (defadvice url-retrieve (before
-			      w32-set-proxy-dynamically
-			      activate)
-       "Before retrieving a URL, query the IE Proxy settings, and use them."
-       (let ((proxy (w32reg-get-ie-proxy-config)))
-	 (setq url-using-proxy proxy url-proxy-services proxy)))))
+;;; Configure the package management system.
+(setq package-list '(color-theme-solarized
+		     fill-column-indicator
+		     magit
+		     markdown-mode
+		     outline-magic
+		     unbound
+		     ))
+
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+			 ("melpa" . "http://melpa.org/packages/")))
+			 
+(package-initialize)
+
+; Fetch the list of packages available.
+(unless package-archive-contents
+  (package-refresh-contents))
+
+; Install the missing packages.
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 
-;;; Do my stuff last. This is particularly important with respect to the themes,
-;;; because we must call custom-safe-themes before loading my themes, otherwise
-;;; we get prompted every time.
-(add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
-(add-to-list 'load-path "~/repos/dotfiles/emacs/lisp/magit/lisp")
-(require 'magit)
-
-(with-eval-after-load 'info
-  (info-initialize)
-  (add-to-list 'Info-directory-list
-	       "~/repos/dotfiles/emacs/lisp/magit/Documentation/"))
-
-(load-library "pd-lisputils")
-(load-library "pd-functions")
-(load-library "pd-appearance")
-(load-library "pd-variables")
-(load-library "pd-mode-customizations")
-(load-library "pd-keys")
+; Do my real initialization, safe in the knowledge that everything is loaded.
+(setq enable-local-variables t)
+(setq enable-local-eval t)
+(add-hook 'after-init-hook (lambda () (load "~/repos/dotfiles/emacs.pd.el")))
 
