@@ -436,6 +436,8 @@ search at index 0."
 (define-key global-map (kbd "<f2>")   'recentf-open-files)
 (define-key global-map (kbd "<S-f2>") 'menu-bar-open)
 (define-key global-map (kbd "<C-f2>") 'menu-bar-open)
+;; f3, f4 = macros.
+;; f10 = menu-bar-open
 
 ;;; ******************* Arrow keys ********************
 ;; Unbind the arrow keys! For hardcore users only.
@@ -452,6 +454,11 @@ search at index 0."
 ;;; ******************* Small pad keys ********************
 (define-key global-map (kbd "C-S-<prior>") (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)))
 (define-key global-map (kbd "C-S-<next>") (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)))
+
+;;; ******************* Main number keys ********************
+;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via C-u anyway.
+(define-key global-map (kbd "M-1") 'window-configuration-to-register)
+(define-key global-map (kbd "M-2") 'jump-to-register)
 
 ;;; ******************* Letter/main section keys ********************
 (define-key global-map (kbd "M-/") 'hippie-expand)
