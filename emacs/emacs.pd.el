@@ -4,16 +4,9 @@
 ;;; eval: (outline-minor-mode 1)
 ;;; End:
 
-
-;;; TODO
-;;; Something like Ctrl-P (wildfinder)
-;;; Window keybindings
-;;; Trailing whitespace in some filetypes only
-
-;; Teach dired to unzip zip files (use the Z key)
-;;(eval-after-load "dired-aux"
-;;  '(add-to-list 'dired-compress-file-suffixes
-;;		'("\\.zip\\'" ".zip" "unzip")))
+;;; $$ TODO
+;;; Something like Ctrl-P (wildfinder) - helm!
+;;; super (apps) keybindings.
 
 
 ;;; Determine operating system and window system we are running on.
@@ -85,6 +78,11 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
+;; Teach dired to unzip zip files (use the Z key)
+(eval-after-load "dired-aux"
+  '(add-to-list 'dired-compress-file-suffixes '("\\.zip\\'" ".zip" "unzip")))
+
+
 (message "MAJOR MODES - END.")
 
 ;;; $$ MINOR MODES.
@@ -146,7 +144,8 @@ search at index 0."
 
 
 ; This ensures the right font is set when running in daemon mode.
-(add-hook 'after-make-frame-functions (lambda (frame) (pd-set-candidate-font 0 frame)))
+(add-hook 'after-make-frame-functions
+	  (lambda (frame) (pd-set-candidate-font 0 frame)))
 
 ; And this ensures the right font is set when running in non-daemon mode.
 (if (display-graphic-p)
@@ -157,7 +156,7 @@ search at index 0."
 ; else we still come up in light mode, no idea why.
 (setq-default frame-background-mode 'dark)
 (mapc 'frame-set-background-mode (frame-list))
-(load-theme 'solarized t)        ; sellout Solarized, package is "color-theme-solarized" on MELPA.
+(load-theme 'solarized t)        ; Package is "color-theme-solarized" on MELPA.
 ;(load-theme 'solarized-dark t)  ; bbatsov Solarized, no good in terminal
 
 ; You can load a different theme for GUI vs Terminal like this.
@@ -220,16 +219,14 @@ search at index 0."
 ;(add-hook 'emacs-lisp-mode-hook 'fci-mode)
 ;(add-hook 'shell-script-mode-hook 'fci-mode)
 
-;; The show-trailing-whitespace mode is incompatible with FCI. This workaround
-;; is from the FCI documentation and produces a nice red rectangle only for
-;; trailing whitespace.
-(whitespace-mode nil)
+;; Show a red rectangle for trailing whitespace, and color long lines.
+(require 'whitespace)
 (setq-default show-trailing-whitespace t)
-(setq whitespace-style '(face trailing))
-
+(setq whitespace-line-column 80)
+(setq whitespace-style '(face trailing lines-tail))
+(add-hook 'prog-mode-hook 'whitespace-mode)
 
 (message "APPEARANCE - END.")
-
 
 
 ;;; $$ GENERAL VARIABLES.
