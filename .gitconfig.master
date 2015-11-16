@@ -1,5 +1,5 @@
 # vim: set filetype=gitconfig:
- 
+
 [user]
     name = Philip Daniels
     email = Philip.Daniels1971@gmail.com
@@ -10,7 +10,7 @@
     helper = cache --timeout=72000
 [core]
     #editor = emacsclient-w32
-    editor = emacsclient --tty
+    editor = emacsclient -c
     pager = less -x4
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems
@@ -63,23 +63,43 @@
     # mupull = subtree pull --prefix MiscUtils --squash git@github.com:PhilipDaniels/MiscUtils.git master
     # mupush = subtree push --prefix MiscUtils git@github.com:PhilipDaniels/MiscUtils.git master
 
-# Setup the GUI diff and mergetools to use p4merge. p4merge is free for Linux
-# and Windows. It needs to be on your path, or you can edit the 'cmd' lines.
+# Setup the GUI diff and mergetools. You can pick which one by uncommenting
+# the relevant lines.
 [merge]
-    tool = p4merge
     conflictstyle = diff3
+    #tool = p4merge
+    #tool = tortoisemerge
+    tool = kdiff3
 [mergetool]
+    prompt = false
     keepBackup = false
+[diff]
+    #guitool = p4merge
+    #tool = p4merge
+    #guitool = tortoisediff
+    #tool = tortoisediff
+    guitool = kdiff3
+    tool = kdiff3
+[difftool]
+    prompt = false
+
 [mergetool "p4merge"]
     cmd = "p4merge $BASE $LOCAL $REMOTE $MERGED"
     keepTemporaries = false
     trustExitCode = false
     keepBackup = false
-[diff]
-    guitool = p4merge
-    tool = p4merge
-[difftool]
-    prompt = false
+[mergetool "tortoisemerge"]
+    cmd = \""c:/Program Files/TortoiseGIT/bin/TortoiseGitMerge.exe"\" -base "$BASE" -theirs "$REMOTE" -mine "$LOCAL" -merged "$MERGED"
+    keepTemporaries = false
+    trustExitCode = false
+    keepBackup = false
+[mergetool "kdiff3"]
+    cmd = \""C:/Program Files/KDiff3/kdiff3"\" $BASE $LOCAL $REMOTE -o $MERGED
+
 [difftool "p4merge"]
     cmd = "p4merge $LOCAL $REMOTE"
+[difftool "tortoisediff"]
+    cmd = \""c:/Program Files/TortoiseGIT/bin/TortoiseGitMerge.exe"\" -mine "$REMOTE" -base "$LOCAL"
+[difftool "kdiff3"]
+    cmd = \""C:/Program Files/KDiff3/kdiff3"\" $LOCAL $REMOTE
 
