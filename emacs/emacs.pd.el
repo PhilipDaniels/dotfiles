@@ -93,6 +93,14 @@
 	    (require 'outline-magic)
 	    (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle)))
 
+;; See http://capitaomorte.github.io/yasnippet/
+;; Load yasnippet, but only load my snippets (there are many examples under
+;; the elpa/yasnippet folder.
+(require 'yasnippet)
+(setq yas-snippet-dirs '("~/repos/dotfiles/emacs/snippets"))
+(yas-reload-all)
+(add-hook 'prog-mode-hook #'yas-minor-mode)
+
 
 ;;; $$ APPEARANCE.
 (message "APPEARANCE - BEGIN.")

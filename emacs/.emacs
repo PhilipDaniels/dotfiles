@@ -27,12 +27,13 @@
 		     markdown-mode
 		     outline-magic
 		     unbound
+		     yasnippet
 		     ))
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "https://marmalade-repo.org/packages/")
 			 ("melpa" . "http://melpa.org/packages/")))
-			 
+
 (package-initialize)
 
 ; Fetch the list of packages available.
@@ -49,4 +50,3 @@
 (setq enable-local-variables t)
 (setq enable-local-eval t)
 (add-hook 'after-init-hook (lambda () (load "~/repos/dotfiles/emacs/emacs.pd.el")))
-
