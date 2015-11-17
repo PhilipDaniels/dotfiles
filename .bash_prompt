@@ -67,7 +67,7 @@ function f_SetPrompt()
     # If this is an xterm set the title to user@host:dir
     case $TERM in
     xterm*|rxvt*)
-        local TITLEBAR='\[\033]0;\u@\h:\w\007\]'
+        local TITLEBAR='\[\033]0;\W\007\]'
         ;;
     *)
         local TITLEBAR=""
