@@ -4,15 +4,13 @@
 ;;; eval: (outline-minor-mode)
 ;;; End:
 
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-(quote
- ("8db4b03b9ae654d4a57804286eb3e332725c84d7cdab38463cb6b97d5762ad26" default))))
+ '(custom-safe-themes t)
+)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -21,17 +19,37 @@
  )
 
 ;;; Configure the package management system.
-(setq package-list '(color-theme-solarized
+(setq package-list '(alect-themes
+		     ample-theme
+		     anti-zenburn-theme
+		     color-theme-solarized
+		     cyberpunk-theme
+		     dakrone-theme
 		     fill-column-indicator
+		     flatland-theme
+		     flatui-theme
+		     git-timemachine
+		     gruber-darker-theme
+		     gruvbox-theme
+		     helm
+		     hemisu-theme
+		     heroku-theme
+		     leuven-theme
 		     magit
 		     markdown-mode
+		     monokai-theme
+		     moe-theme
 		     outline-magic
+		     rainbow-mode
+		     s
+		     tango-plus-theme
 		     unbound
 		     yasnippet
+		     zenburn-theme
 		     ))
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ("melpa" . "http://melpa.org/packages/")))
 
 (package-initialize)

@@ -8,6 +8,15 @@
 ;;; Something like Ctrl-P (wildfinder) - helm!
 ;;; super (apps) keybindings.
 
+;;; $$ USEFUL INFO
+;; https://github.com/emacs-tw/awesome-emacs
+;; http://pawelbx.github.io/emacs-theme-gallery/
+;; https://github.com/pierre-lecocq/emacs4developers
+;; https://tuhdo.github.io/c-ide.html
+;; http://www.emacswiki.org/
+;; http://tuhdo.github.io/helm-intro.html
+
+
 
 ;;; Determine operating system and window system we are running on.
 (message "The system-type variable is %s" system-type)
@@ -244,6 +253,8 @@ search at index 0."
 (require 'unbound)
 
 (setq make-backup-files nil)
+(setq backup-inhibited t)
+(setq auto-save-default nil)
 (setq delete-by-moving-to-trash t)
 (setq inhibit-startup-message t)
 (setq scroll-error-top-bottom t)
