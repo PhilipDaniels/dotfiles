@@ -1,7 +1,6 @@
 ;;; -*- mode: emacs-lisp -*-
 ;;; -*- coding: utf-8 -*-
 ;;; Local Variables:
-;;; eval: (outline-minor-mode 1)
 ;;; End:
 
 ;;; $$ TODO
@@ -95,20 +94,17 @@
 (message "MAJOR MODES - END.")
 
 ;;; $$ MINOR MODES.
-; Setup C-tab to toggle outlining in outline-minor-mode.
-(add-hook 'outline-mode-hook (lambda () (require 'outline-cycle)))
-(add-hook 'outline-minor-mode-hook
-	  (lambda ()
-	    (require 'outline-magic)
-	    (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle)))
-
 ;; See http://capitaomorte.github.io/yasnippet/
 ;; Load yasnippet, but only load my snippets (there are many examples under
 ;; the elpa/yasnippet folder.
+(message "MINOR MODES - END.")
+
 (require 'yasnippet)
 (setq yas-snippet-dirs '("~/repos/dotfiles/emacs/snippets"))
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
+
+(message "MINOR MODES - END.")
 
 
 ;;; $$ APPEARANCE.
