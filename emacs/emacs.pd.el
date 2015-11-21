@@ -3,9 +3,18 @@
 ;;; Local Variables:
 ;;; End:
 
+
 ;;; $$ TODO
-;;; Something like Ctrl-P (wildfinder) - helm!
-;;; super (apps) keybindings.
+;; Something like Ctrl-P (wildfinder) - helm!
+;; super (apps) keybindings.
+;; Something to move a buffer into another window (buffer-move package?)
+;; Something to scroll the other window.
+;; Programming hide-show for collapsing defuns.
+;; M-r reverts the current buffer
+;;(global-set-key [(meta r)] (lambda () (interactive) (revert-buffer nil t)))
+;; W32 proxy settings
+;; sort usings.
+;; http://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs/683575#683575
 
 ;;; $$ USEFUL INFO
 ;; https://github.com/emacs-tw/awesome-emacs
@@ -70,6 +79,25 @@
 	  (set-visited-file-name new-name)
 	  (set-buffer-modified-p nil))))))
 
+(defun endless/comment-line-or-region (n)
+  "Comment or uncomment current line and leave point after it.
+With positive prefix, apply to N lines including current one.
+With negative prefix, apply to -N lines above.
+If region is active, apply to active region instead."
+  (interactive "p")
+  (if (use-region-p)
+      (comment-or-uncomment-region
+       (region-beginning) (region-end))
+    (let ((range
+           (list (line-beginning-position)
+                 (goto-char (line-end-position n)))))
+      (comment-or-uncomment-region
+       (apply #'min range)
+       (apply #'max range)))
+    (forward-line 1)
+    (back-to-indentation)))
+
+
 
 (message "FUNCTIONS - END.")
 
@@ -90,6 +118,13 @@
 (eval-after-load "dired-aux"
   '(add-to-list 'dired-compress-file-suffixes '("\\.zip\\'" ".zip" "unzip")))
 
+;; Shells.
+;; M-x shell runs a shell as a sub-process, communicating with it via pipes.
+;; It is not fully functional.
+;; eshell is a shell written in elisp. It is slow and not very complete.
+;; term and ansi-term (better) are better choices.
+;; There is also multi-term, not sure what that adds though.
+;; tl;dr - use ansi-term for starting shells.
 
 (message "MAJOR MODES - END.")
 
@@ -215,6 +250,7 @@ search at index 0."
 (setq visible-bell 1)
 (blink-cursor-mode -1)
 (show-paren-mode 1)
+(setq-default show-paren-delay 0)
 (global-linum-mode 1)
 (setq linum-format "%4d ")
 (setq column-number-mode 1)
@@ -253,9 +289,11 @@ search at index 0."
 ;;; $$ GENERAL VARIABLES.
 (message "GENERAL VARIABLES - BEGIN.")
 
-; This package provides the command describe-unbound-keys. Try a parameter of 8.
+;; This package provides the command describe-unbound-keys. Try a parameter of 8.
 (require 'unbound)
 
+(setq user-full-name "Philip Daniels")
+(setq user-mail-address "philip.daniels1971@gmail.com")
 (setq make-backup-files nil)
 (setq backup-inhibited t)
 (setq auto-save-default nil)
@@ -268,6 +306,7 @@ search at index 0."
 (setq-default truncate-lines 1)
 (setq require-final-newline t)
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq confirm-nonexistent-file-or-buffer nil)
 (recentf-mode 1)
 (setq recentf-max-saved-items 500)
 (setq recentf-max-menu-items 60)
@@ -275,6 +314,20 @@ search at index 0."
 (add-hook 'before-save-hook 'time-stamp)
 (setq gdb-many-windows t)
 (setq gdb-show-main t)
+
+;; Don't prompt with "Active processes exist, kill them?" when exiting Emacs.
+;; http://stackoverflow.com/questions/2706527/make-emacs-stop-asking-active-processes-exist-kill-them-and-exit-anyway
+(add-hook 'comint-exec-hook
+	  (lambda () (set-process-query-on-exit-flag
+		      (get-buffer-process (current-buffer)) nil)))
+(add-hook 'term-exec-hook
+	  (lambda () (set-process-query-on-exit-flag
+		      (get-buffer-process (current-buffer)) nil)))
+
+;; Don't prompt about killing buffers with live processes attached to them.
+(setq kill-buffer-query-functions
+  (remq 'process-kill-buffer-query-function
+	kill-buffer-query-functions))
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
@@ -447,12 +500,12 @@ search at index 0."
 
 
 ;;; ******************* Global Function keys ********************
-;;; Make F2 and F3 run the macros stored in the 'q' and 'w' registers
-;;; and Shift F2/F3 run the macros until a blank line is encountered.
-;;;map <F2> @q
-;;;map <F3> @w
-;;;map <silent> <S-F2> :call RunMacroToBlankLine('q')<CR>
-;;;map <silent> <S-F3> :call RunMacroToBlankLine('w')<CR>
+;; Make F2 and F3 run the macros stored in the 'q' and 'w' registers
+;; and Shift F2/F3 run the macros until a blank line is encountered.
+;;map <F2> @q
+;;map <F3> @w
+;;map <silent> <S-F2> :call RunMacroToBlankLine('q')<CR>
+;;map <silent> <S-F3> :call RunMacroToBlankLine('w')<CR>
 (define-key global-map (kbd "<f2>")   'recentf-open-files)
 (define-key global-map (kbd "<S-f2>") 'menu-bar-open)
 (define-key global-map (kbd "<C-f2>") 'menu-bar-open)
@@ -483,6 +536,7 @@ search at index 0."
 
 ;;; ******************* Letter/main section keys ********************
 (define-key global-map (kbd "M-/") 'hippie-expand)
+(define-key global-map (kbd "M-;") 'endless/comment-line-or-region)
 (define-key global-map (kbd "C-a") 'pd-back-to-indentation-or-beginning)
 ;; Make a buffer menu in the current window, not an "other" window.
 (define-key global-map (kbd "C-x C-b") 'buffer-menu)
