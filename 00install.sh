@@ -50,9 +50,9 @@ f_Inst $DIR/colors/.dircolors.solarized.ansi-universal ~/.dircolors
 f_Inst $DIR/colors/mintty-themes/SolarizedDark ~/.minttyrc
 f_Inst $DIR/emacs/.emacs ~/.emacs
 
-if [ ! -f /usr/share/fonts/TTF/Cousine-Regular.ttf ] ; then
-    echo "Installing mono fonts..."
-    cp $DIR/fonts/Mono/*.ttf /usr/share/fonts/TTF
-fi
+# if [ ! -f /usr/share/fonts/TTF/Cousine-Regular.ttf ] ; then
+#     echo "Installing mono fonts..."
+#     cp $DIR/fonts/Mono/*.ttf /usr/share/fonts/TTF
+# fi
 
 echo "Installation complete."

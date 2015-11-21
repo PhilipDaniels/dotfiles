@@ -129,6 +129,15 @@ If region is active, apply to active region instead."
 ;; C/C++ mode.
 (message "MAJOR MODES - BEGIN.")
 
+;; Shells.
+;; M-x shell runs a shell as a sub-process, communicating with it via pipes.
+;; It is not fully functional.
+;; eshell is a shell written in elisp. It is slow and not very complete.
+;; term and ansi-term (better) are better choices.
+;; There is also multi-term, not sure what that adds though.
+;; tl;dr - use ansi-term for starting shells.
+
+
 (setq c-default-style "linux"
       c-basic-offset 4)
 
@@ -141,15 +150,23 @@ If region is active, apply to active region instead."
 (eval-after-load "dired-aux"
   '(add-to-list 'dired-compress-file-suffixes '("\\.zip\\'" ".zip" "unzip")))
 
-;; Shells.
-;; M-x shell runs a shell as a sub-process, communicating with it via pipes.
-;; It is not fully functional.
-;; eshell is a shell written in elisp. It is slow and not very complete.
-;; term and ansi-term (better) are better choices.
-;; There is also multi-term, not sure what that adds though.
-;; tl;dr - use ansi-term for starting shells.
+;; Make magit take up the entire screen.
+;;(defadvice magit-status (around magit-fullscreen activate)
+;;  (window-configuration-to-register :magit-fullscreen)
+;;   ad-do-it
+;;   (delete-other-windows))
+
+;; (defun magit-quit-session ()
+;;   "Restores the previous window configuration and kills the magit buffer"
+;;   (interactive)
+;;   (kill-buffer)
+;;   (jump-to-register :magit-fullscreen))
+
+;; (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+
 
 (message "MAJOR MODES - END.")
+
 
 ;;; $$ MINOR MODES.
 ;; See http://capitaomorte.github.io/yasnippet/
@@ -172,10 +189,22 @@ If region is active, apply to active region instead."
   "Return a font if it exists, nil otherwise. Does not work in daemon mode."
   (find-font (font-spec :name font) frame))
 
-(defvar pd-font-candidates '("Consolas-12" "Cousine-12" "Consolas-14"
+;; See https://github.com/chrissimpkins/codeface to get a big zip of ttf and otf
+;; fonts. To determine the name that Emacs uses for a font, the easiest way I
+;; know is to use the customize system to pick a default font, then save
+;; options, the name of the font then appears in the .emacs file.
+(defvar pd-font-candidates '("Cousine-12"
+			     "Aurulent Sans Mono-12"
+			     "Consolas-12"
 			     "Source Code Pro-12"
-			     "Liberation Mono-12" "Anonymous Pro-14"
-			     "Aurulent Sans Mono-12" "Calibri-12")
+			     "DejaVu Sans Mono-12"
+			     "Droid Sans Mono-12"
+			     "Liberation Mono-12"
+			     "Anonymous Pro-14"
+			     "Liberation Mono-12"
+			     "CPMono_v07 Plain-12"
+			     "Calibri-12"
+			     )
   "Defines a list of fonts to be tried in order.")
 
 (defvar pd-font-index nil
@@ -564,15 +593,23 @@ search at index 0."
 (define-key global-map (kbd "M-;") 'endless/comment-line-or-region)
 (define-key global-map (kbd "M-a") 'endless/backward-paragraph)
 (define-key global-map (kbd "M-e") 'endless/forward-paragraph)
+(define-key global-map (kbd "M-j")
+  (lambda ()
+    (interactive)
+    (join-line -1)))
+
 (define-key global-map (kbd "C-a") 'pd-back-to-indentation-or-beginning)
 ;; Make a buffer menu in the current window, not an "other" window.
 (define-key global-map (kbd "C-x C-b") 'buffer-menu)
 (define-key global-map (kbd "C-=") 'fci-mode)
+
+(define-key global-map (kbd "s-d") 'delete-trailing-whitespace)
 (define-key global-map (kbd "s-r") 'recentf-open-files)
 (define-key global-map (kbd "s-w") 'pd-copy-current-line)
 (define-key global-map (kbd "s--") 'text-scale-decrease)
 (define-key global-map (kbd "s-=") 'text-scale-increase)
 
+(define-key global-map (kbd "s-g") 'magit-status)
 (define-key global-map (kbd "C-x g") 'magit-status)
 (define-key global-map (kbd "C-x C-g") 'magit-status)
 
@@ -610,4 +647,3 @@ search at index 0."
 
 
 (message "KEYBINDINGS - END.")
-
