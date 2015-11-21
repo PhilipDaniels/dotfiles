@@ -1,7 +1,6 @@
 ;;; -*- mode: emacs-lisp -*-
 ;;; -*- coding: utf-8 -*-
 ;;; Local Variables:
-;;; eval: (outline-minor-mode)
 ;;; End:
 
 (custom-set-variables
@@ -10,7 +9,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes t)
-)
+ )
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -19,38 +19,59 @@
  )
 
 ;;; Configure the package management system.
-(setq package-list '(alect-themes
+(setq package-list '(csharp-mode expand-region f
+		     fill-column-indicator fsharp-mode
+		     golden-ratio gitattributes-mode
+		     gitignore-mode git-timemachine haskell-mode
+		     helm hlinum jade-mode json-mode key-chord lua-mode
+		     magit markdown-mode multi-term outline-magic
+		     rainbow-mode s sass-mode sunrise-commander
+		     sunrise-x-buttons
+		     unbound yaml-mode
+		     yasnippet
+		     ;; Themes.
+		     afternoon-theme
+		     alect-themes
 		     ample-theme
+		     ample-zen-theme
 		     anti-zenburn-theme
+		     badger-theme
+		     bubbleberry-theme
+		     busybee-theme
+		     cherry-blossom-theme
+		     clues-theme
+		     color-theme-monokai
+		     color-theme-sanityinc-tomorrow
 		     color-theme-solarized
+		     color-theme-wombat
 		     cyberpunk-theme
 		     dakrone-theme
-		     fill-column-indicator
+		     darkburn-theme
+		     distinguished-theme
+		     espresso-theme
+		     firebelly-theme
 		     flatland-theme
 		     flatui-theme
-		     git-timemachine
+		     grandshell-theme
 		     gruber-darker-theme
 		     gruvbox-theme
-		     helm
+		     hc-zenburn-theme
 		     hemisu-theme
 		     heroku-theme
 		     leuven-theme
-		     magit
-		     markdown-mode
-		     monokai-theme
 		     moe-theme
-		     outline-magic
-		     rainbow-mode
-		     s
+		     occidental-theme
+		     soothe-theme
 		     tango-plus-theme
-		     unbound
-		     yasnippet
+		     tangotango-theme
 		     zenburn-theme
 		     ))
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-			 ("melpa" . "http://melpa.org/packages/")))
+			 ("melpa" . "http://melpa.org/packages/")
+                         ("sc" . "http://joseito.republika.pl/sunrise-commander/")
+			 ))
 
 (package-initialize)
 
@@ -67,4 +88,5 @@
 ; Do my real initialization, safe in the knowledge that everything is loaded.
 (setq enable-local-variables t)
 (setq enable-local-eval t)
-(add-hook 'after-init-hook (lambda () (load "~/repos/dotfiles/emacs/emacs.pd.el")))
+(add-hook 'after-init-hook
+	  (lambda () (load "~/repos/dotfiles/emacs/emacs.pd.el")))

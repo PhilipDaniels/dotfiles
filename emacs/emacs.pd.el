@@ -335,6 +335,9 @@ search at index 0."
 ;; lines working.
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
+(require 'hlinum)
+(hlinum-activate)
+
 (message "APPEARANCE - END.")
 
 
