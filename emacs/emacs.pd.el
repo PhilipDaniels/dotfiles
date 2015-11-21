@@ -235,8 +235,16 @@ search at index 0."
 ;; Show a red rectangle for trailing whitespace, and color long lines.
 (require 'whitespace)
 (setq-default show-trailing-whitespace t)
-(setq whitespace-line-column 80)
-(setq whitespace-style '(face trailing lines-tail))
+(setq-default whitespace-line-column 80)
+(setq-default whitespace-style '(face trailing lines-tail))
+
+;; Turn off display of trailing whitespace in some modes.
+(dolist (hook '(buffer-menu-mode-hook compilation-mode-hook
+		diff-mode-hook shell-mode-hook term-mode-hook))
+  (add-hook hook (lambda () (set-variable 'show-trailing-whitespace nil))))
+
+;; We need to turn on whitespace-mode to get the display of the >80 character
+;; lines working.
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
 (message "APPEARANCE - END.")
