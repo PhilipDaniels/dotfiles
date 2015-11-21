@@ -97,7 +97,30 @@ If region is active, apply to active region instead."
     (forward-line 1)
     (back-to-indentation)))
 
+(defun endless/forward-paragraph (&optional n)
+  "Advance just past next blank line."
+  (interactive "p")
+  (let ((para-commands
+         '(endless/forward-paragraph endless/backward-paragraph)))
+    ;; Only push mark if it's not active and we're not repeating.
+    (or (use-region-p)
+        (not (member this-command para-commands))
+        (member last-command para-commands)
+        (push-mark))
+    ;; The actual movement.
+    (dotimes (_ (abs n))
+      (if (> n 0)
+          (skip-chars-forward "\n[:blank:]")
+        (skip-chars-backward "\n[:blank:]"))
+      (if (search-forward-regexp
+           "\n[[:blank:]]*\n[[:blank:]]*" nil t (cl-signum n))
+          (goto-char (match-end 0))
+        (goto-char (if (> n 0) (point-max) (point-min)))))))
 
+(defun endless/backward-paragraph (&optional n)
+  "Go back up to previous blank line."
+  (interactive "p")
+  (endless/forward-paragraph (- n)))
 
 (message "FUNCTIONS - END.")
 
@@ -427,7 +450,7 @@ search at index 0."
 ;; So my prefixes          C-          M-                  s-   C-
 
 
-; Some standard keybindings
+;; Some standard keybindings
 ;; =========================
 ;; C-f, C-b, C-n, C-p : move one character or line
 ;; C-v, M-v           : forward, backward one screen
@@ -499,7 +522,7 @@ search at index 0."
 ;; 	w32-scroll-lock-modifier nil))
 
 
-;;; ******************* Global Function keys ********************
+;; ******************* Global Function keys ********************
 ;; Make F2 and F3 run the macros stored in the 'q' and 'w' registers
 ;; and Shift F2/F3 run the macros until a blank line is encountered.
 ;;map <F2> @q
@@ -512,7 +535,7 @@ search at index 0."
 ;; f3, f4 = macros.
 ;; f10 = menu-bar-open
 
-;;; ******************* Arrow keys ********************
+;; ******************* Arrow keys ********************
 ;; Unbind the arrow keys! For hardcore users only.
 ;; (global-unset-key [left])
 ;; (global-unset-key [up])
@@ -524,19 +547,23 @@ search at index 0."
 (define-key global-map (kbd "S-M-<left>") 'shrink-window-horizontally)
 (define-key global-map (kbd "S-M-<right>") 'enlarge-window-horizontally)
 
-;;; ******************* Small pad keys ********************
+;; ******************* Small pad keys ********************
 (define-key global-map (kbd "C-S-<prior>") (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)))
 (define-key global-map (kbd "C-S-<next>") (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)))
 
-;;; ******************* Main number keys ********************
+;; ******************* Main number keys ********************
 ;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via C-u anyway.
 (define-key global-map (kbd "M-1") 'jump-to-register)
 (define-key global-map (kbd "M-2") 'window-configuration-to-register)
 (define-key global-map (kbd "M-3") 'point-to-register)
+(define-key global-map (kbd "M-9") 'backward-sexp)
+(define-key global-map (kbd "M-0") 'forward-sexp)
 
-;;; ******************* Letter/main section keys ********************
+;; ******************* Letter/main section keys ********************
 (define-key global-map (kbd "M-/") 'hippie-expand)
 (define-key global-map (kbd "M-;") 'endless/comment-line-or-region)
+(define-key global-map (kbd "M-a") 'endless/backward-paragraph)
+(define-key global-map (kbd "M-e") 'endless/forward-paragraph)
 (define-key global-map (kbd "C-a") 'pd-back-to-indentation-or-beginning)
 ;; Make a buffer menu in the current window, not an "other" window.
 (define-key global-map (kbd "C-x C-b") 'buffer-menu)
@@ -549,7 +576,7 @@ search at index 0."
 (define-key global-map (kbd "C-x g") 'magit-status)
 (define-key global-map (kbd "C-x C-g") 'magit-status)
 
-;;; ******************* C/C++ mode keys ********************
+;; ******************* C/C++ mode keys ********************
 (defun pd-setup-vs-keys ()
   "Establishes Visual-Studio compatible local key bindings"
   (interactive)
