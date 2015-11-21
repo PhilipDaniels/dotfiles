@@ -137,7 +137,6 @@ If region is active, apply to active region instead."
 ;; There is also multi-term, not sure what that adds though.
 ;; tl;dr - use ansi-term for starting shells.
 
-
 (setq c-default-style "linux"
       c-basic-offset 4)
 
