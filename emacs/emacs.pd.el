@@ -543,10 +543,67 @@ search at index 0."
 ;;   (setq w32-pass-rwindow-to-system nil
 ;; 	w32-rwindow-modifier 'super))
 
-;; This won't work in mintty Emacs until mintty allows APPS to pass through.
-(when (or (equal window-system 'w32) (equal system-type 'cygwin))
-  (setq w32-pass-apps-to-system nil
-	w32-apps-modifier 'super))
+;; Mintty has been hacked by the maintainer to allow the APPS/MENU key to be
+;; passed through to the underlying program. Adding the line
+;; "Key_Menu=29" to the .minttyrc file causes terminal Emacs to see it as the
+;; "<print"> key. The hack was on 2015-11-19 in commit
+;; 429cb080e6bfee6136227ca5d41ea61494b36c2d.
+;; Given this hack, we can make APPS send the s- (super) prefix like this in
+;; both W32 and terminal Emacs. Unfortunately, APPS still does not work like
+;; the Alt or Control keys, if you hold it down by itself you get lots of input
+;; in the output buffer.
+(defun hyperify (prompt)
+  (let ((e (read-event)))
+    (vector (if (numberp e)
+		(logior (lsh 1 24) e)
+	      (if (memq 'hyper (event-modifiers e))
+		  e
+		(add-event-modifier "H-" e))))))
+
+(defun superify (prompt)
+  (let ((e (read-event)))
+    (vector (if (numberp e)
+		(logior (lsh 1 23) e)
+	      (if (memq 'super (event-modifiers e))
+		  e
+		(add-event-modifier "s-" e))))))
+
+(defun add-event-modifier (string e)
+  (let ((symbol (if (symbolp e) e (car e))))
+    (setq symbol (intern (concat string
+				 (symbol-name symbol))))
+    (if (symbolp e)
+	symbol
+      (cons symbol (cdr e)))))
+
+
+(if (equal system-type 'cygwin)
+    (if (equal window-system 'w32)
+	(setq w32-pass-apps-to-system nil
+	      w32-apps-modifier 'super)
+      (define-key local-function-key-map (kbd "<print>") 'event-apply-super-modifier)))
+
+(define-key global-map (kbd "s-h") (lambda () (interactive) (message "hello from menu key via s- prefix")))
+
+
+;;(define-key key-translation-map (kbd "<print>") 'super)
+
+
+
+;; Alternatively, we can turn it into a leader key like this.
+;; See http://ergoemacs.org/emacs/emacs_menu_app_keys.html
+;; (if (equal system-type 'cygwin)
+;;     (if (equal window-system 'w32)
+;; 	(setq w32-pass-apps-to-system nil
+;; 	      w32-apps-modifier nil)
+;;       (progn ;; force all alternatives to <apps> so we can write one set of keybindings.
+;; 	(define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
+;; 	(define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))))
+
+;; (define-key global-map (kbd "<apps> h")
+;;    (lambda () (interactive) (message "hello from menu key via <apps> leader key")))
+
+
 
 ;; (when (equal window-system 'w32)
 ;;   (setq w32-pass-alt-to-system nil
