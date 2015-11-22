@@ -13,7 +13,7 @@
 ;; M-r reverts the current buffer
 ;;(global-set-key [(meta r)] (lambda () (interactive) (revert-buffer nil t)))
 ;; W32 proxy settings
-;; sort usings.
+;; sort usings via thing-at-point on Xah's blog.
 ;; http://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs/683575#683575
 
 ;;; $$ USEFUL INFO
@@ -552,62 +552,27 @@ search at index 0."
 ;; both W32 and terminal Emacs. Unfortunately, APPS still does not work like
 ;; the Alt or Control keys, if you hold it down by itself you get lots of input
 ;; in the output buffer.
-(defun hyperify (prompt)
-  (let ((e (read-event)))
-    (vector (if (numberp e)
-		(logior (lsh 1 24) e)
-	      (if (memq 'hyper (event-modifiers e))
-		  e
-		(add-event-modifier "H-" e))))))
+;; (if (equal system-type 'cygwin)
+;;     (if (equal window-system 'w32)
+;; 	(setq w32-pass-apps-to-system nil
+;; 	      w32-apps-modifier 'super)
+;;       (define-key local-function-key-map (kbd "<print>") 'event-apply-super-modifier)))
 
-(defun superify (prompt)
-  (let ((e (read-event)))
-    (vector (if (numberp e)
-		(logior (lsh 1 23) e)
-	      (if (memq 'super (event-modifiers e))
-		  e
-		(add-event-modifier "s-" e))))))
-
-(defun add-event-modifier (string e)
-  (let ((symbol (if (symbolp e) e (car e))))
-    (setq symbol (intern (concat string
-				 (symbol-name symbol))))
-    (if (symbolp e)
-	symbol
-      (cons symbol (cdr e)))))
-
-
-(if (equal system-type 'cygwin)
-    (if (equal window-system 'w32)
-	(setq w32-pass-apps-to-system nil
-	      w32-apps-modifier 'super)
-      (define-key local-function-key-map (kbd "<print>") 'event-apply-super-modifier)))
-
-(define-key global-map (kbd "s-h") (lambda () (interactive) (message "hello from menu key via s- prefix")))
-
-
-;;(define-key key-translation-map (kbd "<print>") 'super)
-
+;; (define-key global-map (kbd "s-h") (lambda () (interactive) (message "hello from menu key via s- prefix")))
 
 
 ;; Alternatively, we can turn it into a leader key like this.
 ;; See http://ergoemacs.org/emacs/emacs_menu_app_keys.html
-;; (if (equal system-type 'cygwin)
-;;     (if (equal window-system 'w32)
-;; 	(setq w32-pass-apps-to-system nil
-;; 	      w32-apps-modifier nil)
-;;       (progn ;; force all alternatives to <apps> so we can write one set of keybindings.
-;; 	(define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
-;; 	(define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))))
+(if (equal system-type 'cygwin)
+    (if (equal window-system 'w32)
+	(setq w32-pass-apps-to-system nil
+	      w32-apps-modifier nil)
+      (progn ;; force all alternatives to <apps> so we can write one set of keybindings.
+	(define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
+	(define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))))
 
-;; (define-key global-map (kbd "<apps> h")
-;;    (lambda () (interactive) (message "hello from menu key via <apps> leader key")))
-
-
-
-;; (when (equal window-system 'w32)
-;;   (setq w32-pass-alt-to-system nil
-;; 	w32-scroll-lock-modifier nil))
+;;(define-key global-map (kbd "<apps> h")
+;;   (lambda () (interactive) (message "hello from menu key via <apps> leader key")))
 
 
 ;; ******************* Global Function keys ********************
@@ -665,10 +630,10 @@ search at index 0."
 (define-key global-map (kbd "s-d") 'delete-trailing-whitespace)
 (define-key global-map (kbd "s-r") 'recentf-open-files)
 (define-key global-map (kbd "s-w") 'pd-copy-current-line)
-(define-key global-map (kbd "s--") 'text-scale-decrease)
-(define-key global-map (kbd "s-=") 'text-scale-increase)
+(define-key global-map (kbd "M--") 'text-scale-decrease)
+(define-key global-map (kbd "M-=") 'text-scale-increase)
 
-(define-key global-map (kbd "s-g") 'magit-status)
+(define-key global-map (kbd "<apps> g") 'magit-status)
 (define-key global-map (kbd "C-x g") 'magit-status)
 (define-key global-map (kbd "C-x C-g") 'magit-status)
 
@@ -706,3 +671,4 @@ search at index 0."
 
 
 (message "KEYBINDINGS - END.")
+

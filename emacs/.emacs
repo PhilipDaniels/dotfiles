@@ -19,15 +19,36 @@
  )
 
 ;;; Configure the package management system.
-(setq package-list '(csharp-mode expand-region f
-		     fill-column-indicator fsharp-mode
-		     golden-ratio gitattributes-mode
-		     gitignore-mode git-timemachine haskell-mode
-		     helm hlinum jade-mode json-mode key-chord lua-mode
-		     magit markdown-mode multi-term outline-magic
-		     rainbow-mode s sass-mode sunrise-commander
+(setq package-list '(
+		     csharp-mode
+		     expand-region
+		     f
+		     fill-column-indicator
+		     fsharp-mode
+		     golden-ratio
+		     gitattributes-mode
+		     gitignore-mode
+		     git-timemachine
+		     haskell-mode
+		     helm
+		     hlinum
+		     hydra
+		     jade-mode
+		     json-mode
+		     key-chord
+		     lua-mode
+		     magit
+		     markdown-mode
+		     multi-term
+		     outline-magic
+		     rainbow-delimiters
+		     rainbow-mode
+		     s
+		     sass-mode
+		     sunrise-commander
 		     sunrise-x-buttons
-		     unbound yaml-mode
+		     unbound
+		     yaml-mode
 		     yasnippet
 		     ;; Themes.
 		     afternoon-theme
