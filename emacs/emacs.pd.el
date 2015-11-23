@@ -13,7 +13,6 @@
 ;; M-r reverts the current buffer
 ;;(global-set-key [(meta r)] (lambda () (interactive) (revert-buffer nil t)))
 ;; W32 proxy settings
-;; sort usings via thing-at-point on Xah's blog.
 ;; http://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs/683575#683575
 
 ;;; $$ USEFUL INFO
@@ -78,6 +77,16 @@
 	  (rename-buffer new-name)
 	  (set-visited-file-name new-name)
 	  (set-buffer-modified-p nil))))))
+
+(defun pd-sort-paragraph ()
+  "Sorts the current paragraph and leaves point after the last line."
+  (interactive)
+  (let (bounds pos1 pos2)
+    (setq bounds (bounds-of-thing-at-point 'paragraph))
+    (setq pos1 (car bounds))
+    (setq pos2 (cdr bounds))
+    (sort-lines nil pos1 pos2)
+    (goto-char pos2)))
 
 (defun endless/comment-line-or-region (n)
   "Comment or uncomment current line and leave point after it.
@@ -446,6 +455,8 @@ search at index 0."
 ;;    [kp-left], [kp-up], [kp-right], [kp-down]
 ;;
 ;; "apps" is usually known as the "menu" key, next to Ctrl-right.
+;; It can also be known as "print" on Cygin, because the sequence ESC [ 2 9 ~
+;; is mapped to that in lisp/term/xterm/el.gz.
 
 
 ;; Key Stealing
@@ -466,19 +477,26 @@ search at index 0."
 ;;[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
 ;;"NoWinKeys"=dword:00000001
 ;;
-;; The apps key is also stolen in mintty, though it seems to work ok in GUI
-;; Emacs.
+;; BUT DO NOT DO THIS. It makes it hard to work in a business environment with
+;; projectors, etc.
+;;
+;; The apps key used to be stolen in mintty, but the commit
+;; 429cb080e6bfee6136227ca5d41ea61494b36c2d on 9 Nov 15 made it possible to pass
+;; apps through to the underlying program. See
+;; http://emacs.stackexchange.com/questions/18245/making-terminal-emacs-treat-apps-aka-menu-key-as-super-modifier
 
 
 ;; Recommendations
 ;; ===============
-;; Use super (s-) prefixes by default. This is because they are automatically
-;; setup on Linux, so there is no need to do anything special if you also setup
-;; a key in Windows to send super.
+;; * Restrict repeatable keys (those that you might want to press several times
+;;   quickly in succession) to C- and M-.
+;; * Do not use the Windows keys.
+;; * Make the apps/menu key send the "<apps>" leader.
+;; * Do not use the super s- prefix.
 ;;
-;; A full size keyboard is CTRL    WIN ALT SPACE ALTGR WIN APPS CTRL
-;; My work laptop is       CTRL FN WIN ALT SPACE ALTGR     APPS CTRL
-;; So my prefixes          C-          M-                  s-   C-
+;; A full size keyboard is CTRL    WIN ALT SPACE ALTGR WIN APPS   CTRL
+;; My work laptop is       CTRL FN WIN ALT SPACE ALTGR     APPS   CTRL
+;; So my prefixes/leaders  C-          M-                  <apps> C-
 
 
 ;; Some standard keybindings
@@ -567,9 +585,9 @@ search at index 0."
     (if (equal window-system 'w32)
 	(setq w32-pass-apps-to-system nil
 	      w32-apps-modifier nil)
-      (progn ;; force all alternatives to <apps> so we can write one set of keybindings.
-	(define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
-	(define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))))
+      ;; force all alternatives to <apps> so we can write one set of keybindings.
+      (define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
+      (define-key key-translation-map (kbd "<menu>") (kbd "<apps>"))))
 
 ;;(define-key global-map (kbd "<apps> h")
 ;;   (lambda () (interactive) (message "hello from menu key via <apps> leader key")))
@@ -668,7 +686,7 @@ search at index 0."
 
 (add-hook 'c-mode-common-hook 'pd-setup-vs-keys)
 
-
+(define-key global-map (kbd "<f1>") 'pd-sort-paragraph)
 
 (message "KEYBINDINGS - END.")
 
