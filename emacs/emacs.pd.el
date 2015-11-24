@@ -5,7 +5,6 @@
 
 
 ;;; $$ TODO
-;; Something like Ctrl-P (wildfinder) - helm!
 ;; super (apps) keybindings.
 ;; Something to move a buffer into another window (buffer-move package?)
 ;; Something to scroll the other window.
@@ -87,6 +86,23 @@
     (setq pos2 (cdr bounds))
     (sort-lines nil pos1 pos2)
     (goto-char pos2)))
+
+(defun pd-compile-without-confirmation ()
+  "Runs last compilation without asking for confirmation."
+  (interactive)
+  (save-window-excursion
+    (compile compile-command))
+  (pop-to-buffer (get-buffer "*compilation*")))
+
+(defun pd-compile-clean-one-shot ()
+  "Runs make clean, but restores compile command after it."
+  (interactive)
+  (let (oldcc)
+    (setq oldcc compile-command)
+    (save-window-excursion
+      (compile "make clean"))
+    (pop-to-buffer (get-buffer "*compilation*"))
+    (setq compile-command oldcc)))
 
 (defun endless/comment-line-or-region (n)
   "Comment or uncomment current line and leave point after it.
@@ -172,6 +188,25 @@ If region is active, apply to active region instead."
 
 ;; (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
 
+;; Helm mode.
+;; Based on http://tuhdo.github.io/helm-intro.html
+(require 'helm)
+(require 'helm-config)
+(require 'golden-ratio)
+(global-set-key (kbd "S-SPC") 'helm-command-prefix)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+
+(defun pd-helm-alive-p ()
+  (if (boundp 'helm-alive-p)
+      (symbol-value 'helm-alive-p)))
+
+(add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
+
+(helm-mode 1)
 
 (message "MAJOR MODES - END.")
 
@@ -377,6 +412,7 @@ search at index 0."
 (add-hook 'before-save-hook 'time-stamp)
 (setq gdb-many-windows t)
 (setq gdb-show-main t)
+(setq compilation-ask-about-save nil)
 
 ;; Don't prompt with "Active processes exist, kill them?" when exiting Emacs.
 ;; http://stackoverflow.com/questions/2706527/make-emacs-stop-asking-active-processes-exist-kill-them-and-exit-anyway
@@ -594,17 +630,15 @@ search at index 0."
 
 
 ;; ******************* Global Function keys ********************
-;; Make F2 and F3 run the macros stored in the 'q' and 'w' registers
-;; and Shift F2/F3 run the macros until a blank line is encountered.
-;;map <F2> @q
-;;map <F3> @w
-;;map <silent> <S-F2> :call RunMacroToBlankLine('q')<CR>
-;;map <silent> <S-F3> :call RunMacroToBlankLine('w')<CR>
 (define-key global-map (kbd "<f2>")   'recentf-open-files)
-(define-key global-map (kbd "<S-f2>") 'menu-bar-open)
-(define-key global-map (kbd "<C-f2>") 'menu-bar-open)
-;; f3, f4 = macros.
+;(define-key global-map (kbd "<S-f2>") 'menu-bar-open)
+;(define-key global-map (kbd "<C-f2>") 'menu-bar-open)
+;; f3, f4 = macros start and end.
+;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
+;; f9 = undefined
 ;; f10 = menu-bar-open
+;; f11 = full-screen
+;; f12 = undefined
 
 ;; ******************* Arrow keys ********************
 ;; Unbind the arrow keys! For hardcore users only.
@@ -645,6 +679,8 @@ search at index 0."
 (define-key global-map (kbd "C-x C-b") 'buffer-menu)
 (define-key global-map (kbd "C-=") 'fci-mode)
 
+
+;; The keys C-` , . ' are all available.
 (define-key global-map (kbd "s-d") 'delete-trailing-whitespace)
 (define-key global-map (kbd "s-r") 'recentf-open-files)
 (define-key global-map (kbd "s-w") 'pd-copy-current-line)
@@ -656,37 +692,43 @@ search at index 0."
 (define-key global-map (kbd "C-x C-g") 'magit-status)
 
 ;; ******************* C/C++ mode keys ********************
-(defun pd-setup-vs-keys ()
-  "Establishes Visual-Studio compatible local key bindings"
-  (interactive)
+;; Create a keymap with Visual Studio compatible keymappings.
+;; See http://ergoemacs.org/emacs/elisp_menu_for_major_mode.html
+;; for what is going on here.
+(defvar pd-vs-minor-mode-map nil "Keymap for Visual Studio compatibility.")
 
-;     F5 = run/continue with debugging
+;; TODO: We should really setup the gud commands only in a gud-mode-hook.
+(require 'gud)
+
+(when (not pd-vs-minor-mode-map)
+  (setq pd-vs-minor-mode-map (make-sparse-keymap))
+  (define-key pd-vs-minor-mode-map (kbd "<f5>") 'gud-run) ; continue (gdb command = continue)
 ;   C-F5 = run without debugging
 ;   S-F5 = stop debugging
 ;  CS-F5 = restart
-;noremap <silent> <special>   <F5> :call Debug(1)<CR>
-;noremap <silent> <special> <C-F5> :call CompileAndRun()<CR>
-  (local-set-key (kbd "<f6>")   'compile)              ; interactive compile
-  (local-set-key (kbd "<S-f6>") 'compile)              ; save and compile
-  (local-set-key (kbd "<C-f6>") 'compile)              ; make clean
-  (local-set-key (kbd "<f7>")   'ff-find-other-file)   ; View.ToggleDesigner in VS.
-  (local-set-key (kbd "<S-f7>") (lambda () (interactive) (ff-find-other-file t))) ; View.ToggleDesigner in VS hsplit
-  (local-set-key (kbd "<C-f7>") (lambda () (interactive) (ff-find-other-file t))) ; View.ToggleDesigner in VS vsplit.
-  (local-set-key (kbd "<f8>")   'next-error)
-  (local-set-key (kbd "<S-f8>") 'previous-error)
-;"     F9 = toggle breakpoint (gdb break, clear)
-;"  CS-F9 = delete all breakpoints
-;"    F10 = step over (gdb next)
-;"  C-F10 = run to cursor (gdb advance)
-;" CS-F10 = set next statement
-;"    F11 = step into (gdb = step)
-;"  S-F11 = step out (gdb = finish)
+  (define-key pd-vs-minor-mode-map (kbd "<f6>") 'pd-compile-without-confirmation)
+  (define-key pd-vs-minor-mode-map (kbd "<S-f6>") 'pd-compile-clean-one-shot)
+  (define-key pd-vs-minor-mode-map (kbd "<C-f6>") 'compile) ; make -k, the original compile command.
+  (define-key pd-vs-minor-mode-map (kbd "<f7>") 'ff-find-other-file) ; View.ToggleDesigner in VS.
+  (define-key pd-vs-minor-mode-map (kbd "<S-f7>") (lambda () (interactive) (ff-find-other-file t))) ; in a split window.
+  (define-key pd-vs-minor-mode-map (kbd "<f8>") 'next-error)
+  (define-key pd-vs-minor-mode-map (kbd "<S-f8>") 'previous-error)
+  ;;(define-key pd-vs-minor-mode-map (kbd "<f9>") 'gud-break) ; toggle breakpoint (gdb command = break)
+  ;  CS-F9 = delete all breakpoints = typing d.
+  ;; (define-key pd-vs-minor-mode-map (kbd "<f10>") 'gud-next)  ; step over (gdb command = next)
+  ;; (define-key pd-vs-minor-mode-map (kbd "<C-f10>") 'gud-until)  ; run to cursor (gdb command = advance)
+  ;; (define-key pd-vs-minor-mode-map (kbd "<CS-f10>") 'gud-jump)  ; set next statement (gdb command = jump)
+  ;; (define-key pd-vs-minor-mode-map (kbd "<f11>") 'gud-step)  ; step in (gdb command = step)
+  ;; (define-key pd-vs-minor-mode-map (kbd "<S-f11>") 'gud-finish)  ; step out (gdb command = finish)
+;;    F12 = go to definition
 ;"  C-Brk = cancel current build
-  (local-set-key (kbd "<f12>") 'ff-find-other-file))
+  )
 
-(add-hook 'c-mode-common-hook 'pd-setup-vs-keys)
+(define-minor-mode pd-vs-minor-mode
+   "A minor mode to establish Visual Studio compatible key mappings."
+   nil " vs" 'pd-vs-minor-mode-map)
 
-(define-key global-map (kbd "<f1>") 'pd-sort-paragraph)
+(add-hook 'prog-mode-hook' (lambda () (pd-vs-minor-mode 1)))
+
 
 (message "KEYBINDINGS - END.")
-
