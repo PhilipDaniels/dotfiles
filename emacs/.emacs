@@ -22,7 +22,7 @@
 (setq package-list '(
 		     csharp-mode
 		     expand-region
-		     f
+		     f                      ;; file system manipulation
 		     fill-column-indicator
 		     fsharp-mode
 		     golden-ratio
@@ -41,9 +41,10 @@
 		     markdown-mode
 		     multi-term
 		     outline-magic
+		     projectile
 		     rainbow-delimiters
 		     rainbow-mode
-		     s
+		     s                      ;; string utility functions
 		     sass-mode
 		     sunrise-commander
 		     sunrise-x-buttons

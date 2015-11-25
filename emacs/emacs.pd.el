@@ -170,7 +170,7 @@ If region is active, apply to active region instead."
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
-;; Teach dired to unzip zip files (use the Z key)
+;; Teach dired to unzip zip files (use the Z key).
 (eval-after-load "dired-aux"
   '(add-to-list 'dired-compress-file-suffixes '("\\.zip\\'" ".zip" "unzip")))
 
@@ -197,6 +197,7 @@ If region is active, apply to active region instead."
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x C-b") 'helm-mini)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
@@ -380,6 +381,9 @@ search at index 0."
 
 (require 'hlinum)
 (hlinum-activate)
+
+(require 'which-func)
+(which-function-mode t)
 
 (message "APPEARANCE - END.")
 
@@ -630,7 +634,8 @@ search at index 0."
 
 
 ;; ******************* Global Function keys ********************
-(define-key global-map (kbd "<f2>")   'recentf-open-files)
+(define-key global-map (kbd "<f1>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs.pd.el")))
+
 ;(define-key global-map (kbd "<S-f2>") 'menu-bar-open)
 ;(define-key global-map (kbd "<C-f2>") 'menu-bar-open)
 ;; f3, f4 = macros start and end.
@@ -646,9 +651,18 @@ search at index 0."
 ;; (global-unset-key [up])
 ;; (global-unset-key [right])
 ;; (global-unset-key [down])
+
+;; This takes all M-<arrow> bindings.
 (windmove-default-keybindings 'meta)
-(define-key global-map (kbd "S-M-<up>") 'shrink-window)
-(define-key global-map (kbd "S-M-<down>") 'enlarge-window)
+; Replace standard bindings for bp and fp with better versions.
+(define-key global-map (kbd "C-<up>") 'endless/backward-paragraph)
+(define-key global-map (kbd "C-<down>") 'endless/forward-paragraph)
+;; beg/end of defun is C-M-a or e, which is too hard to type.
+(define-key global-map (kbd "C-<left>") 'beginning-of-defun)
+(define-key global-map (kbd "C-<right>") 'end-of-defun)
+
+(define-key global-map (kbd "S-M-<up>") 'enlarge-window)
+(define-key global-map (kbd "S-M-<down>") 'shrink-window)
 (define-key global-map (kbd "S-M-<left>") 'shrink-window-horizontally)
 (define-key global-map (kbd "S-M-<right>") 'enlarge-window-horizontally)
 
@@ -658,36 +672,32 @@ search at index 0."
 
 ;; ******************* Main number keys ********************
 ;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via C-u anyway.
-(define-key global-map (kbd "M-1") 'jump-to-register)
-(define-key global-map (kbd "M-2") 'window-configuration-to-register)
-(define-key global-map (kbd "M-3") 'point-to-register)
+(define-key global-map (kbd "M-1") (lambda () (interactive) (jump-to-register ?z)))
+(define-key global-map (kbd "M-2") (lambda () (interactive) (window-configuration-to-register ?z) (message "Window configuration saved")))
+(define-key global-map (kbd "M-3") (lambda () (interactive) (point-to-register ?z) (message "Point saved")))
 (define-key global-map (kbd "M-9") 'backward-sexp)
 (define-key global-map (kbd "M-0") 'forward-sexp)
 
 ;; ******************* Letter/main section keys ********************
 (define-key global-map (kbd "M-/") 'hippie-expand)
 (define-key global-map (kbd "M-;") 'endless/comment-line-or-region)
-(define-key global-map (kbd "M-a") 'endless/backward-paragraph)
-(define-key global-map (kbd "M-e") 'endless/forward-paragraph)
-(define-key global-map (kbd "M-j")
-  (lambda ()
-    (interactive)
-    (join-line -1)))
+(define-key global-map (kbd "M-j") (lambda () (interactive) (join-line -1)))
 
 (define-key global-map (kbd "C-a") 'pd-back-to-indentation-or-beginning)
-;; Make a buffer menu in the current window, not an "other" window.
-(define-key global-map (kbd "C-x C-b") 'buffer-menu)
 (define-key global-map (kbd "C-=") 'fci-mode)
 
-
-;; The keys C-` , . ' are all available.
-(define-key global-map (kbd "s-d") 'delete-trailing-whitespace)
-(define-key global-map (kbd "s-r") 'recentf-open-files)
-(define-key global-map (kbd "s-w") 'pd-copy-current-line)
+;; The keys C-` , . ' ; are all available.
 (define-key global-map (kbd "M--") 'text-scale-decrease)
 (define-key global-map (kbd "M-=") 'text-scale-increase)
 
+(define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
 (define-key global-map (kbd "<apps> g") 'magit-status)
+(define-key global-map (kbd "<apps> j") 'jump-to-register)
+(define-key global-map (kbd "<apps> p") 'pd-sort-paragraph)
+(define-key global-map (kbd "<apps> sp") 'point-to-register)
+(define-key global-map (kbd "<apps> sw") 'window-configuration-to-register)
+(define-key global-map (kbd "<apps> w") 'pd-copy-current-line)
+
 (define-key global-map (kbd "C-x g") 'magit-status)
 (define-key global-map (kbd "C-x C-g") 'magit-status)
 
@@ -702,7 +712,7 @@ search at index 0."
 
 (when (not pd-vs-minor-mode-map)
   (setq pd-vs-minor-mode-map (make-sparse-keymap))
-  (define-key pd-vs-minor-mode-map (kbd "<f5>") 'gud-run) ; continue (gdb command = continue)
+;  (define-key pd-vs-minor-mode-map (kbd "<f5>") 'gud-run) ; continue (gdb command = continue)
 ;   C-F5 = run without debugging
 ;   S-F5 = stop debugging
 ;  CS-F5 = restart
@@ -728,7 +738,7 @@ search at index 0."
    "A minor mode to establish Visual Studio compatible key mappings."
    nil " vs" 'pd-vs-minor-mode-map)
 
-(add-hook 'prog-mode-hook' (lambda () (pd-vs-minor-mode 1)))
+(add-hook 'c-mode-common-hook (lambda () (pd-vs-minor-mode 1)))
 
 
 (message "KEYBINDINGS - END.")
