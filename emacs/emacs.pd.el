@@ -5,10 +5,6 @@
 
 
 ;;; $$ TODO
-;; super (apps) keybindings.
-;; Something to move a buffer into another window (buffer-move package?)
-;; Something to scroll the other window.
-;; Programming hide-show for collapsing defuns.
 ;; M-r reverts the current buffer
 ;;(global-set-key [(meta r)] (lambda () (interactive) (revert-buffer nil t)))
 ;; W32 proxy settings
@@ -387,13 +383,16 @@ search at index 0."
 (hlinum-activate)
 
 (require 'which-func)
-(which-function-mode t)
+;;(which-function-mode t)
 
 (message "APPEARANCE - END.")
 
 
 ;;; $$ GENERAL VARIABLES.
 (message "GENERAL VARIABLES - BEGIN.")
+
+(require 'expand-region)
+(require 'buffer-move)
 
 ;; This package provides the command describe-unbound-keys. Try a parameter of 8.
 (require 'unbound)
@@ -456,6 +455,12 @@ search at index 0."
     try-complete-lisp-symbol)
   )
 
+(require 'hideshow)
+(add-hook 'c-mode-common-hook 'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'lisp-mode-hook 'hs-minor-mode)
+(add-hook 'csharp-mode-hook 'hs-minor-mode)
+(add-hook 'sh-mode-hook 'hs-minor-mode)
 
 (message "GENERAL VARIABLES - END.")
 
@@ -638,7 +643,7 @@ search at index 0."
 
 
 ;; ******************* Global Function keys ********************
-(define-key global-map (kbd "<f1>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs.pd.el")))
+(define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs.pd.el")))
 
 ;(define-key global-map (kbd "<S-f2>") 'menu-bar-open)
 ;(define-key global-map (kbd "<C-f2>") 'menu-bar-open)
@@ -658,17 +663,24 @@ search at index 0."
 
 ;; This takes all M-<arrow> bindings.
 (windmove-default-keybindings 'meta)
-; Replace standard bindings for bp and fp with better versions.
-(define-key global-map (kbd "C-<up>") 'endless/backward-paragraph)
-(define-key global-map (kbd "C-<down>") 'endless/forward-paragraph)
-;; beg/end of defun is C-M-a or e, which is too hard to type.
-(define-key global-map (kbd "C-<left>") 'beginning-of-defun)
-(define-key global-map (kbd "C-<right>") 'end-of-defun)
-
 (define-key global-map (kbd "S-M-<up>") 'enlarge-window)
 (define-key global-map (kbd "S-M-<down>") 'shrink-window)
 (define-key global-map (kbd "S-M-<left>") 'shrink-window-horizontally)
 (define-key global-map (kbd "S-M-<right>") 'enlarge-window-horizontally)
+
+(define-key global-map (kbd "C-<up>") 'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
+(define-key global-map (kbd "C-<down>") 'endless/forward-paragraph)
+(define-key global-map (kbd "C-<left>") 'backward-word)
+(define-key global-map (kbd "C-<right>") 'forward-word)
+
+(global-set-key (kbd "<C-S-up>") 'buf-move-up)
+(global-set-key (kbd "<C-S-down>") 'buf-move-down)
+(global-set-key (kbd "<C-S-left>") 'buf-move-left)
+(global-set-key (kbd "<C-S-right>") 'buf-move-right)
+
+(define-key global-map (kbd "C-M-<left>") 'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
+(define-key global-map (kbd "C-M-<right>") 'end-of-defun)
+
 
 ;; ******************* Small pad keys ********************
 (define-key global-map (kbd "C-S-<prior>") (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)))
@@ -692,9 +704,12 @@ search at index 0."
 (define-key global-map (kbd "C-a") 'pd-back-to-indentation-or-beginning)
 (define-key global-map (kbd "C-=") 'fci-mode)
 
-;; The keys C-` , . ' ; are all available.
-;;(define-key global-map (kbd "M--") 'text-scale-decrease)
-;;(define-key global-map (kbd "M-=") 'text-scale-increase)
+(define-key global-map (kbd "C-'") 'er/expand-region)
+(define-key global-map (kbd "C-@") (lambda () (interactive) (er/expand-region -1)))
+
+;; The keys C-` , . ' ; ? # are all available.
+(define-key global-map (kbd "C-\\") 'hs-toggle-hiding)
+(define-key global-map (kbd "C-|") 'hs-show-all)
 
 (define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
 (define-key global-map (kbd "<apps> g") 'magit-status)
