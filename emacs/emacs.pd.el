@@ -237,14 +237,15 @@ If region is active, apply to active region instead."
 ;; fonts. To determine the name that Emacs uses for a font, the easiest way I
 ;; know is to use the customize system to pick a default font, then save
 ;; options, the name of the font then appears in the .emacs file.
-(defvar pd-font-candidates '("Cousine-12"
-			     "Aurulent Sans Mono-12"
-			     "Consolas-12"
+(defvar pd-font-candidates '("Consolas-11"
+			     "Cousine-10"
+			     "Courier New-10"
+			     "Aurulent Sans Mono-10"
 			     "Source Code Pro-12"
 			     "DejaVu Sans Mono-12"
 			     "Droid Sans Mono-12"
 			     "Liberation Mono-12"
-			     "Anonymous Pro-14"
+			     "Anonymous Pro-12"
 			     "Liberation Mono-12"
 			     "CPMono_v07 Plain-12"
 			     "Calibri-12"
@@ -289,11 +290,11 @@ search at index 0."
 
 ; This ensures the right font is set when running in daemon mode.
 (add-hook 'after-make-frame-functions
-	  (lambda (frame) (pd-set-candidate-font 0 frame)))
+	  (lambda (frame) (pd-set-candidate-font 0 frame t)))
 
 ; And this ensures the right font is set when running in non-daemon mode.
 (if (display-graphic-p)
-    (pd-set-candidate-font 0 (selected-frame)))
+    (pd-set-candidate-font 0 (selected-frame) t))
 
 ; Setting the frame-background-mode before loading the theme stops Solarized
 ; from initially loading in light mode. The mapc is needed for w32 emacs, or
@@ -372,7 +373,10 @@ search at index 0."
 
 ;; Turn off display of trailing whitespace in some modes.
 (dolist (hook '(buffer-menu-mode-hook compilation-mode-hook
-		diff-mode-hook shell-mode-hook term-mode-hook))
+				      diff-mode-hook
+				      magit-popup-mode-hook
+				      shell-mode-hook
+				      term-mode-hook))
   (add-hook hook (lambda () (set-variable 'show-trailing-whitespace nil))))
 
 ;; We need to turn on whitespace-mode to get the display of the >80 character
@@ -669,6 +673,8 @@ search at index 0."
 ;; ******************* Small pad keys ********************
 (define-key global-map (kbd "C-S-<prior>") (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)))
 (define-key global-map (kbd "C-S-<next>") (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)))
+(define-key global-map (kbd "M-S-<prior>") 'text-scale-decrease)
+(define-key global-map (kbd "M-S-<next>") 'text-scale-increase)
 
 ;; ******************* Main number keys ********************
 ;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via C-u anyway.
@@ -687,8 +693,8 @@ search at index 0."
 (define-key global-map (kbd "C-=") 'fci-mode)
 
 ;; The keys C-` , . ' ; are all available.
-(define-key global-map (kbd "M--") 'text-scale-decrease)
-(define-key global-map (kbd "M-=") 'text-scale-increase)
+;;(define-key global-map (kbd "M--") 'text-scale-decrease)
+;;(define-key global-map (kbd "M-=") 'text-scale-increase)
 
 (define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
 (define-key global-map (kbd "<apps> g") 'magit-status)
