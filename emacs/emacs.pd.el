@@ -5,8 +5,6 @@
 
 
 ;;; $$ TODO
-;; M-r reverts the current buffer
-;;(global-set-key [(meta r)] (lambda () (interactive) (revert-buffer nil t)))
 ;; W32 proxy settings
 ;; http://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs/683575#683575
 
@@ -189,7 +187,7 @@ If region is active, apply to active region instead."
 (require 'helm)
 (require 'helm-config)
 (require 'golden-ratio)
-(global-set-key (kbd "S-SPC") 'helm-command-prefix)
+(global-set-key (kbd "C-;") 'helm-command-prefix)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x b") 'helm-mini)
@@ -707,7 +705,7 @@ search at index 0."
 (define-key global-map (kbd "C-'") 'er/expand-region)
 (define-key global-map (kbd "C-@") (lambda () (interactive) (er/expand-region -1)))
 
-;; The keys C-` , . ' ; ? # are all available.
+;; The keys C-` , . ' ; ? are all available.
 (define-key global-map (kbd "C-\\") 'hs-toggle-hiding)
 (define-key global-map (kbd "C-|") 'hs-show-all)
 
@@ -715,6 +713,7 @@ search at index 0."
 (define-key global-map (kbd "<apps> g") 'magit-status)
 (define-key global-map (kbd "<apps> j") 'jump-to-register)
 (define-key global-map (kbd "<apps> p") 'pd-sort-paragraph)
+(define-key global-map (kbd "<apps> r") (lambda () (interactive) (revert-buffer nil t)))
 (define-key global-map (kbd "<apps> sp") 'point-to-register)
 (define-key global-map (kbd "<apps> sw") 'window-configuration-to-register)
 (define-key global-map (kbd "<apps> w") 'pd-copy-current-line)
