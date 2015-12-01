@@ -293,6 +293,16 @@ function f_RescanWCD()
     wcd -xf ~/repos/dotfiles/.wcd.exclusions -S /c
 }
 
+function f_StartEmacsDaemon()
+{
+    emacs-w32 --daemon
+}
+
+function f_StopEmacsDaemon()
+{
+    emacsclient-w32 -e '(kill-emacs)'
+}
+
 ########################################################################
 # Support for using ssh-agent because keychain doesn't seem to work
 # that well in MSysGit.

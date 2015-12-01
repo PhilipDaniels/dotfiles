@@ -68,7 +68,7 @@ fi
 if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
     ps cax | grep emacs-w32 > /dev/null
     if [ $? -ne 0 ]; then
-	emacs-w32 --daemon
+	f_StartEmacsDaemon
     fi
 fi
 
