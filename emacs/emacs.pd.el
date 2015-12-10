@@ -348,7 +348,7 @@ search at index 0."
 (setq line-number-mode 1)
 (display-time-mode 1)
 (size-indication-mode 1)
-(set-cursor-color sd-red)
+(set-cursor-color "yellow")
 
 ;; fci-mode can cause an increase in the vertical separation of lines,
 ;; so leave it off by default. It is bound to C-= below, for ease of use.
@@ -377,8 +377,19 @@ search at index 0."
 ;; lines working.
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
+;; Highlighting of the current line. Must do this after theme is loaded.
+(set-face-attribute 'helm-selection nil
+ 		    :background "white"
+ 		    :foreground "black")
+
+(global-hl-line-mode 1)
+(set-face-background 'hl-line "black")
+(set-face-foreground 'hl-line nil)
+(set-face-underline-p 'hl-line nil)
+
+
 (require 'hlinum)
-(hlinum-activate)
+;(hlinum-activate)
 
 (require 'which-func)
 ;;(which-function-mode t)
@@ -418,6 +429,7 @@ search at index 0."
 (setq gdb-many-windows t)
 (setq gdb-show-main t)
 (setq compilation-ask-about-save nil)
+(setq comment-empty-lines t)
 
 ;; Don't prompt with "Active processes exist, kill them?" when exiting Emacs.
 ;; http://stackoverflow.com/questions/2706527/make-emacs-stop-asking-active-processes-exist-kill-them-and-exit-anyway
@@ -704,6 +716,7 @@ search at index 0."
 
 (define-key global-map (kbd "C-'") 'er/expand-region)
 (define-key global-map (kbd "C-@") (lambda () (interactive) (er/expand-region -1)))
+(define-key global-map (kbd "M-'") 'mark-defun)
 
 ;; The keys C-` , . ' ; ? are all available.
 (define-key global-map (kbd "C-\\") 'hs-toggle-hiding)

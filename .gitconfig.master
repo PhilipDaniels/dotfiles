@@ -10,7 +10,7 @@
     helper = cache --timeout=72000
 [core]
     #editor = emacsclient-w32
-    editor = emacsclient -c
+    editor = emacsclient-w32
     pager = less -x4
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems
