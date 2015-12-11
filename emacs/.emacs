@@ -27,12 +27,14 @@
 		     f                      ;; file system manipulation
 		     fill-column-indicator
 		     fsharp-mode
+		     ggtags                 ;; interface to GNU Global tag system
 		     golden-ratio
 		     gitattributes-mode
 		     gitignore-mode
 		     git-timemachine
 		     haskell-mode
 		     helm
+		     helm-gtags             ;; Helm interface to GNU Global tag system
 		     hlinum
 		     hydra
 		     irony                  ;; A C/C++ minor mode powered by libclang
@@ -49,6 +51,7 @@
 		     rainbow-mode
 		     s                      ;; string utility functions
 		     sass-mode
+		     sr-speedbar            ;; in-frame directory tree
 		     sunrise-commander
 		     sunrise-x-buttons
 		     unbound
