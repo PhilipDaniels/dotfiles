@@ -282,31 +282,22 @@ search at index 0."
   ))
 
 
-(defun pd-after-make-frame (frame)
-  "Configures a frame after creation. Various things can only be
-set when a frame exist, attempting to set them in the .emacs file
-just results in a no-op because it is typically loaded by the daemon."
-  (message "Running pd-after-make-frame")
-  )
+;; This ensures the right font is set when running in daemon mode, but it is
+;; no longer required since my preferred method is now to start a normal Emacs
+;; window upon login and turn that into a daemon - see the bottom of this file.
+;;(add-hook 'after-make-frame-functions
+;;	  (lambda (frame) (pd-set-candidate-font 0 frame t)))
 
-;; daemonp
-
-; This ensures the right font is set when running in daemon mode.
-(add-hook 'after-make-frame-functions
-	  (lambda (frame) (pd-set-candidate-font 0 frame t)))
-
-
-; And this ensures the right font is set when running in non-daemon mode.
+;; And this ensures the right font is set when running in non-daemon mode.
 (if (display-graphic-p)
     (pd-set-candidate-font 0 (selected-frame) t))
 
-; Setting the frame-background-mode before loading the theme stops Solarized
-; from initially loading in light mode. The mapc is needed for w32 emacs, or
-; else we still come up in light mode, no idea why.
+;; Setting the frame-background-mode before loading the theme stops Solarized
+;; from initially loading in light mode. The mapc is needed for w32 emacs, or
+;; else we still come up in light mode, no idea why.
 (setq-default frame-background-mode 'dark)
 (mapc 'frame-set-background-mode (frame-list))
 (load-theme 'solarized t)        ; Package is "color-theme-solarized" on MELPA.
-;(load-theme 'solarized-dark t)  ; bbatsov Solarized, no good in terminal
 
 ; You can load a different theme for GUI vs Terminal like this.
 ; Decent terminal themes: manoj-dark, tango-dark, misterioso, tsdh-dark, wheatgrass
@@ -314,7 +305,7 @@ just results in a no-op because it is typically loaded by the daemon."
 ;    (load-theme 'solarized-dark t)
 ;  (load-theme 'tango-dark t))
 
-; Steal the solarized colors from its palette. Only works for dark mode.
+;; Steal the solarized colors from its palette. Only works for dark mode.
 (setq sd-black (nth 1 (assoc 'base02 solarized-colors))
       sd-red (nth 1 (assoc 'red solarized-colors))
       sd-green (nth 1 (assoc 'green solarized-colors))
@@ -333,7 +324,7 @@ just results in a no-op because it is typically loaded by the daemon."
       sd-brwhite (nth 1 (assoc 'base3 solarized-colors))
       )
 
-; These colors are from solarized.
+;; These colors are from solarized.
 (set-face-foreground 'mode-line sd-blue)
 (set-face-background 'mode-line sd-white)
 (set-face-foreground 'mode-line-inactive sd-white)
@@ -350,8 +341,8 @@ just results in a no-op because it is typically loaded by the daemon."
 (setq visible-bell 1)
 (show-paren-mode 1)
 (setq-default show-paren-delay 0)
-;;(global-linum-mode 1)
-;;(setq linum-format "%4d ")
+;;(global-linum-mode 1)           ;; This is very slow with long lines.
+;;(setq linum-format "%4d ")      ;; So we don't need this either.
 (setq column-number-mode 1)
 (setq line-number-mode 1)
 (display-time-mode 1)
@@ -361,7 +352,7 @@ just results in a no-op because it is typically loaded by the daemon."
 ;; See http://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html
 (set-face-attribute 'helm-selection nil
  		    :background "white"
- 		    :foreground "black")
+ 		    :foreground "red")
 
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "black")
@@ -783,5 +774,31 @@ just results in a no-op because it is typically loaded by the daemon."
 
 (add-hook 'c-mode-common-hook (lambda () (pd-vs-minor-mode 1)))
 
-
 (message "KEYBINDINGS - END.")
+
+
+;;; $$ Server (aka daemon) mode.
+;; There are two ways to start Emacs in daemon mode.
+;;   1. Run 'emacs-w32 --daemon' in .bashrc or other startup script.
+;;      This creates an Emacs process which runs in the background and is not
+;;      attached to any tty.
+;;   2. Start Emacs normally after logging in, then call the 'server-start'
+;;      function, either manually or at the end of your .emacs file.
+;;
+;; 1 may seem simpler, but in fact when Emacs is started this way some (hard to
+;; determine) functions, variables and settings do not work because there is no
+;; frame or window system defined. This can make configuration difficult. Cursor
+;; colors, fonts etc. do not get set when you expect them to be.
+;; Therefore, I recommend method 2. This .emacs file has been designed with it
+;; in mind. So, after I logon I just do "we &" to create a new graphical Win32
+;; Emacs with an initial frame - which, typically, I never close. The call to
+;; server-start turns this initial Emacs into a server.
+;;
+;; Other info: daemonp - predicate can be used to detect daemon mode.
+
+(message "SERVER MODE - START.")
+(load "server")
+(unless (server-running-p)
+  (server-start))
+(message "SERVER MODE - END.")
+

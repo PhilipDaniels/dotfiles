@@ -64,14 +64,6 @@ if [ -s ~/.nvm/nvm.sh ]; then
     source ~/.nvm/nvm.sh
 fi
 
-# Start Emacs daemon if it is not already running.
-if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
-    ps cax | grep emacs-w32 > /dev/null
-    if [ $? -ne 0 ]; then
-	f_StartEmacsDaemon
-    fi
-fi
-
 
 #######################################################################
 # Setup ssh-agent.
