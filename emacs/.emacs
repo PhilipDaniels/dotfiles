@@ -21,6 +21,8 @@
 ;;; Configure the package management system.
 (setq package-list '(
 		     csharp-mode
+		     company                ;; Modular in-buffer completion framework
+		     company-irony          ;; Completion back-end for irony-mode
 		     expand-region
 		     f                      ;; file system manipulation
 		     fill-column-indicator
@@ -33,6 +35,7 @@
 		     helm
 		     hlinum
 		     hydra
+		     irony                  ;; A C/C++ minor mode powered by libclang
 		     jade-mode
 		     json-mode
 		     key-chord

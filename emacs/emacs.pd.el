@@ -282,9 +282,19 @@ search at index 0."
   ))
 
 
+(defun pd-after-make-frame (frame)
+  "Configures a frame after creation. Various things can only be
+set when a frame exist, attempting to set them in the .emacs file
+just results in a no-op because it is typically loaded by the daemon."
+  (message "Running pd-after-make-frame")
+  )
+
+;; daemonp
+
 ; This ensures the right font is set when running in daemon mode.
 (add-hook 'after-make-frame-functions
 	  (lambda (frame) (pd-set-candidate-font 0 frame t)))
+
 
 ; And this ensures the right font is set when running in non-daemon mode.
 (if (display-graphic-p)
@@ -336,19 +346,29 @@ search at index 0."
 ;;;(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 ;;;(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 ;;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-
 (setq ring-bell-function nil)
 (setq visible-bell 1)
-(blink-cursor-mode -1)
 (show-paren-mode 1)
 (setq-default show-paren-delay 0)
-(global-linum-mode 1)
-(setq linum-format "%4d ")
+;;(global-linum-mode 1)
+;;(setq linum-format "%4d ")
 (setq column-number-mode 1)
 (setq line-number-mode 1)
 (display-time-mode 1)
 (size-indication-mode 1)
+
+;; Highlighting of the current line. Must do this after theme is loaded.
+;; See http://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html
+(set-face-attribute 'helm-selection nil
+ 		    :background "white"
+ 		    :foreground "black")
+
+(global-hl-line-mode 1)
+(set-face-background 'hl-line "black")
+(set-face-foreground 'hl-line nil)
+(set-face-underline-p 'hl-line nil)
 (set-cursor-color "yellow")
+(blink-cursor-mode 1)
 
 ;; fci-mode can cause an increase in the vertical separation of lines,
 ;; so leave it off by default. It is bound to C-= below, for ease of use.
@@ -376,16 +396,6 @@ search at index 0."
 ;; We need to turn on whitespace-mode to get the display of the >80 character
 ;; lines working.
 (add-hook 'prog-mode-hook 'whitespace-mode)
-
-;; Highlighting of the current line. Must do this after theme is loaded.
-(set-face-attribute 'helm-selection nil
- 		    :background "white"
- 		    :foreground "black")
-
-(global-hl-line-mode 1)
-(set-face-background 'hl-line "black")
-(set-face-foreground 'hl-line nil)
-(set-face-underline-p 'hl-line nil)
 
 
 (require 'hlinum)
