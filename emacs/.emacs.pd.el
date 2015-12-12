@@ -22,7 +22,8 @@
 (message "The system-type variable is %s" system-type)
 (message "The window-system variable is %s" window-system)
 
-;;; $$ FUNCTIONS.
+
+;;; $$ REQUIRES.
 (message "REQUIRES - BEGIN.")
 
 (require 'buffer-move)
@@ -34,6 +35,7 @@
 (require 'helm-config)
 (require 'hideshow)
 (require 'hlinum)
+(require 'shackle)
 (require 'unbound)                ;; This package provides the command describe-unbound-keys. Try a parameter of 8.
 (require 'which-func)
 (require 'whitespace)
@@ -215,9 +217,37 @@ If region is active, apply to active region instead."
   (if (boundp 'helm-alive-p)
       (symbol-value 'helm-alive-p)))
 
-(add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
+(defun pd-make-helm-full-frame ()
+  "Expands the helm window so that it takes up the full frame."
+  (interactive)
+  (with-selected-window (helm-window)
+    (delete-other-windows)))
 
+;;(add-to-list 'golden-ratio-inhibit-functions 'pd-helm-alive-p)
+(setq-default helm-buffer-max-length nil)
 (helm-mode 1)
+
+;; This doesn't seem to work.
+;;(shackle-mode 1)
+;;(setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.4)))
+
+;; (setq helm-split-window-in-side-p nil)
+;; (defun pd-helm-split-window (window)
+;;   (if (one-window-p t)
+;;       ;; With just window helm does the right thing
+;;       (split-window
+;;        (selected-window) nil (if (eq helm-split-window-default-side 'other)
+;;                                  'below helm-split-window-default-side))
+;;     ;; If there are multiple windows, select the bottom-left window
+;;     (while (window-in-direction 'left)
+;;       (select-window (window-in-direction 'left)))
+;;     (while (window-in-direction 'below)
+;;       (select-window (window-in-direction 'below)))
+;;     (selected-window)))
+;;
+;; (setq helm-split-window-preferred-function #'pd-helm-split-window)
+
+
 
 (message "MAJOR MODES - END.")
 
@@ -657,6 +687,7 @@ search at index 0."
 
 ;; ******************* Global Function keys ********************
 (define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs.pd.el")))
+(define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
 
 ;(define-key global-map (kbd "<S-f2>") 'menu-bar-open)
 ;(define-key global-map (kbd "<C-f2>") 'menu-bar-open)

@@ -32,12 +32,16 @@
 		     markdown-mode
 		     multi-term
 		     outline-magic
+		     powerline              ;; Powerline (modeline) package. Not sure which variant.
 		     powershell             ;; Run Powershell as an inferior process.
 		     projectile
 		     rainbow-delimiters
 		     rainbow-mode
 		     s                      ;; string utility functions
 		     sass-mode
+		     shackle                ;; Window enforcement for popups https://github.com/wasamasa/shackle
+		     smart-mode-line        ;; https://github.com/Malabarba/smart-mode-line
+		     smart-mode-line-powerline-theme
 		     sr-speedbar            ;; in-frame directory tree
 		     sunrise-commander
 		     sunrise-x-buttons
