@@ -35,6 +35,7 @@
 		     haskell-mode
 		     helm
 		     helm-gtags             ;; Helm interface to GNU Global tag system
+		     helm-projectile
 		     hlinum
 		     hydra
 		     irony                  ;; A C/C++ minor mode powered by libclang
@@ -46,6 +47,7 @@
 		     markdown-mode
 		     multi-term
 		     outline-magic
+		     powershell             ;; Run Powershell as an inferior process.
 		     projectile
 		     rainbow-delimiters
 		     rainbow-mode

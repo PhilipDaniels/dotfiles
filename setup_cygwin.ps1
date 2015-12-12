@@ -25,14 +25,29 @@ if($arch -eq 32) {
     $targetFile = "$cygDir\setup-x86_64.exe"
 }
 
+Write-Host "Downloading latest Cygwin setup.exe..."
 $client = new-object System.Net.WebClient
 $client.DownloadFile($downloadFile, $targetFile);
 Write-Host "$downloadFile downloaded to $targetFile"
 
-# Get list of packages to install.
-$packagesStr = ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/PhilipDaniels/dotfiles/master/cygwin_packages.txt'))
-$packages = ($packagesStr -split '[\r\n]') |? {$_}
-$packageList = [String]::Join(",", $packages);
+# Get list of packages to install. Try and run from a local dir, if that is not
+# found then download from Github.
+try
+{
+    $packageFile = Split-Path $MyInvocation.MyCommand.Path
+    $packageFile = "$packageFile\cygwin_packages.txt"
+    $packageList = [System.IO.File]::ReadAllText($packageFile)
+    Write-Host "Successfully read local cygwin_packages.txt file."
+}
+catch
+{
+    $packageList = ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/PhilipDaniels/dotfiles/master/cygwin_packages.txt'))
+    Write-Host "Successfully read cygwin_packages.txt file from Github."
+}
+
+$packageList = ($packageList -split '[\r\n]') |? {$_}
+$packageList = [String]::Join(",", $packageList)
+
 
 Write-Host "Installing ===================="
 Write-Host $packageList
