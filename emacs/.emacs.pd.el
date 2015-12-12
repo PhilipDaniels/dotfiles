@@ -22,6 +22,25 @@
 (message "The system-type variable is %s" system-type)
 (message "The window-system variable is %s" window-system)
 
+;;; $$ FUNCTIONS.
+(message "REQUIRES - BEGIN.")
+
+(require 'buffer-move)
+(require 'expand-region)
+(require 'fill-column-indicator)
+(require 'golden-ratio)
+(require 'gud)
+(require 'helm)
+(require 'helm-config)
+(require 'hideshow)
+(require 'hlinum)
+(require 'unbound)                ;; This package provides the command describe-unbound-keys. Try a parameter of 8.
+(require 'which-func)
+(require 'whitespace)
+(require 'yasnippet)
+
+(message "REQUIRES - END.")
+
 
 ;;; $$ FUNCTIONS.
 (message "FUNCTIONS - BEGIN.")
@@ -184,9 +203,6 @@ If region is active, apply to active region instead."
 
 ;; Helm mode.
 ;; Based on http://tuhdo.github.io/helm-intro.html
-(require 'helm)
-(require 'helm-config)
-(require 'golden-ratio)
 (global-set-key (kbd "C-;") 'helm-command-prefix)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
@@ -212,7 +228,6 @@ If region is active, apply to active region instead."
 ;; the elpa/yasnippet folder.
 (message "MINOR MODES - END.")
 
-(require 'yasnippet)
 (setq yas-snippet-dirs '("~/repos/dotfiles/emacs/snippets"))
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
@@ -363,7 +378,6 @@ search at index 0."
 
 ;; fci-mode can cause an increase in the vertical separation of lines,
 ;; so leave it off by default. It is bound to C-= below, for ease of use.
-(require 'fill-column-indicator)
 (setq fci-rule-width 2)
 (setq fci-rule-color sd-blue)
 ;(add-hook 'c-mode-common-hook 'fci-mode)
@@ -371,7 +385,6 @@ search at index 0."
 ;(add-hook 'shell-script-mode-hook 'fci-mode)
 
 ;; Show a red rectangle for trailing whitespace, and color long lines.
-(require 'whitespace)
 (setq-default show-trailing-whitespace t)
 (setq-default whitespace-line-column 80)
 (setq-default whitespace-style '(face trailing lines-tail))
@@ -388,24 +401,14 @@ search at index 0."
 ;; lines working.
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
-
-(require 'hlinum)
-;(hlinum-activate)
-
-(require 'which-func)
-;;(which-function-mode t)
+;;(hlinum-activate)                   ;; Slow
+;;(which-function-mode t)             ;; Slow and pointless
 
 (message "APPEARANCE - END.")
 
 
 ;;; $$ GENERAL VARIABLES.
 (message "GENERAL VARIABLES - BEGIN.")
-
-(require 'expand-region)
-(require 'buffer-move)
-
-;; This package provides the command describe-unbound-keys. Try a parameter of 8.
-(require 'unbound)
 
 (setq user-full-name "Philip Daniels")
 (setq user-mail-address "philip.daniels1971@gmail.com")
@@ -466,7 +469,6 @@ search at index 0."
     try-complete-lisp-symbol)
   )
 
-(require 'hideshow)
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
 (add-hook 'lisp-mode-hook 'hs-minor-mode)
@@ -742,7 +744,6 @@ search at index 0."
 (defvar pd-vs-minor-mode-map nil "Keymap for Visual Studio compatibility.")
 
 ;; TODO: We should really setup the gud commands only in a gud-mode-hook.
-(require 'gud)
 
 (when (not pd-vs-minor-mode-map)
   (setq pd-vs-minor-mode-map (make-sparse-keymap))
