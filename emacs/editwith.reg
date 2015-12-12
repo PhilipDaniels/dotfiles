@@ -5,4 +5,4 @@ Windows Registry Editor Version 5.00
 "icon"="C:\\cygwin\\bin\\emacs.ico"
 
 [HKEY_CLASSES_ROOT\*\shell\openWithEmacs\command]
-@="C:\\cygwin\\bin\\run.exe bash \"-l -c \\\"emacsclient-w32 -c \\\\\\\"$(cygpath \\\\\\\"%1\\\\\\\")\\\\\\\" \\\"  \" "
+@="C:\\cygwin\\bin\\run.exe bash \"-l -c \\\"emacsclient-w32 \\\\\\\"$(cygpath \\\\\\\"%1\\\\\\\")\\\\\\\" \\\"  \" "
