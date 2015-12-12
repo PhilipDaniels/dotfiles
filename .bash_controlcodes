@@ -1,5 +1,4 @@
 # -*- mode: shell-script -*-
-# vim: set filetype=sh:
 
 # Control codes for bash. These are a mixture of formatting instructions (to
 # turn on bold fonts etc.), color instructions, and general control

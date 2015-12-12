@@ -390,7 +390,7 @@ search at index 0."
 ;;(setq linum-format "%4d ")      ;; So we don't need this either.
 (setq column-number-mode 1)
 (setq line-number-mode 1)
-(display-time-mode 1)
+;;(display-time-mode 1)
 (size-indication-mode 1)
 
 ;; Highlighting of the current line. Must do this after theme is loaded.
@@ -686,7 +686,7 @@ search at index 0."
 
 
 ;; ******************* Global Function keys ********************
-(define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs.pd.el")))
+(define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/.emacs.pd.el")))
 (define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
 
 ;(define-key global-map (kbd "<S-f2>") 'menu-bar-open)

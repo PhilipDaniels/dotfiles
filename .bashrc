@@ -1,5 +1,4 @@
 # -*- mode: shell-script -*-
-# vim: set filetype=sh:
 
 # See https://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files.html
 
@@ -137,9 +136,6 @@ alias ce='emacs'                 # {C}ygwin{E}macs            Opens new window u
 alias we='emacs-w32'             # {W}indows{E}macs           Opens new window.
 alias cec='emacsclient'          # {C}ygwin{E}macs{C}lient    Tries to use current frame, including in the console.
 alias wec='emacsclient-w32'      # {W}indows{E}macs{C}lient   Tries to use current frame.
-
-alias killcemacs="emacsclient -e '(kill-emacs)'"
-alias killwemacs="emacsclient-w32 -e '(kill-emacs)'"
 
 
 # MSysGit grep does not recognise the --color option.
