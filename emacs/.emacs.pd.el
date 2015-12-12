@@ -36,6 +36,7 @@
 (require 'hideshow)
 (require 'hlinum)
 (require 'shackle)
+(require 'speedbar)
 (require 'unbound)                ;; This package provides the command describe-unbound-keys. Try a parameter of 8.
 (require 'which-func)
 (require 'whitespace)
@@ -225,6 +226,20 @@ If region is active, apply to active region instead."
 
 ;;(add-to-list 'golden-ratio-inhibit-functions 'pd-helm-alive-p)
 (setq-default helm-buffer-max-length nil)
+
+;; Try and sort buffers by mode, LRU, with SPEEDBAR, MESSAGES etc at the bottom.
+;;(pd-helm-sort-buffers (buffer-list))
+;; (defun pd-sort-buffers (buffers)
+;;   "Sorts buffers nicely for display in helm."
+;;   (interactive)
+;;   buffers
+;;   )
+;;
+;; (defun pd-helm-sort-buffers (orig-fun &rest args)
+;;   (pd-sort-buffers (apply orig-fun args)))
+;;
+;; (advice-add 'helm-buffers-sort-transformer :around #'pd-helm-sort-buffers)
+
 (helm-mode 1)
 
 ;; This doesn't seem to work.
@@ -433,6 +448,12 @@ search at index 0."
 
 ;;(hlinum-activate)                   ;; Slow
 ;;(which-function-mode t)             ;; Slow and pointless
+
+;; This face is used to highlight the selected thing (e.g. function in source
+;; file). Box is on by default, which causes a temporary line-height increase
+;; which is visually irritating.
+(set-face-attribute 'speedbar-highlight-face nil :box nil :background "black")
+(setq-default sr-speedbar-right-side t)
 
 (message "APPEARANCE - END.")
 
@@ -688,6 +709,7 @@ search at index 0."
 ;; ******************* Global Function keys ********************
 (define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/.emacs.pd.el")))
 (define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
+(define-key global-map (kbd "<f12>") 'sr-speedbar-toggle)
 
 ;(define-key global-map (kbd "<S-f2>") 'menu-bar-open)
 ;(define-key global-map (kbd "<C-f2>") 'menu-bar-open)
@@ -833,4 +855,3 @@ search at index 0."
 (unless (server-running-p)
   (server-start))
 (message "SERVER MODE - END.")
-
