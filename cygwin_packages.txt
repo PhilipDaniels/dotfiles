@@ -249,6 +249,7 @@ gnome-themes-standard
 gnome-vfs2
 gnu-free-fonts
 gnupg
+gperf
 gq
 graphviz
 grep
@@ -641,6 +642,7 @@ libmpfr4
 libmpfr-devel
 libmspack0
 libmysqlclient18
+libncurses-devel
 libncursesw10
 libneon27
 libnetpbm10
@@ -910,6 +912,7 @@ nano
 nautilus-doc
 ncdu
 ncurses
+ncurses-demo
 netpbm
 oclock
 okteta
