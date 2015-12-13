@@ -120,6 +120,7 @@ Write-Host ("{0} Installing chocolatey packages" -f (Get-Date -format s))
 
 choco install 7zip -y
 choco install 7zip.commandline -y
+choch install adobereader -y
 choco install audacity -y
 choco install autoruns -y
 #choco install blender -y
@@ -136,6 +137,7 @@ choco install fiddler4 -y
 choco install filetypesman -y
 choco install filezilla -y
 choco install firefox -y
+choco install foxitreader -y
 choco install freefilesync -y
 choco install frhed -y
 #choco install geany -y

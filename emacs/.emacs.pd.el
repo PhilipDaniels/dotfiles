@@ -38,7 +38,7 @@
 (require 'shackle)
 (require 'speedbar)
 (require 'unbound)                ;; This package provides the command describe-unbound-keys. Try a parameter of 8.
-(require 'which-func)
+;;(require 'which-func)
 (require 'whitespace)
 (require 'yasnippet)
 
@@ -226,6 +226,7 @@ If region is active, apply to active region instead."
 
 ;;(add-to-list 'golden-ratio-inhibit-functions 'pd-helm-alive-p)
 (setq-default helm-buffer-max-length nil)
+(setq-default helm-ff-newfile-prompt-p nil)
 
 ;; Try and sort buffers by mode, LRU, with SPEEDBAR, MESSAGES etc at the bottom.
 ;;(pd-helm-sort-buffers (buffer-list))
@@ -242,9 +243,11 @@ If region is active, apply to active region instead."
 
 (helm-mode 1)
 
-;; This doesn't seem to work.
-;;(shackle-mode 1)
-;;(setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align t :ratio 0.4)))
+;; This doesn't seem to work. sm to get rid of char 2603, Snowman, which does not
+;; exist in some fonts, such as Consolas.
+(shackle-mode 1)
+(setq-default shackle-lighter " sm")
+(setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align below :ratio 0.4)))
 
 ;; (setq helm-split-window-in-side-p nil)
 ;; (defun pd-helm-split-window (window)
@@ -262,7 +265,14 @@ If region is active, apply to active region instead."
 ;;
 ;; (setq helm-split-window-preferred-function #'pd-helm-split-window)
 
+;; Automatically delete trailing whitespace in modes derived from prog-mode.
+;; Based on http://stackoverflow.com/questions/19174302/emacs-only-delete-trailing-whitespace-while-saving-in-programming-mode
+;; An alternative, using ws-trim or ws-butler, is mentioned there which
+;; can reduce git commit noise.
+(defun pd-delete-trailing-whitespace ()
+  (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
 
+(add-hook 'prog-mode-hook #'pd-delete-trailing-whitespace)
 
 (message "MAJOR MODES - END.")
 
@@ -276,6 +286,7 @@ If region is active, apply to active region instead."
 (setq yas-snippet-dirs '("~/repos/dotfiles/emacs/snippets"))
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
+(winner-mode 1)
 
 (message "MINOR MODES - END.")
 
@@ -446,8 +457,8 @@ search at index 0."
 ;; lines working.
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
-;;(hlinum-activate)                   ;; Slow
-;;(which-function-mode t)             ;; Slow and pointless
+;;(hlinum-activate)         ;; Slow
+(which-function-mode -1)    ;; Slow and pointless, but seems impossible to disable.
 
 ;; This face is used to highlight the selected thing (e.g. function in source
 ;; file). Box is on by default, which causes a temporary line-height increase
@@ -827,6 +838,7 @@ search at index 0."
    nil " vs" 'pd-vs-minor-mode-map)
 
 (add-hook 'c-mode-common-hook (lambda () (pd-vs-minor-mode 1)))
+(add-hook 'compilation-mode-hook (lambda () (pd-vs-minor-mode 1)))
 
 (message "KEYBINDINGS - END.")
 
