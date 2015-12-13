@@ -721,6 +721,7 @@ search at index 0."
 (define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/.emacs.pd.el")))
 (define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
 (define-key global-map (kbd "<f12>") 'sr-speedbar-toggle)
+(define-key global-map (kbd "S-<f12>") 'sr-speedbar-select-window)
 
 ;(define-key global-map (kbd "<S-f2>") 'menu-bar-open)
 ;(define-key global-map (kbd "<C-f2>") 'menu-bar-open)
