@@ -246,7 +246,7 @@ If region is active, apply to active region instead."
 ;; This doesn't seem to work. sm to get rid of char 2603, Snowman, which does not
 ;; exist in some fonts, such as Consolas.
 (shackle-mode 1)
-(setq-default shackle-lighter " sm")
+(setq-default shackle-lighter "")
 (setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align below :ratio 0.4)))
 
 ;; (setq helm-split-window-in-side-p nil)
@@ -406,7 +406,7 @@ search at index 0."
 ;;;(add-to-list 'default-frame-alist '(height . 50))
 ;;;(add-to-list 'default-frame-alist '(width . 86))
 ;;;(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-;;;(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(tool-bar-mode -1)
 ;;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (setq ring-bell-function nil)
 (setq visible-bell 1)
@@ -792,11 +792,13 @@ search at index 0."
 
 (define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
 (define-key global-map (kbd "<apps> g") 'magit-status)
-(define-key global-map (kbd "<apps> j") 'jump-to-register)
-(define-key global-map (kbd "<apps> p") 'pd-sort-paragraph)
-(define-key global-map (kbd "<apps> r") (lambda () (interactive) (revert-buffer nil t)))
-(define-key global-map (kbd "<apps> sp") 'point-to-register)
-(define-key global-map (kbd "<apps> sw") 'window-configuration-to-register)
+
+(define-key global-map (kbd "<apps> rb") (lambda () (interactive) (revert-buffer nil t)))
+(define-key global-map (kbd "<apps> rj") 'jump-to-register)
+(define-key global-map (kbd "<apps> rp") 'point-to-register)
+(define-key global-map (kbd "<apps> rw") 'window-configuration-to-register)
+
+(define-key global-map (kbd "<apps> sp") 'pd-sort-paragraph)
 (define-key global-map (kbd "<apps> w") 'pd-copy-current-line)
 
 (define-key global-map (kbd "C-x g") 'magit-status)
@@ -840,6 +842,7 @@ search at index 0."
 
 (add-hook 'c-mode-common-hook (lambda () (pd-vs-minor-mode 1)))
 (add-hook 'compilation-mode-hook (lambda () (pd-vs-minor-mode 1)))
+(add-hook 'gdb-mode-hook (lambda () (tool-bar-mode 1)))
 
 (message "KEYBINDINGS - END.")
 
