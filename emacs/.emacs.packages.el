@@ -8,6 +8,7 @@
 		     csharp-mode
 		     company                ;; Modular in-buffer completion framework
 		     company-irony          ;; Completion back-end for irony-mode
+		     dedicated              ;; To stop Emacs munging windows.
 		     expand-region
 		     f                      ;; file system manipulation
 		     fill-column-indicator

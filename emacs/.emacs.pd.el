@@ -27,6 +27,7 @@
 (message "REQUIRES - BEGIN.")
 
 (require 'buffer-move)
+(require 'dedicated)
 (require 'expand-region)
 (require 'fill-column-indicator)
 (require 'golden-ratio)
@@ -82,16 +83,34 @@
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
-	(filename (buffer-file-name)))
+        (filename (buffer-file-name)))
     (if (not filename)
-	(message "Buffer '%s' is not visiting a file!" name)
+        (message "Buffer '%s' is not visiting a file!" name)
       (if (get-buffer new-name)
-	  (message "A buffer named '%s' already exists!" new-name)
-	(progn
-	  (rename-file name new-name 1)
-	  (rename-buffer new-name)
-	  (set-visited-file-name new-name)
-	  (set-buffer-modified-p nil))))))
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file name new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
+
+(defun pd-delete-file-and-buffer ()
+  "Deletes the current buffer and its backing file."
+  (interactive)
+  (let ((filename (buffer-file-name))
+        (buffer (current-buffer))
+        (name (buffer-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (ido-kill-buffer)
+      (when (yes-or-no-p "Are you sure you want to remove this file? ")
+        (delete-file filename)
+        (kill-buffer buffer)
+        (message "File '%s' successfully removed" filename)))))
+
+(defun pd-untabify-buffer ()
+  "Runs untabify on the whole buffer."
+  (interactive)
+  (untabify (point-min) (point-max))
 
 (defun pd-sort-paragraph ()
   "Sorts the current paragraph and leaves point after the last line."
@@ -303,18 +322,18 @@ If region is active, apply to active region instead."
 ;; know is to use the customize system to pick a default font, then save
 ;; options, the name of the font then appears in the .emacs file.
 (defvar pd-font-candidates '("Consolas-11"
-			     "Cousine-10"
-			     "Courier New-10"
-			     "Aurulent Sans Mono-10"
-			     "Source Code Pro-12"
-			     "DejaVu Sans Mono-12"
-			     "Droid Sans Mono-12"
-			     "Liberation Mono-12"
-			     "Anonymous Pro-12"
-			     "Liberation Mono-12"
-			     "CPMono_v07 Plain-12"
-			     "Calibri-12"
-			     )
+                             "Cousine-10"
+                             "Courier New-10"
+                             "Aurulent Sans Mono-10"
+                             "Source Code Pro-12"
+                             "DejaVu Sans Mono-12"
+                             "Droid Sans Mono-12"
+                             "Liberation Mono-12"
+                             "Anonymous Pro-12"
+                             "Liberation Mono-12"
+                             "CPMono_v07 Plain-12"
+                             "Calibri-12"
+                             )
   "Defines a list of fonts to be tried in order.")
 
 (defvar pd-font-index nil
@@ -327,29 +346,29 @@ reset to the first font. The first time this function is called it starts the
 search at index 0."
   (interactive)
   (let ((num-fonts (length pd-font-candidates))
-	(num-seen 0)
-	(font-is-valid))
+        (num-seen 0)
+        (font-is-valid))
     ;; Loop around the array; num-seen is used to avoid looping forever if
     ;; all elements in pd-font-candidates are invalid.
     (while (and (< num-seen num-fonts) (not font-is-valid))
       (cond ((null pd-font-index) (setq pd-font-index 0))
-	    ((= step 0) (setq pd-font-index 0 step 1))
-	    ((< (+ pd-font-index step) 0) (setq pd-font-index (- num-fonts 1)))
-	    ((>= (+ pd-font-index step) num-fonts) (setq pd-font-index 0))
-	    (t (setq pd-font-index (+ pd-font-index step))))
+            ((= step 0) (setq pd-font-index 0 step 1))
+            ((< (+ pd-font-index step) 0) (setq pd-font-index (- num-fonts 1)))
+            ((>= (+ pd-font-index step) num-fonts) (setq pd-font-index 0))
+            (t (setq pd-font-index (+ pd-font-index step))))
 
       (setq next-font (nth pd-font-index pd-font-candidates)
-	    num-seen (1+ num-seen)
-	    font-is-valid (pd-font-exists next-font frame))
+            num-seen (1+ num-seen)
+            font-is-valid (pd-font-exists next-font frame))
 
       (if font-is-valid
-	  (progn
-	    (if show-msg
-		(message "Font set to %s" next-font))
-	    (set-frame-font next-font t (list frame)))
-	(message "Font %s does not exist, skipping" next-font)))
+          (progn
+            (if show-msg
+                (message "Font set to %s" next-font))
+            (set-frame-font next-font t (list frame)))
+        (message "Font %s does not exist, skipping" next-font)))
     (if (not font-is-valid)
-	(message "No valid fonts found in candidates: %s" pd-font-candidates))
+        (message "No valid fonts found in candidates: %s" pd-font-candidates))
   ))
 
 
@@ -357,7 +376,7 @@ search at index 0."
 ;; no longer required since my preferred method is now to start a normal Emacs
 ;; window upon login and turn that into a daemon - see the bottom of this file.
 ;;(add-hook 'after-make-frame-functions
-;;	  (lambda (frame) (pd-set-candidate-font 0 frame t)))
+;;        (lambda (frame) (pd-set-candidate-font 0 frame t)))
 
 ;; And this ensures the right font is set when running in non-daemon mode.
 (if (display-graphic-p)
@@ -422,8 +441,8 @@ search at index 0."
 ;; Highlighting of the current line. Must do this after theme is loaded.
 ;; See http://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html
 (set-face-attribute 'helm-selection nil
- 		    :background "white"
- 		    :foreground "red")
+                    :background "white"
+                    :foreground "red")
 
 (global-hl-line-mode 1)
 (set-face-background 'hl-line "black")
@@ -447,10 +466,10 @@ search at index 0."
 
 ;; Turn off display of trailing whitespace in some modes.
 (dolist (hook '(buffer-menu-mode-hook compilation-mode-hook
-				      diff-mode-hook
-				      magit-popup-mode-hook
-				      shell-mode-hook
-				      term-mode-hook))
+                                      diff-mode-hook
+                                      magit-popup-mode-hook
+                                      shell-mode-hook
+                                      term-mode-hook))
   (add-hook hook (lambda () (set-variable 'show-trailing-whitespace nil))))
 
 ;; We need to turn on whitespace-mode to get the display of the >80 character
@@ -500,16 +519,16 @@ search at index 0."
 ;; Don't prompt with "Active processes exist, kill them?" when exiting Emacs.
 ;; http://stackoverflow.com/questions/2706527/make-emacs-stop-asking-active-processes-exist-kill-them-and-exit-anyway
 (add-hook 'comint-exec-hook
-	  (lambda () (set-process-query-on-exit-flag
-		      (get-buffer-process (current-buffer)) nil)))
+          (lambda () (set-process-query-on-exit-flag
+                      (get-buffer-process (current-buffer)) nil)))
 (add-hook 'term-exec-hook
-	  (lambda () (set-process-query-on-exit-flag
-		      (get-buffer-process (current-buffer)) nil)))
+          (lambda () (set-process-query-on-exit-flag
+                      (get-buffer-process (current-buffer)) nil)))
 
 ;; Don't prompt about killing buffers with live processes attached to them.
 (setq kill-buffer-query-functions
   (remq 'process-kill-buffer-query-function
-	kill-buffer-query-functions))
+        kill-buffer-query-functions))
 
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
@@ -679,11 +698,11 @@ search at index 0."
 ;; Make Win/Apps keys send super/hyper etc.
 ;; (when (equal window-system 'w32)
 ;;   (setq w32-pass-lwindow-to-system nil
-;; 	w32-lwindow-modifier 'super))
+;;      w32-lwindow-modifier 'super))
 
 ;; (when (equal window-system 'w32)
 ;;   (setq w32-pass-rwindow-to-system nil
-;; 	w32-rwindow-modifier 'super))
+;;      w32-rwindow-modifier 'super))
 
 ;; Mintty has been hacked by the maintainer to allow the APPS/MENU key to be
 ;; passed through to the underlying program. Adding the line
@@ -696,8 +715,8 @@ search at index 0."
 ;; in the output buffer.
 ;; (if (equal system-type 'cygwin)
 ;;     (if (equal window-system 'w32)
-;; 	(setq w32-pass-apps-to-system nil
-;; 	      w32-apps-modifier 'super)
+;;      (setq w32-pass-apps-to-system nil
+;;            w32-apps-modifier 'super)
 ;;       (define-key local-function-key-map (kbd "<print>") 'event-apply-super-modifier)))
 
 ;; (define-key global-map (kbd "s-h") (lambda () (interactive) (message "hello from menu key via s- prefix")))
@@ -707,8 +726,8 @@ search at index 0."
 ;; See http://ergoemacs.org/emacs/emacs_menu_app_keys.html
 (if (equal system-type 'cygwin)
     (if (equal window-system 'w32)
-	(setq w32-pass-apps-to-system nil
-	      w32-apps-modifier nil)
+        (setq w32-pass-apps-to-system nil
+              w32-apps-modifier nil)
       ;; force all alternatives to <apps> so we can write one set of keybindings.
       (define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
       (define-key key-translation-map (kbd "<menu>") (kbd "<apps>"))))
