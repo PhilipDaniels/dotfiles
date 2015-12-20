@@ -110,7 +110,7 @@
 (defun pd-untabify-buffer ()
   "Runs untabify on the whole buffer."
   (interactive)
-  (untabify (point-min) (point-max))
+  (untabify (point-min) (point-max)))
 
 (defun pd-sort-paragraph ()
   "Sorts the current paragraph and leaves point after the last line."
