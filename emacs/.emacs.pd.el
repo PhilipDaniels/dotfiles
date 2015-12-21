@@ -514,7 +514,9 @@ search at index 0."
 (setq gdb-many-windows t)
 (setq gdb-show-main t)
 (setq compilation-ask-about-save nil)
+(setq compilation-scroll-output 'first-error)
 (setq comment-empty-lines t)
+(setq magit-push-always-verify nil)
 
 ;; Don't prompt with "Active processes exist, kill them?" when exiting Emacs.
 ;; http://stackoverflow.com/questions/2706527/make-emacs-stop-asking-active-processes-exist-kill-them-and-exit-anyway
