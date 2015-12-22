@@ -38,6 +38,7 @@
 		     projectile
 		     rainbow-delimiters
 		     rainbow-mode
+		     rich-minority          ;; For wrangling minor modes in the modeline
 		     s                      ;; string utility functions
 		     sass-mode
 		     shackle                ;; Window enforcement for popups https://github.com/wasamasa/shackle

@@ -485,6 +485,17 @@ search at index 0."
 (set-face-attribute 'speedbar-highlight-face nil :box nil :background "black")
 (setq-default sr-speedbar-right-side t)
 
+
+(setq rm-blacklist '(" yas" " ws" " hs" " vs" " Helm" " Abbrev"))
+(rich-minority-mode 1)
+
+;; Smart mode line, see https://github.com/Malabarba/smart-mode-line
+;; (sml/setup)
+;; (setq sml/theme 'dark)
+;; (add-to-list 'sml/replacer-regexp-list '("^~/repos/" "RP:") t)
+;; (add-to-list 'sml/replacer-regexp-list '("^/c/work/bitbucket/" "BB:") t)
+;; (sml/setup)
+
 (message "APPEARANCE - END.")
 
 
