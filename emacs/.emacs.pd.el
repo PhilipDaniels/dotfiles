@@ -232,6 +232,9 @@ If region is active, apply to active region instead."
 (global-set-key (kbd "C-x C-b") 'helm-mini)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+(setq helm-semantic-fuzzy-match t)
+(setq helm-imenu-fuzzy-match t)
+(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
 (defun pd-helm-alive-p ()
   (if (boundp 'helm-alive-p)
@@ -306,6 +309,8 @@ If region is active, apply to active region instead."
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
 (winner-mode 1)
+
+(semantic-mode 1)
 
 (message "MINOR MODES - END.")
 
@@ -824,6 +829,12 @@ search at index 0."
 
 (define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
 (define-key global-map (kbd "<apps> g") 'magit-status)
+
+(define-key global-map (kbd "<apps> ho") 'helm-occur)
+(define-key global-map (kbd "<apps> hi") 'helm-semantic-or-imenu)
+(define-key global-map (kbd "<apps> hc") 'helm-colors)
+(define-key global-map (kbd "<apps> hm") 'helm-man-woman)
+(define-key global-map (kbd "<apps> hf") 'helm-find)
 
 (define-key global-map (kbd "<apps> rb") (lambda () (interactive) (revert-buffer nil t)))
 (define-key global-map (kbd "<apps> rj") 'jump-to-register)
