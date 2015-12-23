@@ -225,15 +225,11 @@ If region is active, apply to active region instead."
 
 ;; Helm mode.
 ;; Based on http://tuhdo.github.io/helm-intro.html
-(global-set-key (kbd "C-;") 'helm-command-prefix)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key (kbd "C-x C-b") 'helm-mini)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 (setq helm-semantic-fuzzy-match t)
 (setq helm-imenu-fuzzy-match t)
+(setq helm-M-x-fuzzy-match t)
+(setq helm-apropos-fuzzy-match t)
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
 (defun pd-helm-alive-p ()
@@ -756,6 +752,7 @@ search at index 0."
 
 ;; ******************* Global Function keys ********************
 (define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/.emacs.pd.el")))
+(define-key global-map (kbd "S-<f2>") (lambda () (interactive) (find-file "~/work.org")))
 (define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
 (define-key global-map (kbd "<f12>") 'sr-speedbar-toggle)
 (define-key global-map (kbd "S-<f12>") 'sr-speedbar-select-window)
@@ -788,10 +785,10 @@ search at index 0."
 (define-key global-map (kbd "C-<left>") 'backward-word)
 (define-key global-map (kbd "C-<right>") 'forward-word)
 
-(global-set-key (kbd "<C-S-up>") 'buf-move-up)
-(global-set-key (kbd "<C-S-down>") 'buf-move-down)
-(global-set-key (kbd "<C-S-left>") 'buf-move-left)
-(global-set-key (kbd "<C-S-right>") 'buf-move-right)
+(define-key global-map (kbd "<C-S-up>") 'buf-move-up)
+(define-key global-map (kbd "<C-S-down>") 'buf-move-down)
+(define-key global-map (kbd "<C-S-left>") 'buf-move-left)
+(define-key global-map (kbd "<C-S-right>") 'buf-move-right)
 
 (define-key global-map (kbd "C-M-<left>") 'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
 (define-key global-map (kbd "C-M-<right>") 'end-of-defun)
@@ -812,40 +809,45 @@ search at index 0."
 (define-key global-map (kbd "M-0") 'forward-sexp)
 
 ;; ******************* Letter/main section keys ********************
+;; The keys C-` , . ' ; ? are all available.
+(define-key global-map (kbd "C-\\") 'hs-toggle-hiding)
+(define-key global-map (kbd "C-|") 'hs-show-all)
 (define-key global-map (kbd "M-/") 'hippie-expand)
+(define-key global-map (kbd "C-;") 'helm-command-prefix)
 (define-key global-map (kbd "M-;") 'endless/comment-line-or-region)
-(define-key global-map (kbd "M-j") (lambda () (interactive) (join-line -1)))
-
-(define-key global-map (kbd "C-a") 'pd-back-to-indentation-or-beginning)
 (define-key global-map (kbd "C-=") 'fci-mode)
-
 (define-key global-map (kbd "C-'") 'er/expand-region)
 (define-key global-map (kbd "C-@") (lambda () (interactive) (er/expand-region -1)))
 (define-key global-map (kbd "M-'") 'mark-defun)
 
-;; The keys C-` , . ' ; ? are all available.
-(define-key global-map (kbd "C-\\") 'hs-toggle-hiding)
-(define-key global-map (kbd "C-|") 'hs-show-all)
+(define-key global-map (kbd "C-a") 'pd-back-to-indentation-or-beginning)
+(define-key global-map (kbd "C-x b") 'helm-mini)
+(define-key global-map (kbd "C-x C-b") 'helm-mini)
+(define-key global-map (kbd "M-j") (lambda () (interactive) (join-line -1)))
+(define-key global-map (kbd "M-x") 'helm-M-x)
+(define-key global-map (kbd "C-x C-f") 'helm-find-files)
+(define-key global-map (kbd "C-x g") 'magit-status)
+(define-key global-map (kbd "C-x C-g") 'magit-status)
+(define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
 (define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
 (define-key global-map (kbd "<apps> g") 'magit-status)
-
+(define-key global-map (kbd "<apps> ha") 'helm-apropos)
 (define-key global-map (kbd "<apps> ho") 'helm-occur)
 (define-key global-map (kbd "<apps> hi") 'helm-semantic-or-imenu)
 (define-key global-map (kbd "<apps> hc") 'helm-colors)
 (define-key global-map (kbd "<apps> hm") 'helm-man-woman)
 (define-key global-map (kbd "<apps> hf") 'helm-find)
-
 (define-key global-map (kbd "<apps> rb") (lambda () (interactive) (revert-buffer nil t)))
 (define-key global-map (kbd "<apps> rj") 'jump-to-register)
 (define-key global-map (kbd "<apps> rp") 'point-to-register)
 (define-key global-map (kbd "<apps> rw") 'window-configuration-to-register)
-
 (define-key global-map (kbd "<apps> sp") 'pd-sort-paragraph)
 (define-key global-map (kbd "<apps> w") 'pd-copy-current-line)
 
-(define-key global-map (kbd "C-x g") 'magit-status)
-(define-key global-map (kbd "C-x C-g") 'magit-status)
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
 ;; ******************* C/C++ mode keys ********************
 ;; Create a keymap with Visual Studio compatible keymappings.
