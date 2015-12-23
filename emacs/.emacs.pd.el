@@ -36,6 +36,7 @@
 (require 'helm-config)
 (require 'hideshow)
 (require 'hlinum)
+(require 'recentf-ext)
 (require 'shackle)
 (require 'speedbar)
 (require 'unbound)                ;; This package provides the command describe-unbound-keys. Try a parameter of 8.

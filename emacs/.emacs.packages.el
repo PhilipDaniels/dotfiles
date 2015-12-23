@@ -38,6 +38,7 @@
 		     projectile
 		     rainbow-delimiters
 		     rainbow-mode
+		     recentf-ext            ;; To make recentf mode understand directories.
 		     rich-minority          ;; For wrangling minor modes in the modeline
 		     s                      ;; string utility functions
 		     sass-mode
