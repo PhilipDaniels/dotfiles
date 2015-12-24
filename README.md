@@ -1,9 +1,8 @@
 # dotfiles
 
-dotfiles: bash, vim, terminal and misc config for
-Linux and Cygwin.
+dotfiles: bash, vim, terminal and misc config for Linux and Cygwin.
 
-See document INSTALL.md for full installation instructions for a new box.
+See document Public Build Book.odt for full installation instructions for a new box.
 
 ### Installation instructions
 From an elevated CMD command prompt (not ConEmu because it is part of the install), first install Cygwin so you get Git:

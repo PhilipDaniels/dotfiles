@@ -40,7 +40,7 @@
 (require 'shackle)
 (require 'speedbar)
 (require 'unbound)                ;; This package provides the command describe-unbound-keys. Try a parameter of 8.
-;;(require 'which-func)
+(require 'which-func)
 (require 'whitespace)
 (require 'yasnippet)
 
