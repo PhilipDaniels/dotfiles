@@ -40,7 +40,7 @@
 (require 'shackle)
 (require 'speedbar)
 (require 'unbound)                ;; This package provides the command describe-unbound-keys. Try a parameter of 8.
-;;(require 'which-func)
+(require 'which-func)
 (require 'whitespace)
 (require 'yasnippet)
 
@@ -200,6 +200,10 @@ If region is active, apply to active region instead."
 
 (setq c-default-style "linux"
       c-basic-offset 4)
+
+(if (eq system-type 'cygwin)
+    (setq powershell-location-of-exe "/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"))
+
 
 ;; Markdown mode.
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
@@ -479,7 +483,9 @@ search at index 0."
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
 ;;(hlinum-activate)         ;; Slow
-(which-function-mode -1)    ;; Slow and pointless, but seems impossible to disable.
+(which-function-mode -1)    ;; Slow and pointless and some modes have a nasty habit of enabling it,
+(setq which-func-modes nil) ;; such as Powershell mode. Together, these two lines disable it.
+
 
 ;; This face is used to highlight the selected thing (e.g. function in source
 ;; file). Box is on by default, which causes a temporary line-height increase
