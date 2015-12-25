@@ -29,6 +29,7 @@ sudo apt-get install \
      bc \
      bison \
      build-essential \
+     cabextract \
      cgdb \
      checkinstall \
      cifs-utils \
@@ -42,6 +43,7 @@ sudo apt-get install \
      emacs \
      exuberant-ctags \
      flex \
+     font-manager \
      fonts-droid \
      fonts-inconsolata \
      fonts-jura \
