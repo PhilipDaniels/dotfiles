@@ -15,6 +15,7 @@
 # apt-get dist-upgrade               upgrade all packages and handle changed dependencies
 
 sudo apt-get update
+sudo apt-get dist-upgrade
 
 # Non-X stuff. The fonts don't require X. libssl-dev and apache2-utils
 # are required to compile node. Includes dependencies for compiling
@@ -38,6 +39,7 @@ sudo apt-get install \
      docbook2x \
      docbook-utils \
      dos2unix \
+     emacs \
      exuberant-ctags \
      flex \
      fonts-droid \
@@ -69,6 +71,7 @@ sudo apt-get install \
      libssl-dev \
      libtiff-dev \
      libtool \
+     libtool-bin \
      libxml2-dev \
      libz-dev \
      links2 \
@@ -140,3 +143,6 @@ sudo apt-get install \
      xfce4 \
      xfe \
      xorg
+
+
+sudo apt-get dist-upgrade
