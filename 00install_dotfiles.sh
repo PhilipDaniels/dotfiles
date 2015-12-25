@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# This script "sets up" dotfiles itself. It does not install any packages via
+# apt-get, it just installs or symlinks files as appropriate.
+# It works on Linux and Cygwin.
+
 # Determine the location of this script.
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 

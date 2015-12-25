@@ -46,8 +46,8 @@
 		     smart-mode-line        ;; https://github.com/Malabarba/smart-mode-line
 		     smart-mode-line-powerline-theme
 		     sr-speedbar            ;; in-frame directory tree
-		     sunrise-commander
-		     sunrise-x-buttons
+		     ;;sunrise-commander
+		     ;;sunrise-x-buttons
 		     unbound
 		     yaml-mode
 		     yasnippet
@@ -62,10 +62,10 @@
 		     busybee-theme
 		     cherry-blossom-theme
 		     clues-theme
-		     color-theme-monokai
+		     ;; color-theme-monokai  ;; Unavailable?
 		     color-theme-sanityinc-tomorrow
 		     color-theme-solarized
-		     color-theme-wombat
+		     ;;color-theme-wombat    ;; Unavailable?
 		     cyberpunk-theme
 		     dakrone-theme
 		     darkburn-theme
@@ -94,8 +94,6 @@
 			 ("melpa" . "http://melpa.org/packages/")
                          ("sc" . "http://joseito.republika.pl/sunrise-commander/")
 			 ))
-
-(package-initialize)
 
 ;; Fetch the list of packages available.
 (unless package-archive-contents
