@@ -22,6 +22,7 @@
 (message "The system-type variable is %s" system-type)
 (message "The window-system variable is %s" window-system)
 
+(add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 
 ;;; $$ REQUIRES.
 (message "REQUIRES - BEGIN.")
