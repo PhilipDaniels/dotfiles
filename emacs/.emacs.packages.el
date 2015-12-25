@@ -95,6 +95,8 @@
                          ("sc" . "http://joseito.republika.pl/sunrise-commander/")
 			 ))
 
+(package-initialize)
+
 ;; Fetch the list of packages available.
 (unless package-archive-contents
   (package-refresh-contents))

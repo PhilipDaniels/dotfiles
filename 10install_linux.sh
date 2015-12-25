@@ -34,7 +34,9 @@ sudo apt-get install \
      cmake \
      cscope \
      curl \
+     dblatex \
      docbook2x \
+     docbook-utils \
      dos2unix \
      exuberant-ctags \
      flex \
@@ -73,10 +75,12 @@ sudo apt-get install \
      make \
      mc \
      ncdu \
+     pandoc \
      rsync \
      samba \
      screen \
      smbclient \
+     source-highlight \
      ssh \
      strace \
      sudo \
