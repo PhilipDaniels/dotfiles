@@ -15,7 +15,7 @@
 # apt-get dist-upgrade               upgrade all packages and handle changed dependencies
 
 sudo apt-get update
-sudo apt-get dist-upgrade
+
 
 # Non-X stuff. The fonts don't require X. libssl-dev and apache2-utils
 # are required to compile node. Includes dependencies for compiling
