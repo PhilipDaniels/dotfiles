@@ -754,6 +754,10 @@ search at index 0."
       (define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
       (define-key key-translation-map (kbd "<menu>") (kbd "<apps>"))))
 
+(if (equal system-type 'gnu/linux)
+    (define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))
+
+
 ;;(define-key global-map (kbd "<apps> h")
 ;;   (lambda () (interactive) (message "hello from menu key via <apps> leader key")))
 
