@@ -37,6 +37,7 @@ sudo apt-get install \
      cscope \
      curl \
      dblatex \
+     docbook \
      docbook2x \
      docbook-utils \
      dos2unix \
@@ -145,6 +146,3 @@ sudo apt-get install \
      xfce4 \
      xfe \
      xorg
-
-
-sudo apt-get dist-upgrade
