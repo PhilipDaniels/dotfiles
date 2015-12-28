@@ -200,7 +200,7 @@ If region is active, apply to active region instead."
 ;; tl;dr - use ansi-term for starting shells.
 
 (setq c-default-style "linux"
-      c-basic-offset 4)
+      c-basic-offset 2)
 
 (if (eq system-type 'cygwin)
     (setq powershell-location-of-exe "/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"))
@@ -232,10 +232,10 @@ If region is active, apply to active region instead."
 ;; Helm mode.
 ;; Based on http://tuhdo.github.io/helm-intro.html
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
-(setq helm-semantic-fuzzy-match t)
-(setq helm-imenu-fuzzy-match t)
-(setq helm-M-x-fuzzy-match t)
-(setq helm-apropos-fuzzy-match t)
+(setq helm-semantic-fuzzy-match nil)
+(setq helm-imenu-fuzzy-match nil)
+(setq helm-M-x-fuzzy-match nil)
+(setq helm-apropos-fuzzy-match nil)
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
 (defun pd-helm-alive-p ()
@@ -328,7 +328,8 @@ If region is active, apply to active region instead."
 ;; fonts. To determine the name that Emacs uses for a font, the easiest way I
 ;; know is to use the customize system to pick a default font, then save
 ;; options, the name of the font then appears in the .emacs file.
-(defvar pd-font-candidates '("Consolas-11"
+(defvar pd-font-candidates '("Consolas-12"
+			     "Consolas-11"
                              "Cousine-10"
                              "Courier New-10"
                              "Aurulent Sans Mono-10"
@@ -537,6 +538,11 @@ search at index 0."
 (setq compilation-scroll-output 'first-error)
 (setq comment-empty-lines t)
 (setq magit-push-always-verify nil)
+(setq vc-follow-symlinks t)
+(add-to-list 'helm-grep-ignored-files "*.exe")
+(add-to-list 'helm-grep-ignored-files "*.dll")
+(add-to-list 'helm-grep-ignored-files "*.obj")
+(add-to-list 'helm-grep-ignored-files "*.pdb")
 
 ;; Don't prompt with "Active processes exist, kill them?" when exiting Emacs.
 ;; http://stackoverflow.com/questions/2706527/make-emacs-stop-asking-active-processes-exist-kill-them-and-exit-anyway

@@ -1,5 +1,5 @@
 # -*- mode: snippet -*-
-# name : using std::...
+# name : using std::...;
 # key: us
 # --
-using std::$1;$0
+using std::$0;
