@@ -37,12 +37,14 @@
 (require 'helm-config)
 (require 'hideshow)
 (require 'hlinum)
+(require 'org)
 (require 'recentf-ext)
 (require 'shackle)
 (require 'speedbar)
 (require 'unbound)                ;; This package provides the command describe-unbound-keys. Try a parameter of 8.
 (require 'which-func)
 (require 'whitespace)
+(require 'windmove)
 (require 'yasnippet)
 
 (message "REQUIRES - END.")
@@ -184,6 +186,48 @@ If region is active, apply to active region instead."
   (interactive "p")
   (endless/forward-paragraph (- n)))
 
+(defun hydra-move-splitter-left (arg)
+  "Move window splitter left."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'right))
+      (shrink-window-horizontally arg)
+    (enlarge-window-horizontally arg)))
+
+(defun hydra-move-splitter-right (arg)
+  "Move window splitter right."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'right))
+      (enlarge-window-horizontally arg)
+    (shrink-window-horizontally arg)))
+
+(defun hydra-move-splitter-up (arg)
+  "Move window splitter up."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'up))
+      (enlarge-window arg)
+    (shrink-window arg)))
+
+(defun hydra-move-splitter-down (arg)
+  "Move window splitter down."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'up))
+      (shrink-window arg)
+    (enlarge-window arg)))
+
+(defvar rectangle-mark-mode)
+(defun hydra-ex-point-mark ()
+  "Exchange point and mark."
+  (interactive)
+  (if rectangle-mark-mode
+      (exchange-point-and-mark)
+    (let ((mk (mark)))
+      (rectangle-mark-mode 1)
+      (goto-char mk))))
+
 (message "FUNCTIONS - END.")
 
 
@@ -199,7 +243,7 @@ If region is active, apply to active region instead."
 ;; There is also multi-term, not sure what that adds though.
 ;; tl;dr - use ansi-term for starting shells.
 
-(setq c-default-style "linux"
+(setq c-default-style "k&r"
       c-basic-offset 2)
 
 (if (eq system-type 'cygwin)
@@ -477,7 +521,8 @@ search at index 0."
                                       diff-mode-hook
                                       magit-popup-mode-hook
                                       shell-mode-hook
-                                      term-mode-hook))
+                                      term-mode-hook
+				      org-mode-hook))
   (add-hook hook (lambda () (set-variable 'show-trailing-whitespace nil))))
 
 ;; We need to turn on whitespace-mode to get the display of the >80 character
@@ -692,7 +737,7 @@ search at index 0."
 ;; C-o                : open-line
 ;; C-s, C-r           : isearch-forward/backward, M-s/r does regexps.
 ;; C-t, M-t, C-x C-t  : transpose chars/words/lines
-;; C-/                : undo
+;; C-_                : undo
 ;; f3, f4             : start, end/run keyboard macro
 ;; C-x (,  C-x )      : start, end/run keyboard macro
 ;; C-x `              : next-error
@@ -770,7 +815,7 @@ search at index 0."
 
 ;; ******************* Global Function keys ********************
 (define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/.emacs.pd.el")))
-(define-key global-map (kbd "S-<f2>") (lambda () (interactive) (find-file "~/work.org")))
+;;(define-key global-map (kbd "S-<f2>") (lambda () (interactive) (find-file "~/work.org")))
 (define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
 (define-key global-map (kbd "<f12>") 'sr-speedbar-toggle)
 (define-key global-map (kbd "S-<f12>") 'sr-speedbar-select-window)
@@ -792,31 +837,64 @@ search at index 0."
 ;; (global-unset-key [down])
 
 ;; This takes all M-<arrow> bindings.
-(windmove-default-keybindings 'meta)
-(define-key global-map (kbd "S-M-<up>") 'enlarge-window)
-(define-key global-map (kbd "S-M-<down>") 'shrink-window)
-(define-key global-map (kbd "S-M-<left>") 'shrink-window-horizontally)
-(define-key global-map (kbd "S-M-<right>") 'enlarge-window-horizontally)
+;(windmove-default-keybindings 'meta)
+;; (define-key global-map (kbd "S-M-<up>") 'enlarge-window)
+;; (define-key global-map (kbd "S-M-<down>") 'shrink-window)
+;; (define-key global-map (kbd "S-M-<left>") 'shrink-window-horizontally)
+;; (define-key global-map (kbd "S-M-<right>") 'enlarge-window-horizontally)
 
 (define-key global-map (kbd "C-<up>") 'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
 (define-key global-map (kbd "C-<down>") 'endless/forward-paragraph)
 (define-key global-map (kbd "C-<left>") 'backward-word)
 (define-key global-map (kbd "C-<right>") 'forward-word)
 
-(define-key global-map (kbd "<C-S-up>") 'buf-move-up)
-(define-key global-map (kbd "<C-S-down>") 'buf-move-down)
-(define-key global-map (kbd "<C-S-left>") 'buf-move-left)
-(define-key global-map (kbd "<C-S-right>") 'buf-move-right)
+;; (define-key global-map (kbd "<C-S-up>") 'buf-move-up)
+;; (define-key global-map (kbd "<C-S-down>") 'buf-move-down)
+;; (define-key global-map (kbd "<C-S-left>") 'buf-move-left)
+;; (define-key global-map (kbd "<C-S-right>") 'buf-move-right)
 
 (define-key global-map (kbd "C-M-<left>") 'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
 (define-key global-map (kbd "C-M-<right>") 'end-of-defun)
 
+(defhydra hydra-windows (global-map "M-#")
+  "Arrow = switch, C-arrow = move, S-arrow = size"
+  ("<left>" windmove-left nil)
+  ("<right>" windmove-right nil)
+  ("<up>" windmove-up nil)
+  ("<down>" windmove-down nil)
+  ("S-<left>" hydra-move-splitter-left nil)
+  ("S-<right>" hydra-move-splitter-right  nil)
+  ("S-<up>" hydra-move-splitter-up nil)
+  ("S-<down>" hydra-move-splitter-down nil)
+  ("C-<left>" buf-move-left nil)
+  ("C-<right>" buf-move-right nil)
+  ("C-<up>" buf-move-up nil)
+  ("C-<down>" buf-move-down nil)
+  ("1" delete-other-windows "1")
+  ("d" delete-window "del")
+  ("s" save-buffer "save")
+  ("u" (progn (winner-undo) (setq this-command 'winner-undo)) "undo")
+  ("r" winner-redo "redo")
+  ("b" helm-mini "helm-mini" :exit t)
+  ("f" helm-find-files "helm-find" :exit t)
+  ("|" (lambda () (interactive) (split-window-right) (windmove-right)))
+  ("_" (lambda () (interactive) (split-window-below) (windmove-down)))
+  ("q" nil "cancel")
+  )
 
 ;; ******************* Small pad keys ********************
-(define-key global-map (kbd "C-S-<prior>") (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)))
-(define-key global-map (kbd "C-S-<next>") (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)))
-(define-key global-map (kbd "M-S-<prior>") 'text-scale-decrease)
-(define-key global-map (kbd "M-S-<next>") 'text-scale-increase)
+;; (define-key global-map (kbd "C-S-<prior>") (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)))
+;; (define-key global-map (kbd "C-S-<next>") (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)))
+;; (define-key global-map (kbd "M-S-<prior>") 'text-scale-decrease)
+;; (define-key global-map (kbd "M-S-<next>") 'text-scale-increase)
+
+(defhydra hydra-font (global-map "C-# f")
+  "Adjust font size and face with hydra."
+  ("i" text-scale-increase "increase")
+  ("d" text-scale-decrease "decrease")
+  ("n" (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)) "next font")
+  ("p" (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)) "previous font"))
+
 
 ;; ******************* Main number keys ********************
 ;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via C-u anyway.
