@@ -857,11 +857,11 @@ search at index 0."
 (define-key global-map (kbd "C-M-<right>") 'end-of-defun)
 
 (defhydra hydra-windows (global-map "M-#")
-  "Arrow = switch, C-arrow = move, S-arrow = size"
-  ("<left>" windmove-left nil)
-  ("<right>" windmove-right nil)
-  ("<up>" windmove-up nil)
-  ("<down>" windmove-down nil)
+  "M-Arrow = switch, C-arrow = move, S-arrow = size"
+  ("M-<left>" windmove-left nil)
+  ("M-<right>" windmove-right nil)
+  ("M-<up>" windmove-up nil)
+  ("M-<down>" windmove-down nil)
   ("S-<left>" hydra-move-splitter-left nil)
   ("S-<right>" hydra-move-splitter-right  nil)
   ("S-<up>" hydra-move-splitter-up nil)
