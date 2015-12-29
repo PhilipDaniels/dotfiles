@@ -447,30 +447,25 @@ search at index 0."
 ;    (load-theme 'solarized-dark t)
 ;  (load-theme 'tango-dark t))
 
-;; Steal the solarized colors from its palette. Only works for dark mode.
-(setq sd-black (nth 1 (assoc 'base02 solarized-colors))
-      sd-red (nth 1 (assoc 'red solarized-colors))
-      sd-green (nth 1 (assoc 'green solarized-colors))
-      sd-yellow (nth 1 (assoc 'yellow solarized-colors))
-      sd-blue (nth 1 (assoc 'blue solarized-colors))
-      sd-magenta (nth 1 (assoc 'magenta solarized-colors))
-      sd-cyan (nth 1 (assoc 'cyan solarized-colors))
-      sd-white (nth 1 (assoc 'base2 solarized-colors))
-      sd-brblack (nth 1 (assoc 'base03 solarized-colors))
-      sd-brred (nth 1 (assoc 'orange solarized-colors))
-      sd-brgreen (nth 1 (assoc 'base01 solarized-colors))
-      sd-bryellow (nth 1 (assoc 'base00 solarized-colors))
-      sd-brblue (nth 1 (assoc 'base0 solarized-colors))
-      sd-brmagenta (nth 1 (assoc 'violet solarized-colors))
-      sd-brcyan (nth 1 (assoc 'base1 solarized-colors))
-      sd-brwhite (nth 1 (assoc 'base3 solarized-colors))
-      )
+(defvar pd-mode-line-foreground "#e9e2cb"
+  "The foreground color I use in my modelines when overriding a theme.
+Defaults to a near-white as used in solarized dark.")
 
-;; These colors are from solarized.
-(set-face-foreground 'mode-line sd-blue)
-(set-face-background 'mode-line sd-white)
-(set-face-foreground 'mode-line-inactive sd-white)
-(set-face-background 'mode-line-inactive sd-blue)
+(defvar pd-mode-line-background "#2075c7"
+  "The background color I use in my modelines when overriding a theme.
+Defaults to bright blue as used in solarized dark.")
+
+(defvar pd-helm-selection-background "white"
+  "The colour I use for the background of the helm selection line.")
+
+(defvar pd-helm-selection-foreground "red"
+  "The color I use for the foreground of the helm selection line.")
+
+(defvar pd-current-line-background "black"
+  "The color I use for the background of the current line.")
+
+(defvar pd-cursor-color "yellow"
+  "The color I use for the cursor.")
 
 (message "APPEARANCE - SOLARIZED STUFF DONE.")
 
@@ -493,20 +488,20 @@ search at index 0."
 ;; Highlighting of the current line. Must do this after theme is loaded.
 ;; See http://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html
 (set-face-attribute 'helm-selection nil
-                    :background "white"
-                    :foreground "red")
+                    :background pd-helm-selection-background
+                    :foreground pd-helm-selection-foreground)
 
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "black")
+(set-face-background 'hl-line pd-current-line-background)
 (set-face-foreground 'hl-line nil)
 (set-face-underline-p 'hl-line nil)
-(set-cursor-color "yellow")
+(set-cursor-color pd-cursor-color)
 (blink-cursor-mode 1)
 
 ;; fci-mode can cause an increase in the vertical separation of lines,
 ;; so leave it off by default. It is bound to C-= below, for ease of use.
 (setq fci-rule-width 2)
-(setq fci-rule-color sd-blue)
+(setq fci-rule-color pd-mode-line-foreground)
 ;(add-hook 'c-mode-common-hook 'fci-mode)
 ;(add-hook 'emacs-lisp-mode-hook 'fci-mode)
 ;(add-hook 'shell-script-mode-hook 'fci-mode)
@@ -836,27 +831,15 @@ search at index 0."
 ;; (global-unset-key [right])
 ;; (global-unset-key [down])
 
-;; This takes all M-<arrow> bindings.
-;(windmove-default-keybindings 'meta)
-;; (define-key global-map (kbd "S-M-<up>") 'enlarge-window)
-;; (define-key global-map (kbd "S-M-<down>") 'shrink-window)
-;; (define-key global-map (kbd "S-M-<left>") 'shrink-window-horizontally)
-;; (define-key global-map (kbd "S-M-<right>") 'enlarge-window-horizontally)
-
 (define-key global-map (kbd "C-<up>") 'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
 (define-key global-map (kbd "C-<down>") 'endless/forward-paragraph)
 (define-key global-map (kbd "C-<left>") 'backward-word)
 (define-key global-map (kbd "C-<right>") 'forward-word)
 
-;; (define-key global-map (kbd "<C-S-up>") 'buf-move-up)
-;; (define-key global-map (kbd "<C-S-down>") 'buf-move-down)
-;; (define-key global-map (kbd "<C-S-left>") 'buf-move-left)
-;; (define-key global-map (kbd "<C-S-right>") 'buf-move-right)
-
 (define-key global-map (kbd "C-M-<left>") 'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
 (define-key global-map (kbd "C-M-<right>") 'end-of-defun)
 
-(defhydra hydra-windows (global-map "M-#")
+(defhydra hydra-windows ()
   "M-Arrow = switch, C-arrow = move, S-arrow = size"
   ("M-<left>" windmove-left nil)
   ("M-<right>" windmove-right nil)
@@ -882,19 +865,96 @@ search at index 0."
   ("q" nil "cancel")
   )
 
-;; ******************* Small pad keys ********************
-;; (define-key global-map (kbd "C-S-<prior>") (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)))
-;; (define-key global-map (kbd "C-S-<next>") (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)))
-;; (define-key global-map (kbd "M-S-<prior>") 'text-scale-decrease)
-;; (define-key global-map (kbd "M-S-<next>") 'text-scale-increase)
+(global-set-key (kbd "M-#") 'hydra-windows/body)
 
-(defhydra hydra-font (global-map "C-# f")
+(defhydra hydra-fonts ()
   "Adjust font size and face with hydra."
   ("i" text-scale-increase "increase")
   ("d" text-scale-decrease "decrease")
   ("n" (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)) "next font")
   ("p" (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)) "previous font"))
 
+(global-set-key (kbd "C-# f") 'hydra-fonts/body)
+
+(defun pd-load-dark-theme (theme)
+  "Helper function to set background to dark and load specified theme."
+  (setq-default frame-background-mode 'dark)
+  ;;(mapc 'frame-set-background-mode (frame-list))
+  (load-theme theme))
+
+(defun pd-load-light-theme (theme)
+  "Helper function to set background to dark and load specified theme."
+  (setq-default frame-background-mode 'light)
+  ;;(mapc 'frame-set-background-mode (frame-list))
+  (load-theme theme))
+
+;; Watch out! Some modes set inverse-video to t which will confuse you
+;; no end when trying to set colors!
+(set-face-attribute 'mode-line nil
+		    :foreground pd-mode-line-foreground
+		    :background pd-mode-line-background)
+
+(set-face-attribute 'mode-line-inactive nil
+		    :foreground pd-mode-line-background
+		    :background pd-mode-line-foreground)
+
+(defhydra hydra-themes (:hint nil)
+  "
+Fav       : _sd_ Sol Dark       _sl_ Sol Light   _zb_ Zenburn
+Dark      : _ab_ Alect Black    _cp_ Cyberpunk   _gd_ Gruber Darker   _bb_ BusyBee   _hd_ Hemisu Dark  _gb_ Gruvbox _mi_ Minimal   _mo_ Monochrome
+Light     : _al_ Alect Light    _lv_ Leuven      _hl_ Hemisu-Light
+Blue      : _rp_ Raspopovic     _rs_ Resolve     _uw_ Underwater  _ad_ Aalto Dark
+Green     : _gp_ Green Phosphor _rg_ Retro Green
+Grey/Mono : _xx_ testing        _az_ Anti-Zenburn _fu_ Flat UI  _ob_ Obsidian  _ma_ Material _ro_ Retro Orange  _sm_ Soft Morning _tt_ TangoTango
+"
+  ("sd" (pd-load-dark-theme 'solarized))
+  ("sl" (pd-load-light-theme 'solarized))
+  ("zb" (pd-load-light-theme 'zenburn))
+
+  ("ab" (pd-load-dark-theme 'alect-black))
+  ("cp" (pd-load-dark-theme 'cyberpunk))
+  ("gd" (pd-load-dark-theme 'gruber-darker))
+  ("bb" (pd-load-dark-theme 'busybee))
+  ("hd" (pd-load-dark-theme 'hemisu-dark))
+  ("gb" (pd-load-dark-theme 'gruvbox))
+  ("mi" (pd-load-dark-theme 'minimal))
+  ("mo" (pd-load-dark-theme 'monochrome))
+
+  ("al" (pd-load-light-theme 'alect-light))
+  ("lv" (pd-load-light-theme 'leuven))
+  ("hl" (pd-load-light-theme 'hemisu-light))
+  ("pa" (pd-load-light-theme 'paper))
+
+  ("rp" (pd-load-dark-theme 'raspopovic))
+  ("rs" (pd-load-dark-theme 'resolve))
+  ("uw" (pd-load-dark-theme 'underwater))
+  ("ad" (pd-load-dark-theme 'aalto-dark))
+
+  ("gp" (pd-load-light-theme 'green-phosphor))
+  ("rg" (pd-load-light-theme 'retro-green))
+
+  ("az" (pd-load-dark-theme 'anti-zenburn))
+  ("fu" (pd-load-dark-theme 'flatui))
+  ("ob" (pd-load-dark-theme 'obsidian))
+  ("ma" (pd-load-dark-theme 'material))
+  ("ro" (pd-load-dark-theme 'retro-orange))
+  ("sm" (pd-load-dark-theme 'soft-morning))
+  ("tt" (pd-load-dark-theme 'tangotango))
+
+  ("xx" (pd-load-dark-theme 'anti-zenburn))
+  )
+
+(global-set-key (kbd "C-# t") 'hydra-themes/body)
+
+;; Comprehensive non-packages themes
+
+;; Blackboard, Blue Mood, Blue Sea, Dark Blue, Dark Blue 2, Deviant,
+;; Fischmeister, Jedit Grey Emacs Themes
+;; Green: Lawrence
+;; Blue: Parus!
+
+
+;; ******************* Small pad keys ********************
 
 ;; ******************* Main number keys ********************
 ;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via C-u anyway.
