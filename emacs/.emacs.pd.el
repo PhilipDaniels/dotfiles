@@ -22,6 +22,8 @@
 (message "The system-type variable is %s" system-type)
 (message "The window-system variable is %s" window-system)
 
+(tool-bar-mode -1)
+
 (add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 
 ;;; $$ REQUIRES.
@@ -37,6 +39,7 @@
 (require 'helm-config)
 (require 'hideshow)
 (require 'hlinum)
+(require 'moe-theme)
 (require 'org)
 (require 'recentf-ext)
 (require 'shackle)
@@ -72,9 +75,32 @@
   (insert "Time-stamp: <>"))
 
 (defun pd-copy-current-line ()
-  "Copy current line (including the newline character at the end)"
+  "Copy the current line (including the newline character at the end)"
   (interactive)
   (kill-new (buffer-substring (point-at-bol) (+ (point-at-eol) 1))))
+
+(defun pd-duplicate-line-or-region (&optional n)
+  "Duplicate current line, or region if active.
+With argument N, make N copies.
+With negative N, comment out original line and use the absolute value.
+From http://stackoverflow.com/questions/88399"
+  (interactive "*p")
+  (let ((use-region (use-region-p)))
+    (save-excursion
+      (let ((text (if use-region        ;Get region if active, otherwise line
+                      (buffer-substring (region-beginning) (region-end))
+                    (prog1 (thing-at-point 'line)
+                      (end-of-line)
+                      (if (< 0 (forward-line 1)) ;Go to beginning of next line, or make a new one
+                          (newline))))))
+        (dotimes (i (abs (or n 1)))     ;Insert N times, or once if not specified
+          (insert text))))
+    (if use-region nil                  ;Only if we're working with a line (not a region)
+      (let ((pos (- (point) (line-beginning-position)))) ;Save column
+        (if (> 0 n)                             ;Comment out original with negative arg
+            (comment-region (line-beginning-position) (line-end-position)))
+        (forward-line 1)
+        (forward-char pos)))))
 
 (defun pd-back-to-indentation-or-beginning ()
   "Toggle between indentation and true beginning of line."
@@ -84,7 +110,7 @@
     (back-to-indentation)))
 
 (defun pd-rename-file-and-buffer (new-name)
-  "Renames both current buffer and file it's visiting to NEW-NAME."
+  "Rename the current buffer and the file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
         (filename (buffer-file-name)))
@@ -99,7 +125,7 @@
           (set-buffer-modified-p nil))))))
 
 (defun pd-delete-file-and-buffer ()
-  "Deletes the current buffer and its backing file."
+  "Delete the current buffer and its backing file."
   (interactive)
   (let ((filename (buffer-file-name))
         (buffer (current-buffer))
@@ -112,9 +138,30 @@
         (message "File '%s' successfully removed" filename)))))
 
 (defun pd-untabify-buffer ()
-  "Runs untabify on the whole buffer."
+  "Run untabify on the entire buffer."
   (interactive)
   (untabify (point-min) (point-max)))
+
+(defun pd-indent-buffer ()
+  "Run indent on the entire buffer."
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
+(defun pd-sort-c-includes ()
+  "Sort the #include block at the beginning of a file."
+  )
+
+(defun pd-sort-cpp-usings ()
+  "Sort the using statements at the beginning of a C++ file."
+  )
+
+(defun pd-cleanup-buffer ()
+  "Runs various cleanups; recommended for programming modes only.
+Also not recommended when working with other people's code
+because it will re-indent the entire buffer."
+  (pd-indent-buffer)
+  (pd-untabify-buffer)
+  (delete-trailing-whitespace))
 
 (defun pd-sort-paragraph ()
   "Sorts the current paragraph and leaves point after the last line."
@@ -472,7 +519,6 @@ Defaults to bright blue as used in solarized dark.")
 ;;;(add-to-list 'default-frame-alist '(height . 50))
 ;;;(add-to-list 'default-frame-alist '(width . 86))
 ;;;(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(tool-bar-mode -1)
 ;;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (setq ring-bell-function nil)
 (setq visible-bell 1)
@@ -495,7 +541,8 @@ Defaults to bright blue as used in solarized dark.")
 ;;(set-face-background 'hl-line pd-current-line-background)
 ;;(set-face-foreground 'hl-line nil)
 ;;(set-face-underline-p 'hl-line nil)
-;(set-cursor-color pd-cursor-color)
+;;(set-cursor-color pd-cursor-color)
+;;(setq yasnippet-can-fire-cursor-color "purple")
 (blink-cursor-mode 1)
 
 ;; fci-mode can cause an increase in the vertical separation of lines,
@@ -536,7 +583,7 @@ Defaults to bright blue as used in solarized dark.")
 (setq-default sr-speedbar-right-side t)
 
 
-(setq rm-blacklist '(" yas" " ws" " hs" " vs" " Helm" " Abbrev"))
+(setq rm-blacklist '(" yas" " ws" " hs" " vs" " Helm" " Abbrev"))  ; Or simply ".*"
 (rich-minority-mode 1)
 
 ;; Smart mode line, see https://github.com/Malabarba/smart-mode-line
@@ -561,8 +608,9 @@ Defaults to bright blue as used in solarized dark.")
 (setq inhibit-startup-message t)
 (setq scroll-error-top-bottom t)
 (setq message-log-max 50000)
-(setq indent-tabs-mode nil)
-(setq tab-width 4)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq sentence-end-double-space nil)
 (setq-default truncate-lines 1)
 (setq require-final-newline t)
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -612,11 +660,9 @@ Defaults to bright blue as used in solarized dark.")
   (remq 'process-kill-buffer-query-function
         kill-buffer-query-functions))
 
-(put 'downcase-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'eval-expression 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
-(put 'erase-buffer 'disabled nil)
+(setq disabled-command-function nil)
+(setq recenter-positions '(top middle bottom))
+(setq use-dialog-box nil)
 
 (setq hippie-expand-try-functions-list
   '(
@@ -890,17 +936,69 @@ Defaults to bright blue as used in solarized dark.")
 
 (global-set-key (kbd "C-# f") 'hydra-fonts/body)
 
-(defun pd-load-dark-theme (theme)
-  "Helper function to set background to dark and load specified theme."
-  (setq-default frame-background-mode 'dark)
-  ;;(mapc 'frame-set-background-mode (frame-list))
-  (load-theme theme))
 
-(defun pd-load-light-theme (theme)
-  "Helper function to set background to dark and load specified theme."
-  (setq-default frame-background-mode 'light)
-  ;;(mapc 'frame-set-background-mode (frame-list))
-  (load-theme theme))
+;; Create a hydra to switch themes. We use the Emacs 24 theme engine (aka
+;; deftheme) only, not the old color-theme.el engine.
+;; A strange and non-obvious thing - calling load-theme applies the new
+;; theme on top of the previous one - themes accumulate! Therefore, in
+;; order to get a reasonable implementation we must disable all existing
+;; themes before loading the new one, or alternatively keep track of the
+;; current theme and disable it before loading a new one, which can be done
+;; by writing our own wrapper around load-theme.
+;; See Drew's answer at http://emacs.stackexchange.com/questions/3112/how-to-reset-color-theme?rq=1
+;; I choose to use my own function so that I have flexibility to enable
+;; more than one theme simultaneously if I want to.
+;;
+;; Applying extra theming
+;; For example, you want to tweak cursor colors, modeline colors etc.
+;; This is problematic, because your changes are not "part of" the theme
+;; and hence cannot be reliably undone (see Drew's bug report at the above
+;; SO link). There appear to be several possible solutions, none of which
+;; are great:
+;;
+;; 1. For themes you really care about, customize the theme with your
+;;    changes and use your customized version instead. This involves
+;;    tweaking (setq custom-theme-directory "your-directory")
+;;    and (add-to-list 'custom-theme-load-path "your-directory")
+;;    and appears to be a reasonable solution.
+;;    Pro: nicely self-contained.
+;;    Cons: you have to tweak each theme.
+;; 2. Write a custom theme which just contains your changes, then apply it
+;;    whenever you change master themes (taking advantage of the fact that
+;;    themes "accumulate").
+;;    Pro: easy to apply your changes on top of several themes.
+;;    Cons: requires all theme loading be done with your own custom function.
+;; 3. Write a fn, which may be arbitrarily smart, which simply modifies
+;;    faces and colours as appropriate and run it after switching themes.
+
+(defvar pd-current-theme nil "The theme that was last loaded by pd-load-theme.")
+
+(defun pd-load-theme (theme &optional bg-mode)
+  "Load a theme, disabling the current custom theme first.
+Normally themes 'accumulate' as you load them which gives a very
+confusing experience. This function prevents strange display and
+performance problems by disabling the current active custom
+theme (if any) before loading the new theme.
+
+This function can only do its job properly if you do all theme
+loading using it.
+
+BG-MODE is used to set the variable `frame-background-mode'.
+Valid values are nil, 'dark and 'light."
+  ;; TODO: Run pd-pre-load-theme-hook here
+  (if pd-current-theme (disable-theme pd-current-theme))
+  (setq pd-current-theme theme)
+  ;; Solarized (the only one I am sure about) uses the frame-background-mode to
+  ;; determine how to display itself. The default for this variable is nil,
+  ;; which most themes seem happy with.
+  (setq frame-background-mode bg-mode)
+  (mapc 'frame-set-background-mode (frame-list))
+
+  (load-theme theme t)
+  (message "Theme set to %s" theme)
+  ;; TODO: Run pd-post-load-theme-hook here
+  )
+
 
 ;; Watch out! Some modes set inverse-video to t which will confuse you
 ;; no end when trying to set colors!
@@ -912,60 +1010,65 @@ Defaults to bright blue as used in solarized dark.")
 ;;		    :foreground pd-mode-line-background
 ;;		    :background pd-mode-line-foreground)
 
+;; All these themes are available on MELPA.
 (defhydra hydra-themes (:hint nil)
   "
-Fav       : _sd_ Sol Dark       _sl_ Sol Light   _zb_ Zenburn
-Dark      : _ab_ Alect Black    _cp_ Cyberpunk   _gd_ Gruber Darker   _bb_ BusyBee   _hd_ Hemisu Dark  _gb_ Gruvbox _mi_ Minimal   _mo_ Monochrome
-Light     : _al_ Alect Light    _lv_ Leuven      _hl_ Hemisu-Light
-Blue      : _rp_ Raspopovic     _rs_ Resolve     _uw_ Underwater  _ad_ Aalto Dark
-Green     : _gp_ Green Phosphor _rg_ Retro Green
-Grey/Mono : _xx_ testing        _az_ Anti-Zenburn _fu_ Flat UI  _ob_ Obsidian  _ma_ Material _ro_ Retro Orange  _sm_ Soft Morning _tt_ TangoTango
+Fav      : _sd_ Sol Dark      _sl_ Sol Light
+Dark     : _zb_ Zenburn       _gd_ Gruber Darker  _cp_ Cyberpunk       _gb_ Gruvbox       _bb_ BusyBee      _me_ Moe Dark
+           _uw_ Underwater    _md_ Minimal Dark   _mn_ Monokai         _ml_ Molokai       _cf_ Calm Forest  _ty_ TTY Dark
+Light    : _lv_ Leuven        _hl_ Hemisu-Light   _mi_ Minimal Light   _ao_ Aalto Light   _mt_ Moe Light
+Grey     : _ob_ Obsidian      _ma_ Material       _az_ Anti-Zenburn    _fu_ Flat UI       _sm_ Soft Morning
+           _tt_ TangoTango    _pa_ Paper          _cb_ Charcoal Black  _je_ JEdit Grey
+Blue     : _rs_ Resolve       _bs_ Blue Sea       _rp_ Raspopovic      _ad_ Aalto Dark    _pr_ Parus
+Mono     : _ro_ Retro Orange  _mo_ Monochrome     _rg_ Retro Green     _gp_ Green Phosphor
+Consider :
+Rejects  : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 "
-  ("sd" (pd-load-dark-theme 'solarized))
-  ("sl" (pd-load-light-theme 'solarized))
-  ("zb" (pd-load-light-theme 'zenburn))
-
-  ("ab" (pd-load-dark-theme 'alect-black))
-  ("cp" (pd-load-dark-theme 'cyberpunk))
-  ("gd" (pd-load-dark-theme 'gruber-darker))
-  ("bb" (pd-load-dark-theme 'busybee))
-  ("hd" (pd-load-dark-theme 'hemisu-dark))
-  ("gb" (pd-load-dark-theme 'gruvbox))
-  ("mi" (pd-load-dark-theme 'minimal))
-  ("mo" (pd-load-dark-theme 'monochrome))
-
-  ("al" (pd-load-light-theme 'alect-light))
-  ("lv" (pd-load-light-theme 'leuven))
-  ("hl" (pd-load-light-theme 'hemisu-light))
-  ("pa" (pd-load-light-theme 'paper))
-
-  ("rp" (pd-load-dark-theme 'raspopovic))
-  ("rs" (pd-load-dark-theme 'resolve))
-  ("uw" (pd-load-dark-theme 'underwater))
-  ("ad" (pd-load-dark-theme 'aalto-dark))
-
-  ("gp" (pd-load-light-theme 'green-phosphor))
-  ("rg" (pd-load-light-theme 'retro-green))
-
-  ("az" (pd-load-dark-theme 'anti-zenburn))
-  ("fu" (pd-load-dark-theme 'flatui))
-  ("ob" (pd-load-dark-theme 'obsidian))
-  ("ma" (pd-load-dark-theme 'material))
-  ("ro" (pd-load-dark-theme 'retro-orange))
-  ("sm" (pd-load-dark-theme 'soft-morning))
-  ("tt" (pd-load-dark-theme 'tangotango))
-
-  ("xx" (pd-load-dark-theme 'anti-zenburn))
+  ("ab" (pd-load-theme 'alect-black))
+  ("ad" (pd-load-theme 'aalto-dark))
+  ("al" (pd-load-theme 'alect-light))
+  ("ao" (pd-load-theme 'aalto-light))
+  ("az" (pd-load-theme 'anti-zenburn))
+  ("bb" (pd-load-theme 'busybee))
+  ("bs" (pd-load-theme 'blue-sea))
+  ("cb" (pd-load-theme 'charcoal-black))
+  ("cf" (pd-load-theme 'calm-forest))
+  ("cp" (pd-load-theme 'cyberpunk))
+  ("fu" (pd-load-theme 'flatui))
+  ("gb" (pd-load-theme 'gruvbox))
+  ("gd" (pd-load-theme 'gruber-darker))
+  ("gp" (pd-load-theme 'green-phosphor))
+  ("gr" (pd-load-theme 'goldenrod))
+  ("hd" (pd-load-theme 'hemisu-dark))
+  ("hl" (pd-load-theme 'hemisu-light))
+  ("je" (pd-load-theme 'jedit-grey))
+  ("lv" (pd-load-theme 'leuven))
+  ("ma" (pd-load-theme 'material))
+  ("md" (pd-load-theme 'minimal))
+  ("me" (pd-load-theme 'moe-dark))
+  ("mi" (pd-load-theme 'minimal-light))
+  ("ml" (pd-load-theme 'molokai))
+  ("mn" (pd-load-theme 'monokai))
+  ("mo" (pd-load-theme 'monochrome))
+  ("mt" (pd-load-theme 'moe-light))
+  ("ob" (pd-load-theme 'obsidian))
+  ("pa" (pd-load-theme 'paper))
+  ("pr" (pd-load-theme 'parus))
+  ("rg" (pd-load-theme 'retro-green))
+  ("ro" (pd-load-theme 'retro-orange))
+  ("rp" (pd-load-theme 'raspopovic))
+  ("rs" (pd-load-theme 'resolve))
+  ("sd" (pd-load-theme 'solarized 'dark))
+  ("sl" (pd-load-theme 'solarized 'light))
+  ("sm" (pd-load-theme 'soft-morning))
+  ("tt" (pd-load-theme 'tangotango))
+  ("ty" (pd-load-theme 'tty-dark))
+  ("uw" (pd-load-theme 'underwater))
+  ("zb" (pd-load-theme 'zenburn))
   )
 
 (global-set-key (kbd "C-# t") 'hydra-themes/body)
-
-;; Comprehensive non-packages themes
-
-;; Blackboard, Blue Mood, Blue Sea, Dark Blue, Dark Blue 2, Deviant,
-;; Fischmeister, Jedit Grey Emacs Themes
-;; Green: Lawrence
-;; Blue: Parus!
+(pd-load-theme 'solarized 'dark)
 
 
 ;; ******************* Small pad keys ********************
@@ -980,6 +1083,7 @@ Grey/Mono : _xx_ testing        _az_ Anti-Zenburn _fu_ Flat UI  _ob_ Obsidian  _
 
 ;; ******************* Letter/main section keys ********************
 ;; The keys C-` , . ' ; ? are all available.
+;; C-c <any letter> are always available in any mode, they are reserved for you.
 (define-key global-map (kbd "C-\\") 'hs-toggle-hiding)
 (define-key global-map (kbd "C-|") 'hs-show-all)
 (define-key global-map (kbd "M-/") 'hippie-expand)
@@ -994,12 +1098,14 @@ Grey/Mono : _xx_ testing        _az_ Anti-Zenburn _fu_ Flat UI  _ob_ Obsidian  _
 (define-key global-map (kbd "C-x b") 'helm-mini)
 (define-key global-map (kbd "C-x C-b") 'helm-mini)
 (define-key global-map (kbd "M-j") (lambda () (interactive) (join-line -1)))
+(define-key global-map (kbd "C-S-l") 'pd-duplicate-line-or-region)
 (define-key global-map (kbd "M-x") 'helm-M-x)
 (define-key global-map (kbd "C-x C-f") 'helm-find-files)
 (define-key global-map (kbd "C-x g") 'magit-status)
 (define-key global-map (kbd "C-x C-g") 'magit-status)
 (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
+(define-key global-map (kbd "<apps> dl") 'pd-duplicate-line-or-region)
 (define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
 (define-key global-map (kbd "<apps> g") 'magit-status)
 (define-key global-map (kbd "<apps> ha") 'helm-apropos)

@@ -62,10 +62,9 @@
 		     busybee-theme
 		     cherry-blossom-theme
 		     clues-theme
-		     ;; color-theme-monokai  ;; Unavailable?
+		     color-theme-modern
 		     color-theme-sanityinc-tomorrow
 		     color-theme-solarized
-		     ;;color-theme-wombat    ;; Unavailable?
 		     cyberpunk-theme
 		     dakrone-theme
 		     darkburn-theme
@@ -75,17 +74,27 @@
 		     flatland-theme
 		     flatui-theme
 		     grandshell-theme
+		     green-phosphor-theme
 		     gruber-darker-theme
 		     gruvbox-theme
 		     hc-zenburn-theme
 		     hemisu-theme
 		     heroku-theme
 		     leuven-theme
+		     material-theme
+		     minimal-theme
 		     moe-theme
+		     molokai-theme
+		     monokai-theme
+		     monochrome-theme
+		     obsidian-theme
 		     occidental-theme
+		     paper-theme
+		     soft-morning-theme
 		     soothe-theme
 		     tango-plus-theme
 		     tangotango-theme
+		     underwater-theme
 		     zenburn-theme
 		     ))
 
