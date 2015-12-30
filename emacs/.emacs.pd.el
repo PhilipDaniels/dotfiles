@@ -437,9 +437,9 @@ search at index 0."
 ;; Setting the frame-background-mode before loading the theme stops Solarized
 ;; from initially loading in light mode. The mapc is needed for w32 emacs, or
 ;; else we still come up in light mode, no idea why.
-(setq-default frame-background-mode 'dark)
-(mapc 'frame-set-background-mode (frame-list))
-(load-theme 'solarized t)        ; Package is "color-theme-solarized" on MELPA.
+;(setq-default frame-background-mode 'dark)
+;(mapc 'frame-set-background-mode (frame-list))
+;(load-theme 'solarized t)        ; Package is "color-theme-solarized" on MELPA.
 
 ; You can load a different theme for GUI vs Terminal like this.
 ; Decent terminal themes: manoj-dark, tango-dark, misterioso, tsdh-dark, wheatgrass
@@ -487,21 +487,21 @@ Defaults to bright blue as used in solarized dark.")
 
 ;; Highlighting of the current line. Must do this after theme is loaded.
 ;; See http://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html
-(set-face-attribute 'helm-selection nil
-                    :background pd-helm-selection-background
-                    :foreground pd-helm-selection-foreground)
+;(set-face-attribute 'helm-selection nil
+;                    :background pd-helm-selection-background
+;                    :foreground pd-helm-selection-foreground)
 
 (global-hl-line-mode 1)
-(set-face-background 'hl-line pd-current-line-background)
-(set-face-foreground 'hl-line nil)
-(set-face-underline-p 'hl-line nil)
-(set-cursor-color pd-cursor-color)
+;;(set-face-background 'hl-line pd-current-line-background)
+;;(set-face-foreground 'hl-line nil)
+;;(set-face-underline-p 'hl-line nil)
+;(set-cursor-color pd-cursor-color)
 (blink-cursor-mode 1)
 
 ;; fci-mode can cause an increase in the vertical separation of lines,
 ;; so leave it off by default. It is bound to C-= below, for ease of use.
 (setq fci-rule-width 2)
-(setq fci-rule-color pd-mode-line-foreground)
+;(setq fci-rule-color pd-mode-line-foreground)
 ;(add-hook 'c-mode-common-hook 'fci-mode)
 ;(add-hook 'emacs-lisp-mode-hook 'fci-mode)
 ;(add-hook 'shell-script-mode-hook 'fci-mode)
@@ -532,7 +532,7 @@ Defaults to bright blue as used in solarized dark.")
 ;; This face is used to highlight the selected thing (e.g. function in source
 ;; file). Box is on by default, which causes a temporary line-height increase
 ;; which is visually irritating.
-(set-face-attribute 'speedbar-highlight-face nil :box nil :background "black")
+;(set-face-attribute 'speedbar-highlight-face nil :box nil :background "black")
 (setq-default sr-speedbar-right-side t)
 
 
@@ -583,6 +583,7 @@ Defaults to bright blue as used in solarized dark.")
 (add-to-list 'helm-grep-ignored-files "*.dll")
 (add-to-list 'helm-grep-ignored-files "*.obj")
 (add-to-list 'helm-grep-ignored-files "*.pdb")
+(setq explicit-shell-file-name "/bin/bash")  ; TODO: Does this work?
 
 ;; Don't prompt with "Active processes exist, kill them?" when exiting Emacs.
 ;; http://stackoverflow.com/questions/2706527/make-emacs-stop-asking-active-processes-exist-kill-them-and-exit-anyway
@@ -592,6 +593,19 @@ Defaults to bright blue as used in solarized dark.")
 (add-hook 'term-exec-hook
           (lambda () (set-process-query-on-exit-flag
                       (get-buffer-process (current-buffer)) nil)))
+
+;; Make exiting ansi-term kill the buffer.
+(defun oleh-term-exec-hook ()
+  (let* ((buff (current-buffer))
+         (proc (get-buffer-process buff)))
+    (set-process-sentinel
+     proc
+     `(lambda (process event)
+        (if (string= event "finished\n")
+            (kill-buffer ,buff))))))
+
+(add-hook 'term-exec-hook 'oleh-term-exec-hook)
+
 
 ;; Don't prompt about killing buffers with live processes attached to them.
 (setq kill-buffer-query-functions
@@ -890,13 +904,13 @@ Defaults to bright blue as used in solarized dark.")
 
 ;; Watch out! Some modes set inverse-video to t which will confuse you
 ;; no end when trying to set colors!
-(set-face-attribute 'mode-line nil
-		    :foreground pd-mode-line-foreground
-		    :background pd-mode-line-background)
+;;(set-face-attribute 'mode-line nil
+;;		    :foreground pd-mode-line-foreground
+;;		    :background pd-mode-line-background)
 
-(set-face-attribute 'mode-line-inactive nil
-		    :foreground pd-mode-line-background
-		    :background pd-mode-line-foreground)
+;;(set-face-attribute 'mode-line-inactive nil
+;;		    :foreground pd-mode-line-background
+;;		    :background pd-mode-line-foreground)
 
 (defhydra hydra-themes (:hint nil)
   "
