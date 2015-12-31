@@ -3,27 +3,12 @@
 ;;; Local Variables:
 ;;; End:
 
-
-;;; $$ TODO
-;; W32 proxy settings
-;; http://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs/683575#683575
-
-;;; $$ USEFUL INFO
-;; https://github.com/emacs-tw/awesome-emacs
-;; http://pawelbx.github.io/emacs-theme-gallery/
-;; https://github.com/pierre-lecocq/emacs4developers
-;; https://tuhdo.github.io/c-ide.html
-;; http://www.emacswiki.org/
-;; http://tuhdo.github.io/helm-intro.html
-
-
-
 ;;; Determine operating system and window system we are running on.
 (message "The system-type variable is %s" system-type)
 (message "The window-system variable is %s" window-system)
-
 (tool-bar-mode -1)
 
+;; Just a few packages that are not available on MELPA.
 (add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 
 ;;; $$ REQUIRES.
@@ -44,7 +29,8 @@
 (require 'recentf-ext)
 (require 'shackle)
 (require 'speedbar)
-(require 'unbound)                ;; This package provides the command describe-unbound-keys. Try a parameter of 8.
+;; Unbound provides the command describe-unbound-keys. Try a parameter of 8.
+(require 'unbound)
 (require 'which-func)
 (require 'whitespace)
 (require 'windmove)
@@ -155,13 +141,15 @@ From http://stackoverflow.com/questions/88399"
   "Sort the using statements at the beginning of a C++ file."
   )
 
-(defun pd-cleanup-buffer ()
+(defun pd-cleanup-programming-buffer ()
   "Runs various cleanups; recommended for programming modes only.
 Also not recommended when working with other people's code
 because it will re-indent the entire buffer."
   (pd-indent-buffer)
   (pd-untabify-buffer)
-  (delete-trailing-whitespace))
+  (delete-trailing-whitespace)
+  (message "Buffer reindented, untabified and trailing whitespace trimmed.")
+  )
 
 (defun pd-sort-paragraph ()
   "Sorts the current paragraph and leaves point after the last line."
@@ -278,24 +266,17 @@ If region is active, apply to active region instead."
 (message "FUNCTIONS - END.")
 
 
-;;; $$ MAJOR MODES.
-;; C/C++ mode.
-(message "MAJOR MODES - BEGIN.")
+;;; $$ MODES.
+(message "MODES - BEGIN.")
 
-;; Shells.
-;; M-x shell runs a shell as a sub-process, communicating with it via pipes.
-;; It is not fully functional.
-;; eshell is a shell written in elisp. It is slow and not very complete.
-;; term and ansi-term (better) are better choices.
-;; There is also multi-term, not sure what that adds though.
-;; tl;dr - use ansi-term for starting shells.
+(winner-mode 1)
+(semantic-mode 1)
 
 (setq c-default-style "k&r"
       c-basic-offset 2)
 
 (if (eq system-type 'cygwin)
     (setq powershell-location-of-exe "/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"))
-
 
 ;; Markdown mode.
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
@@ -306,22 +287,7 @@ If region is active, apply to active region instead."
 (eval-after-load "dired-aux"
   '(add-to-list 'dired-compress-file-suffixes '("\\.zip\\'" ".zip" "unzip")))
 
-;; Make magit take up the entire screen.
-;;(defadvice magit-status (around magit-fullscreen activate)
-;;  (window-configuration-to-register :magit-fullscreen)
-;;   ad-do-it
-;;   (delete-other-windows))
-
-;; (defun magit-quit-session ()
-;;   "Restores the previous window configuration and kills the magit buffer"
-;;   (interactive)
-;;   (kill-buffer)
-;;   (jump-to-register :magit-fullscreen))
-
-;; (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
-
-;; Helm mode.
-;; Based on http://tuhdo.github.io/helm-intro.html
+;; Helm mode. Based on http://tuhdo.github.io/helm-intro.html
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 (setq helm-semantic-fuzzy-match nil)
 (setq helm-imenu-fuzzy-match nil)
@@ -342,70 +308,86 @@ If region is active, apply to active region instead."
 ;;(add-to-list 'golden-ratio-inhibit-functions 'pd-helm-alive-p)
 (setq-default helm-buffer-max-length nil)
 (setq-default helm-ff-newfile-prompt-p nil)
-
-;; Try and sort buffers by mode, LRU, with SPEEDBAR, MESSAGES etc at the bottom.
-;;(pd-helm-sort-buffers (buffer-list))
-;; (defun pd-sort-buffers (buffers)
-;;   "Sorts buffers nicely for display in helm."
-;;   (interactive)
-;;   buffers
-;;   )
-;;
-;; (defun pd-helm-sort-buffers (orig-fun &rest args)
-;;   (pd-sort-buffers (apply orig-fun args)))
-;;
-;; (advice-add 'helm-buffers-sort-transformer :around #'pd-helm-sort-buffers)
-
 (helm-mode 1)
 
-;; This doesn't seem to work. sm to get rid of char 2603, Snowman, which does not
-;; exist in some fonts, such as Consolas.
+;; Use shackle to make helm always appear as a window at the bottom spanning
+;; the full width of the screen. Also get rid of the shackle lighter, as it
+;; used to use a UTF char 2603, Snowman, which does not appear in many fonts
+;; and causes the modeline to grow in height. Actually, later versions of
+;; shackle mode do not have a lighter, plus I actually use rich-minority
+;; to turn off all minor mode lighters.
 (shackle-mode 1)
 (setq-default shackle-lighter "")
 (setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align below :ratio 0.4)))
 
-;; (setq helm-split-window-in-side-p nil)
-;; (defun pd-helm-split-window (window)
-;;   (if (one-window-p t)
-;;       ;; With just window helm does the right thing
-;;       (split-window
-;;        (selected-window) nil (if (eq helm-split-window-default-side 'other)
-;;                                  'below helm-split-window-default-side))
-;;     ;; If there are multiple windows, select the bottom-left window
-;;     (while (window-in-direction 'left)
-;;       (select-window (window-in-direction 'left)))
-;;     (while (window-in-direction 'below)
-;;       (select-window (window-in-direction 'below)))
-;;     (selected-window)))
-;;
-;; (setq helm-split-window-preferred-function #'pd-helm-split-window)
-
-;; Automatically delete trailing whitespace in modes derived from prog-mode.
-;; Based on http://stackoverflow.com/questions/19174302/emacs-only-delete-trailing-whitespace-while-saving-in-programming-mode
-;; An alternative, using ws-trim or ws-butler, is mentioned there which
-;; can reduce git commit noise.
-(defun pd-delete-trailing-whitespace ()
-  (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
-
-(add-hook 'prog-mode-hook #'pd-delete-trailing-whitespace)
-
-(message "MAJOR MODES - END.")
-
-
-;;; $$ MINOR MODES.
-;; See http://capitaomorte.github.io/yasnippet/
-;; Load yasnippet, but only load my snippets (there are many examples under
-;; the elpa/yasnippet folder.
-(message "MINOR MODES - END.")
-
+;; See http://capitaomorte.github.io/yasnippet/. Load yasnippet, but only load
+;; my snippets (there are many examples under the elpa/yasnippet folder which we
+;; do not want to load).
 (setq yas-snippet-dirs '("~/repos/dotfiles/emacs/snippets"))
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
-(winner-mode 1)
 
-(semantic-mode 1)
+;; Automatically cleanup files before save in programming modes. Based on
+;; http://stackoverflow.com/questions/19174302. An alternative, using ws-trim or
+;; ws-butler, is mentioned there which can reduce git commit noise, but since
+;; I only use Emacs for my own repos at the moment it doesn't matter.
+(add-hook 'before-save-hook (lambda()
+                              (when (derived-mode-p 'prog-mode)
+                                (pd-cleanup-programming-buffer))))
 
-(message "MINOR MODES - END.")
+(add-hook 'c-mode-common-hook 'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+(add-hook 'lisp-mode-hook 'hs-minor-mode)
+(add-hook 'csharp-mode-hook 'hs-minor-mode)
+(add-hook 'sh-mode-hook 'hs-minor-mode)
+
+;; Don't prompt with "Active processes exist, kill them?" when exiting Emacs.
+;; http://stackoverflow.com/questions/2706527/make-emacs-stop-asking-active-processes-exist-kill-them-and-exit-anyway
+(add-hook 'comint-exec-hook
+          (lambda () (set-process-query-on-exit-flag
+                      (get-buffer-process (current-buffer)) nil)))
+(add-hook 'term-exec-hook
+          (lambda () (set-process-query-on-exit-flag
+                      (get-buffer-process (current-buffer)) nil)))
+
+;; Make exiting ansi-term kill the buffer.
+(defun oleh-term-exec-hook ()
+  (let* ((buff (current-buffer))
+         (proc (get-buffer-process buff)))
+    (set-process-sentinel
+     proc
+     `(lambda (process event)
+        (if (string= event "finished\n")
+            (kill-buffer ,buff))))))
+
+(add-hook 'term-exec-hook 'oleh-term-exec-hook)
+
+;; Don't prompt about killing buffers with live processes attached to them.
+(setq kill-buffer-query-functions
+      (remq 'process-kill-buffer-query-function
+            kill-buffer-query-functions))
+
+;; Shells.
+;; M-x shell runs a shell as a sub-process, communicating with it via pipes.
+;; It is not fully functional.
+;; eshell is a shell written in elisp. It is slow and not very complete.
+;; term and ansi-term (better) are better choices.
+;; There is also multi-term, not sure what that adds though.
+;; tl;dr - use ansi-term for starting shells.
+
+;; Make magit take up the entire screen.
+;;(defadvice magit-status (around magit-fullscreen activate)
+;;  (window-configuration-to-register :magit-fullscreen)
+;;   ad-do-it
+;;   (delete-other-windows))
+;; (defun magit-quit-session ()
+;;   "Restores the previous window configuration and kills the magit buffer"
+;;   (interactive)
+;;   (kill-buffer)
+;;   (jump-to-register :magit-fullscreen))
+;; (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
+
+(message "MODES - END.")
 
 
 ;;; $$ APPEARANCE.
@@ -420,7 +402,7 @@ If region is active, apply to active region instead."
 ;; know is to use the customize system to pick a default font, then save
 ;; options, the name of the font then appears in the .emacs file.
 (defvar pd-font-candidates '("Consolas-12"
-			     "Consolas-11"
+                             "Consolas-11"
                              "Cousine-10"
                              "Courier New-10"
                              "Aurulent Sans Mono-10"
@@ -468,7 +450,7 @@ search at index 0."
         (message "Font %s does not exist, skipping" next-font)))
     (if (not font-is-valid)
         (message "No valid fonts found in candidates: %s" pd-font-candidates))
-  ))
+    ))
 
 
 ;; This ensures the right font is set when running in daemon mode, but it is
@@ -476,122 +458,69 @@ search at index 0."
 ;; window upon login and turn that into a daemon - see the bottom of this file.
 ;;(add-hook 'after-make-frame-functions
 ;;        (lambda (frame) (pd-set-candidate-font 0 frame t)))
-
 ;; And this ensures the right font is set when running in non-daemon mode.
 (if (display-graphic-p)
     (pd-set-candidate-font 0 (selected-frame) t))
 
-;; Setting the frame-background-mode before loading the theme stops Solarized
-;; from initially loading in light mode. The mapc is needed for w32 emacs, or
-;; else we still come up in light mode, no idea why.
-;(setq-default frame-background-mode 'dark)
-;(mapc 'frame-set-background-mode (frame-list))
-;(load-theme 'solarized t)        ; Package is "color-theme-solarized" on MELPA.
-
-; You can load a different theme for GUI vs Terminal like this.
-; Decent terminal themes: manoj-dark, tango-dark, misterioso, tsdh-dark, wheatgrass
-;(if (display-graphic-p)
-;    (load-theme 'solarized-dark t)
-;  (load-theme 'tango-dark t))
-
-(defvar pd-mode-line-foreground "#e9e2cb"
-  "The foreground color I use in my modelines when overriding a theme.
-Defaults to a near-white as used in solarized dark.")
-
-(defvar pd-mode-line-background "#2075c7"
-  "The background color I use in my modelines when overriding a theme.
-Defaults to bright blue as used in solarized dark.")
-
-(defvar pd-helm-selection-background "white"
-  "The colour I use for the background of the helm selection line.")
-
-(defvar pd-helm-selection-foreground "red"
-  "The color I use for the foreground of the helm selection line.")
-
-(defvar pd-current-line-background "black"
-  "The color I use for the background of the current line.")
-
-(defvar pd-cursor-color "yellow"
-  "The color I use for the cursor.")
-
-(message "APPEARANCE - SOLARIZED STUFF DONE.")
-
-;;;(add-to-list 'default-frame-alist '(height . 50))
-;;;(add-to-list 'default-frame-alist '(width . 86))
-;;;(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-;;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (setq ring-bell-function nil)
 (setq visible-bell 1)
 (show-paren-mode 1)
 (setq-default show-paren-delay 0)
-;;(global-linum-mode 1)           ;; This is very slow with long lines.
-;;(setq linum-format "%4d ")      ;; So we don't need this either.
 (setq column-number-mode 1)
 (setq line-number-mode 1)
-;;(display-time-mode 1)
 (size-indication-mode 1)
-
-;; Highlighting of the current line. Must do this after theme is loaded.
-;; See http://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html
-;(set-face-attribute 'helm-selection nil
-;                    :background pd-helm-selection-background
-;                    :foreground pd-helm-selection-foreground)
-
-(global-hl-line-mode 1)
-;;(set-face-background 'hl-line pd-current-line-background)
-;;(set-face-foreground 'hl-line nil)
-;;(set-face-underline-p 'hl-line nil)
-;;(set-cursor-color pd-cursor-color)
-;;(setq yasnippet-can-fire-cursor-color "purple")
 (blink-cursor-mode 1)
+(global-hl-line-mode 1)
+(which-function-mode -1)      ;; Slow and pointless and some modes have a nasty habit of enabling it,
+(setq which-func-modes nil)   ;; such as Powershell mode. Together, these two lines disable it.
+(setq rm-blacklist '(" yas" " ws" " hs" " vs" " Helm" " Abbrev"))  ; Or simply ".*"
+(rich-minority-mode 1)
 
-;; fci-mode can cause an increase in the vertical separation of lines,
-;; so leave it off by default. It is bound to C-= below, for ease of use.
+;; fci-mode can cause an increase in the vertical separation of lines, so leave
+;; it off by default. It is bound to C-= below, for ease of use.
 (setq fci-rule-width 2)
-;(setq fci-rule-color pd-mode-line-foreground)
-;(add-hook 'c-mode-common-hook 'fci-mode)
-;(add-hook 'emacs-lisp-mode-hook 'fci-mode)
-;(add-hook 'shell-script-mode-hook 'fci-mode)
+;;(setq fci-rule-color "blue")
 
 ;; Show a red rectangle for trailing whitespace, and color long lines.
 (setq-default show-trailing-whitespace t)
 (setq-default whitespace-line-column 80)
 (setq-default whitespace-style '(face trailing lines-tail))
-
 ;; Turn off display of trailing whitespace in some modes.
 (dolist (hook '(buffer-menu-mode-hook compilation-mode-hook
                                       diff-mode-hook
                                       magit-popup-mode-hook
                                       shell-mode-hook
                                       term-mode-hook
-				      org-mode-hook))
+                                      org-mode-hook))
   (add-hook hook (lambda () (set-variable 'show-trailing-whitespace nil))))
-
-;; We need to turn on whitespace-mode to get the display of the >80 character
-;; lines working.
+;; We need to turn on whitespace-mode to get the display of the >80 character lines working.
 (add-hook 'prog-mode-hook 'whitespace-mode)
-
-;;(hlinum-activate)         ;; Slow
-(which-function-mode -1)    ;; Slow and pointless and some modes have a nasty habit of enabling it,
-(setq which-func-modes nil) ;; such as Powershell mode. Together, these two lines disable it.
-
 
 ;; This face is used to highlight the selected thing (e.g. function in source
 ;; file). Box is on by default, which causes a temporary line-height increase
 ;; which is visually irritating.
-;(set-face-attribute 'speedbar-highlight-face nil :box nil :background "black")
+;; (set-face-attribute 'speedbar-highlight-face nil :box nil :background "black")
 (setq-default sr-speedbar-right-side t)
 
 
-(setq rm-blacklist '(" yas" " ws" " hs" " vs" " Helm" " Abbrev"))  ; Or simply ".*"
-(rich-minority-mode 1)
+;;(add-to-list 'default-frame-alist '(height . 50))
+;;(add-to-list 'default-frame-alist '(width . 86))
+;;(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+;;(global-linum-mode 1)           ;; This is very slow with long lines.
+;;(setq linum-format "%4d ")      ;; So we don't need this either.
+;;(display-time-mode 1)
+;;(hlinum-activate)         ;; Slow
+;;(set-face-background 'hl-line "black")
+;;(set-face-foreground 'hl-line nil)
+;;(set-face-underline-p 'hl-line nil)
 
-;; Smart mode line, see https://github.com/Malabarba/smart-mode-line
-;; (sml/setup)
-;; (setq sml/theme 'dark)
-;; (add-to-list 'sml/replacer-regexp-list '("^~/repos/" "RP:") t)
-;; (add-to-list 'sml/replacer-regexp-list '("^/c/work/bitbucket/" "BB:") t)
-;; (sml/setup)
+;;Smart mode line, see https://github.com/Malabarba/smart-mode-line
+;;(sml/setup)
+;;(setq sml/theme 'dark)
+;;(add-to-list 'sml/replacer-regexp-list '("^~/repos/" "RP:") t)
+;;(add-to-list 'sml/replacer-regexp-list '("^/c/work/bitbucket/" "BB:") t)
+;;(sml/setup)
 
 (message "APPEARANCE - END.")
 
@@ -599,305 +528,61 @@ Defaults to bright blue as used in solarized dark.")
 ;;; $$ GENERAL VARIABLES.
 (message "GENERAL VARIABLES - BEGIN.")
 
-(setq user-full-name "Philip Daniels")
-(setq user-mail-address "philip.daniels1971@gmail.com")
-(setq make-backup-files nil)
-(setq backup-inhibited t)
-(setq auto-save-default nil)
-(setq delete-by-moving-to-trash t)
-(setq inhibit-startup-message t)
-(setq scroll-error-top-bottom t)
-(setq message-log-max 50000)
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 2)
-(setq sentence-end-double-space nil)
-(setq-default truncate-lines 1)
-(setq require-final-newline t)
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq confirm-nonexistent-file-or-buffer nil)
-(recentf-mode 1)
-(setq recentf-max-saved-items 500)
-(setq recentf-max-menu-items 60)
-(setq-default fill-column 80)
 (add-hook 'before-save-hook 'time-stamp)
-(setq gdb-many-windows t)
-(setq gdb-show-main t)
-(setq compilation-ask-about-save nil)
-(setq compilation-scroll-output 'first-error)
-(setq comment-empty-lines t)
-(setq magit-push-always-verify nil)
-(setq vc-follow-symlinks t)
-(add-to-list 'helm-grep-ignored-files "*.exe")
 (add-to-list 'helm-grep-ignored-files "*.dll")
+(add-to-list 'helm-grep-ignored-files "*.exe")
 (add-to-list 'helm-grep-ignored-files "*.obj")
 (add-to-list 'helm-grep-ignored-files "*.pdb")
+(fset 'yes-or-no-p 'y-or-n-p)
+(recentf-mode 1)
+(setq auto-save-default nil)
+(setq backup-inhibited t)
+(setq comment-empty-lines t)
+(setq compilation-ask-about-save nil)
+(setq compilation-scroll-output 'first-error)
+(setq confirm-nonexistent-file-or-buffer nil)
+(setq delete-by-moving-to-trash t)
 (setq explicit-shell-file-name "/bin/bash")  ; TODO: Does this work?
-
-;; Don't prompt with "Active processes exist, kill them?" when exiting Emacs.
-;; http://stackoverflow.com/questions/2706527/make-emacs-stop-asking-active-processes-exist-kill-them-and-exit-anyway
-(add-hook 'comint-exec-hook
-          (lambda () (set-process-query-on-exit-flag
-                      (get-buffer-process (current-buffer)) nil)))
-(add-hook 'term-exec-hook
-          (lambda () (set-process-query-on-exit-flag
-                      (get-buffer-process (current-buffer)) nil)))
-
-;; Make exiting ansi-term kill the buffer.
-(defun oleh-term-exec-hook ()
-  (let* ((buff (current-buffer))
-         (proc (get-buffer-process buff)))
-    (set-process-sentinel
-     proc
-     `(lambda (process event)
-        (if (string= event "finished\n")
-            (kill-buffer ,buff))))))
-
-(add-hook 'term-exec-hook 'oleh-term-exec-hook)
-
-
-;; Don't prompt about killing buffers with live processes attached to them.
-(setq kill-buffer-query-functions
-  (remq 'process-kill-buffer-query-function
-        kill-buffer-query-functions))
-
+(setq gdb-many-windows t)
+(setq gdb-show-main t)
+(setq inhibit-startup-message t)
+(setq magit-push-always-verify nil)
+(setq make-backup-files nil)
+(setq message-log-max 50000)
+(setq recentf-max-menu-items 60)
+(setq recentf-max-saved-items 500)
+(setq require-final-newline t)
+(setq scroll-error-top-bottom t)
+(setq sentence-end-double-space nil)
+(setq user-full-name "Philip Daniels")
+(setq user-mail-address "philip.daniels1971@gmail.com")
+(setq vc-follow-symlinks t)
 (setq disabled-command-function nil)
-(setq recenter-positions '(top middle bottom))
 (setq use-dialog-box nil)
+(setq-default fill-column 80)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2)
+(setq-default truncate-lines 1)
 
 (setq hippie-expand-try-functions-list
-  '(
-    try-expand-dabbrev
-    try-expand-dabbrev-all-buffers
-    try-expand-dabbrev-from-kill
-    try-complete-file-name
-    try-complete-file-name-partially
-    try-expand-all-abbrevs
-    try-expand-list
-    try-expand-line
-    try-complete-lisp-symbol-partially
-    try-complete-lisp-symbol)
-  )
-
-(add-hook 'c-mode-common-hook 'hs-minor-mode)
-(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
-(add-hook 'lisp-mode-hook 'hs-minor-mode)
-(add-hook 'csharp-mode-hook 'hs-minor-mode)
-(add-hook 'sh-mode-hook 'hs-minor-mode)
+      '(
+        try-expand-dabbrev
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+        try-complete-file-name
+        try-complete-file-name-partially
+        try-expand-all-abbrevs
+        try-expand-list
+        try-expand-line
+        try-complete-lisp-symbol-partially
+        try-complete-lisp-symbol)
+      )
 
 (message "GENERAL VARIABLES - END.")
 
 
-
-;;; $$ KEYBINDINGS.
-;; Emacs understands the following modifiers:
-;;    M- (meta)      Alt on my keyboard
-;;    C- (control)   Ctrl keys on my keyboard
-;;    S- (shift)     Shift keys on my keyboard
-;;    s- (super)     Note lower case 's'. On Linux, this is usually bound to
-;;                   the Windows key automatically. On Windows, the Windows key
-;;                   is used by Windows (see below).
-;;    H- (hyper)     Not usually bound to any key by default.
-;;    A- (alt)       Not usually bound to any key by default. Note that the
-;;                   Alt key sends Meta! Best to avoid A- mappings, use H- and
-;;                   s- instead.
-
-;; To find out what the name of a key is, the easiest way is to type the key,
-;; then type C-h l (view-lossage), which shows you the last 100 keys pressed.
-;; See unbound.el for how to find unbound keys.
-
-
-;; Keynames for a PC keyboard
-;; ==========================
-;; Function keys:
-;;    [f5] (must be in lower case, f1 is help by default)
-;; Cursor arrow keys:
-;;    [left], [up], [right], [down]
-;; The small pad between qwerty and numeric:
-;;    [home], [end], [next (is PgDn)], [prior (is PgUp)], [insert], [delete]
-;; Numeric keypad arithmetic operators:
-;;    [kp-add], [kp-subtract], [kp-multiply], [kp-divide]
-;; Numbers on the numeric pad:
-;;    [kp-0], [kp-1] ... [kp-9]
-;; The other 2 keys on the numeric pad:
-;;    [kp-enter], [kp-decimal]
-;; Keypad keys available when NUM LOCK is pressed:
-;;    [kp-home], [kp-end], [kp-next], [kp-prior]
-;;    [kp-insert], [kp-delete]
-;;    [kp-left], [kp-up], [kp-right], [kp-down]
-;;
-;; "apps" is usually known as the "menu" key, next to Ctrl-right.
-;; It can also be known as "print" on Cygin, because the sequence ESC [ 2 9 ~
-;; is mapped to that in lisp/term/xterm/el.gz.
-
-
-;; Key Stealing
-;; ============
-;; Key stealing is when a key combination is grabbed by the operating system or
-;; the window manager before Emacs even sees the keypress, which makes it
-;; impossible to bind the key in Emacs. On Linux, it is usually the window
-;; manager that is grabbing the key. Use the window manager's tools to free up
-;; these keys so that they can be used in Emacs.
-;;
-;; On Windows, this happens with the two Windows keys: many WinKey+letter
-;; combinations are reserved, and the count goes up with each release of
-;; Windows. To make these key combinations available a registry hack must be
-;; used to disable all the default bindings - use a .reg file with this text:
-;;
-;; Windows Registry Editor Version 5.00
-;;
-;;[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
-;;"NoWinKeys"=dword:00000001
-;;
-;; BUT DO NOT DO THIS. It makes it hard to work in a business environment with
-;; projectors, etc.
-;;
-;; The apps key used to be stolen in mintty, but the commit
-;; 429cb080e6bfee6136227ca5d41ea61494b36c2d on 9 Nov 15 made it possible to pass
-;; apps through to the underlying program. See
-;; http://emacs.stackexchange.com/questions/18245/making-terminal-emacs-treat-apps-aka-menu-key-as-super-modifier
-
-
-;; Recommendations
-;; ===============
-;; * Restrict repeatable keys (those that you might want to press several times
-;;   quickly in succession) to C- and M-.
-;; * Do not use the Windows keys.
-;; * Make the apps/menu key send the "<apps>" leader.
-;; * Do not use the super s- prefix.
-;;
-;; A full size keyboard is CTRL    WIN ALT SPACE ALTGR WIN APPS   CTRL
-;; My work laptop is       CTRL FN WIN ALT SPACE ALTGR     APPS   CTRL
-;; So my prefixes/leaders  C-          M-                  <apps> C-
-
-
-;; Some standard keybindings
-;; =========================
-;; C-f, C-b, C-n, C-p : move one character or line
-;; C-v, M-v           : forward, backward one screen
-;; M-f, M-b           : forward, backward by 1 word
-;; C-M-f, C-M-b       : forward/backward by 1 sexp
-;; C-x C-x            : exchange-point-and-mark
-
-;; C-a, C-e           : beginning/end of a line
-;; M-a, M-e           : beginning/end of a sentence
-;; C-M-a, C-M-e       : beginning/end of defun
-
-;; M-<, M->           : beginning/end of buffer
-;; M-r                : move-to-window-line-top-bottom
-;; C-d, M-d           : kill next character/word
-;; Delback, M-Delback : kill prev char/word
-;; C-k, M-k           : kill to end of line/sentence
-
-;; C-M-v, C-M-V       : scroll other window down/up
-;; C-o                : open-line
-;; C-s, C-r           : isearch-forward/backward, M-s/r does regexps.
-;; C-t, M-t, C-x C-t  : transpose chars/words/lines
-;; C-_                : undo
-;; f3, f4             : start, end/run keyboard macro
-;; C-x (,  C-x )      : start, end/run keyboard macro
-;; C-x `              : next-error
-
-;; M-$, M-%           : ispell-word, query-replace foo
-;; M-\, M-^, M-z      : delete horz space, delete-indentation, zap-to-char
-;; M-c, M-l, M-u      : capitalize/lower/upper word
-;; M-m                : back-to-indentation
-;; M-h                : mark-paragraph
-
-
-;; Techniques
-;; ===============
-;; How to unset a key globally:
-;;   (global-unset-key "\C-x\C-v")
-;;
-;; Modify a mode-local map:
-;;   (define-key lisp-mode-map "\C-xl"; 'make-symbolic-link)
-;;
-;; Modify a mode-local map after the mode has started (necessary for
-;; some modes where the keymap is created after the mode has started):
-;;   (add-hook 'texinfo-mode-hook
-;;     '(lambda () (define-key texinfo-mode-map "\C-cp"
-;;       'backward-paragraph) (define-key texinfo-mode-map "\C-cn"
-;;       'forward-paragraph)) (...any command whatsoever here ...))
-
-
-
-(message "KEYBINDINGS - BEGIN.")
-
-;; Make Win/Apps keys send super/hyper etc.
-;; (when (equal window-system 'w32)
-;;   (setq w32-pass-lwindow-to-system nil
-;;      w32-lwindow-modifier 'super))
-
-;; (when (equal window-system 'w32)
-;;   (setq w32-pass-rwindow-to-system nil
-;;      w32-rwindow-modifier 'super))
-
-;; Mintty has been hacked by the maintainer to allow the APPS/MENU key to be
-;; passed through to the underlying program. Adding the line
-;; "Key_Menu=29" to the .minttyrc file causes terminal Emacs to see it as the
-;; "<print"> key. The hack was on 2015-11-19 in commit
-;; 429cb080e6bfee6136227ca5d41ea61494b36c2d.
-;; Given this hack, we can make APPS send the s- (super) prefix like this in
-;; both W32 and terminal Emacs. Unfortunately, APPS still does not work like
-;; the Alt or Control keys, if you hold it down by itself you get lots of input
-;; in the output buffer.
-;; (if (equal system-type 'cygwin)
-;;     (if (equal window-system 'w32)
-;;      (setq w32-pass-apps-to-system nil
-;;            w32-apps-modifier 'super)
-;;       (define-key local-function-key-map (kbd "<print>") 'event-apply-super-modifier)))
-
-;; (define-key global-map (kbd "s-h") (lambda () (interactive) (message "hello from menu key via s- prefix")))
-
-
-;; Alternatively, we can turn it into a leader key like this.
-;; See http://ergoemacs.org/emacs/emacs_menu_app_keys.html
-(if (equal system-type 'cygwin)
-    (if (equal window-system 'w32)
-        (setq w32-pass-apps-to-system nil
-              w32-apps-modifier nil)
-      ;; force all alternatives to <apps> so we can write one set of keybindings.
-      (define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
-      (define-key key-translation-map (kbd "<menu>") (kbd "<apps>"))))
-
-(if (equal system-type 'gnu/linux)
-    (define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))
-
-
-;;(define-key global-map (kbd "<apps> h")
-;;   (lambda () (interactive) (message "hello from menu key via <apps> leader key")))
-
-
-;; ******************* Global Function keys ********************
-(define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/.emacs.pd.el")))
-;;(define-key global-map (kbd "S-<f2>") (lambda () (interactive) (find-file "~/work.org")))
-(define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
-(define-key global-map (kbd "<f12>") 'sr-speedbar-toggle)
-(define-key global-map (kbd "S-<f12>") 'sr-speedbar-select-window)
-
-;(define-key global-map (kbd "<S-f2>") 'menu-bar-open)
-;(define-key global-map (kbd "<C-f2>") 'menu-bar-open)
-;; f3, f4 = macros start and end.
-;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
-;; f9 = undefined
-;; f10 = menu-bar-open
-;; f11 = full-screen
-;; f12 = undefined
-
-;; ******************* Arrow keys ********************
-;; Unbind the arrow keys! For hardcore users only.
-;; (global-unset-key [left])
-;; (global-unset-key [up])
-;; (global-unset-key [right])
-;; (global-unset-key [down])
-
-(define-key global-map (kbd "C-<up>") 'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
-(define-key global-map (kbd "C-<down>") 'endless/forward-paragraph)
-(define-key global-map (kbd "C-<left>") 'backward-word)
-(define-key global-map (kbd "C-<right>") 'forward-word)
-
-(define-key global-map (kbd "C-M-<left>") 'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
-(define-key global-map (kbd "C-M-<right>") 'end-of-defun)
+;;; $$ Hydras
+(message "HYDRAS - BEGIN.")
 
 (defhydra hydra-windows ()
   "M-Arrow = switch, C-arrow = move, S-arrow = size"
@@ -935,7 +620,6 @@ Defaults to bright blue as used in solarized dark.")
   ("p" (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)) "previous font"))
 
 (global-set-key (kbd "C-# f") 'hydra-fonts/body)
-
 
 ;; Create a hydra to switch themes. We use the Emacs 24 theme engine (aka
 ;; deftheme) only, not the old color-theme.el engine.
@@ -985,7 +669,6 @@ loading using it.
 
 BG-MODE is used to set the variable `frame-background-mode'.
 Valid values are nil, 'dark and 'light."
-  ;; TODO: Run pd-pre-load-theme-hook here
   (if pd-current-theme (disable-theme pd-current-theme))
   (setq pd-current-theme theme)
   ;; Solarized (the only one I am sure about) uses the frame-background-mode to
@@ -993,36 +676,30 @@ Valid values are nil, 'dark and 'light."
   ;; which most themes seem happy with.
   (setq frame-background-mode bg-mode)
   (mapc 'frame-set-background-mode (frame-list))
-
   (load-theme theme t)
   (message "Theme set to %s" theme)
-  ;; TODO: Run pd-post-load-theme-hook here
+  ;; Post-theme customizations that I apply to everything.
+  ;; Some things *should* be prominent.
+  (set-cursor-color "red")
+  (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil)
+  (when (eq theme 'solarized)
+    (set-face-attribute 'mode-line nil          :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
+    (set-face-attribute 'mode-line-inactive nil :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil))
   )
-
-
-;; Watch out! Some modes set inverse-video to t which will confuse you
-;; no end when trying to set colors!
-;;(set-face-attribute 'mode-line nil
-;;		    :foreground pd-mode-line-foreground
-;;		    :background pd-mode-line-background)
-
-;;(set-face-attribute 'mode-line-inactive nil
-;;		    :foreground pd-mode-line-background
-;;		    :background pd-mode-line-foreground)
 
 ;; All these themes are available on MELPA.
 (defhydra hydra-themes (:hint nil)
   "
-Fav      : _sd_ Sol Dark      _sl_ Sol Light
-Dark     : _zb_ Zenburn       _gd_ Gruber Darker  _cp_ Cyberpunk       _gb_ Gruvbox       _bb_ BusyBee      _me_ Moe Dark
-           _uw_ Underwater    _md_ Minimal Dark   _mn_ Monokai         _ml_ Molokai       _cf_ Calm Forest  _ty_ TTY Dark
-Light    : _lv_ Leuven        _hl_ Hemisu-Light   _mi_ Minimal Light   _ao_ Aalto Light   _mt_ Moe Light
-Grey     : _ob_ Obsidian      _ma_ Material       _az_ Anti-Zenburn    _fu_ Flat UI       _sm_ Soft Morning
-           _tt_ TangoTango    _pa_ Paper          _cb_ Charcoal Black  _je_ JEdit Grey
-Blue     : _rs_ Resolve       _bs_ Blue Sea       _rp_ Raspopovic      _ad_ Aalto Dark    _pr_ Parus
-Mono     : _ro_ Retro Orange  _mo_ Monochrome     _rg_ Retro Green     _gp_ Green Phosphor
-Consider :
-Rejects  : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
+Favourite : _sd_ Sol Dark       _sl_ Sol Light       _zb_ Zenburn        _ob_ Obsidian        _ty_ TTY Dark
+Dark      : _gd_ Gruber Darker  _cp_ Cyberpunk       _gb_ Gruvbox        _bb_ BusyBee         _me_ Moe Dark
+            _uw_ Underwater     _md_ Minimal Dark    _mn_ Monokai        _ml_ Molokai         _cf_ Calm Forest
+Light     : _lv_ Leuven         _hl_ Hemisu-Light    _mi_ Minimal Light  _ao_ Aalto Light     _mt_ Moe Light
+Grey      : _ma_ Material       _az_ Anti-Zenburn    _fu_ Flat UI        _sm_ Soft Morning    _tt_ TangoTango
+            _je_ JEdit Grey     _cb_ Charcoal Black
+Blue      : _rs_ Resolve        _bs_ Blue Sea        _rp_ Raspopovic     _ad_ Aalto Dark      _pr_ Parus
+Mono      : _ro_ Retro Orange   _mo_ Monochrome      _rg_ Retro Green    _gp_ Green Phosphor
+Consider  :
+Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 "
   ("ab" (pd-load-theme 'alect-black))
   ("ad" (pd-load-theme 'aalto-dark))
@@ -1052,7 +729,6 @@ Rejects  : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   ("mo" (pd-load-theme 'monochrome))
   ("mt" (pd-load-theme 'moe-light))
   ("ob" (pd-load-theme 'obsidian))
-  ("pa" (pd-load-theme 'paper))
   ("pr" (pd-load-theme 'parus))
   ("rg" (pd-load-theme 'retro-green))
   ("ro" (pd-load-theme 'retro-orange))
@@ -1070,11 +746,201 @@ Rejects  : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (global-set-key (kbd "C-# t") 'hydra-themes/body)
 (pd-load-theme 'solarized 'dark)
 
+(message "HYDRAS - END.")
+
+
+;;; $$ KEYBINDINGS.
+(message "KEYBINDINGS - BEGIN.")
+
+;; Emacs understands the following modifiers:
+;;    M- (meta)      Alt on my keyboard
+;;    C- (control)   Ctrl keys on my keyboard
+;;    S- (shift)     Shift keys on my keyboard
+;;    s- (super)     Note lower case 's'. On Linux, this is usually bound to
+;;                   the Windows key automatically. On Windows, the Windows key
+;;                   is monopolized by Windows (see below).
+;;    H- (hyper)     Not usually bound to any key by default.
+;;    A- (alt)       Not usually bound to any key by default. Note that the
+;;                   Alt key sends Meta! Best to avoid A- mappings, use H- and
+;;                   s- instead.
+;;
+;; To find out what the name of a key is, the easiest way is to type the key,
+;; then type C-h l (view-lossage), which shows you the last 100 keys pressed.
+;; See unbound.el for how to find unbound keys.
+;;
+;; Keynames for a PC keyboard
+;; ==========================
+;; Function keys:
+;;    [f5] (must be in lower case, f1 is help by default)
+;; Cursor arrow keys:
+;;    [left], [up], [right], [down]
+;; The small pad between qwerty and numeric:
+;;    [home], [end], [next (is PgDn)], [prior (is PgUp)], [insert], [delete]
+;; Numeric keypad arithmetic operators:
+;;    [kp-add], [kp-subtract], [kp-multiply], [kp-divide]
+;; Numbers on the numeric pad:
+;;    [kp-0], [kp-1] ... [kp-9]
+;; The other 2 keys on the numeric pad:
+;;    [kp-enter], [kp-decimal]
+;; Keypad keys available when NUM LOCK is pressed:
+;;    [kp-home], [kp-end], [kp-next], [kp-prior]
+;;    [kp-insert], [kp-delete]
+;;    [kp-left], [kp-up], [kp-right], [kp-down]
+;;
+;; "apps" is usually known as the "menu" key, next to Ctrl-right.
+;; It can also be known as "print" on Cygin, because the sequence ESC [ 2 9 ~
+;; is mapped to that in lisp/term/xterm/el.gz.
+;;
+;; Key Stealing
+;; ============
+;; Key stealing is when a key combination is grabbed by the operating system or
+;; the window manager before Emacs even sees the keypress, which makes it
+;; impossible to bind the key in Emacs. On Linux, it is usually the window
+;; manager that is grabbing the key. Use the window manager's tools to free up
+;; these keys so that they can be used in Emacs.
+;;
+;; On Windows, this happens with the two Windows keys: many WinKey+letter
+;; combinations are reserved, and the count goes up with each release of
+;; Windows. To make these key combinations available a registry hack must be
+;; used to disable all the default bindings - use a .reg file with this text:
+;;
+;; Windows Registry Editor Version 5.00
+;;
+;;[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
+;;"NoWinKeys"=dword:00000001
+;;
+;; BUT DO NOT DO THIS. It makes it hard to work in a business environment with
+;; projectors, etc.
+;;
+;; The apps key used to be stolen in mintty, but the commit
+;; 429cb080e6bfee6136227ca5d41ea61494b36c2d on 9 Nov 15 made it possible to pass
+;; apps through to the underlying program. See
+;; http://emacs.stackexchange.com/questions/18245/making-terminal-emacs-treat-apps-aka-menu-key-as-super-modifier
+;;
+;; Recommendations
+;; ===============
+;; * Restrict repeatable keys (those that you might want to press several times
+;;   quickly in succession) to C- and M-.
+;; * Do not use the Windows keys.
+;; * Make the apps/menu key send the "<apps>" leader.
+;; * Do not use the super s- prefix.
+;;
+;; A full size keyboard is CTRL    WIN ALT SPACE ALTGR WIN APPS   CTRL
+;; My work laptop is       CTRL FN WIN ALT SPACE ALTGR     APPS   CTRL
+;; So my prefixes/leaders  C-          M-                  <apps> C-
+;;
+;; Some standard keybindings
+;; =========================
+;; C-c <letter>       ; always reserved for your own bindings
+;; C-f, C-b, C-n, C-p : move one character or line
+;; C-v, M-v           : forward, backward one screen
+;; M-f, M-b           : forward, backward by 1 word
+;; C-M-f, C-M-b       : forward/backward by 1 sexp
+;; C-x C-x            : exchange-point-and-mark
+;; C-a, C-e           : beginning/end of a line
+;; M-a, M-e           : beginning/end of a sentence
+;; C-M-a, C-M-e       : beginning/end of defun
+;; M-<, M->           : beginning/end of buffer
+;; M-r                : move-to-window-line-top-bottom
+;; C-d, M-d           : kill next character/word
+;; Delback, M-Delback : kill prev char/word
+;; C-k, M-k           : kill to end of line/sentence
+;; C-M-v, C-M-V       : scroll other window down/up
+;; C-o                : open-line
+;; C-s, C-r           : isearch-forward/backward, M-s/r does regexps.
+;; C-t, M-t, C-x C-t  : transpose chars/words/lines
+;; C-_                : undo
+;; f3, f4             : start, end/run keyboard macro
+;; C-x (,  C-x )      : start, end/run keyboard macro
+;; C-x `              : next-error
+;; M-$, M-%           : ispell-word, query-replace foo
+;; M-\, M-^, M-z      : delete horz space, delete-indentation, zap-to-char
+;; M-c, M-l, M-u      : capitalize/lower/upper word
+;; M-m                : back-to-indentation
+;; M-h                : mark-paragraph
+;;
+;; Techniques
+;; ===============
+;; How to unset a key globally:
+;;   (global-unset-key "\C-x\C-v")
+;;
+;; Modify a mode-local map:
+;;   (define-key lisp-mode-map "\C-xl"; 'make-symbolic-link)
+;;
+;; Modify a mode-local map after the mode has started (necessary for
+;; some modes where the keymap is created after the mode has started):
+;;   (add-hook 'texinfo-mode-hook
+;;     '(lambda () (define-key texinfo-mode-map "\C-cp"
+;;       'backward-paragraph) (define-key texinfo-mode-map "\C-cn"
+;;       'forward-paragraph)) (...any command whatsoever here ...))
+;;
+;; Make Win/Apps keys send super/hyper etc.
+;; (when (equal window-system 'w32)
+;;   (setq w32-pass-lwindow-to-system nil
+;;      w32-lwindow-modifier 'super))
+;; (when (equal window-system 'w32)
+;;   (setq w32-pass-rwindow-to-system nil
+;;      w32-rwindow-modifier 'super))
+;;
+;; Mintty has been hacked by the maintainer to allow the APPS/MENU key to be
+;; passed through to the underlying program. Adding the line
+;; "Key_Menu=29" to the .minttyrc file causes terminal Emacs to see it as the
+;; "<print"> key. The hack was on 2015-11-19 in commit
+;; 429cb080e6bfee6136227ca5d41ea61494b36c2d.
+;; Given this hack, we can make APPS send the s- (super) prefix like this in
+;; both W32 and terminal Emacs. Unfortunately, APPS still does not work like
+;; the Alt or Control keys, if you hold it down by itself you get lots of input
+;; in the output buffer.
+;; (if (equal system-type 'cygwin)
+;;     (if (equal window-system 'w32)
+;;      (setq w32-pass-apps-to-system nil
+;;            w32-apps-modifier 'super)
+;;       (define-key local-function-key-map (kbd "<print>") 'event-apply-super-modifier)))
+;; (define-key global-map (kbd "s-h") (lambda () (interactive) (message "hello from menu key via s- prefix")))
+;;
+;; Alternatively, we can turn it into a leader key like this.
+;; See http://ergoemacs.org/emacs/emacs_menu_app_keys.html
+(if (equal system-type 'cygwin)
+    (if (equal window-system 'w32)
+        (setq w32-pass-apps-to-system nil
+              w32-apps-modifier nil)
+      ;; force all alternatives to <apps> so we can write one set of keybindings.
+      (define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
+      (define-key key-translation-map (kbd "<menu>") (kbd "<apps>"))))
+
+(if (equal system-type 'gnu/linux)
+    (define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))
+
+
+;; ******************* Global Function keys ********************
+;;(define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/.emacs.pd.el")))
+;;(define-key global-map (kbd "S-<f2>") (lambda () (interactive) (find-file "~/work.org")))
+;;(define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
+(define-key global-map (kbd "<f12>") 'sr-speedbar-toggle)
+(define-key global-map (kbd "S-<f12>") 'sr-speedbar-select-window)
+;; (define-key global-map (kbd "<S-f2>") 'menu-bar-open)
+;; (define-key global-map (kbd "<C-f2>") 'menu-bar-open)
+;; f3, f4 = macros start and end.
+;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
+;; f9 = undefined
+;; f10 = menu-bar-open
+;; f11 = full-screen
+;; f12 = undefined
+
+;; ******************* Arrow keys ********************
+(define-key global-map (kbd "C-<up>") 'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
+(define-key global-map (kbd "C-<down>") 'endless/forward-paragraph)
+(define-key global-map (kbd "C-<left>") 'backward-word)
+(define-key global-map (kbd "C-<right>") 'forward-word)
+
+(define-key global-map (kbd "C-M-<left>") 'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
+(define-key global-map (kbd "C-M-<right>") 'end-of-defun)
 
 ;; ******************* Small pad keys ********************
 
 ;; ******************* Main number keys ********************
-;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via C-u anyway.
+;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via
+;; C-u anyway, so feel free to grab them for other uses.
 (define-key global-map (kbd "M-1") (lambda () (interactive) (jump-to-register ?z)))
 (define-key global-map (kbd "M-2") (lambda () (interactive) (window-configuration-to-register ?z) (message "Window configuration saved")))
 (define-key global-map (kbd "M-3") (lambda () (interactive) (point-to-register ?z) (message "Point saved")))
@@ -1083,31 +949,31 @@ Rejects  : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 
 ;; ******************* Letter/main section keys ********************
 ;; The keys C-` , . ' ; ? are all available.
-;; C-c <any letter> are always available in any mode, they are reserved for you.
+;; C-c <any letter> is always available in any mode, they are reserved for you.
 (define-key global-map (kbd "C-\\") 'hs-toggle-hiding)
-(define-key global-map (kbd "C-|") 'hs-show-all)
-(define-key global-map (kbd "M-/") 'hippie-expand)
-(define-key global-map (kbd "C-;") 'helm-command-prefix)
-(define-key global-map (kbd "M-;") 'endless/comment-line-or-region)
-(define-key global-map (kbd "C-=") 'fci-mode)
-(define-key global-map (kbd "C-'") 'er/expand-region)
-(define-key global-map (kbd "C-@") (lambda () (interactive) (er/expand-region -1)))
-(define-key global-map (kbd "M-'") 'mark-defun)
+(define-key global-map (kbd "C-|")  'hs-show-all)
+(define-key global-map (kbd "M-/")  'hippie-expand)
+(define-key global-map (kbd "C-;")  'helm-command-prefix)
+(define-key global-map (kbd "M-;")  'endless/comment-line-or-region)
+(define-key global-map (kbd "C-=")  'fci-mode)
+(define-key global-map (kbd "C-'")  'er/expand-region)
+(define-key global-map (kbd "C-@")  (lambda () (interactive) (er/expand-region -1)))
+(define-key global-map (kbd "M-'")  'mark-defun)
 
-(define-key global-map (kbd "C-a") 'pd-back-to-indentation-or-beginning)
-(define-key global-map (kbd "C-x b") 'helm-mini)
+(define-key global-map (kbd "C-a")     'pd-back-to-indentation-or-beginning)
+(define-key global-map (kbd "C-x b")   'helm-mini)
 (define-key global-map (kbd "C-x C-b") 'helm-mini)
-(define-key global-map (kbd "M-j") (lambda () (interactive) (join-line -1)))
-(define-key global-map (kbd "C-S-l") 'pd-duplicate-line-or-region)
-(define-key global-map (kbd "M-x") 'helm-M-x)
+(define-key global-map (kbd "M-j")     (lambda () (interactive) (join-line -1)))
+(define-key global-map (kbd "C-S-o")   'pd-duplicate-line-or-region)
+(define-key global-map (kbd "M-x")     'helm-M-x)
 (define-key global-map (kbd "C-x C-f") 'helm-find-files)
-(define-key global-map (kbd "C-x g") 'magit-status)
+(define-key global-map (kbd "C-x g")   'magit-status)
 (define-key global-map (kbd "C-x C-g") 'magit-status)
-(define-key global-map (kbd "M-y") 'helm-show-kill-ring)
+(define-key global-map (kbd "M-y")     'helm-show-kill-ring)
 
 (define-key global-map (kbd "<apps> dl") 'pd-duplicate-line-or-region)
 (define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
-(define-key global-map (kbd "<apps> g") 'magit-status)
+(define-key global-map (kbd "<apps> g")  'magit-status)
 (define-key global-map (kbd "<apps> ha") 'helm-apropos)
 (define-key global-map (kbd "<apps> ho") 'helm-occur)
 (define-key global-map (kbd "<apps> hi") 'helm-semantic-or-imenu)
@@ -1119,11 +985,11 @@ Rejects  : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "<apps> rp") 'point-to-register)
 (define-key global-map (kbd "<apps> rw") 'window-configuration-to-register)
 (define-key global-map (kbd "<apps> sp") 'pd-sort-paragraph)
-(define-key global-map (kbd "<apps> w") 'pd-copy-current-line)
+(define-key global-map (kbd "<apps> w")  'pd-copy-current-line)
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+(define-key helm-map (kbd "C-i")   'helm-execute-persistent-action) ; make TAB works in terminal
+(define-key helm-map (kbd "C-z")   'helm-select-action) ; list actions using C-z
 
 ;; ******************* C/C++ mode keys ********************
 ;; Create a keymap with Visual Studio compatible keymappings.
@@ -1135,10 +1001,10 @@ Rejects  : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 
 (when (not pd-vs-minor-mode-map)
   (setq pd-vs-minor-mode-map (make-sparse-keymap))
-;  (define-key pd-vs-minor-mode-map (kbd "<f5>") 'gud-run) ; continue (gdb command = continue)
-;   C-F5 = run without debugging
-;   S-F5 = stop debugging
-;  CS-F5 = restart
+                                        ;  (define-key pd-vs-minor-mode-map (kbd "<f5>") 'gud-run) ; continue (gdb command = continue)
+                                        ;   C-F5 = run without debugging
+                                        ;   S-F5 = stop debugging
+                                        ;  CS-F5 = restart
   (define-key pd-vs-minor-mode-map (kbd "<f6>") 'pd-compile-without-confirmation)
   (define-key pd-vs-minor-mode-map (kbd "<S-f6>") 'pd-compile-clean-one-shot)
   (define-key pd-vs-minor-mode-map (kbd "<C-f6>") 'compile) ; make -k, the original compile command.
@@ -1147,19 +1013,19 @@ Rejects  : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   (define-key pd-vs-minor-mode-map (kbd "<f8>") 'next-error)
   (define-key pd-vs-minor-mode-map (kbd "<S-f8>") 'previous-error)
   ;;(define-key pd-vs-minor-mode-map (kbd "<f9>") 'gud-break) ; toggle breakpoint (gdb command = break)
-  ;  CS-F9 = delete all breakpoints = typing d.
+                                        ;  CS-F9 = delete all breakpoints = typing d.
   ;; (define-key pd-vs-minor-mode-map (kbd "<f10>") 'gud-next)  ; step over (gdb command = next)
   ;; (define-key pd-vs-minor-mode-map (kbd "<C-f10>") 'gud-until)  ; run to cursor (gdb command = advance)
   ;; (define-key pd-vs-minor-mode-map (kbd "<CS-f10>") 'gud-jump)  ; set next statement (gdb command = jump)
   ;; (define-key pd-vs-minor-mode-map (kbd "<f11>") 'gud-step)  ; step in (gdb command = step)
   ;; (define-key pd-vs-minor-mode-map (kbd "<S-f11>") 'gud-finish)  ; step out (gdb command = finish)
-;;    F12 = go to definition
-;"  C-Brk = cancel current build
+  ;;    F12 = go to definition
+                                        ;"  C-Brk = cancel current build
   )
 
 (define-minor-mode pd-vs-minor-mode
-   "A minor mode to establish Visual Studio compatible key mappings."
-   nil " vs" 'pd-vs-minor-mode-map)
+  "A minor mode to establish Visual Studio compatible key mappings."
+  nil " vs" 'pd-vs-minor-mode-map)
 
 (add-hook 'c-mode-common-hook (lambda () (pd-vs-minor-mode 1)))
 (add-hook 'compilation-mode-hook (lambda () (pd-vs-minor-mode 1)))
@@ -1176,7 +1042,7 @@ Rejects  : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;;   2. Start Emacs normally after logging in, then call the 'server-start'
 ;;      function, either manually or at the end of your .emacs file.
 ;;
-;; 1 may seem simpler, but in fact when Emacs is started this way some (hard to
+;; 1) may seem simpler, but in fact when Emacs is started this way some (hard to
 ;; determine) functions, variables and settings do not work because there is no
 ;; frame or window system defined. This can make configuration difficult. Cursor
 ;; colors, fonts etc. do not get set when you expect them to be.
@@ -1186,9 +1052,9 @@ Rejects  : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; server-start turns this initial Emacs into a server.
 ;;
 ;; Other info: daemonp - predicate can be used to detect daemon mode.
-
-(message "SERVER MODE - START.")
 (load "server")
 (unless (server-running-p)
   (server-start))
-(message "SERVER MODE - END.")
+
+
+(message ".EMACS.PD.EL - ALL DONE!")
