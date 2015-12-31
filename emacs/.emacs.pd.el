@@ -7,6 +7,7 @@
 (message "The system-type variable is %s" system-type)
 (message "The window-system variable is %s" window-system)
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;; Just a few packages that are not available on MELPA.
 (add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
@@ -14,6 +15,7 @@
 ;;; $$ REQUIRES.
 (message "REQUIRES - BEGIN.")
 
+(require 'autopair)
 (require 'buffer-move)
 (require 'dedicated)
 (require 'expand-region)
@@ -269,8 +271,10 @@ If region is active, apply to active region instead."
 ;;; $$ MODES.
 (message "MODES - BEGIN.")
 
+(autopair-global-mode)
 (winner-mode 1)
 (semantic-mode 1)
+(delete-selection-mode 1)
 
 (setq c-default-style "k&r"
       c-basic-offset 2)
@@ -282,6 +286,8 @@ If region is active, apply to active region instead."
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(add-to-list 'auto-mode-alist '("\\.gitconfig$" . conf-mode))
 
 ;; Teach dired to unzip zip files (use the Z key).
 (eval-after-load "dired-aux"
@@ -505,7 +511,7 @@ search at index 0."
 
 ;;(add-to-list 'default-frame-alist '(height . 50))
 ;;(add-to-list 'default-frame-alist '(width . 86))
-;;(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
 ;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 ;;(global-linum-mode 1)           ;; This is very slow with long lines.
 ;;(setq linum-format "%4d ")      ;; So we don't need this either.
@@ -542,10 +548,12 @@ search at index 0."
 (setq compilation-scroll-output 'first-error)
 (setq confirm-nonexistent-file-or-buffer nil)
 (setq delete-by-moving-to-trash t)
+(setq echo-keystrokes 0.1)
 (setq explicit-shell-file-name "/bin/bash")  ; TODO: Does this work?
 (setq gdb-many-windows t)
 (setq gdb-show-main t)
 (setq inhibit-startup-message t)
+(setq initial-scratch-message nil)
 (setq magit-push-always-verify nil)
 (setq make-backup-files nil)
 (setq message-log-max 50000)
