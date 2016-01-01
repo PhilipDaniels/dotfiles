@@ -631,8 +631,11 @@ search at index 0."
   ("M-<right>" buf-move-right nil)
   ("M-<up>" buf-move-up nil)
   ("M-<down>" buf-move-down nil)
+  ("p" previous-buffer "prev")
+  ("n" next-buffer "next")
   ("1" delete-other-windows "1")
   ("d" delete-window "del")
+  ("k" kill-buffer "kill")
   ("s" save-buffer "save")
   ("u" (progn (winner-undo) (setq this-command 'winner-undo)) "undo")
   ("r" winner-redo "redo")
@@ -871,6 +874,8 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; C-v, M-v           : forward, backward one screen
 ;; M-f, M-b           : forward, backward by 1 word
 ;; C-M-f, C-M-b       : forward/backward by 1 sexp
+;; C-SPC              : set mark and activate region
+;; C-SPC C-SPC        : just set the mark
 ;; C-x C-x            : exchange-point-and-mark
 ;; C-a, C-e           : beginning/end of a line
 ;; M-a, M-e           : beginning/end of a sentence
@@ -986,28 +991,34 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; ******************* Letter/main section keys ********************
 ;; The keys C-` , . ' ; ? are all available.
 ;; C-c <any letter> is always available in any mode, they are reserved for you.
-(define-key global-map (kbd "C-\\") 'hs-toggle-hiding)
-(define-key global-map (kbd "C-|")  'hs-show-all)
-(define-key global-map (kbd "M-/")  'hippie-expand)
-(define-key global-map (kbd "C-;")  'helm-command-prefix)
-(define-key global-map (kbd "M-;")  'endless/comment-line-or-region)
-(define-key global-map (kbd "C-=")  'fci-mode)
-(define-key global-map (kbd "C-'")  'er/expand-region)
-(define-key global-map (kbd "C-@")  (lambda () (interactive) (er/expand-region -1)))
-(define-key global-map (kbd "M-'")  'mark-defun)
-(define-key global-map (kbd "M-{")  'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
-(define-key global-map (kbd "M-}")  'endless/forward-paragraph)
+(define-key global-map (kbd "C-'")       'er/expand-region)
+(define-key global-map (kbd "C-; SPC")   'helm-all-mark-rings)
+(define-key global-map (kbd "C-; a")     'helm-apropos)
+(define-key global-map (kbd "C-; c")     'helm-colors)
+(define-key global-map (kbd "C-; f")     'helm-find)
+(define-key global-map (kbd "C-; i")     'helm-semantic-or-imenu)
+(define-key global-map (kbd "C-; o")     'helm-occur)
+(define-key global-map (kbd "C-; m")     'helm-man-woman)
+(define-key global-map (kbd "C-=")       'fci-mode)
+(define-key global-map (kbd "C-@")       (lambda () (interactive) (er/expand-region -1)))
+(define-key global-map (kbd "C-\\")      'hs-toggle-hiding)
+(define-key global-map (kbd "C-|")       'hs-show-all)
+(define-key global-map (kbd "M-'")       'mark-defun)
+(define-key global-map (kbd "M-/")       'hippie-expand)
+(define-key global-map (kbd "M-;")       'endless/comment-line-or-region)
+(define-key global-map (kbd "M-{")       'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
+(define-key global-map (kbd "M-}")       'endless/forward-paragraph)
 
-(define-key global-map (kbd "C-a")     'pd-back-to-indentation-or-beginning)
-(define-key global-map (kbd "C-x b")   'helm-mini)
-(define-key global-map (kbd "C-x C-b") 'helm-mini)
-(define-key global-map (kbd "M-j")     (lambda () (interactive) (join-line -1)))
-(define-key global-map (kbd "C-S-o")   'pd-duplicate-line-or-region)
-(define-key global-map (kbd "M-x")     'helm-M-x)
-(define-key global-map (kbd "C-x C-f") 'helm-find-files)
-(define-key global-map (kbd "C-x g")   'magit-status)
-(define-key global-map (kbd "C-x C-g") 'magit-status)
-(define-key global-map (kbd "M-y")     'helm-show-kill-ring)
+(define-key global-map (kbd "C-S-o")     'pd-duplicate-line-or-region)
+(define-key global-map (kbd "C-a")       'pd-back-to-indentation-or-beginning)
+(define-key global-map (kbd "C-x C-b")   'helm-mini)
+(define-key global-map (kbd "C-x C-f")   'helm-find-files)
+(define-key global-map (kbd "C-x C-g")   'magit-status)
+(define-key global-map (kbd "C-x b")     'helm-mini)
+(define-key global-map (kbd "C-x g")     'magit-status)
+(define-key global-map (kbd "M-j")       (lambda () (interactive) (join-line -1)))
+(define-key global-map (kbd "M-x")       'helm-M-x)
+(define-key global-map (kbd "M-y")       'helm-show-kill-ring)
 
 (define-key global-map (kbd "<apps> dl") 'pd-duplicate-line-or-region)
 (define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
@@ -1018,6 +1029,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "<apps> hc") 'helm-colors)
 (define-key global-map (kbd "<apps> hm") 'helm-man-woman)
 (define-key global-map (kbd "<apps> hf") 'helm-find)
+(define-key global-map (kbd "<apps> hr") 'helm-all-mark-rings)
 (define-key global-map (kbd "<apps> rb") (lambda () (interactive) (revert-buffer nil t)))
 (define-key global-map (kbd "<apps> rj") 'jump-to-register)
 (define-key global-map (kbd "<apps> rp") 'point-to-register)
