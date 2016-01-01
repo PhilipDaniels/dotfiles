@@ -583,6 +583,7 @@ search at index 0."
 (setq recentf-max-menu-items 60)
 (setq recentf-max-saved-items 500)
 (setq require-final-newline t)
+(setq scroll-margin 3)
 (setq scroll-conservatively 10000)
 (setq scroll-error-top-bottom t)
 (setq scroll-preserve-screen-position t)
@@ -631,8 +632,8 @@ search at index 0."
   ("M-<right>" buf-move-right nil)
   ("M-<up>" buf-move-up nil)
   ("M-<down>" buf-move-down nil)
-  ("p" previous-buffer "prev")
-  ("n" next-buffer "next")
+  ("p" previous-buffer "prev-buf")
+  ("n" next-buffer "next-buf")
   ("1" delete-other-windows "1")
   ("d" delete-window "del")
   ("k" kill-buffer "kill")
@@ -893,6 +894,8 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; f3, f4             : start, end/run keyboard macro
 ;; C-x (,  C-x )      : start, end/run keyboard macro
 ;; C-x `              : next-error
+;; C-x <left>/<right> : previous-buffer and next-buffer
+;; C-x 8 RET          : insert characters by name
 ;; M-$, M-%           : ispell-word, query-replace foo
 ;; M-\, M-^, M-z      : delete horz space, delete-indentation, zap-to-char
 ;; M-c, M-l, M-u      : capitalize/lower/upper word
@@ -996,9 +999,10 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-; a")     'helm-apropos)
 (define-key global-map (kbd "C-; c")     'helm-colors)
 (define-key global-map (kbd "C-; f")     'helm-find)
-(define-key global-map (kbd "C-; i")     'helm-semantic-or-imenu)
-(define-key global-map (kbd "C-; o")     'helm-occur)
+(define-key global-map (kbd "C-; i")     'insert-char)
 (define-key global-map (kbd "C-; m")     'helm-man-woman)
+(define-key global-map (kbd "C-; o")     'helm-occur)
+(define-key global-map (kbd "C-; s")     'helm-semantic-or-imenu)
 (define-key global-map (kbd "C-=")       'fci-mode)
 (define-key global-map (kbd "C-@")       (lambda () (interactive) (er/expand-region -1)))
 (define-key global-map (kbd "C-\\")      'hs-toggle-hiding)
@@ -1016,6 +1020,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-x C-g")   'magit-status)
 (define-key global-map (kbd "C-x b")     'helm-mini)
 (define-key global-map (kbd "C-x g")     'magit-status)
+(define-key global-map (kbd "C-x z")     'undo)
 (define-key global-map (kbd "M-j")       (lambda () (interactive) (join-line -1)))
 (define-key global-map (kbd "M-x")       'helm-M-x)
 (define-key global-map (kbd "M-y")       'helm-show-kill-ring)
