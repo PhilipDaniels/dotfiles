@@ -3,17 +3,15 @@
 ;;; Local Variables:
 ;;; End:
 
-;;; Determine operating system and window system we are running on.
-(message "The system-type variable is %s" system-type)
-(message "The window-system variable is %s" window-system)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-;; Just a few packages that are not available on MELPA.
-(add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 
 ;;; $$ REQUIRES.
 (message "REQUIRES - BEGIN.")
+
+;; Just a few packages that are not available on MELPA.
+(add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 
 (require 'buffer-move)
 (require 'dedicated)
@@ -28,6 +26,7 @@
 (require 'moe-theme)
 (require 'org)
 (require 'recentf-ext)
+(require 's)
 (require 'shackle)
 (require 'smartparens-config)
 (require 'speedbar)
@@ -39,6 +38,16 @@
 (require 'yasnippet)
 
 (message "REQUIRES - END.")
+
+
+;; $$ DO THIS EARLY.
+(defvar pd-at-home t "t if this Emacs is being run at home, nil if at work")
+
+(if (s-starts-with-p "rdl" system-name t)
+    (setq pd-at-home nil))
+
+(message "Host = %s, pd-at-home = %s, system-type=%s, window-system=%s"
+         system-name pd-at-home system-type window-system)
 
 
 ;;; $$ FUNCTIONS.
@@ -391,6 +400,14 @@ If region is active, apply to active region instead."
   (interactive (list pd-term-shell)))
 (ad-activate 'ansi-term)
 
+;; Org mode.
+(setq org-directory "~/repos/org")
+(setq org-log-done t)
+(define-key global-map (kbd "C-c l") 'org-store-link)
+(define-key global-map (kbd "C-c a") 'org-agenda)
+;; smartparens interferes with the entry of links in org-mode. Turn it off.
+;; From https://github.com/Fuco1/smartparens/wiki/Permissions
+(sp-local-pair 'org-mode "[" nil :actions nil)
 
 ;; Shells.
 ;; M-x shell runs a shell as a sub-process, communicating with it via pipes.
@@ -516,8 +533,7 @@ search at index 0."
                                       diff-mode-hook
                                       magit-popup-mode-hook
                                       shell-mode-hook
-                                      term-mode-hook
-                                      org-mode-hook))
+                                      term-mode-hook))
   (add-hook hook (lambda () (set-variable 'show-trailing-whitespace nil))))
 ;; We need to turn on whitespace-mode to get the display of the >80 character lines working.
 (add-hook 'prog-mode-hook 'whitespace-mode)
@@ -574,7 +590,9 @@ search at index 0."
 (setq gdb-many-windows t)
 (setq gdb-show-main t)
 (setq inhibit-startup-message t)
-(setq initial-buffer-choice "~/repos/dotfiles/emacs/.emacs.pd.el")
+(if pd-at-home
+    (setq initial-buffer-choice "~/repos/org/home.org")
+  (set initial-buffer-choice "/c/work/work.org"))
 (setq initial-major-mode 'emacs-lisp-mode)
 (setq initial-scratch-message nil)
 (setq magit-push-always-verify nil)
