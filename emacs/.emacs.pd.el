@@ -15,7 +15,6 @@
 ;;; $$ REQUIRES.
 (message "REQUIRES - BEGIN.")
 
-(require 'autopair)
 (require 'buffer-move)
 (require 'dedicated)
 (require 'expand-region)
@@ -30,6 +29,7 @@
 (require 'org)
 (require 'recentf-ext)
 (require 'shackle)
+(require 'smartparens-config)
 (require 'speedbar)
 ;; Unbound provides the command describe-unbound-keys. Try a parameter of 8.
 (require 'unbound)
@@ -271,16 +271,27 @@ If region is active, apply to active region instead."
 ;;; $$ MODES.
 (message "MODES - BEGIN.")
 
-(autopair-global-mode)
 (winner-mode 1)
 (semantic-mode 1)
 (delete-selection-mode 1)
+(smartparens-global-mode 1)
+(show-smartparens-global-mode 1)
+(setq sp-show-pair-delay 0)
 
 (setq c-default-style "k&r"
       c-basic-offset 2)
 
-(if (eq system-type 'cygwin)
-    (setq powershell-location-of-exe "/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"))
+(when (eq system-type 'cygwin)
+  (setq powershell-location-of-exe "/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe")
+  )
+
+;; Dired.
+;; Stop dired from opening lots of new buffers when you press RET to edit a file.
+;; (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+;; http://oremacs.com/2015/01/13/dired-options/
+;; http://oremacs.com/2015/01/10/dired-ansi-term/
+(setq dired-listing-switches "-laGh1v --group-directories-first")
+
 
 ;; Markdown mode.
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
@@ -372,6 +383,14 @@ If region is active, apply to active region instead."
 (setq kill-buffer-query-functions
       (remq 'process-kill-buffer-query-function
             kill-buffer-query-functions))
+
+;; Make ansi-term stop prompting and always use bash.
+;; From http://echosa.github.io/blog/2012/06/06/improving-ansi-term/
+(defvar pd-term-shell "/bin/bash")
+(defadvice ansi-term (before force-bash)
+  (interactive (list pd-term-shell)))
+(ad-activate 'ansi-term)
+
 
 ;; Shells.
 ;; M-x shell runs a shell as a sub-process, communicating with it via pipes.
@@ -468,18 +487,19 @@ search at index 0."
 (if (display-graphic-p)
     (pd-set-candidate-font 0 (selected-frame) t))
 
+(setq custom-theme-directory "~/repos/dotfiles/emacs/themes")
+(setq x-gtk-use-system-tooltips nil)
 (setq ring-bell-function nil)
 (setq visible-bell 1)
-(show-paren-mode 1)
-(setq-default show-paren-delay 0)
 (setq column-number-mode 1)
 (setq line-number-mode 1)
 (size-indication-mode 1)
 (blink-cursor-mode 1)
 (global-hl-line-mode 1)
-(which-function-mode -1)      ;; Slow and pointless and some modes have a nasty habit of enabling it,
-(setq which-func-modes nil)   ;; such as Powershell mode. Together, these two lines disable it.
-(setq rm-blacklist '(" yas" " ws" " hs" " vs" " Helm" " Abbrev"))  ; Or simply ".*"
+(setq blink-matching-paren nil)  ;; We use the smartparens package instead.
+(which-function-mode -1)         ;; Slow and pointless and some modes have a nasty habit of enabling it,
+(setq which-func-modes nil)      ;; such as Powershell mode. Together, these two lines disable it.
+(setq rm-blacklist ".*")         ;; List of lighter strings or simply ".*"
 (rich-minority-mode 1)
 
 ;; fci-mode can cause an increase in the vertical separation of lines, so leave
@@ -511,7 +531,8 @@ search at index 0."
 
 ;;(add-to-list 'default-frame-alist '(height . 50))
 ;;(add-to-list 'default-frame-alist '(width . 86))
-
+;;(show-paren-mode 1)             ;; Superceded by smartparens mode.
+;;(setq-default show-paren-delay 0)
 ;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 ;;(global-linum-mode 1)           ;; This is very slow with long lines.
 ;;(setq linum-format "%4d ")      ;; So we don't need this either.
@@ -548,11 +569,13 @@ search at index 0."
 (setq compilation-scroll-output 'first-error)
 (setq confirm-nonexistent-file-or-buffer nil)
 (setq delete-by-moving-to-trash t)
+(setq disabled-command-function nil)
 (setq echo-keystrokes 0.1)
-(setq explicit-shell-file-name "/bin/bash")  ; TODO: Does this work?
 (setq gdb-many-windows t)
 (setq gdb-show-main t)
 (setq inhibit-startup-message t)
+(setq initial-buffer-choice "~/repos/dotfiles/emacs/.emacs.pd.el")
+(setq initial-major-mode 'emacs-lisp-mode)
 (setq initial-scratch-message nil)
 (setq magit-push-always-verify nil)
 (setq make-backup-files nil)
@@ -560,17 +583,19 @@ search at index 0."
 (setq recentf-max-menu-items 60)
 (setq recentf-max-saved-items 500)
 (setq require-final-newline t)
+(setq scroll-conservatively 10000)
 (setq scroll-error-top-bottom t)
+(setq scroll-preserve-screen-position t)
 (setq sentence-end-double-space nil)
+(setq use-dialog-box nil)
 (setq user-full-name "Philip Daniels")
 (setq user-mail-address "philip.daniels1971@gmail.com")
 (setq vc-follow-symlinks t)
-(setq disabled-command-function nil)
-(setq use-dialog-box nil)
 (setq-default fill-column 80)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
 (setq-default truncate-lines 1)
+(setq windmove-wrap-around t)
 
 (setq hippie-expand-try-functions-list
       '(
@@ -593,19 +618,19 @@ search at index 0."
 (message "HYDRAS - BEGIN.")
 
 (defhydra hydra-windows ()
-  "M-Arrow = switch, C-arrow = move, S-arrow = size"
-  ("M-<left>" windmove-left nil)
-  ("M-<right>" windmove-right nil)
-  ("M-<up>" windmove-up nil)
-  ("M-<down>" windmove-down nil)
+  "C-arrow = switch, S-arrow = size, M-arrow = move"
+  ("C-<left>" windmove-left nil)
+  ("C-<right>" windmove-right nil)
+  ("C-<up>" windmove-up nil)
+  ("C-<down>" windmove-down nil)
   ("S-<left>" hydra-move-splitter-left nil)
   ("S-<right>" hydra-move-splitter-right  nil)
   ("S-<up>" hydra-move-splitter-up nil)
   ("S-<down>" hydra-move-splitter-down nil)
-  ("C-<left>" buf-move-left nil)
-  ("C-<right>" buf-move-right nil)
-  ("C-<up>" buf-move-up nil)
-  ("C-<down>" buf-move-down nil)
+  ("M-<left>" buf-move-left nil)
+  ("M-<right>" buf-move-right nil)
+  ("M-<up>" buf-move-up nil)
+  ("M-<down>" buf-move-down nil)
   ("1" delete-other-windows "1")
   ("d" delete-window "del")
   ("s" save-buffer "save")
@@ -625,7 +650,8 @@ search at index 0."
   ("i" text-scale-increase "increase")
   ("d" text-scale-decrease "decrease")
   ("n" (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)) "next font")
-  ("p" (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)) "previous font"))
+  ("p" (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)) "previous font")
+  ("q" nil "cancel"))
 
 (global-set-key (kbd "C-# f") 'hydra-fonts/body)
 
@@ -749,6 +775,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   ("ty" (pd-load-theme 'tty-dark))
   ("uw" (pd-load-theme 'underwater))
   ("zb" (pd-load-theme 'zenburn))
+  ("q"  nil)
   )
 
 (global-set-key (kbd "C-# t") 'hydra-themes/body)
@@ -936,10 +963,11 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; f12 = undefined
 
 ;; ******************* Arrow keys ********************
-(define-key global-map (kbd "C-<up>") 'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
-(define-key global-map (kbd "C-<down>") 'endless/forward-paragraph)
-(define-key global-map (kbd "C-<left>") 'backward-word)
-(define-key global-map (kbd "C-<right>") 'forward-word)
+;; Hopefully this will have better compatibility with org-mode.
+(define-key global-map (kbd "C-<up>") 'windmove-up)
+(define-key global-map (kbd "C-<down>") 'windmove-down)
+(define-key global-map (kbd "C-<left>") 'windmove-left)
+(define-key global-map (kbd "C-<right>") 'windmove-right)
 
 (define-key global-map (kbd "C-M-<left>") 'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
 (define-key global-map (kbd "C-M-<right>") 'end-of-defun)
@@ -967,6 +995,8 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-'")  'er/expand-region)
 (define-key global-map (kbd "C-@")  (lambda () (interactive) (er/expand-region -1)))
 (define-key global-map (kbd "M-'")  'mark-defun)
+(define-key global-map (kbd "M-{")  'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
+(define-key global-map (kbd "M-}")  'endless/forward-paragraph)
 
 (define-key global-map (kbd "C-a")     'pd-back-to-indentation-or-beginning)
 (define-key global-map (kbd "C-x b")   'helm-mini)

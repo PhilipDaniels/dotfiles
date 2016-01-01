@@ -46,6 +46,7 @@
                      shackle                ;; Window enforcement for popups https://github.com/wasamasa/shackle
                      smart-mode-line        ;; https://github.com/Malabarba/smart-mode-line
                      smart-mode-line-powerline-theme
+                     smartparens            ;; Superset of autopair
                      sr-speedbar            ;; in-frame directory tree
                      ;;sunrise-commander
                      ;;sunrise-x-buttons
