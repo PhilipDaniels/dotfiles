@@ -592,7 +592,7 @@ search at index 0."
 (setq inhibit-startup-message t)
 (if pd-at-home
     (setq initial-buffer-choice "~/repos/org/home.org")
-  (set initial-buffer-choice "/c/work/work.org"))
+  (setq initial-buffer-choice "/c/work/work.org"))
 (setq initial-major-mode 'emacs-lisp-mode)
 (setq initial-scratch-message nil)
 (setq magit-push-always-verify nil)
