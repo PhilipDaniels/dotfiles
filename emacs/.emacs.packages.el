@@ -48,8 +48,8 @@
                      smart-mode-line-powerline-theme
                      smartparens            ;; Superset of autopair
                      sr-speedbar            ;; in-frame directory tree
-                     ;;sunrise-commander
-                     ;;sunrise-x-buttons
+                     sunrise-commander
+                     sunrise-x-buttons
                      unbound
                      yaml-mode
                      yasnippet
