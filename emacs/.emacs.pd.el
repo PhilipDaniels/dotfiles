@@ -590,9 +590,6 @@ search at index 0."
 (setq gdb-many-windows t)
 (setq gdb-show-main t)
 (setq inhibit-startup-message t)
-(if pd-at-home
-    (setq initial-buffer-choice "~/repos/org/home.org")
-  (setq initial-buffer-choice "/c/work/work.org"))
 (setq initial-major-mode 'emacs-lisp-mode)
 (setq initial-scratch-message nil)
 (setq magit-push-always-verify nil)
@@ -629,6 +626,12 @@ search at index 0."
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol)
       )
+
+;; Don't do this - it stops you from invoking Emacs on the command line
+;; for a single file, and also changes the cwd which is very annoying.
+;; (if pd-at-home
+;;     (setq initial-buffer-choice "~/repos/org/home.org")
+;;   (setq initial-buffer-choice "/c/work/work.org"))
 
 (message "GENERAL VARIABLES - END.")
 
