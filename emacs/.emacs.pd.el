@@ -291,8 +291,7 @@ If region is active, apply to active region instead."
       c-basic-offset 2)
 
 (when (eq system-type 'cygwin)
-  (setq powershell-location-of-exe "/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe")
-  )
+  (setq powershell-location-of-exe (s-trim (shell-command-to-string "which powershell"))))
 
 ;; Dired.
 ;; Stop dired from opening lots of new buffers when you press RET to edit a file.
