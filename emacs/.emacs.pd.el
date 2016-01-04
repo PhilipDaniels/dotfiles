@@ -165,12 +165,39 @@ because it will re-indent the entire buffer."
 (defun pd-sort-paragraph ()
   "Sorts the current paragraph and leaves point after the last line."
   (interactive)
-  (let (bounds pos1 pos2)
-    (setq bounds (bounds-of-thing-at-point 'paragraph))
-    (setq pos1 (car bounds))
-    (setq pos2 (cdr bounds))
-    (sort-lines nil pos1 pos2)
+  (let* ((bounds (bounds-of-thing-at-point 'paragraph))
+         (pos1 (car bounds))
+         (pos2 (cdr bounds)))
+    ;;(sort-lines nil pos1 pos2)
+    (pd-sort-lines nil pos1 pos2 'pd-cmp-c-includes)
     (goto-char pos2)))
+
+(defun pd-cmp-c-includes (s1 s2)
+  "Compare C-style includes, ensuring #include <...> appears before #include \"...\"."
+  (setq s1 (replace-regexp-in-string "#include \"" "#include z" s1))
+  (setq s2 (replace-regexp-in-string "#include \"" "#include z" s2))
+  ;;(message "Comparing strings %s and %s" s1 s2)
+  (string< s1 s2))
+
+(defun pd-sort-lines (reverse beg end cmp)
+  "Sort lines in the region using the specified comparison function.
+
+Called from a program, there are four arguments:
+REVERSE (non-nil means reverse order), BEG and END (region to sort)
+and CMP, a comparison predicate to be used for ordering, which will
+be passed two strings."
+  (save-excursion
+    (save-restriction
+      (narrow-to-region beg end)
+      (goto-char (point-min))
+      (sort-subr nil 'forward-line 'end-of-line nil nil
+                 ;; We get passed a pair such as (700 . 800) for r1 and another for r2
+                 (lambda (r1 r2)
+                   (let (
+                         (s1 (buffer-substring-no-properties (car r1) (cdr r1)))
+                         (s2 (buffer-substring-no-properties (car r2) (cdr r2))))
+                     ;; (message "Got s1=%s and s2=%s" s1 s2)
+                     (funcall cmp s1 s2)))))))
 
 (defun pd-compile-without-confirmation ()
   "Runs last compilation without asking for confirmation."
@@ -182,8 +209,7 @@ because it will re-indent the entire buffer."
 (defun pd-compile-clean-one-shot ()
   "Runs make clean, but restores compile command after it."
   (interactive)
-  (let (oldcc)
-    (setq oldcc compile-command)
+  (let (oldcc compile-command)
     (save-window-excursion
       (compile "make clean"))
     (pop-to-buffer (get-buffer "*compilation*"))
