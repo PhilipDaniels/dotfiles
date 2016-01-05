@@ -144,48 +144,14 @@ From http://stackoverflow.com/questions/88399"
   (interactive)
   (indent-region (point-min) (point-max)))
 
-(defun pd-sort-c-includes ()
-  "Sort the #include block at the beginning of a file."
-  )
-
-(defun pd-sort-cpp-usings ()
-  "Sort the using statements at the beginning of a C++ file."
-  )
-
-(defun pd-cleanup-programming-buffer ()
-  "Runs various cleanups; recommended for programming modes only.
-Also not recommended when working with other people's code
-because it will re-indent the entire buffer."
-  (pd-indent-buffer)
-  (pd-untabify-buffer)
-  (delete-trailing-whitespace)
-  (message "Buffer reindented, untabified and trailing whitespace trimmed.")
-  )
-
-(defun pd-sort-paragraph ()
-  "Sorts the current paragraph and leaves point after the last line."
-  (interactive)
-  (let* ((bounds (bounds-of-thing-at-point 'paragraph))
-         (pos1 (car bounds))
-         (pos2 (cdr bounds)))
-    ;;(sort-lines nil pos1 pos2)
-    (pd-sort-lines nil pos1 pos2 'pd-cmp-c-includes)
-    (goto-char pos2)))
-
-(defun pd-cmp-c-includes (s1 s2)
-  "Compare C-style includes, ensuring #include <...> appears before #include \"...\"."
-  (setq s1 (replace-regexp-in-string "#include \"" "#include z" s1))
-  (setq s2 (replace-regexp-in-string "#include \"" "#include z" s2))
-  ;;(message "Comparing strings %s and %s" s1 s2)
-  (string< s1 s2))
-
-(defun pd-sort-lines (reverse beg end cmp)
+(defun pd-sort-lines (reverse beg end &optional cmp)
   "Sort lines in the region using the specified comparison function.
 
-Called from a program, there are four arguments:
-REVERSE (non-nil means reverse order), BEG and END (region to sort)
-and CMP, a comparison predicate to be used for ordering, which will
-be passed two strings."
+Pass non-nil for REVERSE to reverse the order, BEG and END are the two points
+that specify the region to sort. CMP is a binary comparison predicate to be used
+for ordering the lines, it will be passed two strings. You may pass nil, in
+which case the function STRING< is used."
+  (or cmp (setq cmp 'string<))
   (save-excursion
     (save-restriction
       (narrow-to-region beg end)
@@ -198,6 +164,90 @@ be passed two strings."
                          (s2 (buffer-substring-no-properties (car r2) (cdr r2))))
                      ;; (message "Got s1=%s and s2=%s" s1 s2)
                      (funcall cmp s1 s2)))))))
+
+(defun pd-cmp-c-includes (s1 s2)
+  "Compare C-style include statements, ensuring #include <...>
+appears before #include \"...\".
+
+S1 and S2 are the two strings (lines) to compare."
+  ;; Deal with any whacky spacing by just getting rid of all whitespace.
+  (setq s1 (replace-regexp-in-string "[[:space:]]" "" s1))
+  (setq s2 (replace-regexp-in-string "[[:space:]]" "" s2))
+  ;; Replace " with a character - the question mark - that sorts after it but
+  ;; that will never show up in a filename.
+  (setq s1 (replace-regexp-in-string "\"" "\?" s1))
+  (setq s2 (replace-regexp-in-string "\"" "\?" s2))
+  ;; (message "Comparing strings %s and %s" s1 s2)
+  (string< s1 s2))
+
+;; (defun pd-sort-paragraph ()
+;;   "Sorts the current paragraph and leaves point after the last line."
+;;   (interactive)
+;;   (let* ((bounds (bounds-of-thing-at-point 'paragraph))
+;;          (beg (car bounds))
+;;          (end (cdr bounds)))
+;;     (sort-lines nil beg end)
+;;     (goto-char end)))
+
+(defun pd-sort-paragraph-dwim (&optional special-c-sort)
+  "Sorts the current paragraph and leaves point after the last line.
+
+If a prefix argument is supplied, and if the paragraph starts
+with '#include', then it is sorted specially to ensure that
+system library includes such as #include <...> appear before
+#include \"...\"."
+  (interactive "P")
+  (let* ((bounds (bounds-of-thing-at-point 'paragraph))
+         (beg (car bounds))
+         (end (cdr bounds)))
+    (when special-c-sort
+      (setq start (buffer-substring-no-properties (+ 1 beg) (+ beg 9)))
+      (unless (string= start "#include")
+        (setq special-c-sort nil)))
+    (if special-c-sort
+        (pd-sort-lines nil beg end 'pd-cmp-c-includes)
+      (sort-lines nil beg end))
+    (goto-char end)))
+
+;; pd-find-paragraph-starting - get bounds of paragraphs starting...stop on first non-match
+
+(defun pd-find-first-paragraph-starting (s)
+  "Returns the BEG and END point of the first paragraph, if any, that starts
+with the specified string S."
+  )
+
+(defun pd-sort-c-includes ()
+  "Sort the #include block at the beginning of a file."
+  (let* (bounds (pd-find-first-paragraph-starting "#include"))
+    )
+  ;; pd-find-paragraph-starting "#include"
+  ;; if found
+  ;;   pd-sort-lines nil BEG END 'pd-cmp-c-includes
+  )
+
+(defun pd-sort-cpp-usings ()
+  "Sort the using statements at the beginning of a C++ file."
+  ;; pd-find-paragraph-starting "using"
+  ;; if found
+  ;;   pd-sort-lines nil BEG END
+  )
+
+
+(define-key global-map (kbd "<apps> sp") 'pd-sort-paragraph-dwim)
+
+(defun pd-cleanup-programming-buffer ()
+  "Runs various cleanups; recommended for programming modes only.
+Also not recommended when working with other people's code
+because it will re-indent the entire buffer."
+  (pd-indent-buffer)
+  (pd-untabify-buffer)
+  (delete-trailing-whitespace)
+  (message "Buffer reindented, untabified and trailing whitespace trimmed.")
+  )
+
+
+
+
 
 (defun pd-compile-without-confirmation ()
   "Runs last compilation without asking for confirmation."
@@ -1089,7 +1139,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "<apps> rj") 'jump-to-register)
 (define-key global-map (kbd "<apps> rp") 'point-to-register)
 (define-key global-map (kbd "<apps> rw") 'window-configuration-to-register)
-(define-key global-map (kbd "<apps> sp") 'pd-sort-paragraph)
+(define-key global-map (kbd "<apps> sp") 'pd-sort-paragraph-dwim)
 (define-key global-map (kbd "<apps> w")  'pd-copy-current-line)
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
