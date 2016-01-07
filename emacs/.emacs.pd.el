@@ -180,6 +180,20 @@ S1 and S2 are the two strings (lines) to compare."
   ;; (message "Comparing strings %s and %s" s1 s2)
   (string< s1 s2))
 
+(defun pd-cmp-cpp-usings (s1 s2)
+  "Compare CPP using statements, ensuring 'using namespace ...'
+appears after using 'std::cout' statements.
+
+S1 and S2 are the two strings (lines) to compare."
+  ;; Deal with any whacky spacing by just getting rid of all whitespace.
+  (setq s1 (replace-regexp-in-string "[[:space:]]" "" s1))
+  (setq s2 (replace-regexp-in-string "[[:space:]]" "" s2))
+  ;; Replace 'using namespace' with something that will sort after 'using'.
+  (setq s1 (replace-regexp-in-string "usingnamespace" "zzz" s1))
+  (setq s2 (replace-regexp-in-string "usingnamespace" "zzz" s2))
+  ;; (message "Comparing strings %s and %s" s1 s2)
+  (string< s1 s2))
+
 (defun pd-sort-paragraph-dwim (&optional special-c-sort)
   "Sorts the current paragraph and leaves point after the last line.
 
@@ -200,45 +214,46 @@ system library includes such as #include <...> appear before
       (sort-lines nil beg end))
     (goto-char end)))
 
-;; pd-find-paragraph-starting - get bounds of paragraphs starting...stop on first non-match
-
 (defun pd-find-first-paragraph-starting (s)
-  "Returns the BEG and END point of the first paragraph, if any, that starts
+  "Returns the (BEG . END) point of the first paragraph, if any, that starts
 with the specified string S."
-  )
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (let ((m (re-search-forward s)))
+      (if m
+          (bounds-of-thing-at-point 'paragraph)))))
 
 (defun pd-sort-c-includes ()
-  "Sort the #include block at the beginning of a file."
-  (let* (bounds (pd-find-first-paragraph-starting "#include"))
-    )
-  ;; pd-find-paragraph-starting "#include"
-  ;; if found
-  ;;   pd-sort-lines nil BEG END 'pd-cmp-c-includes
-  )
+  "Sort the #include block at the beginning of a file. The cursor does not
+have to be in the paragraph."
+  (interactive)
+  (let ((bounds (pd-find-first-paragraph-starting "^#include")))
+    (if bounds
+        (pd-sort-lines nil (car bounds) (cdr bounds) 'pd-cmp-c-includes))))
 
 (defun pd-sort-cpp-usings ()
-  "Sort the using statements at the beginning of a C++ file."
-  ;; pd-find-paragraph-starting "using"
-  ;; if found
-  ;;   pd-sort-lines nil BEG END
-  )
-
-
-(define-key global-map (kbd "<apps> sp") 'pd-sort-paragraph-dwim)
+  "Sort the using statements at the beginning of a C++ file. The cursor does not
+have to be in the paragraph."
+  (interactive)
+  (let ((bounds (pd-find-first-paragraph-starting "^using ")))
+    (if bounds
+        (pd-sort-lines nil (car bounds) (cdr bounds) 'pd-cmp-cpp-usings))))
 
 (defun pd-cleanup-programming-buffer ()
   "Runs various cleanups; recommended for programming modes only.
+
 Also not recommended when working with other people's code
 because it will re-indent the entire buffer."
+  (interactive)
   (pd-indent-buffer)
   (pd-untabify-buffer)
   (delete-trailing-whitespace)
-  (message "Buffer reindented, untabified and trailing whitespace trimmed.")
-  )
-
-
-
-
+  (when (or (derived-mode-p 'c-mode) (derived-mode-p 'c++-mode))
+    (pd-sort-c-includes))
+  (when (derived-mode-p 'c++-mode)
+    (pd-sort-cpp-usings))
+  (message "Reindent, untabify, delete trailing whitespace."))
 
 (defun pd-compile-without-confirmation ()
   "Runs last compilation without asking for confirmation."
@@ -423,9 +438,9 @@ If region is active, apply to active region instead."
 ;; http://stackoverflow.com/questions/19174302. An alternative, using ws-trim or
 ;; ws-butler, is mentioned there which can reduce git commit noise, but since
 ;; I only use Emacs for my own repos at the moment it doesn't matter.
-(add-hook 'before-save-hook (lambda()
-                              (when (derived-mode-p 'prog-mode)
-                                (pd-cleanup-programming-buffer))))
+;; (add-hook 'before-save-hook (lambda()
+;;                               (when (derived-mode-p 'prog-mode)
+;;                                 (pd-cleanup-programming-buffer))))
 
 (add-hook 'c-mode-common-hook 'hs-minor-mode)
 (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
@@ -472,8 +487,7 @@ If region is active, apply to active region instead."
 (setq org-hierarchical-todo-statistics nil)
 (define-key global-map (kbd "C-c l") 'org-store-link)
 (define-key global-map (kbd "C-c a") 'org-agenda)
-(add-hook 'org-mode-hook
-          (lambda () (local-unset-key (kbd "C-#"))))
+(add-hook 'org-mode-hook (lambda () (local-unset-key (kbd "C-#"))))
 
 ;; smartparens interferes with the entry of links in org-mode. Turn it off.
 ;; From https://github.com/Fuco1/smartparens/wiki/Permissions
@@ -1120,6 +1134,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "M-x")       'helm-M-x)
 (define-key global-map (kbd "M-y")       'helm-show-kill-ring)
 
+(define-key global-map (kbd "<apps> cc") 'pd-cleanup-programming-buffer)
 (define-key global-map (kbd "<apps> dl") 'pd-duplicate-line-or-region)
 (define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
 (define-key global-map (kbd "<apps> g")  'magit-status)
