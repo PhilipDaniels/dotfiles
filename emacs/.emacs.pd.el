@@ -180,15 +180,6 @@ S1 and S2 are the two strings (lines) to compare."
   ;; (message "Comparing strings %s and %s" s1 s2)
   (string< s1 s2))
 
-;; (defun pd-sort-paragraph ()
-;;   "Sorts the current paragraph and leaves point after the last line."
-;;   (interactive)
-;;   (let* ((bounds (bounds-of-thing-at-point 'paragraph))
-;;          (beg (car bounds))
-;;          (end (cdr bounds)))
-;;     (sort-lines nil beg end)
-;;     (goto-char end)))
-
 (defun pd-sort-paragraph-dwim (&optional special-c-sort)
   "Sorts the current paragraph and leaves point after the last line.
 
@@ -363,11 +354,12 @@ If region is active, apply to active region instead."
 (show-smartparens-global-mode 1)
 (setq sp-show-pair-delay 0)
 
-(setq c-default-style "k&r"
-      c-basic-offset 2)
+(setq c-default-style "k&r")
+(setq c-basic-offset 2)
 
 (when (eq system-type 'cygwin)
-  (setq powershell-location-of-exe (concat (s-trim (shell-command-to-string "which powershell")) ".exe")))
+  (setq powershell-location-of-exe
+        (s-trim (shell-command-to-string "which powershell.exe"))))
 
 ;; Dired.
 ;; Stop dired from opening lots of new buffers when you press RET to edit a file.
@@ -375,7 +367,6 @@ If region is active, apply to active region instead."
 ;; http://oremacs.com/2015/01/13/dired-options/
 ;; http://oremacs.com/2015/01/10/dired-ansi-term/
 (setq dired-listing-switches "-laGh1v --group-directories-first")
-
 
 ;; Markdown mode.
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
@@ -478,8 +469,12 @@ If region is active, apply to active region instead."
 ;; Org mode.
 (setq org-directory "~/repos/org")
 (setq org-log-done t)
+(setq org-hierarchical-todo-statistics nil)
 (define-key global-map (kbd "C-c l") 'org-store-link)
 (define-key global-map (kbd "C-c a") 'org-agenda)
+(add-hook 'org-mode-hook
+          (lambda () (local-unset-key (kbd "C-#"))))
+
 ;; smartparens interferes with the entry of links in org-mode. Turn it off.
 ;; From https://github.com/Fuco1/smartparens/wiki/Permissions
 (sp-local-pair 'org-mode "[" nil :actions nil)
