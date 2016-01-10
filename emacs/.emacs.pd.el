@@ -14,6 +14,7 @@
 (add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 
 (require 'buffer-move)
+(require 'dash)
 (require 'dedicated)
 (require 'expand-region)
 (require 'fill-column-indicator)
@@ -134,6 +135,16 @@ From http://stackoverflow.com/questions/88399"
         (kill-buffer buffer)
         (message "File '%s' successfully removed" filename)))))
 
+(defun pd-replace-all-in-buffer ()
+  "Replace all occurrences of a string in the buffer."
+  (interactive)
+  (save-excursion
+    (if (equal mark-active nil) (mark-word))
+    (let* ((curr-word (buffer-substring-no-properties (mark) (point)))
+           (old-string (read-string "OLD string: " curr-word))
+           (new-string (read-string "NEW string: " old-string)))
+      (replace-string old-string new-string nil (point-min) (point-max)))))
+
 (defun pd-untabify-buffer ()
   "Run untabify on the entire buffer."
   (interactive)
@@ -165,7 +176,7 @@ which case the function STRING< is used."
                      ;; (message "Got s1=%s and s2=%s" s1 s2)
                      (funcall cmp s1 s2)))))))
 
-(defun pd-cmp-c-includes (s1 s2)
+(defun pd-c-cmp-includes (s1 s2)
   "Compare C-style include statements, ensuring #include <...>
 appears before #include \"...\".
 
@@ -180,7 +191,7 @@ S1 and S2 are the two strings (lines) to compare."
   ;; (message "Comparing strings %s and %s" s1 s2)
   (string< s1 s2))
 
-(defun pd-cmp-cpp-usings (s1 s2)
+(defun pd-cpp-cmp-usings (s1 s2)
   "Compare CPP using statements, ensuring 'using namespace ...'
 appears after using 'std::cout' statements.
 
@@ -210,7 +221,7 @@ system library includes such as #include <...> appear before
       (unless (string= start "#include")
         (setq special-c-sort nil)))
     (if special-c-sort
-        (pd-sort-lines nil beg end 'pd-cmp-c-includes)
+        (pd-sort-lines nil beg end 'pd-c-cmp-includes)
       (sort-lines nil beg end))
     (goto-char end)))
 
@@ -224,21 +235,21 @@ with the specified string S."
       (if m
           (bounds-of-thing-at-point 'paragraph)))))
 
-(defun pd-sort-c-includes ()
+(defun pd-c-sort-includes ()
   "Sort the #include block at the beginning of a file. The cursor does not
 have to be in the paragraph."
   (interactive)
   (let ((bounds (pd-find-first-paragraph-starting "^#include")))
     (if bounds
-        (pd-sort-lines nil (car bounds) (cdr bounds) 'pd-cmp-c-includes))))
+        (pd-sort-lines nil (car bounds) (cdr bounds) 'pd-c-cmp-includes))))
 
-(defun pd-sort-cpp-usings ()
+(defun pd-cpp-sort-usings ()
   "Sort the using statements at the beginning of a C++ file. The cursor does not
 have to be in the paragraph."
   (interactive)
   (let ((bounds (pd-find-first-paragraph-starting "^using ")))
     (if bounds
-        (pd-sort-lines nil (car bounds) (cdr bounds) 'pd-cmp-cpp-usings))))
+        (pd-sort-lines nil (car bounds) (cdr bounds) 'pd-cpp-cmp-usings))))
 
 (defun pd-cleanup-programming-buffer ()
   "Runs various cleanups; recommended for programming modes only.
@@ -250,10 +261,198 @@ because it will re-indent the entire buffer."
   (pd-untabify-buffer)
   (delete-trailing-whitespace)
   (when (or (derived-mode-p 'c-mode) (derived-mode-p 'c++-mode))
-    (pd-sort-c-includes))
+    (pd-c-sort-includes))
   (when (derived-mode-p 'c++-mode)
-    (pd-sort-cpp-usings))
+    (pd-cpp-sort-usings))
   (message "Reindent, untabify, delete trailing whitespace."))
+
+(defvar pd-cpp-using-map
+  '(
+    ;; #include <..> -> list of symbols in that header
+    ("algorithm" . ("all_of" "any_of" "none_of" "for_each" "count" "count_if"
+                    "mismatch" "equal" "find" "find_if" "find_if_not"
+                    "find_end" "find_first_of" "adjacent_find"
+                    "search" "search_n"
+                    "copy" "copy_if" "copy_n" "copy_backward" "move_backward"
+                    "fill" "fill_n" "transform" "generate" "generate_n"
+                    "remove" "remove_if" "remove_copy" "remove_copy_if"
+                    "replace" "replace_if" "replace_copy" "replace_copy_if"
+                    "swap_ranges" "iter_swap" "reverse" "reverse_copy"
+                    "rotate" "rotate_copy" "shuffle" "unique" "unique_copy"
+                    "is_partioned" "partition" "partition_copy"
+                    "stable_partition" "partition_point"
+                    "is_sorted" "is_sorted_until" "sort" "partial_sort"
+                    "partial_sort_copy" "stable_sort" "nth_element"
+                    "lower_bound" "upper_bound" "binary_search" "equal_range"
+                    "merge" "inplace_merge" "includes" "set_difference"
+                    "set_intersection" "set_symmetric_difference" "set_union"
+                    "is_heap" "is_heap_until" "make_heap" "push_heap"
+                    "pop_heap" "sort_heap"
+                    "max" "max_element" "min" "min_element" "minmax"
+                    "minmax_element" "lexicographical_compare"
+                    "is_permutation" "next_permutation" "prev_permutation"
+                    ))
+    ("array" . ("array"))
+    ("cassert" . ("assert"))
+    ("cctype" . ("isalnum" "isalpha" "islower" "isupper" "isdigit" "isxdigit"
+                 "iscntrl" "isgraph" "isspace" "isblank" "isprint" "ispunct"
+                 "tolower" "toupper"))
+    ("cmath" . ("INFINITY" "NAN" "float_t" "double_t" "abs" "fabs"
+                "fmod" "remainder" "remquo" "fma" "fmax" "fmin" "fdim" "nan"
+                "nanf" "nanl" "exp" "exp2" "expm1" "log" "log10" "log2" "log1p"
+                "pow" "sqrt" "cbrt" "hypot" "sin" "cos" "tan" "asin" "acos"
+                "atan" "atan2" "sinh" "cosh" "tanh" "asinh" "acosh" "atanh"
+                "erf" "erfc" "tgamma" "lgamma" "ceil" "floor" "trunc" "round"
+                "lround" "llround" "nearbyint" "rint" "lrint" "llrint"
+                "frexp" "ldexp" "modf" "scalbn" "scalbln" "ilogb" "logb"
+                "nextafter" "nexttoward" "fpclassify" "isfinite" "isinf" "isnan"
+                "isnormal" "signbit" "isgreater" "isgreaterequal" "isless"
+                "islessequal" "islessgreater" "isunordered"
+                ))
+    ("complex" . ("complex" "real" "imag" "norm" "conj" "proj" "polar"))
+    ("cstddef" . ("size_t" "ptrdiff_t" "nullptr_t"))
+    ("cstdint" . ("int8_t" "int16_t" "int32_t" "int64_t"
+                  "uint8_t" "uint16_t" "uint32_t" "uint64_t"))
+    ("deque" . ("deque"))
+    ("forward_list" . ("forward_list"))
+    ("fstream" . ("filebuf" "wfilebuf" "istream" "wifstream" "ofstream"
+                  "wofstream" "fstream" "wfstream" "basic_filebuf"
+                  "basic_ifstream" "basic_ofstream" "basic_fstream"))
+    ("functional" . ("bind" "hash" "function" ))
+    ("iomanip" . ("resetiosflags" "setiosflags" "setbase" "setfill"
+                  "setprecision" "setw" "get_money" "put_money" "get_time"
+                  "put_time" "quoted"))
+    ("iostream" . ("cout" "cin" "cerr" "clog"
+                   "wcout" "wcin" "wcerr" "wclog"
+                   ;; The following are actually in <ios> but we will never need
+                   ;; to use them without <iostream>.
+                   "streamoff" "streamsize" "boolalpha" "noboolalpha"
+                   "showbase" "noshowbase" "showpoint" "noshowpoint"
+                   "showpos" "noshowpos" "skipws" "noskipws"
+                   "uppercase" "nouppercase" "unitbuf" "nounitbuf"
+                   "internal" "left" "right" "dec" "hex" "oct"
+                   "fixed" "scientific" "hexfloat" "defaultfloat"
+                   ;; The following are in <ostream>.
+                   "ends" "flush" "endl" "ostream" "wostream" "basic_ostream"
+                   ;; The following are in <istream>.
+                   "istream" "wistream" "iostream" "wiostream" "ws"
+                   "basic_istream" "basic_iostream"
+                   ))
+    ("iterator" . ("iterator_traits" "iterator" "reverse_iterator"
+                   "move_iterator" "back_insert_iterator"
+                   "front_insert_iterator" "insert_iterator"
+                   "istream_iterator" "ostream_iterator"
+                   "istreambuf_iterator" "ostreambuf_iterator"
+                   "make_reverse_iterator" "make_move_iterator"
+                   "front_inserter" "back_inserter" "inserter"
+                   "advance" "distance" "begin" "cbegin"
+                   "end" "cend" "rbegin" "crbegin" "rend" "crend"
+                   ))
+    ("list" . ("list"))
+    ("map" . ("map" "multimap"))
+    ("memory" . ("unique_ptr" "shared_ptr" "weak_ptr" "make_shared"))
+    ("mutex" . ("mutex" "timed_mutex" "recursive_mutex" "recursive_timed_mutex"
+                "lock_guard" "unique_lock" "defer_lock_t" "try_to_lock_t"
+                "adopt_lock_t" "defer_lock" "try_to_lock" "adopt_lock"
+                "once_flag" "try_lock" "lock" "call_once"))
+    ("numeric" . ("iota" "accumulate" "inner_product" "adjacent_difference"
+                  "partial_sum"))
+    ("queue" . ("queue" "priority_queue"))
+    ("ratio" . ("ratio" "ratio_add" "ratio_subtract" "ratio_multiply"
+                "ratio_divide" "yocto" "zepto" "atto" "femto" "pico" "nano"
+                "micro" "milli" "centi" "deci" "deca" "hecto" "kilo" "mega"
+                "giga" "tera" "peta" "exa" "zetta" "yotta"))
+    ("regex" . ("basic_regex" "regex_match" "regex_search" "regex_replace"
+                "sub_match" "match_results" "regex_iterator"
+                "regex_token_iterator" "regex_error" "regex_traits"))
+    ("set" . ("set" "multiset"))
+    ("shared_mutex" . ("shared_mutex" "shared_timed_mutex" "shared_lock"))
+    ("sstream" . ("stringbuf" "wstringbuf" "istringstream" "wistringstream"
+                  "ostringstream" "wostringstream" "stringstream"
+                  "wstringstream" "basic_stringbuf" "basic_istringstream"
+                  "basic_ostringstream" "basic_stringstream"
+                  ))
+    ("stack" . ("stack"))
+    ("stdexcept" . ("logic_error" "invalid_argument" "domain_error"
+                    "length_error" "out_of_range" "runtime_error" "range_error"
+                    "overflow_error" "underflow_error"))
+    ("streambuf" . ("basic_streambuf" "streambuf" "wstreambuf"))
+    ("string" . ("string" "wstring" "getline" "stoi" "stol" "stoll" "stoul"
+                 "stoull" "stof" "stod" "stold" "to_string" "to_wstring"))
+    ("thread" . ("thread" "yield" "get_id" "sleep_for" "sleep_until"))
+    ("tuple" . ("tuple" "make_tuple"))
+    ("unordered_map" . ("unordered_map" "unordered_multimap"))
+    ("unordered_set" . ("unordered_set" "unordered_multiset"))
+    ("utility" . ("pair" "make_pair" "swap" "move" "exchange" "forward"))
+    ("vector" . ("vector"))
+    )
+  "Maps words such as 'cout' to the C++ standard header used to #include them."
+  )
+
+(defun pd-cpp-lookup-symbol-header (cpp-symbol)
+  "Returns the appropriate C++ header file for a symbol, or nil if
+CPP-SYMBOL is not a known symbol.
+
+Symbols are looked up in the variable PD-CPP-USING-MAP."
+  (car (-first
+        (lambda (cpp-mapping)
+          (let ((header (car cpp-mapping))
+                (symbols (cdr cpp-mapping))
+                )
+            (-first (lambda (s) (string= s cpp-symbol)) symbols)
+            )
+          )
+        pd-cpp-using-map)))
+
+(defun pd-cpp-get-insertion-point (for)
+  "Returns the correct insertion point for a using or #include statement."
+  (point-min)
+  )
+
+(defun pd-cpp-add-using-and-sort (using-stmt sort-function)
+  "Utility function to add a using statement. Checks for duplicates
+and sorts the using statements."
+  (save-excursion
+    (goto-char (point-min))
+    (unless (search-forward using-stmt nil t)
+      ;; find the first using
+      ;; find the first #include
+      ;; if inserting-include
+      ;;   if got the first include
+      ;;     insert the stmt and a newline before the first include and sort
+      ;;   else
+      ;;     goto point-min and insert the first stmt followed by a blank line
+      ;; if inserting-using
+      ;;   if got the first using
+      ;;     insert the stmt and a newline before the first using and sort
+      ;;   else
+      ;;     if got the first include
+      ;;       find the last include
+      ;;       insert a blank line
+      ;;       insert the using stmt
+      ;;     else
+      ;;       error, we expect the #include to be inserted first.
+      (let ((insertion-point (pd-cpp-get-insertion-point using-stmt)))
+        (goto-char insertion-point)
+        (insert using-stmt "\n")
+        )
+      (funcall sort-function)
+      )
+    ))
+
+(defun pd-cpp-add-using ()
+  "Adds a using statement, and possibly a #include, for the word at point."
+  (interactive)
+  (let* ((w (thing-at-point 'word t))
+         (hdr (pd-cpp-lookup-symbol-header w))
+         (hdr-stmt (concat "#include <" hdr ">"))
+         (using-stmt (concat "using std::" w ";"))
+         )
+    (when (and w hdr)
+      ;; (message "hdr = %s || using = %s" hdr-stmt using-stmt)
+      (pd-cpp-add-using-and-sort hdr-stmt 'pd-c-sort-includes)
+      (pd-cpp-add-using-and-sort using-stmt 'pd-cpp-sort-usings)
+      )))
 
 (defun pd-compile-without-confirmation ()
   "Runs last compilation without asking for confirmation."
@@ -369,8 +568,19 @@ If region is active, apply to active region instead."
 (show-smartparens-global-mode 1)
 (setq sp-show-pair-delay 0)
 
-(setq c-default-style "k&r")
-(setq c-basic-offset 2)
+; The style I want to use in c++ mode.
+(c-add-style "pd-style"
+	     '("k&r"
+	       (indent-tabs-mode . nil)        ; use spaces rather than tabs
+	       (c-basic-offset . 4)            ; indent by four spaces
+	       (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
+                             (brace-list-open . 0)
+                             (statement-case-open . 0)
+                             (arglist-intro . '+)
+                             ))))
+
+(add-hook 'c++-mode-hook (lambda () (c-set-style "pd-style")))
+
 
 (when (eq system-type 'cygwin)
   (setq powershell-location-of-exe
@@ -1130,6 +1340,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-x b")     'helm-mini)
 (define-key global-map (kbd "C-x g")     'magit-status)
 (define-key global-map (kbd "C-x z")     'undo)
+(define-key global-map (kbd "C-z")       'pd-replace-all-in-buffer)
 (define-key global-map (kbd "M-j")       (lambda () (interactive) (join-line -1)))
 (define-key global-map (kbd "M-x")       'helm-M-x)
 (define-key global-map (kbd "M-y")       'helm-show-kill-ring)
