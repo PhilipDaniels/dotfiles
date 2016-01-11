@@ -271,123 +271,141 @@ because it will re-indent the entire buffer."
 
 (defvar pd-cpp-using-map
   '(
-    ;; #include <..> -> list of symbols in that header
-    ("algorithm" . ("all_of" "any_of" "none_of" "for_each" "count" "count_if"
-                    "mismatch" "equal" "find" "find_if" "find_if_not"
-                    "find_end" "find_first_of" "adjacent_find"
-                    "search" "search_n"
-                    "copy" "copy_if" "copy_n" "copy_backward" "move_backward"
-                    "fill" "fill_n" "transform" "generate" "generate_n"
-                    "remove" "remove_if" "remove_copy" "remove_copy_if"
-                    "replace" "replace_if" "replace_copy" "replace_copy_if"
-                    "swap_ranges" "iter_swap" "reverse" "reverse_copy"
-                    "rotate" "rotate_copy" "shuffle" "unique" "unique_copy"
-                    "is_partioned" "partition" "partition_copy"
-                    "stable_partition" "partition_point"
-                    "is_sorted" "is_sorted_until" "sort" "partial_sort"
-                    "partial_sort_copy" "stable_sort" "nth_element"
-                    "lower_bound" "upper_bound" "binary_search" "equal_range"
-                    "merge" "inplace_merge" "includes" "set_difference"
-                    "set_intersection" "set_symmetric_difference" "set_union"
-                    "is_heap" "is_heap_until" "make_heap" "push_heap"
-                    "pop_heap" "sort_heap"
-                    "max" "max_element" "min" "min_element" "minmax"
-                    "minmax_element" "lexicographical_compare"
-                    "is_permutation" "next_permutation" "prev_permutation"
-                    ))
-    ("array" . ("array"))
-    ("cassert" . ("assert"))
-    ("cctype" . ("isalnum" "isalpha" "islower" "isupper" "isdigit" "isxdigit"
-                 "iscntrl" "isgraph" "isspace" "isblank" "isprint" "ispunct"
-                 "tolower" "toupper"))
-    ("cmath" . ("INFINITY" "NAN" "float_t" "double_t" "abs" "fabs"
-                "fmod" "remainder" "remquo" "fma" "fmax" "fmin" "fdim" "nan"
-                "nanf" "nanl" "exp" "exp2" "expm1" "log" "log10" "log2" "log1p"
-                "pow" "sqrt" "cbrt" "hypot" "sin" "cos" "tan" "asin" "acos"
-                "atan" "atan2" "sinh" "cosh" "tanh" "asinh" "acosh" "atanh"
-                "erf" "erfc" "tgamma" "lgamma" "ceil" "floor" "trunc" "round"
-                "lround" "llround" "nearbyint" "rint" "lrint" "llrint"
-                "frexp" "ldexp" "modf" "scalbn" "scalbln" "ilogb" "logb"
-                "nextafter" "nexttoward" "fpclassify" "isfinite" "isinf" "isnan"
-                "isnormal" "signbit" "isgreater" "isgreaterequal" "isless"
-                "islessequal" "islessgreater" "isunordered"
-                ))
-    ("complex" . ("complex" "real" "imag" "norm" "conj" "proj" "polar"))
-    ("cstddef" . ("size_t" "ptrdiff_t" "nullptr_t"))
-    ("cstdint" . ("int8_t" "int16_t" "int32_t" "int64_t"
-                  "uint8_t" "uint16_t" "uint32_t" "uint64_t"))
-    ("deque" . ("deque"))
-    ("forward_list" . ("forward_list"))
-    ("fstream" . ("filebuf" "wfilebuf" "istream" "wifstream" "ofstream"
-                  "wofstream" "fstream" "wfstream" "basic_filebuf"
-                  "basic_ifstream" "basic_ofstream" "basic_fstream"))
-    ("functional" . ("bind" "hash" "function" ))
-    ("iomanip" . ("resetiosflags" "setiosflags" "setbase" "setfill"
-                  "setprecision" "setw" "get_money" "put_money" "get_time"
-                  "put_time" "quoted"))
-    ("iostream" . ("cout" "cin" "cerr" "clog"
-                   "wcout" "wcin" "wcerr" "wclog"
-                   ;; The following are actually in <ios> but we will never need
-                   ;; to use them without <iostream>.
-                   "streamoff" "streamsize" "boolalpha" "noboolalpha"
-                   "showbase" "noshowbase" "showpoint" "noshowpoint"
-                   "showpos" "noshowpos" "skipws" "noskipws"
-                   "uppercase" "nouppercase" "unitbuf" "nounitbuf"
-                   "internal" "left" "right" "dec" "hex" "oct"
-                   "fixed" "scientific" "hexfloat" "defaultfloat"
-                   ;; The following are in <ostream>.
-                   "ends" "flush" "endl" "ostream" "wostream" "basic_ostream"
-                   ;; The following are in <istream>.
-                   "istream" "wistream" "iostream" "wiostream" "ws"
-                   "basic_istream" "basic_iostream"
-                   ))
-    ("iterator" . ("iterator_traits" "iterator" "reverse_iterator"
-                   "move_iterator" "back_insert_iterator"
-                   "front_insert_iterator" "insert_iterator"
-                   "istream_iterator" "ostream_iterator"
-                   "istreambuf_iterator" "ostreambuf_iterator"
-                   "make_reverse_iterator" "make_move_iterator"
-                   "front_inserter" "back_inserter" "inserter"
-                   "advance" "distance" "begin" "cbegin"
-                   "end" "cend" "rbegin" "crbegin" "rend" "crend"
-                   ))
-    ("list" . ("list"))
-    ("map" . ("map" "multimap"))
-    ("memory" . ("unique_ptr" "shared_ptr" "weak_ptr" "make_shared"))
-    ("mutex" . ("mutex" "timed_mutex" "recursive_mutex" "recursive_timed_mutex"
-                "lock_guard" "unique_lock" "defer_lock_t" "try_to_lock_t"
-                "adopt_lock_t" "defer_lock" "try_to_lock" "adopt_lock"
-                "once_flag" "try_lock" "lock" "call_once"))
-    ("numeric" . ("iota" "accumulate" "inner_product" "adjacent_difference"
-                  "partial_sum"))
-    ("queue" . ("queue" "priority_queue"))
-    ("ratio" . ("ratio" "ratio_add" "ratio_subtract" "ratio_multiply"
-                "ratio_divide" "yocto" "zepto" "atto" "femto" "pico" "nano"
-                "micro" "milli" "centi" "deci" "deca" "hecto" "kilo" "mega"
-                "giga" "tera" "peta" "exa" "zetta" "yotta"))
-    ("regex" . ("basic_regex" "regex_match" "regex_search" "regex_replace"
-                "sub_match" "match_results" "regex_iterator"
-                "regex_token_iterator" "regex_error" "regex_traits"))
-    ("set" . ("set" "multiset"))
-    ("shared_mutex" . ("shared_mutex" "shared_timed_mutex" "shared_lock"))
-    ("sstream" . ("stringbuf" "wstringbuf" "istringstream" "wistringstream"
-                  "ostringstream" "wostringstream" "stringstream"
-                  "wstringstream" "basic_stringbuf" "basic_istringstream"
-                  "basic_ostringstream" "basic_stringstream"
-                  ))
-    ("stack" . ("stack"))
-    ("stdexcept" . ("logic_error" "invalid_argument" "domain_error"
-                    "length_error" "out_of_range" "runtime_error" "range_error"
-                    "overflow_error" "underflow_error"))
-    ("streambuf" . ("basic_streambuf" "streambuf" "wstreambuf"))
-    ("string" . ("string" "wstring" "getline" "stoi" "stol" "stoll" "stoul"
-                 "stoull" "stof" "stod" "stold" "to_string" "to_wstring"))
-    ("thread" . ("thread" "yield" "get_id" "sleep_for" "sleep_until"))
-    ("tuple" . ("tuple" "make_tuple"))
-    ("unordered_map" . ("unordered_map" "unordered_multimap"))
-    ("unordered_set" . ("unordered_set" "unordered_multiset"))
-    ("utility" . ("pair" "make_pair" "swap" "move" "exchange" "forward"))
-    ("vector" . ("vector"))
+    ;; The first element is the name of the header to be used in #include <..>
+    ;; and the subsequent elements are the names of symbols that appear in that
+    ;; header.
+    ("algorithm" "all_of" "any_of" "none_of" "for_each" "count" "count_if"
+                 "mismatch" "equal" "find" "find_if" "find_if_not"
+                 "find_end" "find_first_of" "adjacent_find"
+                 "search" "search_n"
+                 "copy" "copy_if" "copy_n" "copy_backward" "move_backward"
+                 "fill" "fill_n" "transform" "generate" "generate_n"
+                 "remove" "remove_if" "remove_copy" "remove_copy_if"
+                 "replace" "replace_if" "replace_copy" "replace_copy_if"
+                 "swap_ranges" "iter_swap" "reverse" "reverse_copy"
+                 "rotate" "rotate_copy" "shuffle" "unique" "unique_copy"
+                 "is_partioned" "partition" "partition_copy"
+                 "stable_partition" "partition_point"
+                 "is_sorted" "is_sorted_until" "sort" "partial_sort"
+                 "partial_sort_copy" "stable_sort" "nth_element"
+                 "lower_bound" "upper_bound" "binary_search" "equal_range"
+                 "merge" "inplace_merge" "includes" "set_difference"
+                 "set_intersection" "set_symmetric_difference" "set_union"
+                 "is_heap" "is_heap_until" "make_heap" "push_heap"
+                 "pop_heap" "sort_heap"
+                 "max" "max_element" "min" "min_element" "minmax"
+                 "minmax_element" "lexicographical_compare"
+                 "is_permutation" "next_permutation" "prev_permutation"
+                 )
+    ("array" "array")
+    ("cassert" "assert")
+    ("cctype" "isalnum" "isalpha" "islower" "isupper" "isdigit" "isxdigit"
+              "iscntrl" "isgraph" "isspace" "isblank" "isprint" "ispunct"
+              "tolower" "toupper")
+    ("cmath" "INFINITY" "NAN" "float_t" "double_t" "abs" "fabs"
+             "fmod" "remainder" "remquo" "fma" "fmax" "fmin" "fdim" "nan"
+             "nanf" "nanl" "exp" "exp2" "expm1" "log" "log10" "log2" "log1p"
+             "pow" "sqrt" "cbrt" "hypot" "sin" "cos" "tan" "asin" "acos"
+             "atan" "atan2" "sinh" "cosh" "tanh" "asinh" "acosh" "atanh"
+             "erf" "erfc" "tgamma" "lgamma" "ceil" "floor" "trunc" "round"
+             "lround" "llround" "nearbyint" "rint" "lrint" "llrint"
+             "frexp" "ldexp" "modf" "scalbn" "scalbln" "ilogb" "logb"
+             "nextafter" "nexttoward" "fpclassify" "isfinite" "isinf" "isnan"
+             "isnormal" "signbit" "isgreater" "isgreaterequal" "isless"
+             "islessequal" "islessgreater" "isunordered"
+             )
+    ("complex" "complex" "real" "imag" "norm" "conj" "proj" "polar")
+    ("cstddef" "offsetof" "size_t" "ptrdiff_t" "nullptr_t" "max_align_t")
+    ("cstdint" "int8_t" "int16_t" "int32_t" "int64_t"
+               "uint8_t" "uint16_t" "uint32_t" "uint64_t"
+               "intmax_t" "intptr_t" "uintmax_t" "uintptr_t")
+    ("deque" "deque")
+    ("forward_list" "forward_list")
+    ("fstream" "basic_filebuf" "basic_ifstream" "basic_ofstream" "basic_fstream"
+               "filebuf" "wfilebuf" "fistream" "wifstream" "ofstream"
+               "wofstream" "fstream" "wfstream")
+    ("functional" "mem_fn" "bad_function_call" "is_bind_expression"
+                  "is_placeholder" "reference_wrapper" "bind" "hash" "function"
+                  "plus" "minus" "multiplies" "divides" "modulus" "negate"
+                  "equal_to" "not_equal_to"
+                  "greater" "less" "greater_equal" "less_equal"
+                  "logical_and" "logical_or" "logical_not"
+                  "bit_and" "bit_or" "bit_xor"
+                  "unary_negate" "binary_negate" "not1" "not2")
+    ("iomanip" "resetiosflags" "setiosflags" "setbase" "setfill"
+               "setprecision" "setw" "get_money" "put_money" "get_time"
+               "put_time" "quoted")
+    ("iostream" "cin" "cout" "cerr" "clog"
+                "wcout" "wcin" "wcerr" "wclog"
+                ;; The following are actually in <ios> but we will never need
+                ;; to use them without <iostream>.
+                "ios_base" "basic_ios" "fpos" "io_errc" "iostream_category"
+                "streamoff" "streamsize"
+                "make_error_code" "make_error_condition"
+                "boolalpha" "noboolalpha"
+                "showbase" "noshowbase" "showpoint" "noshowpoint"
+                "showpos" "noshowpos" "skipws" "noskipws"
+                "uppercase" "nouppercase" "unitbuf" "nounitbuf"
+                "internal" "left" "right" "dec" "hex" "oct"
+                "fixed" "scientific" "hexfloat" "defaultfloat"
+                ;; The following are in <ostream>.
+                "basic_ostream" "ostream" "wostream" "ends" "flush" "endl"
+                ;; The following are in <istream>.
+                "basic_istream" "istream" "wistream"
+                "basic_iostream" "iostream" "wiostream" "ws"
+                )
+    ("iterator" "iterator_traits" "input_iterator_tag" "output_iterator_tag"
+                "forward_iterator_tag" "bidirectional_iterator_tag"
+                "random_access_iterator_tag"
+                "iterator" "reverse_iterator"
+                "move_iterator" "back_insert_iterator"
+                "front_insert_iterator" "insert_iterator"
+                "istream_iterator" "ostream_iterator"
+                "istreambuf_iterator" "ostreambuf_iterator"
+                "make_reverse_iterator" "make_move_iterator"
+                "front_inserter" "back_inserter" "inserter"
+                "advance" "distance" "next" "prev" "begin" "cbegin"
+                "end" "cend" "rbegin" "crbegin" "rend" "crend"
+                )
+    ("list" "list")
+    ("map" "map" "multimap")
+    ("memory" "unique_ptr" "shared_ptr" "weak_ptr" "make_shared" "addressof")
+    ("mutex" "mutex" "timed_mutex" "recursive_mutex" "recursive_timed_mutex"
+             "lock_guard" "unique_lock" "defer_lock_t" "try_to_lock_t"
+             "adopt_lock_t" "defer_lock" "try_to_lock" "adopt_lock"
+             "once_flag" "try_lock" "lock" "call_once")
+    ("numeric" "iota" "accumulate" "inner_product" "adjacent_difference"
+               "partial_sum")
+    ("queue" "queue" "priority_queue")
+    ("ratio" "ratio" "ratio_add" "ratio_subtract" "ratio_multiply"
+             "ratio_divide" "yocto" "zepto" "atto" "femto" "pico" "nano"
+             "micro" "milli" "centi" "deci" "deca" "hecto" "kilo" "mega"
+             "giga" "tera" "peta" "exa" "zetta" "yotta")
+    ("regex" "basic_regex" "sub_match" "match_results"
+             "regex_match" "regex_search" "regex_replace"
+             "regex_iterator" "regex_token_iterator"
+             "regex_error" "regex_traits")
+    ("set" "set" "multiset")
+    ("shared_mutex" "shared_mutex" "shared_timed_mutex" "shared_lock")
+    ("sstream" "basic_stringbuf" "basic_istringstream"
+               "basic_ostringstream" "basic_stringstream"
+               "stringbuf" "wstringbuf" "istringstream" "wistringstream"
+               "ostringstream" "wostringstream"
+               "stringstream" "wstringstream")
+    ("stack" "stack")
+    ("stdexcept" "logic_error" "invalid_argument" "domain_error"
+                 "length_error" "out_of_range" "runtime_error" "range_error"
+                 "overflow_error" "underflow_error")
+    ("streambuf" "basic_streambuf" "streambuf" "wstreambuf")
+    ("string" "char_traits" "basic_string" "string" "wstring"
+              "u16string" "u32string" "getline" "stoi" "stol" "stoll" "stoul"
+              "stoull" "stof" "stod" "stold" "to_string" "to_wstring")
+    ("thread" "thread" "yield" "get_id" "sleep_for" "sleep_until")
+    ("tuple" "tuple" "make_tuple")
+    ("unordered_map" "unordered_map" "unordered_multimap")
+    ("unordered_set" "unordered_set" "unordered_multiset")
+    ("utility" "pair" "make_pair" "swap" "move" "exchange" "forward")
+    ("vector" "vector")
     )
   "Maps words such as 'cout' to the C++ standard header used to #include them."
   )
@@ -399,12 +417,7 @@ CPP-SYMBOL is not a known symbol.
 Symbols are looked up in the variable PD-CPP-USING-MAP."
   (car (-first
         (lambda (cpp-mapping)
-          (let ((header (car cpp-mapping))
-                (symbols (cdr cpp-mapping))
-                )
-            (-first (lambda (s) (string= s cpp-symbol)) symbols)
-            )
-          )
+          (member cpp-symbol (cdr cpp-mapping)))
         pd-cpp-using-map)))
 
 (defun pd-cpp-add-include-and-sort (include-stmt)
@@ -420,7 +433,8 @@ before inserting and sorts the #include block."
           )
         (goto-char insertion-point)
         (insert include-stmt "\n")
-        (pd-c-sort-includes)))))
+        (pd-c-sort-includes)
+        ))))
 
 (defun pd-cpp-add-using-and-sort (using-stmt)
   "Utility function to add a using statement. Checks for duplicates
@@ -436,21 +450,25 @@ and sorts the using block."
                (setq insertion-point (cdr (pd-find-first-paragraph-starting "^#include")))
                (goto-char insertion-point)
                (insert "\n" using-stmt "\n")))
-        (pd-cpp-sort-usings)))))
+        (pd-cpp-sort-usings)
+        ))))
 
 (defun pd-cpp-add-using ()
   "Adds a using statement, and possibly a #include, for the C++ word at point."
   (interactive)
-  (let* ((w (thing-at-point 'word t))
+  (let* ((w (thing-at-point 'symbol t))
          (hdr (pd-cpp-lookup-symbol-header w))
          (include-stmt (concat "#include <" hdr ">"))
          (using-stmt (concat "using std::" w ";"))
          )
+    ;; (message "Adding using and #include for %s" w)
     (when (and w hdr)
       ;; Always add the #include first, so that there will be a #include
-      ;; block in existence when we come to add the using statement.
+      ;; block in existence when we come to add the using statement. Don't
+      ;; add using statements in headers.
       (pd-cpp-add-include-and-sort include-stmt)
-      (pd-cpp-add-using-and-sort using-stmt)
+      (unless (s-ends-with? ".hpp" (buffer-name) t)
+        (pd-cpp-add-using-and-sort using-stmt))
       )))
 
 (defun pd-compile-without-confirmation ()
