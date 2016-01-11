@@ -231,7 +231,7 @@ with the specified string S."
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (let ((m (re-search-forward s)))
+    (let ((m (re-search-forward s nil t)))
       (if m
           (bounds-of-thing-at-point 'paragraph)))))
 
@@ -404,55 +404,56 @@ Symbols are looked up in the variable PD-CPP-USING-MAP."
           )
         pd-cpp-using-map)))
 
-(defun pd-cpp-get-insertion-point (for)
-  "Returns the correct insertion point for a using or #include statement."
-  (point-min)
-  )
-
-(defun pd-cpp-add-using-and-sort (using-stmt sort-function)
-  "Utility function to add a using statement. Checks for duplicates
-and sorts the using statements."
+(defun pd-cpp-add-include-and-sort (include-stmt)
+  "Utility function to add a #include statement. Checks for duplicates
+before inserting and sorts the #include block."
   (save-excursion
     (goto-char (point-min))
-    (unless (search-forward using-stmt nil t)
-      ;; find the first using
-      ;; find the first #include
-      ;; if inserting-include
-      ;;   if got the first include
-      ;;     insert the stmt and a newline before the first include and sort
-      ;;   else
-      ;;     goto point-min and insert the first stmt followed by a blank line
-      ;; if inserting-using
-      ;;   if got the first using
-      ;;     insert the stmt and a newline before the first using and sort
-      ;;   else
-      ;;     if got the first include
-      ;;       find the last include
-      ;;       insert a blank line
-      ;;       insert the using stmt
-      ;;     else
-      ;;       error, we expect the #include to be inserted first.
-      (let ((insertion-point (pd-cpp-get-insertion-point using-stmt)))
+    (unless (search-forward include-stmt nil t)
+      (let* ((bounds (pd-find-first-paragraph-starting "^#include"))
+             (insertion-point (or (car bounds) (point-min)))
+             )
         (goto-char insertion-point)
-        (insert using-stmt "\n")
-        )
-      (funcall sort-function)
-      )
-    ))
+        (insert include-stmt "\n")
+        (pd-c-sort-includes)))))
+
+(defun pd-cpp-add-using-and-sort (using-stmt)
+  "Utility function to add a using statement. Checks for duplicates
+and sorts the using block."
+  (save-excursion
+    (goto-char (point-min))
+    (message "p = %s" (point))
+    (unless (search-forward using-stmt nil t)
+      ;; Is there a using block already?
+      (let ((bounds (pd-find-first-paragraph-starting "^using ")))
+        ;; If not, add one after the last contiguous #include statement.
+        (message "bounds = %s" bounds)))))
+        ;; (if insertion-point
+        ;;     (progn
+        ;;       (message "block1")
+        ;;       (goto-char insertion-point)
+        ;;       (insert using-stmt "\n")
+        ;;       )
+        ;;   (setq insertion-point (cdr (pd-find-first-paragraph-starting "#include")))
+        ;;   (goto-char insertion-point)
+        ;;   (insert "\n" using-stmt "\n")
+        ;;   )
+        ;; (pd-cpp-sort-usings)
+        ;; ))))
 
 (defun pd-cpp-add-using ()
-  "Adds a using statement, and possibly a #include, for the word at point."
+  "Adds a using statement, and possibly a #include, for the C++ word at point."
   (interactive)
   (let* ((w (thing-at-point 'word t))
          (hdr (pd-cpp-lookup-symbol-header w))
-         (hdr-stmt (concat "#include <" hdr ">"))
+         (include-stmt (concat "#include <" hdr ">"))
          (using-stmt (concat "using std::" w ";"))
          )
     (when (and w hdr)
-      ;; (message "hdr = %s || using = %s" hdr-stmt using-stmt)
-      (pd-cpp-add-using-and-sort hdr-stmt 'pd-c-sort-includes)
-      (pd-cpp-add-using-and-sort using-stmt 'pd-cpp-sort-usings)
-      )))
+      ;; Always add the #include first, so that there will be a #include
+      ;; block in existence when we come to add the using statement.
+      (pd-cpp-add-include-and-sort include-stmt)
+      (pd-cpp-add-using-and-sort using-stmt))))
 
 (defun pd-compile-without-confirmation ()
   "Runs last compilation without asking for confirmation."
@@ -576,7 +577,7 @@ If region is active, apply to active region instead."
 	       (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
                              (brace-list-open . 0)
                              (statement-case-open . 0)
-                             (arglist-intro . '+)
+                             (arglist-intro . 0)
                              ))))
 
 (add-hook 'c++-mode-hook (lambda () (c-set-style "pd-style")))
@@ -1345,6 +1346,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "M-x")       'helm-M-x)
 (define-key global-map (kbd "M-y")       'helm-show-kill-ring)
 
+(define-key global-map (kbd "<apps> a")  'pd-cpp-add-using)
 (define-key global-map (kbd "<apps> cc") 'pd-cleanup-programming-buffer)
 (define-key global-map (kbd "<apps> dl") 'pd-duplicate-line-or-region)
 (define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
