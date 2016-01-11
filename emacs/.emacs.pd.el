@@ -227,13 +227,16 @@ system library includes such as #include <...> appear before
 
 (defun pd-find-first-paragraph-starting (s)
   "Returns the (BEG . END) point of the first paragraph, if any, that starts
-with the specified string S."
+with the specified string S.
+
+For some reason this function tends to return leading whitespace. I consider
+this to be a bug."
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (let ((m (re-search-forward s nil t)))
-      (if m
-          (bounds-of-thing-at-point 'paragraph)))))
+    (let ((p (re-search-forward s nil t)))
+      (when p
+        (bounds-of-thing-at-point 'paragraph)))))
 
 (defun pd-c-sort-includes ()
   "Sort the #include block at the beginning of a file. The cursor does not
@@ -410,9 +413,11 @@ before inserting and sorts the #include block."
   (save-excursion
     (goto-char (point-min))
     (unless (search-forward include-stmt nil t)
-      (let* ((bounds (pd-find-first-paragraph-starting "^#include"))
-             (insertion-point (or (car bounds) (point-min)))
-             )
+      (let ((insertion-point (cdr (pd-find-first-paragraph-starting "^#include"))))
+        (unless insertion-point
+          (insert "\n")
+          (setq insertion-point (point-min))
+          )
         (goto-char insertion-point)
         (insert include-stmt "\n")
         (pd-c-sort-includes)))))
@@ -422,24 +427,16 @@ before inserting and sorts the #include block."
 and sorts the using block."
   (save-excursion
     (goto-char (point-min))
-    (message "p = %s" (point))
     (unless (search-forward using-stmt nil t)
-      ;; Is there a using block already?
-      (let ((bounds (pd-find-first-paragraph-starting "^using ")))
-        ;; If not, add one after the last contiguous #include statement.
-        (message "bounds = %s" bounds)))))
-        ;; (if insertion-point
-        ;;     (progn
-        ;;       (message "block1")
-        ;;       (goto-char insertion-point)
-        ;;       (insert using-stmt "\n")
-        ;;       )
-        ;;   (setq insertion-point (cdr (pd-find-first-paragraph-starting "#include")))
-        ;;   (goto-char insertion-point)
-        ;;   (insert "\n" using-stmt "\n")
-        ;;   )
-        ;; (pd-cpp-sort-usings)
-        ;; ))))
+      (let ((insertion-point (cdr (pd-find-first-paragraph-starting "^using "))))
+        (cond (insertion-point
+               (goto-char insertion-point)
+               (insert using-stmt "\n"))
+              (t
+               (setq insertion-point (cdr (pd-find-first-paragraph-starting "^#include")))
+               (goto-char insertion-point)
+               (insert "\n" using-stmt "\n")))
+        (pd-cpp-sort-usings)))))
 
 (defun pd-cpp-add-using ()
   "Adds a using statement, and possibly a #include, for the C++ word at point."
@@ -453,7 +450,8 @@ and sorts the using block."
       ;; Always add the #include first, so that there will be a #include
       ;; block in existence when we come to add the using statement.
       (pd-cpp-add-include-and-sort include-stmt)
-      (pd-cpp-add-using-and-sort using-stmt))))
+      (pd-cpp-add-using-and-sort using-stmt)
+      )))
 
 (defun pd-compile-without-confirmation ()
   "Runs last compilation without asking for confirmation."
