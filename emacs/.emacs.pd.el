@@ -983,7 +983,7 @@ search at index 0."
   ("q" nil "cancel")
   )
 
-(global-set-key (kbd "M-#") 'hydra-windows/body)
+(global-set-key (kbd "C-#") 'hydra-windows/body)
 
 (defhydra hydra-fonts ()
   "Adjust font size and face with hydra."
@@ -993,7 +993,7 @@ search at index 0."
   ("p" (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)) "previous font")
   ("q" nil "cancel"))
 
-(global-set-key (kbd "C-# f") 'hydra-fonts/body)
+(global-set-key (kbd "C-<f12> f") 'hydra-fonts/body)
 
 ;; Create a hydra to switch themes. We use the Emacs 24 theme engine (aka
 ;; deftheme) only, not the old color-theme.el engine.
@@ -1118,7 +1118,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   ("q"  nil)
   )
 
-(global-set-key (kbd "C-# t") 'hydra-themes/body)
+(global-set-key (kbd "C-<f12> t") 'hydra-themes/body)
 (pd-load-theme 'solarized 'dark)
 
 (message "HYDRAS - END.")
