@@ -339,7 +339,7 @@ because it will re-indent the entire buffer."
                 "wcout" "wcin" "wcerr" "wclog"
                 ;; The following are actually in <ios> but we will never need
                 ;; to use them without <iostream>.
-                "ios_base" "basic_ios" "fpos" "io_errc" "iostream_category"
+                "ios" "ios_base" "basic_ios" "fpos" "io_errc" "iostream_category"
                 "streamoff" "streamsize"
                 "make_error_code" "make_error_condition"
                 "boolalpha" "noboolalpha"
