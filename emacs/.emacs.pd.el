@@ -332,6 +332,7 @@ because it will re-indent the entire buffer."
                   "logical_and" "logical_or" "logical_not"
                   "bit_and" "bit_or" "bit_xor"
                   "unary_negate" "binary_negate" "not1" "not2")
+    ("initializer_list" "initializer_list")
     ("iomanip" "resetiosflags" "setiosflags" "setbase" "setfill"
                "setprecision" "setw" "get_money" "put_money" "get_time"
                "put_time" "quoted")
