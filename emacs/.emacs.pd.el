@@ -387,10 +387,13 @@ because it will re-indent the entire buffer."
              "ratio_divide" "yocto" "zepto" "atto" "femto" "pico" "nano"
              "micro" "milli" "centi" "deci" "deca" "hecto" "kilo" "mega"
              "giga" "tera" "peta" "exa" "zetta" "yotta")
-    ("regex" "basic_regex" "sub_match" "match_results"
-             "regex_match" "regex_search" "regex_replace"
-             "regex_iterator" "regex_token_iterator"
-             "regex_error" "regex_traits")
+    ("regex" "regex" "smatch" "ssub_match" "sregex_iterator" "scregex_token_iterator"
+              "cmatch" "csub_match" "cregex_iterator" "cregex_token_iterator"
+              "wregex" "wsmatch" "wssub_match" "wsregex_iterator"
+              "wcmatch" "wcsub_match" "wcregex_iterator" "wcregex_token_iterator"
+              "basic_regex" "sub_match" "match_results" "regex_match"
+              "regex_search" "regex_replace" "regex_iterator"
+              "regex_token_iterator" "regex_error" "regex_traits")
     ("set" "set" "multiset")
     ("shared_mutex" "shared_mutex" "shared_timed_mutex" "shared_lock")
     ("sstream" "basic_stringbuf" "basic_istringstream"
@@ -407,7 +410,7 @@ because it will re-indent the entire buffer."
               "u16string" "u32string" "getline" "stoi" "stol" "stoll" "stoul"
               "stoull" "stof" "stod" "stold" "to_string" "to_wstring")
     ("thread" "thread" "yield" "get_id" "sleep_for" "sleep_until")
-    ("tuple" "tuple" "make_tuple")
+    ("tuple" "tuple" "make_tuple" "get")
     ("unordered_map" "unordered_map" "unordered_multimap")
     ("unordered_set" "unordered_set" "unordered_multiset")
     ("utility" "pair" "make_pair" "swap" "move" "exchange" "forward")
