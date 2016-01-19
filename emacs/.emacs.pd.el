@@ -145,6 +145,11 @@ From http://stackoverflow.com/questions/88399"
            (new-string (read-string "NEW string: " old-string)))
       (replace-string old-string new-string nil (point-min) (point-max)))))
 
+(defun pd-no-space ()
+  "A version of just-one-space that leaves no spaces."
+  (interactive)
+  (just-one-space 0))
+
 (defun pd-untabify-buffer ()
   "Run untabify on the entire buffer."
   (interactive)
@@ -1309,12 +1314,12 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 
 ;; ******************* Arrow keys ********************
 ;; Hopefully this will have better compatibility with org-mode.
-(define-key global-map (kbd "C-<up>") 'windmove-up)
-(define-key global-map (kbd "C-<down>") 'windmove-down)
-(define-key global-map (kbd "C-<left>") 'windmove-left)
-(define-key global-map (kbd "C-<right>") 'windmove-right)
+(define-key global-map (kbd "C-<up>")      'windmove-up)
+(define-key global-map (kbd "C-<down>")    'windmove-down)
+(define-key global-map (kbd "C-<left>")    'windmove-left)
+(define-key global-map (kbd "C-<right>")   'windmove-right)
 
-(define-key global-map (kbd "C-M-<left>") 'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
+(define-key global-map (kbd "C-M-<left>")  'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
 (define-key global-map (kbd "C-M-<right>") 'end-of-defun)
 
 ;; ******************* Small pad keys ********************
@@ -1362,6 +1367,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "M-j")       (lambda () (interactive) (join-line -1)))
 (define-key global-map (kbd "M-x")       'helm-M-x)
 (define-key global-map (kbd "M-y")       'helm-show-kill-ring)
+(define-key global-map (kbd "M-SPC")     'pd-no-space)
 
 (define-key global-map (kbd "<apps> a")  'pd-cpp-add-using)
 (define-key global-map (kbd "<apps> cc") 'pd-cleanup-programming-buffer)
