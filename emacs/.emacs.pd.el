@@ -393,7 +393,13 @@ because it will re-indent the entire buffer."
               "wcmatch" "wcsub_match" "wcregex_iterator" "wcregex_token_iterator"
               "basic_regex" "sub_match" "match_results" "regex_match"
               "regex_search" "regex_replace" "regex_iterator"
-              "regex_token_iterator" "regex_error" "regex_traits")
+              "regex_token_iterator" "regex_error" "regex_traits"
+              ;; These constants are actually in std::regex_constants::xxx.
+              "match_default" "match_not_bol" "match_not_eol" "match_not_bow"
+              "match_not_eow" "match_any" "match_not_null" "match_continuous"
+              "match_prev_avail" "format_default" "format_sed"
+              "format_no_copy" "format_first_only"
+              )
     ("set" "set" "multiset")
     ("shared_mutex" "shared_mutex" "shared_timed_mutex" "shared_lock")
     ("sstream" "basic_stringbuf" "basic_istringstream"
