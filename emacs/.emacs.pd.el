@@ -14,6 +14,7 @@
 (add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 
 (require 'buffer-move)
+(require 'cycle-buffer)
 (require 'dash)
 (require 'dedicated)
 (require 'expand-region)
@@ -327,7 +328,7 @@ because it will re-indent the entire buffer."
     ("deque" "deque")
     ("forward_list" "forward_list")
     ("fstream" "basic_filebuf" "basic_ifstream" "basic_ofstream" "basic_fstream"
-               "filebuf" "wfilebuf" "fistream" "wifstream" "ofstream"
+               "filebuf" "wfilebuf" "ifstream" "wifstream" "ofstream"
                "wofstream" "fstream" "wfstream")
     ("functional" "mem_fn" "bad_function_call" "is_bind_expression"
                   "is_placeholder" "reference_wrapper" "bind" "hash" "function"
@@ -477,6 +478,7 @@ and sorts the using block."
          (using-stmt (concat "using std::" w ";"))
          )
     ;; (message "Adding using and #include for %s" w)
+    ;; TODO: Always sort, even if we do not add.
     (when (and w hdr)
       ;; Always add the #include first, so that there will be a #include
       ;; block in existence when we come to add the using statement. Don't
@@ -1310,8 +1312,15 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;;(define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/.emacs.pd.el")))
 ;;(define-key global-map (kbd "S-<f2>") (lambda () (interactive) (find-file "~/work.org")))
 ;;(define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
-(define-key global-map (kbd "<f12>") 'sr-speedbar-toggle)
-(define-key global-map (kbd "S-<f12>") 'sr-speedbar-select-window)
+
+(define-key global-map (kbd "<f9>")      'cycle-buffer-backward)
+(define-key global-map (kbd "<f10>")     'cycle-buffer)
+(define-key global-map (kbd "S-<f9>")    'cycle-buffer-backward-permissive)
+(define-key global-map (kbd "S-<f10>")   'cycle-buffer-permissive)
+(define-key global-map (kbd "C-<f9>")    (lambda () (interactive) (kill-buffer nil)))
+(define-key global-map (kbd "C-<f10>")   'bury-buffer)
+(define-key global-map (kbd "<f12>")     'sr-speedbar-toggle)
+(define-key global-map (kbd "S-<f12>")   'sr-speedbar-select-window)
 ;; (define-key global-map (kbd "<S-f2>") 'menu-bar-open)
 ;; (define-key global-map (kbd "<C-f2>") 'menu-bar-open)
 ;; f3, f4 = macros start and end.
