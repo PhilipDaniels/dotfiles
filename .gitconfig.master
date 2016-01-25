@@ -37,6 +37,7 @@
     b = branch -a -vv
     c = diff --check
     cc = diff --check --cached
+    rod = rebase -i origin/develop
     # Do a git add followed by a git status. This is the syntax to define ashell function,
     # which can be used to execute arbitrary commands.
     as = "'!f() { git add .; git status; }; f'"
