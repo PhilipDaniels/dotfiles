@@ -469,14 +469,17 @@ and sorts the using block."
         (pd-cpp-sort-usings)
         ))))
 
+(defvar pd-cpp-use-std-namespace t
+  "If non-nil, inserts 'using namespace std;' instead of 'using std::symbol;'")
+
 (defun pd-cpp-add-using ()
   "Adds a using statement, and possibly a #include, for the C++ word at point."
   (interactive)
   (let* ((w (thing-at-point 'symbol t))
          (hdr (pd-cpp-lookup-symbol-header w))
          (include-stmt (concat "#include <" hdr ">"))
-         (using-stmt (concat "using std::" w ";"))
-         )
+         (using-stmt (if pd-cpp-use-std-namespace "using namespace std;"
+                       (concat "using std::" w ";"))))
     ;; (message "Adding using and #include for %s" w)
     ;; TODO: Always sort, even if we do not add.
     (when (and w hdr)
