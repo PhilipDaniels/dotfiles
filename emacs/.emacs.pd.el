@@ -438,14 +438,21 @@ Symbols are looked up in the variable PD-CPP-USING-MAP."
 
 (defun pd-cpp-add-include-and-sort (include-stmt)
   "Utility function to add a #include statement. Checks for duplicates
-before inserting and sorts the #include block."
+before inserting and sorts the #include block. If the file starts with
+#pragma once or #ifndef...#define, the insertion occurs after them, which
+makes it work correctly in header files."
   (save-excursion
     (goto-char (point-min))
     (unless (search-forward include-stmt nil t)
       (let ((insertion-point (cdr (pd-find-first-paragraph-starting "^#include"))))
         (unless insertion-point
-          (insert "\n")
-          (setq insertion-point (point-min))
+          (goto-char (point-min))
+          (setq insertion-point (re-search-forward "#pragma once.*$\\|#ifndef .*\n#define .*$" 1000 t))
+          (cond (insertion-point
+                 (insert "\n\n")
+                 (setq insertion-point (+ insertion-point 2)))
+                (t
+                 (setq insertion-point (point-min))))
           )
         (goto-char insertion-point)
         (insert include-stmt "\n")
