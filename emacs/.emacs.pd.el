@@ -146,10 +146,18 @@ From http://stackoverflow.com/questions/88399"
            (new-string (read-string "NEW string: " old-string)))
       (replace-string old-string new-string nil (point-min) (point-max)))))
 
-(defun pd-no-space ()
-  "A version of just-one-space that leaves no spaces."
+(defun pd-join-line ()
+  "Joins a line with the next line, leaving no space."
   (interactive)
-  (just-one-space 0))
+  (join-line -1))
+
+(defun pd-no-space ()
+  "A version of just-one-space that leaves no spaces. If at the end
+of a line, calls pd-join-line."
+  (interactive)
+  (if (eolp)
+      (pd-join-line)
+    (just-one-space 0)))
 
 (defun pd-untabify-buffer ()
   "Run untabify on the entire buffer."
@@ -1392,7 +1400,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-x g")     'magit-status)
 (define-key global-map (kbd "C-x z")     'undo)
 (define-key global-map (kbd "C-z")       'pd-replace-all-in-buffer)
-(define-key global-map (kbd "M-j")       (lambda () (interactive) (join-line -1)))
+(define-key global-map (kbd "M-j")       'pd-join-line)
 (define-key global-map (kbd "M-x")       'helm-M-x)
 (define-key global-map (kbd "M-y")       'helm-show-kill-ring)
 (define-key global-map (kbd "M-SPC")     'pd-no-space)
