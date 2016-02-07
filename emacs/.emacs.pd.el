@@ -339,7 +339,7 @@ because it will re-indent the entire buffer."
      "printf" "fprintf" "sprintf" "snprintf" "vprintf" "vfprintf"
      "vsprintf" "vsnprintf" "ftell" "fgetpos" "fseek" "fsetpos" "rewind"
      "clearerr" "feof" "ferror" "perror" "rename" "tmpfile" "tmpnam"
-     ;; don't include the remove function because it is also an algorithm.
+     ;; don't include the remove function because it is also in algorithm.
      )
     ("deque" "deque")
     ("forward_list" "forward_list")
@@ -523,25 +523,81 @@ BUFFER-NAME defaults to the current buffer."
 (defun pd-cpp-add-using ()
   "Adds a using statement, and possibly a #include, for the C++ word at point."
   (interactive)
-  (let* ((w (thing-at-point 'symbol t))
-         (main-include (pd-cpp-lookup-symbol-header w pd-cpp-include-map))
-         ;; If w is a symbol defined in pd-cpp-header-include-map and we are in
-         ;; a header file, favour including that header instead.
-         (hdr-include (if (pd-cpp-header-p)
-                          (pd-cpp-lookup-symbol-header w pd-cpp-header-include-map)))
-         (include-stmt (if hdr-include
-                           (concat "#include <" hdr-include ">")
-                         (if main-include (concat "#include <" main-include ">"))))
-         (using-stmt (if pd-cpp-use-std-namespace "using namespace std;"
-                       (concat "using std::" w ";"))))
-    (when (and w include-stmt)
-      ;; Always add the #include first, so that there will be a #include
-      ;; block in existence when we come to add the using statement. Don't
-      ;; add using statements in headers.
-      (pd-cpp-add-include-and-sort include-stmt)
-      (unless (pd-cpp-header-p)
-        (pd-cpp-add-using-and-sort using-stmt))
-        )))
+  ;; Because this function can be called automatically when typing certain
+  ;; commonly occuring characters, optimize for early exit if there is no
+  ;; match for a symbol.
+  (let ((w (thing-at-point 'symbol t)))
+    (when w
+      (let ((main-include (pd-cpp-lookup-symbol-header w pd-cpp-include-map)))
+        (when main-include
+          ;; If w is a symbol defined in pd-cpp-header-include-map and we are in
+          ;; a header file, favour including that header instead.
+          (let* ((hdr-include (if (pd-cpp-header-p)
+                                  (pd-cpp-lookup-symbol-header w pd-cpp-header-include-map)))
+                 (include-stmt (if hdr-include
+                                   (concat "#include <" hdr-include ">")
+                                 (concat "#include <" main-include ">")))
+                 (using-stmt (if pd-cpp-use-std-namespace "using namespace std;"
+                               (concat "using std::" w ";"))))
+            ;; Always add the #include first, so that there will be a #include
+            ;; block in existence when we come to add the using statement. Don't
+            ;; add using statements in headers.
+            (pd-cpp-add-include-and-sort include-stmt)
+            (unless (pd-cpp-header-p)
+              (pd-cpp-add-using-and-sort using-stmt))
+            ))))))
+  ;; (let* ((w (thing-at-point 'symbol t))
+  ;;        (main-include (pd-cpp-lookup-symbol-header w pd-cpp-include-map))
+  ;;        ;; If w is a symbol defined in pd-cpp-header-include-map and we are in
+  ;;        ;; a header file, favour including that header instead.
+  ;;        (hdr-include (if (pd-cpp-header-p)
+  ;;                         (pd-cpp-lookup-symbol-header w pd-cpp-header-include-map)))
+  ;;        (include-stmt (if hdr-include
+  ;;                          (concat "#include <" hdr-include ">")
+  ;;                        (if main-include (concat "#include <" main-include ">"))))
+  ;;        (using-stmt (if pd-cpp-use-std-namespace "using namespace std;"
+  ;;                      (concat "using std::" w ";"))))
+  ;;   (when (and w include-stmt)
+  ;;     ;; Always add the #include first, so that there will be a #include
+  ;;     ;; block in existence when we come to add the using statement. Don't
+  ;;     ;; add using statements in headers.
+  ;;     (pd-cpp-add-include-and-sort include-stmt)
+  ;;     (unless (pd-cpp-header-p)
+  ;;       (pd-cpp-add-using-and-sort using-stmt))
+  ;;       )))
+
+(defvar pd-cpp-auto-include-characters "(<&* "
+  "A list of characters which trigger automatic insertion of headers
+and using statements for the previous symbol. NOT USED.")
+
+(defun pd-cpp-auto-include-maybe (arg)
+  "Automatically insert an appropriate C/C++ #include statement if
+we are not in a comment or a string."
+  (interactive "p")
+  ;; Are we in a comment or a string?
+  (when (null (nth 8 (syntax-ppss)))
+    (pd-cpp-add-using))
+  (self-insert-command arg))
+
+(defvar pd-cpp-auto-include-keymap
+  (let ((map (make-sparse-keymap)))
+    (define-key map [?(] 'pd-cpp-auto-include-maybe)
+    (define-key map [?<] 'pd-cpp-auto-include-maybe)
+    (define-key map [?>] 'pd-cpp-auto-include-maybe)
+    (define-key map [?&] 'pd-cpp-auto-include-maybe)
+    (define-key map [?*] 'pd-cpp-auto-include-maybe)
+    (define-key map [? ] 'pd-cpp-auto-include-maybe)
+    map)
+  "Keymap for auto-inserting #include statements in C++ mode. Certain
+characters, such as space and '(<>&*' trigger the automatic insertion.")
+
+(define-minor-mode pd-cpp-auto-include-mode
+  "When enabled, automatically inserts a C/C++ #include statement
+for the symbol just typed."
+  nil
+  "caut"
+  pd-cpp-auto-include-keymap
+  )
 
 (defun pd-compile-without-confirmation ()
   "Runs last compilation without asking for confirmation."
