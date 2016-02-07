@@ -433,7 +433,7 @@ because it will re-indent the entire buffer."
     )
   "Map words such as 'cout' and 'vector' to the C++ standard header used to
 #include them. These definitions are used in cpp files, and header files
-if there is no override defined in PD-CPP-HEADER-INCLUDE-MAP."
+unless there is an override defined in PD-CPP-HEADER-INCLUDE-MAP."
   )
 
 (defvar pd-cpp-header-include-map
@@ -459,9 +459,7 @@ PD-CPP-INCLUDE-MAP."
 
 (defun pd-cpp-lookup-symbol-header (cpp-symbol include-map)
   "Returns the appropriate C++ header file for a symbol, or nil if
-CPP-SYMBOL is not a known symbol.
-
-Symbols are looked up in the variable PD-CPP-INCLUDE-MAP."
+CPP-SYMBOL is not a known symbol."
   (car (-first
         (lambda (cpp-mapping)
           (member cpp-symbol (cdr cpp-mapping)))
@@ -534,9 +532,7 @@ BUFFER-NAME defaults to the current buffer."
           ;; a header file, favour including that header instead.
           (let* ((hdr-include (if (pd-cpp-header-p)
                                   (pd-cpp-lookup-symbol-header w pd-cpp-header-include-map)))
-                 (include-stmt (if hdr-include
-                                   (concat "#include <" hdr-include ">")
-                                 (concat "#include <" main-include ">")))
+                 (include-stmt (concat "#include <" (or hdr-include main-include) ">"))
                  (using-stmt (if pd-cpp-use-std-namespace "using namespace std;"
                                (concat "using std::" w ";"))))
             ;; Always add the #include first, so that there will be a #include
@@ -546,33 +542,14 @@ BUFFER-NAME defaults to the current buffer."
             (unless (pd-cpp-header-p)
               (pd-cpp-add-using-and-sort using-stmt))
             ))))))
-  ;; (let* ((w (thing-at-point 'symbol t))
-  ;;        (main-include (pd-cpp-lookup-symbol-header w pd-cpp-include-map))
-  ;;        ;; If w is a symbol defined in pd-cpp-header-include-map and we are in
-  ;;        ;; a header file, favour including that header instead.
-  ;;        (hdr-include (if (pd-cpp-header-p)
-  ;;                         (pd-cpp-lookup-symbol-header w pd-cpp-header-include-map)))
-  ;;        (include-stmt (if hdr-include
-  ;;                          (concat "#include <" hdr-include ">")
-  ;;                        (if main-include (concat "#include <" main-include ">"))))
-  ;;        (using-stmt (if pd-cpp-use-std-namespace "using namespace std;"
-  ;;                      (concat "using std::" w ";"))))
-  ;;   (when (and w include-stmt)
-  ;;     ;; Always add the #include first, so that there will be a #include
-  ;;     ;; block in existence when we come to add the using statement. Don't
-  ;;     ;; add using statements in headers.
-  ;;     (pd-cpp-add-include-and-sort include-stmt)
-  ;;     (unless (pd-cpp-header-p)
-  ;;       (pd-cpp-add-using-and-sort using-stmt))
-  ;;       )))
 
 (defvar pd-cpp-auto-include-characters "(<&* "
   "A list of characters which trigger automatic insertion of headers
 and using statements for the previous symbol. NOT USED.")
 
 (defun pd-cpp-auto-include-maybe (arg)
-  "Automatically insert an appropriate C/C++ #include statement if
-we are not in a comment or a string."
+  "Automatically insert an appropriate C/C++ #include statement for the
+prior symbol if we are not in a comment or a string."
   (interactive "p")
   ;; Are we in a comment or a string?
   (when (null (nth 8 (syntax-ppss)))
@@ -581,23 +558,23 @@ we are not in a comment or a string."
 
 (defvar pd-cpp-auto-include-keymap
   (let ((map (make-sparse-keymap)))
-    (define-key map [?(] 'pd-cpp-auto-include-maybe)
-    (define-key map [?<] 'pd-cpp-auto-include-maybe)
-    (define-key map [?>] 'pd-cpp-auto-include-maybe)
-    (define-key map [?&] 'pd-cpp-auto-include-maybe)
-    (define-key map [?*] 'pd-cpp-auto-include-maybe)
-    (define-key map [? ] 'pd-cpp-auto-include-maybe)
+    (define-key map [?(]  'pd-cpp-auto-include-maybe)
+    (define-key map [?<]  'pd-cpp-auto-include-maybe)
+    (define-key map [?>]  'pd-cpp-auto-include-maybe)
+    (define-key map [?&]  'pd-cpp-auto-include-maybe)
+    (define-key map [?*]  'pd-cpp-auto-include-maybe)
+    (define-key map [? ]  'pd-cpp-auto-include-maybe)
+    (define-key map [?\;] 'pd-cpp-auto-include-maybe)
     map)
-  "Keymap for auto-inserting #include statements in C++ mode. Certain
-characters, such as space and '(<>&*' trigger the automatic insertion.")
+  "Keymap for auto-inserting #include statements in C++ mode. A limited
+number of characters, such as space and '(<>&*;' trigger the automatic
+insertion (the number of characters is kept as low as possible for
+performance reasons).")
 
 (define-minor-mode pd-cpp-auto-include-mode
   "When enabled, automatically inserts a C/C++ #include statement
 for the symbol just typed."
-  nil
-  "caut"
-  pd-cpp-auto-include-keymap
-  )
+  nil "caut" pd-cpp-auto-include-keymap)
 
 (defun pd-compile-without-confirmation ()
   "Runs last compilation without asking for confirmation."
