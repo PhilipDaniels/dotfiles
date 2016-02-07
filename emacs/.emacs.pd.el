@@ -359,7 +359,7 @@ because it will re-indent the entire buffer."
      "setprecision" "setw" "get_money" "put_money" "get_time"
      "put_time" "quoted")
     ("ios" "ios_base" "basic_ios" "fpos" "io_errc" "iostream_category"
-     "is_error_code_enum" "streamoff" "streamsize"
+     "is_error_code_enum" "streamoff" "streamsize" "openmode"
      "make_error_code" "make_error_condition"
      "boolalpha" "noboolalpha"
      "showbase" "noshowbase" "showpoint" "noshowpoint"
