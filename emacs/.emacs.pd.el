@@ -333,19 +333,24 @@ If region is active, apply to active region instead."
 (show-smartparens-global-mode 1)
 (setq sp-show-pair-delay 0)
 
-; The style I want to use in c++ mode.
+;; The style I want to use in c++ mode.
 (c-add-style "pd-style"
-	     '("k&r"
-	       (indent-tabs-mode . nil)        ; use spaces rather than tabs
-	       (c-basic-offset . 4)            ; indent by four spaces
-	       (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
-                             (brace-list-open . 0)
-                             (statement-case-open . 0)
-                             (arglist-intro . 0)
-                             ))))
+             '("k&r"
+               (indent-tabs-mode . nil)        ; use spaces rather than tabs
+               (c-basic-offset . 4)            ; indent by four spaces
+               (c-offsets-alist . ((inline-open . 0)  ; custom indentation rules
+                                   (brace-list-open . 0)
+                                   (statement-case-open . 0)
+                                   (arglist-intro . 0)
+                                   ))))
 
-(add-hook 'c++-mode-hook (lambda () (c-set-style "pd-style")))
+(add-hook 'c++-mode-hook
+          (lambda ()
+            (c-set-style "pd-style")
+            (pd-cpp-auto-mode)
+            ))
 
+(add-hook 'before-save-hook 'pd-cpp-cleanup-buffer)
 
 (when (eq system-type 'cygwin)
   (setq powershell-location-of-exe
@@ -1062,7 +1067,8 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; f12 = undefined
 
 ;; ******************* Arrow keys ********************
-;; Hopefully this will have better compatibility with org-mode.
+;; Hopefully this will have better compatibility with org-mode
+;; (org-mode uses M-arrow to change the order of items).
 (define-key global-map (kbd "C-<up>")      'windmove-up)
 (define-key global-map (kbd "C-<down>")    'windmove-down)
 (define-key global-map (kbd "C-<left>")    'windmove-left)

@@ -361,14 +361,13 @@ have to be in the paragraph."
 Also not recommended when working with other people's code
 because it will re-indent the entire buffer."
   (interactive)
-  (pd-indent-buffer)
-  (pd-untabify-buffer)
-  (delete-trailing-whitespace)
-  (when (or (derived-mode-p 'c-mode) (derived-mode-p 'c++-mode))
-    (pd-cpp-sort-includes))
   (when (derived-mode-p 'c++-mode)
-    (pd-cpp-sort-usings))
-  (message "Reindent, untabify, delete trailing whitespace."))
+    (pd-indent-buffer)
+    (pd-untabify-buffer)
+    (delete-trailing-whitespace)
+    (pd-cpp-sort-includes)
+    (pd-cpp-sort-usings)
+    ))
 
 (defun pd-cpp-auto-include-maybe (arg)
   "Automatically insert an appropriate C/C++ #include statement for the
@@ -382,22 +381,23 @@ prior symbol if we are not in a comment or a string."
 (defvar pd-cpp-auto-keymap
   (let ((map (make-sparse-keymap)))
     (define-key map [?(]  'pd-cpp-auto-include-maybe)
-    (define-key map [?<]  'pd-cpp-auto-include-maybe)
-    (define-key map [?>]  'pd-cpp-auto-include-maybe)
-    (define-key map [?&]  'pd-cpp-auto-include-maybe)
-    (define-key map [?*]  'pd-cpp-auto-include-maybe)
-    (define-key map [? ]  'pd-cpp-auto-include-maybe)
-    (define-key map [?\;] 'pd-cpp-auto-include-maybe)
-    map)
-  "Keymap for auto-inserting #include statements in C++ mode. A limited
+      (define-key map [?<]  'pd-cpp-auto-include-maybe)
+      (define-key map [?>]  'pd-cpp-auto-include-maybe)
+      (define-key map [?&]  'pd-cpp-auto-include-maybe)
+      (define-key map [?*]  'pd-cpp-auto-include-maybe)
+      (define-key map [? ]  'pd-cpp-auto-include-maybe)
+      (define-key map [?\;] 'pd-cpp-auto-include-maybe)
+      map)
+    "Keymap for auto-inserting #include statements in C++ mode. A limited
 number of characters, such as space and '(<>&*;' trigger the automatic
 insertion (the number of characters is kept as low as possible for
-performance reasons).")
+performance reasons)."
+    )
 
 (define-minor-mode pd-cpp-auto-mode
   "When enabled, automatically inserts a C/C++ #include statement
 for the symbol just typed."
-  nil "caut" pd-cpp-auto-keymap)
+    nil "caut" pd-cpp-auto-keymap)
 
 (provide 'pd-cpp)
 
