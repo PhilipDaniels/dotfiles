@@ -39,6 +39,9 @@
   "A list of characters which trigger automatic insertion of headers
 and using statements for the previous symbol. NOT USED.")
 
+(defvar pd-cpp-auto-cleanup t
+  "If non-nil, C++ buffers will be automatically cleaned up before saving.")
+
 (defvar pd-cpp-include-map
   '(
     ;; The first element is the name of the header to be used in #include <..>
@@ -368,6 +371,11 @@ because it will re-indent the entire buffer."
     (pd-cpp-sort-includes)
     (pd-cpp-sort-usings)
     ))
+
+(defun pd-cpp-cleanup-buffer-maybe ()
+  "Cleans up the current buffer if PD-CPP-AUTO-CLEANUP is non-nil."
+  (when pd-cpp-auto-cleanup
+    (pd-cpp-cleanup-buffer)))
 
 (defun pd-cpp-auto-include-maybe (arg)
   "Automatically insert an appropriate C/C++ #include statement for the

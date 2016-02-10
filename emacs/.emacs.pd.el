@@ -43,7 +43,6 @@
 
 (message "REQUIRES - END.")
 
-
 ;; $$ DO THIS EARLY.
 (defvar pd-at-home t "t if this Emacs is being run at home, nil if at work.")
 
@@ -56,14 +55,6 @@
 
 ;;; $$ FUNCTIONS.
 (message "FUNCTIONS - BEGIN.")
-
-(defun pd-left-rotate (list)
-  "Move the first element to the end of the list."
-  (append (cdr list) (list (car list))))
-
-(defun pd-right-rotate (list)
-  "Move the last element to the front of the list."
-  (append (last list) (butlast list)))
 
 (defun pd-utf8 ()
   "Inserts a utf-8 file coding marker."
@@ -350,7 +341,7 @@ If region is active, apply to active region instead."
             (pd-cpp-auto-mode)
             ))
 
-(add-hook 'before-save-hook 'pd-cpp-cleanup-buffer)
+(add-hook 'before-save-hook 'pd-cpp-cleanup-buffer-maybe)
 
 (when (eq system-type 'cygwin)
   (setq powershell-location-of-exe

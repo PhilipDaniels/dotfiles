@@ -27,6 +27,14 @@
 ;; ChangeLog
 ;; ---------
 
+(defun pd-left-rotate (list)
+  "Move the first element to the end of the list."
+  (append (cdr list) (list (car list))))
+
+(defun pd-right-rotate (list)
+  "Move the last element to the front of the list."
+  (append (last list) (butlast list)))
+
 (defun pd-sort-lines (reverse beg end &optional cmp)
   "Sort lines in the region using the specified comparison function.
 
