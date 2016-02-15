@@ -929,8 +929,10 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;;
 ;; On Windows, this happens with the two Windows keys: many WinKey+letter
 ;; combinations are reserved, and the count goes up with each release of
-;; Windows. To make these key combinations available a registry hack must be
-;; used to disable all the default bindings - use a .reg file with this text:
+;; Windows. So these keys are unavailable *even if* you use the
+;; w32-pass-lwindow-to-system technique described below. To make these key
+;; combinations available a registry hack must be used to disable all the
+;; default bindings - use a .reg file with this text:
 ;;
 ;; Windows Registry Editor Version 5.00
 ;;
