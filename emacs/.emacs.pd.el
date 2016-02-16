@@ -1025,19 +1025,19 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;;
 ;; Alternatively, we can turn it into a leader key like this.
 ;; See http://ergoemacs.org/emacs/emacs_menu_app_keys.html
-;; (if (equal system-type 'cygwin)
-;;     (if (equal window-system 'w32)
-;;         (setq w32-pass-apps-to-system nil
-;;               w32-apps-modifier nil)
-;;       ;; force all alternatives to <apps> so we can write one set of keybindings.
-;;       (define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
-;;       (define-key key-translation-map (kbd "<menu>") (kbd "<apps>"))))
+(if (equal system-type 'cygwin)
+    (if (equal window-system 'w32)
+        (setq w32-pass-apps-to-system nil
+              w32-apps-modifier nil)
+      ;; force all alternatives to <apps> so we can write one set of keybindings.
+      (define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
+      (define-key key-translation-map (kbd "<menu>") (kbd "<apps>"))))
 
-;;(if (equal system-type 'gnu/linux)
-;;    (define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))
+(if (equal system-type 'gnu/linux)
+    (define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))
 
-(when (equal window-system 'w32)
-  (setq w32-pass-apps-to-system nil w32-apps-modifier 'hyper))
+;;(when (equal window-system 'w32)
+;;  (setq w32-pass-apps-to-system nil w32-apps-modifier 'hyper))
 
 ;;(define-key global-map (kbd "H-h") (lambda () (interactive) (message "hello from menu key via H- prefix")))
 
@@ -1142,11 +1142,11 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "<apps> sp") 'pd-sort-paragraph-dwim)
 (define-key global-map (kbd "<apps> w")  'pd-copy-current-line)
 
-(define-key global-map (kbd "H-a")  'pd-cpp-add-using)
+(define-key global-map (kbd "H-a")   'pd-cpp-add-using)
 (define-key global-map (kbd "H-c c") 'pd-cleanup-programming-buffer)
 (define-key global-map (kbd "H-d l") 'pd-duplicate-line-or-region)
 (define-key global-map (kbd "H-d w") 'delete-trailing-whitespace)
-(define-key global-map (kbd "H-g")  'magit-status)
+(define-key global-map (kbd "H-g")   'magit-status)
 (define-key global-map (kbd "H-h a") 'helm-apropos)
 (define-key global-map (kbd "H-h o") 'helm-occur)
 (define-key global-map (kbd "H-h i") 'helm-semantic-or-imenu)
@@ -1159,7 +1159,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "H-r p") 'point-to-register)
 (define-key global-map (kbd "H-r w") 'window-configuration-to-register)
 (define-key global-map (kbd "H-s p") 'pd-sort-paragraph-dwim)
-(define-key global-map (kbd "H-w")  'pd-copy-current-line)
+(define-key global-map (kbd "H-w")   'pd-copy-current-line)
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action) ; make TAB works in terminal
@@ -1175,10 +1175,10 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 
 (when (not pd-vs-minor-mode-map)
   (setq pd-vs-minor-mode-map (make-sparse-keymap))
-                                        ;  (define-key pd-vs-minor-mode-map (kbd "<f5>") 'gud-run) ; continue (gdb command = continue)
-                                        ;   C-F5 = run without debugging
-                                        ;   S-F5 = stop debugging
-                                        ;  CS-F5 = restart
+  ;;  (define-key pd-vs-minor-mode-map (kbd "<f5>") 'gud-run) ; continue (gdb command = continue)
+  ;;   C-F5 = run without debugging
+  ;;   S-F5 = stop debugging
+  ;;  CS-F5 = restart
   (define-key pd-vs-minor-mode-map (kbd "<f6>") 'pd-compile-without-confirmation)
   (define-key pd-vs-minor-mode-map (kbd "<S-f6>") 'pd-compile-clean-one-shot)
   (define-key pd-vs-minor-mode-map (kbd "<C-f6>") 'compile) ; make -k, the original compile command.
@@ -1187,14 +1187,14 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   (define-key pd-vs-minor-mode-map (kbd "<f8>") 'next-error)
   (define-key pd-vs-minor-mode-map (kbd "<S-f8>") 'previous-error)
   ;;(define-key pd-vs-minor-mode-map (kbd "<f9>") 'gud-break) ; toggle breakpoint (gdb command = break)
-                                        ;  CS-F9 = delete all breakpoints = typing d.
+  ;;  CS-F9 = delete all breakpoints = typing d.
   ;; (define-key pd-vs-minor-mode-map (kbd "<f10>") 'gud-next)  ; step over (gdb command = next)
   ;; (define-key pd-vs-minor-mode-map (kbd "<C-f10>") 'gud-until)  ; run to cursor (gdb command = advance)
   ;; (define-key pd-vs-minor-mode-map (kbd "<CS-f10>") 'gud-jump)  ; set next statement (gdb command = jump)
   ;; (define-key pd-vs-minor-mode-map (kbd "<f11>") 'gud-step)  ; step in (gdb command = step)
   ;; (define-key pd-vs-minor-mode-map (kbd "<S-f11>") 'gud-finish)  ; step out (gdb command = finish)
   ;;    F12 = go to definition
-                                        ;"  C-Brk = cancel current build
+  ;; "  C-Brk = cancel current build
   )
 
 (define-minor-mode pd-vs-minor-mode
