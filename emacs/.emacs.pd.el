@@ -1045,8 +1045,8 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (if (equal system-type 'gnu/linux)
     (define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))
 
-;;(when (equal window-system 'w32)
-;;   (setq w32-apps-modifier 'hyper))
+(when (equal window-system 'w32)
+   (setq w32-apps-modifier 'hyper))
 ;;(define-key global-map (kbd "H-h") (lambda () (interactive) (message "hello from menu key via H- prefix")))
 
 ;; ******************* Global Function keys ********************
@@ -1147,6 +1147,25 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "<apps> rw") 'window-configuration-to-register)
 (define-key global-map (kbd "<apps> sp") 'pd-sort-paragraph-dwim)
 (define-key global-map (kbd "<apps> w")  'pd-copy-current-line)
+
+(define-key global-map (kbd "H-a")  'pd-cpp-add-using)
+(define-key global-map (kbd "H-c c") 'pd-cleanup-programming-buffer)
+(define-key global-map (kbd "H-d l") 'pd-duplicate-line-or-region)
+(define-key global-map (kbd "H-d w") 'delete-trailing-whitespace)
+(define-key global-map (kbd "H-g")  'magit-status)
+(define-key global-map (kbd "H-h a") 'helm-apropos)
+(define-key global-map (kbd "H-h o") 'helm-occur)
+(define-key global-map (kbd "H-h i") 'helm-semantic-or-imenu)
+(define-key global-map (kbd "H-h c") 'helm-colors)
+(define-key global-map (kbd "H-h m") 'helm-man-woman)
+(define-key global-map (kbd "H-h f") 'helm-find)
+(define-key global-map (kbd "H-h r") 'helm-all-mark-rings)
+(define-key global-map (kbd "H-r b") (lambda () (interactive) (revert-buffer nil t)))
+(define-key global-map (kbd "H-r j") 'jump-to-register)
+(define-key global-map (kbd "H-r p") 'point-to-register)
+(define-key global-map (kbd "H-r w") 'window-configuration-to-register)
+(define-key global-map (kbd "H-s p") 'pd-sort-paragraph-dwim)
+(define-key global-map (kbd "H-w")  'pd-copy-current-line)
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action) ; make TAB works in terminal
