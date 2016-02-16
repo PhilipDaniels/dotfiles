@@ -1025,20 +1025,23 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;;
 ;; Alternatively, we can turn it into a leader key like this.
 ;; See http://ergoemacs.org/emacs/emacs_menu_app_keys.html
-(if (equal system-type 'cygwin)
-    (if (equal window-system 'w32)
-        (setq w32-pass-apps-to-system nil
-              w32-apps-modifier nil)
-      ;; force all alternatives to <apps> so we can write one set of keybindings.
-      (define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
-      (define-key key-translation-map (kbd "<menu>") (kbd "<apps>"))))
+;; (if (equal system-type 'cygwin)
+;;     (if (equal window-system 'w32)
+;;         (setq w32-pass-apps-to-system nil
+;;               w32-apps-modifier nil)
+;;       ;; force all alternatives to <apps> so we can write one set of keybindings.
+;;       (define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
+;;       (define-key key-translation-map (kbd "<menu>") (kbd "<apps>"))))
 
-(if (equal system-type 'gnu/linux)
-    (define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))
+;;(if (equal system-type 'gnu/linux)
+;;    (define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))
 
 (when (equal window-system 'w32)
-   (setq w32-apps-modifier 'hyper))
+  (setq w32-pass-apps-to-system nil w32-apps-modifier 'hyper))
+
 ;;(define-key global-map (kbd "H-h") (lambda () (interactive) (message "hello from menu key via H- prefix")))
+
+;; Over ssh to Linux, window-system is 'x and system-type is 'gnu/linux.
 
 ;; ******************* Global Function keys ********************
 ;;(define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/.emacs.pd.el")))
