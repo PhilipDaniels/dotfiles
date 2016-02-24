@@ -46,7 +46,7 @@
 ;; $$ DO THIS EARLY.
 (defvar pd-at-home t "t if this Emacs is being run at home, nil if at work.")
 
-(if (s-starts-with-p "rdl" system-name t)
+(if (s-starts-with-p "rd" system-name t)
     (setq pd-at-home nil))
 
 (message "Host = %s, pd-at-home = %s, system-type=%s, window-system=%s"

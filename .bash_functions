@@ -56,8 +56,8 @@ f_AtHome()
 {
     # Determine if I am at home or at work.
     case $HOSTNAME in
-        RDL*) false ;;
-        *)    true ;;
+        RD*) false ;;
+        *)   true ;;
     esac
 }
 
