@@ -17,12 +17,12 @@ bison \
 build-essential \
 checkinstall \
 colorgcc \
-ctags \
         curl \
         docbook \
         docbook2x \
         docbook-utils \
         emacs \
+        exuberant-ctags \
         fortune-mod \
 flex \
 g++ \
@@ -37,7 +37,7 @@ libgif-dev \
 libice-dev \
 libjpeg62-dev \
 libncurses5-dev \
-libpng-dev \
+libpng12-dev \
 libsm-dev \
         libtiff4-dev \
         libtool \
@@ -52,10 +52,8 @@ libxrandr-dev \
 libxt-dev \
 libxtst-dev \
         libxv-dev \
-        libz-dev \
 m4 \
 make \
-        ncurses-libs \
         ncdu \
         pandoc \
         rsync \
