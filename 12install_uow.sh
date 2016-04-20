@@ -10,7 +10,6 @@
 
 ## Main setup.
 apt-get install \
-Xaw3d-devel \
 asciidoc \
 autoconf \
 automake \
@@ -30,37 +29,18 @@ g++ \
 gcc \
 gdb \
 gettext \
-giflib \
 gimp \
 git \
-glibc-devel \
-ice-devel \
-libSM-devel \
-libX11-devel \
-libXext-devel \
-libXi-devel \
-libXmu-devel \
-libXpm-devel \
-libXrandr-devel \
-libXt-devel \
-libXtst-devel \
-libXv-devel \
 libc6-dev \
 libcurl4-openssl-dev \
 libgif-dev \
 libice-dev \
-libjpeg-turbo \
 libjpeg62-dev \
 libncurses5-dev \
 libpng-dev \
-libpng-devel \
 libsm-dev \
-libtiff-devel \
-libtiff3g-dev \
         libtiff4-dev \
         libtool \
-        libtool-bin \
-libungif4-dev \
 libx11-dev \
 libxext-dev \
         libxi-dev \
@@ -70,13 +50,11 @@ libxmuu-dev \
 libxpm-dev \
 libxrandr-dev \
 libxt-dev \
-libxtrap-dev \
 libxtst-dev \
         libxv-dev \
         libz-dev \
 m4 \
 make \
-ncurses \
         ncurses-libs \
         ncdu \
         pandoc \
@@ -86,13 +64,9 @@ ncurses \
         tig \
         tmux \
         tree \
-x-dev \
 xaw3dg-dev \
-xeyes \
+x11-apps \
 xfe \
-xlibs-dev \
-        xlibs-static-dev \
         xmlto \
         xorg-dev \
-zlib-devel \
 zlib1g-dev
