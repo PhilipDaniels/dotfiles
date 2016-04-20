@@ -12,11 +12,12 @@ if [ -d emacs ]; then
     git pull
     git clean -xfd
 else
-    git clone --depth 1 git://git.sv.gnu.org/emacs.git
+    #git clone --depth 1 git://git.sv.gnu.org/emacs.git
+    git clone --depth 1 https://github.com/emacs-mirror/emacs
     cd emacs
 fi
 
 ./autogen.sh
 ./configure
-make bootstrap
+make
 sudo make install
