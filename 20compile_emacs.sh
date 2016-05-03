@@ -19,5 +19,5 @@ fi
 
 ./autogen.sh
 ./configure
-make
+make -j4
 sudo make install
