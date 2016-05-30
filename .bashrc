@@ -160,6 +160,10 @@ alias s='git status'
 alias b='git branch -a -vv'
 alias bs='git branch -a -vv;echo "";git status'
 alias q='git status;echo "";git branch -a -vv;echo "";git l -10'
+alias co='git checkout'
+alias cob='git checkout -b'
+alias cod='git checkout develop'
+alias com='git checkout master'
 
 alias wcd='wcd -q'
 
