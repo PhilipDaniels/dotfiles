@@ -74,19 +74,13 @@
 # the relevant lines.
 [merge]
     conflictstyle = diff3
-    #tool = p4merge
-    #tool = tortoisemerge
-    tool = kdiff3
+    tool = vs2015
 [mergetool]
     prompt = false
     keepBackup = false
 [diff]
-    #guitool = p4merge
-    #tool = p4merge
-    #guitool = tortoisediff
-    #tool = tortoisediff
-    guitool = kdiff3
-    tool = kdiff3
+    guitool = vs2015
+    tool = vs2015
 [difftool]
     prompt = false
 
@@ -102,6 +96,10 @@
     keepBackup = false
 [mergetool "kdiff3"]
     cmd = \""C:/Program Files/KDiff3/kdiff3"\" $BASE $LOCAL $REMOTE -o $MERGED
+[mergetool "vs2015"]
+    cmd = \""C:/Program Files (x86)/Microsoft Visual Studio 14.0/Common7/IDE/vsdiffmerge.exe"\" "$REMOTE" "$LOCAL" "$BASE" "$MERGED" //m
+    keepbackup = false
+    trustexistcode = true
 
 [difftool "p4merge"]
     cmd = "p4merge $LOCAL $REMOTE"
@@ -109,4 +107,8 @@
     cmd = \""c:/Program Files/TortoiseGIT/bin/TortoiseGitMerge.exe"\" -mine "$REMOTE" -base "$LOCAL"
 [difftool "kdiff3"]
     cmd = \""C:/Program Files/KDiff3/kdiff3"\" $LOCAL $REMOTE
+[difftool "vs2015"]
+    cmd = \""C:/Program Files (x86)/Microsoft Visual Studio 14.0/Common7/IDE/vsdiffmerge.exe\"" "$LOCAL" "$REMOTE" //t
+    keepbackup = false
+    trustexistcode = true
 
