@@ -14,6 +14,16 @@ f_DetermineOS
 f_IsRoot
 echo ">> Running dotfiles/.bashrc, OS is '$OS' and TERM is '$TERM'. $ISROOTMSG"
 
+# Ensure that Git sets core.fileMode to false whenever I cd into a repo directory.
+# See http://stackoverflow.com/questions/12457910/how-do-i-prevent-git-on-cygwin-to-set-core-filemode-true
+PROMPT_COMMAND=pc
+pc () {
+    [ -d .git -a ! -g .git/config ] || return
+    git config core.fileMode 0
+    chmod +s .git/config
+    echo core.fileMode was set to false
+}
+
 if f_IsCmd "fortune"; then
     echo
     fortune -a ~/repos/dotfiles/fortunes ~/repos/dotfiles/fortunes-dune
@@ -164,6 +174,7 @@ alias co='git checkout'
 alias cob='git checkout -b'
 alias cod='git checkout develop'
 alias com='git checkout master'
+alias gfm='git config --local core.fileMode false'
 
 alias wcd='wcd -q'
 
