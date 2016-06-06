@@ -17,11 +17,21 @@ echo ">> Running dotfiles/.bashrc, OS is '$OS' and TERM is '$TERM'. $ISROOTMSG"
 # Ensure that Git sets core.fileMode to false whenever I cd into a repo directory.
 # See http://stackoverflow.com/questions/12457910/how-do-i-prevent-git-on-cygwin-to-set-core-filemode-true
 PROMPT_COMMAND=pc
-pc () {
+pc()
+{
     [ -d .git -a ! -g .git/config ] || return
+
     git config core.fileMode 0
-    chmod +s .git/config
     echo core.fileMode was set to false
+
+    # And also ensure that my personal email address is used for repos
+    # underneath ~/repos (at work only).
+    if [ "${PWD##/c/Users/pdaniels/repos}" != "${PWD}" ] ; then
+        f_GitPersonalEmail
+        echo Configured user.email to my personal address
+    fi
+
+    chmod +s .git/config
 }
 
 if f_IsCmd "fortune"; then

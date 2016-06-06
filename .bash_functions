@@ -230,6 +230,18 @@ f_GitUnsetProxy()
     sed -i 's/ proxy =/ #proxy =/g' ~/.gitconfig
 }
 
+f_GitPersonalEmail()
+{
+    # Configures a repository to use my local email irrespective
+    # of what the global default is.
+    git config user.email Philip.Daniels1971@gmail.com
+}
+
+f_GitWorkEmail()
+{
+    git config user.email Philip.Daniels@LLandmark.co.uk
+}
+
 f_GitAuthorRewrite()
 {
     local oldemail=$1
