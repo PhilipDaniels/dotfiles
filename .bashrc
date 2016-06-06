@@ -98,6 +98,8 @@ fi
 
 if f_AtWork; then
     f_GitSetProxy
+else
+    f_GitUnsetProxy
 fi
 
 

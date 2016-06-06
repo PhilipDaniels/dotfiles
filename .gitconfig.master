@@ -25,8 +25,12 @@
     safecrlf = false
 [push]
     default = simple
-#[http]  Now done in an environment variable in ~/.bashrc.
-#    proxy = http://rdproxy01:800/
+[http]
+    # See also functions f_GitSetProxy and f_GitUnsetProxy and the call of the former
+    # from .bashrc. Reading is http://rdproxy01:800 and Exeter is http://exproxy03:8080
+    proxy = http://exproxy03:8080
+[https]
+    proxy = http://exproxy03:8080
 [alias]
     s = status
     ss = status --short

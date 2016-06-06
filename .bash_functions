@@ -211,14 +211,23 @@ f_ShowTerminalColors()
 
 f_GitSetProxy()
 {
-    export http_proxy=http://rdproxy01:800/
-    export https_proxy=http://rdproxy01:800/
+    # export http_proxy=http://rdproxy01:800/
+    # export https_proxy=http://rdproxy01:800/
+    # export http_proxy=http://exproxy03:8080/
+    # export https_proxy=http://exproxy03:8080/
+
+    # Edit ~/.gitconfig to add the proxy settings.
+    sed -i 's/#proxy =/proxy =/g' ~/.gitconfig
 }
 
 f_GitUnsetProxy()
 {
-    unset http_proxy
-    unset https_proxy
+    # unset http_proxy
+    # unset https_proxy
+
+    # Edit ~/.gitconfig to remove the proxy settings.
+    # Assumes a leading space.
+    sed -i 's/ proxy =/ #proxy =/g' ~/.gitconfig
 }
 
 f_GitAuthorRewrite()
