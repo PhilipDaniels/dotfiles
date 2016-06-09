@@ -32,6 +32,15 @@ if f_AtWork; then
     sed -i.bak 's/email = Philip.Daniels1971@gmail.com/email = Philip.Daniels@landmark.co.uk/g' ~/.gitconfig
 fi
 
+
+if f_AtWork; then
+    echo "You are at work, setting the Git proxy server"
+    f_GitSetProxy
+else
+    echo "You are at home, un-setting the Git proxy server"
+    f_GitUnsetProxy
+fi
+
 # Do Cygwin specific things.
 if [ "$OS" == "cygwin" ] ; then
     f_Inst $DIR/colors/mintty-themes/SolarizedDark ~/.minttyrc
@@ -57,5 +66,7 @@ if [ -f /etc/debian_version ]; then
     # but it is not necessary for Ubuntu, Mint etc.
     f_Inst $DIR/.fonts.conf ~/.fonts.conf
 fi
+
+
 
 echo "Installation complete."

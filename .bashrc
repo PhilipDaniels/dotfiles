@@ -106,12 +106,6 @@ if f_AtHome; then
     f_SetupSSH
 fi
 
-if f_AtWork; then
-    f_GitSetProxy
-else
-    f_GitUnsetProxy
-fi
-
 
 GIT_PROMPT_ONLY_IN_REPO=1
 GIT_PROMPT_FETCH_REMOTE_STATUS=0   # uncomment to avoid fetching remote status
