@@ -1100,10 +1100,9 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-; o")     'helm-occur)
 (define-key global-map (kbd "C-; s")     'helm-semantic-or-imenu)
 (define-key global-map (kbd "C-=")       'fci-mode)
-(define-key global-map (kbd "C-@")       (lambda () (interactive) (er/expand-region -1)))
+(define-key global-map (kbd "M-'")       (lambda () (interactive) (er/expand-region -1)))
 (define-key global-map (kbd "C-\\")      'hs-toggle-hiding)
 (define-key global-map (kbd "C-|")       'hs-show-all)
-(define-key global-map (kbd "M-'")       'mark-defun)
 (define-key global-map (kbd "M-/")       'hippie-expand)
 (define-key global-map (kbd "M-;")       'endless/comment-line-or-region)
 (define-key global-map (kbd "M-{")       'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
