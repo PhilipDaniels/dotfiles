@@ -152,12 +152,27 @@ fi
 # explicitly in my ~/.gitconfig.
 export NO_AT_BRIDGE=1
 
-# Emacs aliases. W32 Emacs is also from Cygwin, but runs using native Windows fonts and without X.
-# For clients, arg -c means create a new window, -t means use current terminal.
-alias ce='emacs'                 # {C}ygwin{E}macs            Opens new window unless X is not running.
-alias we='emacs-w32'             # {W}indows{E}macs           Opens new window.
-alias cec='emacsclient'          # {C}ygwin{E}macs{C}lient    Tries to use current frame, including in the console.
-alias wec='emacsclient-w32'      # {W}indows{E}macs{C}lient   Tries to use current frame.
+# {C}ygwin{E}macs.
+# If X is running opens X window, else opens console window.
+# Use -nw to force open in the console.
+alias ce='emacs'
+
+# {W}indows{E}macs
+# Will open a new Windows window. emacs-w32 is also from Cygwin, but runs using
+# native Windows fonts and without having to start an X server.
+# Use -nw to force open in the console (like normal 'emacs')
+alias we='emacs-w32'
+
+# {C}ygwin{E}macs{C}lient
+# -c means create a new window.
+# -t, -nw or -tty means use current terminal.
+alias cec='emacsclient'
+
+# {W}indows{E}macs{C}lient
+# With no arg, tries to use current frame.
+# -c creates a new frame
+# -nw does not work and hangs the main Emacs window. DO NOT USE.
+alias wec='emacsclient-w32'
 
 
 # MSysGit grep does not recognise the --color option.

@@ -9,8 +9,15 @@
     # Store passwords in RAM for 20 hours.
     helper = cache --timeout=72000
 [core]
-    #editor = emacsclient-w32
-    editor = emacsclient-w32
+    # editor = emacsclient-w32   - works if using we to start Windows Emacs server
+    # editor = emacsclient       - works if using ce to start Cywgin Emacs. Normally would do "ce -nw" to run without X
+    #                              However, this open the commit message in the original console window
+    # editor = emacsclient -nw   - better than the above, opens the commit message in the current console window
+    #
+    # The best console experience is to start emacs using 'ce -nw' and then use
+    # emacsclient -nw as the Git editor.
+
+    editor = emacsclient -nw
     pager = less -x4
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems
