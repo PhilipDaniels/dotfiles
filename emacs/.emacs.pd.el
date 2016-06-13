@@ -484,6 +484,9 @@ If region is active, apply to active region instead."
 ;;   (jump-to-register :magit-fullscreen))
 ;; (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
 
+;; Make commits done from the command line also use the Magit COMMIT_MSG mode.
+(global-git-commit-mode)
+
 (message "MODES - END.")
 
 
