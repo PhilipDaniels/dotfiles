@@ -161,6 +161,7 @@ alias we='emacs-w32'
 # -c means create a new window.
 # -t, -nw or -tty means use current terminal.
 alias cec='emacsclient'
+alias ec='emacsclient -nw'
 
 # {W}indows{E}macs{C}lient
 # With no arg, tries to use current frame.
