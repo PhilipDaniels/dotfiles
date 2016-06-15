@@ -808,7 +808,7 @@ Valid values are nil, 'dark and 'light."
   (set-face-attribute 'menu                   nil :background "black" :foreground "white")
   (set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")
   (set-face-attribute 'tty-menu-selected-face nil :background "white" :foreground "black")
-  (set-face-attribute 'tty-menu-disabled-face nil :background "black" :foreground "#red")
+  (set-face-attribute 'tty-menu-disabled-face nil :background "black" :foreground "red")
   (when (eq theme 'solarized)
     (set-face-attribute 'mode-line nil          :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
     (set-face-attribute 'mode-line-inactive nil :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil))
