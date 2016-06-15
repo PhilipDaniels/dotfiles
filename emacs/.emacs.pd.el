@@ -730,7 +730,7 @@ search at index 0."
   ("q" nil "cancel")
   )
 
-(global-set-key (kbd "C-#") 'hydra-windows/body)
+(global-set-key (kbd "M-#") 'hydra-windows/body)
 
 (defhydra hydra-fonts ()
   "Adjust font size and face with hydra."
@@ -850,7 +850,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   ("mo" (pd-load-theme 'monochrome))
   ("mt" (pd-load-theme 'moe-light))
   ("ob" (pd-load-theme 'obsidian))
-  ("pr" (pd-load-theme 'parus))
+  ("pr" (pd-load-theme 'pautrus))
   ("rg" (pd-load-theme 'retro-green))
   ("ro" (pd-load-theme 'retro-orange))
   ("rp" (pd-load-theme 'raspopovic))
@@ -1057,10 +1057,11 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "S-<f10>")   'cycle-buffer-permissive)
 (define-key global-map (kbd "C-<f9>")    (lambda () (interactive) (kill-buffer nil)))
 (define-key global-map (kbd "C-<f10>")   'bury-buffer)
+(define-key global-map (kbd "<f11>")     'menu-bar-open)
+(define-key global-map (kbd "S-<f11>")   'menu-bar-open)
+(define-key global-map (kbd "C-<f11>")   'menu-bar-open)
 (define-key global-map (kbd "<f12>")     'sr-speedbar-toggle)
 (define-key global-map (kbd "S-<f12>")   'sr-speedbar-select-window)
-;; (define-key global-map (kbd "<S-f2>") 'menu-bar-open)
-;; (define-key global-map (kbd "<C-f2>") 'menu-bar-open)
 ;; f3, f4 = macros start and end.
 ;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
 ;; f9 = undefined
