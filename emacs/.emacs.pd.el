@@ -801,12 +801,19 @@ Valid values are nil, 'dark and 'light."
   (message "Theme set to %s" theme)
   ;; Post-theme customizations that I apply to everything.
   ;; Some things *should* be prominent.
+  ;; In terminal Emacs, these color names appear to map to the corresponding
+  ;; solarized colors automatically (see list-colors-display).
   (set-cursor-color "red")
   (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil)
+  (set-face-attribute 'menu                   nil :background "black" :foreground "white")
+  (set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")
+  (set-face-attribute 'tty-menu-selected-face nil :background "white" :foreground "black")
+  (set-face-attribute 'tty-menu-disabled-face nil :background "black" :foreground "#red")
   (when (eq theme 'solarized)
     (set-face-attribute 'mode-line nil          :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
     (set-face-attribute 'mode-line-inactive nil :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil))
   )
+
 
 ;; All these themes are available on MELPA.
 (defhydra hydra-themes (:hint nil)
