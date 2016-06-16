@@ -311,6 +311,13 @@ If region is active, apply to active region instead."
       (rectangle-mark-mode 1)
       (goto-char mk))))
 
+(defun pd-hide-dos-eol ()
+  "Do not show ^M in files containing mixed UNIX and DOS line endings."
+  ;; From http://stackoverflow.com/questions/730751/hiding-m-in-emacs
+  (interactive)
+  (setq buffer-display-table (make-display-table))
+    (aset buffer-display-table ?\^M []))
+
 (message "FUNCTIONS - END.")
 
 
@@ -606,6 +613,9 @@ search at index 0."
 ;; (set-face-attribute 'speedbar-highlight-face nil :box nil :background "black")
 (setq-default sr-speedbar-right-side t)
 
+;; Ensure that ^M characters never appear in text modes.
+(add-hook 'text-mode-hook 'pd-hide-dos-eol)
+(add-hook 'magit-diff-mode-hook 'pd-hide-dos-eol)
 
 ;;(add-to-list 'default-frame-alist '(height . 50))
 ;;(add-to-list 'default-frame-alist '(width . 86))
