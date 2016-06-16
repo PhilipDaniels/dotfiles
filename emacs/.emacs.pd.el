@@ -602,7 +602,8 @@ search at index 0."
                                       diff-mode-hook
                                       magit-popup-mode-hook
                                       shell-mode-hook
-                                      term-mode-hook))
+                                      term-mode-hook
+                                      calendar-mode-hook))
   (add-hook hook (lambda () (set-variable 'show-trailing-whitespace nil))))
 ;; We need to turn on whitespace-mode to get the display of the >80 character lines working.
 (add-hook 'prog-mode-hook 'whitespace-mode)
