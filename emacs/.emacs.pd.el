@@ -360,6 +360,7 @@ If region is active, apply to active region instead."
 ;; http://oremacs.com/2015/01/13/dired-options/
 ;; http://oremacs.com/2015/01/10/dired-ansi-term/
 (setq dired-listing-switches "-laGh1v --group-directories-first")
+(setq dired-dwim-target t)
 
 ;; Markdown mode.
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
