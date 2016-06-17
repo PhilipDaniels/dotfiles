@@ -12,12 +12,11 @@ esac
 . ~/repos/dotfiles/.bash_functions
 f_DetermineOS
 f_IsRoot
-echo ">> Running dotfiles/.bashrc, OS is '$OS' and TERM is '$TERM'. $ISROOTMSG"
 
 # Ensure that Git sets core.fileMode to false whenever I cd into a repo directory.
 # See http://stackoverflow.com/questions/12457910/how-do-i-prevent-git-on-cygwin-to-set-core-filemode-true
-PROMPT_COMMAND=pc
-pc()
+PROMPT_COMMAND=f_PromptCommand
+f_PromptCommand()
 {
     [ -d .git -a ! -g .git/config ] || return
 

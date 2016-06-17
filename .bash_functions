@@ -4,8 +4,6 @@
 # Boolean functions should return 0 for success, following the same
 # convention as unix utilities.
 
-echo ">> Running dotfiles/.bash_functions"
-
 function f_ShowPath()
 {
     echo $PATH | tr ':' '\n' | sort -u
@@ -50,6 +48,15 @@ f_IsRoot()
         export ISROOT=1
         export ISROOTMSG="You are root!"
     fi
+}
+
+f_Info()
+{
+    # Print out various bits of information. This used to be printed when I
+    # logged in, but it became tiresome.
+    f_DetermineOS
+    f_IsRoot
+    echo -e "OS=$OS\nTERM=$TERM\nISROOTMSG=$ISROOTMSG"
 }
 
 f_AtHome()
