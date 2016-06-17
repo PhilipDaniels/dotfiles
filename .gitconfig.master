@@ -6,8 +6,8 @@
 [color]
     ui = true
 [credential]
-    # Store passwords in RAM for 20 hours.
-    helper = cache --timeout=72000
+    # Store passwords in RAM for 6 days (6 * 24 * 60 * 60).
+    helper = cache --timeout=518400
 [core]
     # editor = emacsclient-w32   - works if using we to start Windows Emacs server
     # editor = emacsclient       - works if using ce to start Cywgin Emacs. Normally would do "ce -nw" to run without X
