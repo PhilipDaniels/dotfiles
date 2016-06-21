@@ -412,6 +412,7 @@ If region is active, apply to active region instead."
 (setq yas-snippet-dirs '("~/repos/dotfiles/emacs/snippets"))
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
+(add-hook 'markdown-mode-hook #'yas-minor-mode)
 
 ;; Automatically cleanup files before save in programming modes. Based on
 ;; http://stackoverflow.com/questions/19174302. An alternative, using ws-trim or
