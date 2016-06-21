@@ -870,7 +870,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   ("mo" (pd-load-theme 'monochrome))
   ("mt" (pd-load-theme 'moe-light))
   ("ob" (pd-load-theme 'obsidian))
-  ("pr" (pd-load-theme 'pautrus))
+  ("pr" (pd-load-theme 'parus))
   ("rg" (pd-load-theme 'retro-green))
   ("ro" (pd-load-theme 'retro-orange))
   ("rp" (pd-load-theme 'raspopovic))
