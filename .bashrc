@@ -33,11 +33,11 @@ f_PromptCommand()
     chmod +s .git/config
 }
 
-if f_IsCmd "fortune"; then
-    echo
-    fortune -a ~/repos/dotfiles/fortunes ~/repos/dotfiles/fortunes-dune
-    echo
-fi
+#if f_IsCmd "fortune"; then
+#    echo
+#    fortune -a ~/repos/dotfiles/fortunes ~/repos/dotfiles/fortunes-dune
+#    echo
+#fi
 
 # Bring in control codes (for setting colors etc.) then configure the prompt.
 . ~/repos/dotfiles/.bash_controlcodes
