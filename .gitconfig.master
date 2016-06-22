@@ -52,6 +52,8 @@
     cob = checkout -b
     cod = checkout develop
     com = checkout master
+    fmoff = config core.fileMode 0
+    fmon = config core.fileMode 1
     rod = rebase -i origin/develop
     # Do a git add followed by a git status. This is the syntax to define ashell function,
     # which can be used to execute arbitrary commands.

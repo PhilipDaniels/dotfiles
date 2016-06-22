@@ -20,8 +20,8 @@ f_PromptCommand()
 {
     [ -d .git -a ! -g .git/config ] || return
 
-    git config core.fileMode 0
-    echo core.fileMode was set to false
+    # git config core.fileMode 0
+    # echo core.fileMode was set to false
 
     # And also ensure that my personal email address is used for repos
     # underneath ~/repos (at work only).

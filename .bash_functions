@@ -284,9 +284,9 @@ f_GitShowConfig()
     # Lists critical git configuration which I am always getting wrong
     # when moving from work to home.
     echo -e "${F_Red}Global config:${F_Default}"
-    git config --list --global | grep 'user.email\|proxy' | sort
+    git config --list --global | grep -i 'user.email\|proxy\|fileMode' | sort
     echo -e "\n${F_Red}Local config (takes priority):${F_Default}"
-    git config --list --local | grep 'user.email\|proxy' | sort
+    git config --list --local | grep -i 'user.email\|proxy\|fileMode' | sort
 }
 
 function gv()
