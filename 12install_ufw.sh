@@ -9,7 +9,7 @@
 
 
 ## Main setup.
-apt-get install \
+sudo apt-get install \
 asciidoc \
 autoconf \
 automake \
