@@ -2,5 +2,5 @@
 # name : image snippet
 # key: img
 # --
-![$1:caption](/img/2016/06/$0)
+![${1:caption}](/img/2016/06/$0)
 

@@ -1,3 +1,4 @@
+# -*- mode: shell-script -*-
 # vim: set filetype=sh:
 
 # Configure the prompt. This relies on the codes in the .bash_controlcodes script.

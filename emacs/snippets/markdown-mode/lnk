@@ -2,5 +2,5 @@
 # name : link snippet
 # key: lnk
 # --
-[$1:caption](http://$0)
+[${1:caption}]($0)
 
