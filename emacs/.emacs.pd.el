@@ -318,6 +318,31 @@ If region is active, apply to active region instead."
   (setq buffer-display-table (make-display-table))
     (aset buffer-display-table ?\^M []))
 
+(defun pd-terminal ()
+  "Switch to a buffer named *ansi-term*, creating it if necessary.
+To create new terminals, simply rename existing ones with M-x rename-buffer
+to reflect what they are actually being used for.
+From http://oremacs.com/2015/01/10/dired-ansi-term/"
+  (interactive)
+  (if (get-buffer "*ansi-term*")
+      (switch-to-buffer "*ansi-term*")
+    (ansi-term "/bin/bash"))
+    (get-buffer-process "*ansi-term*"))
+
+(defun pd-dired-open-terminal ()
+  "Open an `ansi-term' that corresponds to current dired directory.
+Usually bound to the ` key in dired-mode-map.
+From http://oremacs.com/2015/01/10/dired-ansi-term/"
+  (interactive)
+  (let ((current-dir (dired-current-directory)))
+    (term-send-string
+     (pd-terminal)
+     (if (file-remote-p current-dir)
+         (let ((v (tramp-dissect-file-name current-dir t)))
+           (format "ssh %s@%s\n"
+                   (aref v 1) (aref v 2)))
+              (format "cd '%s'\n" current-dir)))))
+
 (message "FUNCTIONS - END.")
 
 
@@ -1187,6 +1212,8 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action) ; make TAB works in terminal
 (define-key helm-map (kbd "C-z")   'helm-select-action) ; list actions using C-z
+
+(define-key dired-mode-map (kbd "`") 'pd-dired-open-terminal)
 
 ;; ******************* C/C++ mode keys ********************
 ;; Create a keymap with Visual Studio compatible keymappings.
