@@ -246,7 +246,7 @@ f_GitPersonalEmail()
 
 f_GitWorkEmail()
 {
-    git config user.email Philip.Daniels@LLandmark.co.uk
+    git config user.email Philip.Daniels@Landmark.co.uk
 }
 
 f_GitAuthorRewrite()
