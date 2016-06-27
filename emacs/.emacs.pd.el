@@ -34,6 +34,7 @@
 (require 'shackle)
 (require 'smartparens-config)
 (require 'speedbar)
+(require 'term)
 ;; Unbound provides the command describe-unbound-keys. Try a parameter of 8.
 (require 'unbound)
 (require 'which-func)
