@@ -66,7 +66,7 @@
                      clues-theme
                      color-theme-modern
                      color-theme-sanityinc-tomorrow
-                     color-theme-solarized
+                     color-theme-solarized  ;; https://github.com/sellout/emacs-color-theme-solarized
                      cyberpunk-theme
                      dakrone-theme
                      darkburn-theme
@@ -100,7 +100,7 @@
                      ))
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ;; ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
                          ("sc" . "http://joseito.republika.pl/sunrise-commander/")))
 
