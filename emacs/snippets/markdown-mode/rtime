@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name : reading time snippet
+# key: rtime
+# --
+<div class="reading-time">updated on save</div>
