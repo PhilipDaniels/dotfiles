@@ -17,9 +17,9 @@ function f_Inst()
     local dest=$2
 
     if [ "$OS" == "linux" ] ; then
-	f_Relink $src $dest
+	      f_Relink $src $dest
     else
-	f_CopyFileWithBackup $src $dest
+	      f_CopyFileWithBackup $src $dest
     fi
 }
 
@@ -60,6 +60,7 @@ f_Inst $DIR/.bashrc ~/.bashrc
 f_Inst $DIR/.profile ~/.profile
 f_Inst $DIR/colors/.dircolors.solarized.ansi-universal ~/.dircolors
 f_Inst $DIR/emacs/.emacs ~/.emacs
+f_Inst $DIR/.tmux.conf ~/.tmux.conf
 
 if [ -f /etc/debian_version ]; then
     # We are running on Debian, this file improves font rendering considerably,
