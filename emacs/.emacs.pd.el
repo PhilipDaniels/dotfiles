@@ -534,6 +534,10 @@ From http://oremacs.com/2015/01/10/dired-ansi-term/"
   (interactive (list pd-term-shell)))
 (ad-activate 'ansi-term)
 
+;; Tramp mode.
+(setq tramp-default-method "sshx")
+(setq tramp-default-user "phil")
+
 ;; Org mode.
 (setq org-directory "~/repos/org")
 (setq org-log-done t)
