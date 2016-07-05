@@ -696,6 +696,7 @@ search at index 0."
 ;; Ensure that ^M characters never appear in text modes.
 (add-hook 'text-mode-hook 'pd-hide-dos-eol)
 (add-hook 'magit-diff-mode-hook 'pd-hide-dos-eol)
+(add-hook 'git-timemachine-mode-hook 'pd-hide-dos-eol)
 
 ;;(add-to-list 'default-frame-alist '(height . 50))
 ;;(add-to-list 'default-frame-alist '(width . 86))
