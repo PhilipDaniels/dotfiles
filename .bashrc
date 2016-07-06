@@ -186,8 +186,8 @@ alias lt="ls $LSIGNORE -lA --color=auto --sort=time"
 
 alias more='less'
 alias cls='printf "\033c"'
-alias wcd='wcd -q iicolor'
 alias quit='exit'
+alias wcd='wcd -q'
 
 alias s='git status'
 alias b='git branch -a -vv'
@@ -198,8 +198,7 @@ alias cob='git checkout -b'
 alias cod='git checkout develop'
 alias com='git checkout master'
 alias gfm='git config --local core.fileMode false'
-
-alias wcd='wcd -q'
+alias gp='git pull'
 
 if [ "$OS" == "cygwin" ]; then
     # Always export this so that an X server started from one Cygwin terminal
