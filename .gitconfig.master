@@ -75,9 +75,7 @@
     # colour which is whatever the foreground is. You may also use the
     # modifiers bold, dim, ul, blink and reverse. If two colours are given the
     # first is the foreground and the second is the background.
-    lg = log --graph --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold red) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(reset)%s %C(blue)%ae'
-    lg2 = log --graph --abbrev-commit --date=short --pretty=format:'%C(yellow)%h%C(bold red) %cd %C(reset)%s %C(blue)%ae'
-    l = log -20 --graph --all --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold red) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(white)%d %C(reset)%s %C(blue)%ae'
+    l = log -20 --graph --all --abbrev-commit --pretty=format:'%C(yellow)%h%C(bold red) %ci%x08%x08%x08%x08%x08%x08%x08%x08%x08%C(white)%d%C(reset) %s %C(blue)%ae'
 
     # An example of how to setup aliases for git subtree pull and push commands.
     # See my answer at http://stackoverflow.com/questions/24038147/managing-third-party-assets/
