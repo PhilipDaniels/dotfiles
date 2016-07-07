@@ -400,9 +400,9 @@ From http://oremacs.com/2015/01/10/dired-ansi-term/"
 (winner-mode 1)
 (semantic-mode 1)
 (delete-selection-mode 1)
-(smartparens-global-mode 1)
-(show-smartparens-global-mode 1)
-(setq sp-show-pair-delay 0)
+;; (smartparens-global-mode 1)
+;; (show-smartparens-global-mode 1)
+;; (setq sp-show-pair-delay 0)
 
 ;; The style I want to use in c++ mode.
 (c-add-style "pd-style"
@@ -548,7 +548,10 @@ From http://oremacs.com/2015/01/10/dired-ansi-term/"
 
 ;; smartparens interferes with the entry of links in org-mode. Turn it off.
 ;; From https://github.com/Fuco1/smartparens/wiki/Permissions
-(sp-local-pair 'org-mode "[" nil :actions nil)
+;;(sp-local-pair 'org-mode "[" nil :actions nil)
+
+;; Turn on rainbow delimiters in all programming modes.
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
 ;; Shells.
 ;; M-x shell runs a shell as a sub-process, communicating with it via pipes.
@@ -666,6 +669,10 @@ search at index 0."
 (setq which-func-modes nil)      ;; such as Powershell mode. Together, these two lines disable it.
 (setq rm-blacklist ".*")         ;; List of lighter strings or simply ".*"
 (rich-minority-mode 1)
+;; Some example frame titles. See Emacs wiki.
+;; (setq frame-title-format (list "\u25b6 %f \u25c0 " user-login-name "@" system-name))
+;; (setq frame-title-format (list "\u27a4 %f    \u27a4 " user-login-name "@" system-name))
+(setq frame-title-format (list "\u2b24 %f    \u2b24 " user-login-name "@" system-name))
 
 ;; fci-mode can cause an increase in the vertical separation of lines, so leave
 ;; it off by default. It is bound to C-= below, for ease of use.
