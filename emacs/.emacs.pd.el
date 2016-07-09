@@ -181,35 +181,6 @@ of a line, calls pd-join-line."
             pt (- pt size)))
     str))
 
-(defun pd-blog-update-reading-time ()
-  "Updates the word count and reading time estimate in a document.
-Used when writing posts for my blog."
-  (interactive)
-  (save-excursion
-    (save-restriction
-      (widen)
-      (goto-char (point-min))
-      (let* ((beg (search-forward "</div>"))
-             (num-words (count-words-region beg (point-max)))
-             (wpm 200.0)
-             (mins (ceiling (/ num-words wpm)))
-             (suffix (if (eq mins 1) "" "s"))
-             (words (pd-group-number num-words))
-             (replacement-text (format "<div class=\"reading-time\">%s words, estimated reading time %s minute%s at %d w.p.m.</div>" words mins suffix wpm))
-             )
-        (goto-char (point-min))
-        (when (re-search-forward "<div class=\"reading-time.*?/div>" (+ beg 10) t)
-          (replace-match replacement-text nil nil)
-          (message replacement-text))
-        ))))
-
-(defun pd-blog-save-hook ()
-  "Hook function run before save. Updates my blog posts with reading time."
-  (when (and (eq major-mode 'markdown-mode) (s-contains? "blog" buffer-file-name))
-    (pd-blog-update-reading-time)))
-
-(add-hook 'before-save-hook #'pd-blog-save-hook)
-
 (defun pd-sort-paragraph-dwim (&optional special-c-sort)
   "Sorts the current paragraph and leaves point after the last line.
 
