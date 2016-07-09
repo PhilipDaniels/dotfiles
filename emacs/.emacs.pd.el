@@ -847,6 +847,23 @@ search at index 0."
 
 (defvar pd-current-theme nil "The theme that was last loaded by pd-load-theme.")
 
+(defun pd-apply-theme-overrides ()
+  "Apply my theme overrides."
+  ;; Post-theme customizations that I apply to everything.
+  ;; Some things *should* be prominent.
+  ;; In terminal Emacs, these color names appear to map to the corresponding
+  ;; solarized colors automatically (see list-colors-display).
+  (set-cursor-color "red")
+  (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil)
+  (set-face-attribute 'menu                   nil :background "black" :foreground "white")
+  (set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")
+  (set-face-attribute 'tty-menu-selected-face nil :background "white" :foreground "black")
+  (set-face-attribute 'tty-menu-disabled-face nil :background "black" :foreground "red")
+  (when (eq theme 'solarized)
+    (set-face-attribute 'mode-line nil          :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
+    (set-face-attribute 'mode-line-inactive nil :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil))
+  )
+
 (defun pd-load-theme (theme &optional bg-mode)
   "Load a theme, disabling the current custom theme first.
 Normally themes 'accumulate' as you load them which gives a very
@@ -868,21 +885,7 @@ Valid values are nil, 'dark and 'light."
   (mapc 'frame-set-background-mode (frame-list))
   (load-theme theme t)
   (message "Theme set to %s" theme)
-  ;; Post-theme customizations that I apply to everything.
-  ;; Some things *should* be prominent.
-  ;; In terminal Emacs, these color names appear to map to the corresponding
-  ;; solarized colors automatically (see list-colors-display).
-  (set-cursor-color "red")
-  (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil)
-  (set-face-attribute 'menu                   nil :background "black" :foreground "white")
-  (set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")
-  (set-face-attribute 'tty-menu-selected-face nil :background "white" :foreground "black")
-  (set-face-attribute 'tty-menu-disabled-face nil :background "black" :foreground "red")
-  (when (eq theme 'solarized)
-    (set-face-attribute 'mode-line nil          :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
-    (set-face-attribute 'mode-line-inactive nil :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil))
-  )
-
+  (pd-apply-theme-overrides))
 
 ;; All these themes are available on MELPA.
 (defhydra hydra-themes (:hint nil)
