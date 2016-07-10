@@ -25,6 +25,7 @@
 (require 'helm-config)
 (require 'hideshow)
 (require 'hlinum)
+(require 'mic-paren)
 (require 'moe-theme)
 (require 'org)
 (require 'pd)
@@ -635,7 +636,7 @@ search at index 0."
 ;;(setq-default blink-cursor-alist '((t . (hbar . 5))))
 ;;(setq-default blink-cursor-alist '((t . nil)))
 (global-hl-line-mode 1)
-(setq blink-matching-paren nil)  ;; We use the smartparens package instead.
+(setq blink-matching-paren nil)  ;; We use the mic-paren package instead.
 (which-function-mode -1)         ;; Slow and pointless and some modes have a nasty habit of enabling it,
 (setq which-func-modes nil)      ;; such as Powershell mode. Together, these two lines disable it.
 (setq rm-blacklist ".*")         ;; List of lighter strings or simply ".*"
@@ -675,6 +676,11 @@ search at index 0."
 (add-hook 'text-mode-hook 'pd-hide-dos-eol)
 (add-hook 'magit-diff-mode-hook 'pd-hide-dos-eol)
 (add-hook 'git-timemachine-mode-hook 'pd-hide-dos-eol)
+
+;; Setup for mic-paren mode.
+;; Use list-faces-display to pick a suitable face.
+(paren-activate)
+(setq paren-match-face 'mode-line)
 
 ;;(add-to-list 'default-frame-alist '(height . 50))
 ;;(add-to-list 'default-frame-alist '(width . 86))

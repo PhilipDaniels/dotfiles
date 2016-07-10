@@ -32,6 +32,7 @@
                      lua-mode
                      magit
                      markdown-mode
+                     mic-paren
                      multi-term
                      outline-magic
                      powerline              ;; Powerline (modeline) package. Not sure which variant.
