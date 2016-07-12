@@ -17,8 +17,7 @@
     #
     # The best console experience is to start emacs using 'ce -nw' and then use
     # emacsclient -nw as the Git editor.
-
-    editor = emacsclient -nw
+    editor = emacsclient-w32 -c
     pager = less -x4
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems
