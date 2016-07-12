@@ -338,6 +338,22 @@ If region is active, apply to active region instead."
   (setq buffer-display-table (make-display-table))
     (aset buffer-display-table ?\^M []))
 
+(defun pd-new-terminal-for-buffer ()
+  "Create a new terminal window with a name appropriate to the
+current buffer , which may be a dired buffer, or a remote buffer.
+If such a buffer already exists, switch to it instead of creating
+a new one."
+  (interactive)
+  (let ((desired-buffer-name (cond ((derived-mode-p 'dired-mode) (dired-current-directory))
+                                   (buffer-file-name (file-name-directory buffer-file-name))
+                                   (t "ansi-term"))))
+    (if (get-buffer desired-buffer-name)
+        (switch-to-buffer desired-buffer-name)
+      (message "dbn = %s" desired-buffer-name)
+      (ansi-term "/bin/bash" desired-buffer-name)
+      )))
+
+
 (defun pd-terminal ()
   "Switch to a buffer named *ansi-term*, creating it if necessary.
 To create new terminals, simply rename existing ones with M-x rename-buffer
