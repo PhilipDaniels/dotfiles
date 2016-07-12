@@ -646,12 +646,12 @@ search at index 0."
 (setq column-number-mode 1)
 (setq line-number-mode 1)
 (size-indication-mode 1)
-(blink-cursor-mode 1)
+(blink-cursor-mode 0)
 (setq blink-cursor-blinks 0)
 ;; http://stackoverflow.com/questions/13625080/looking-forward-a-way-to-make-cursor-blinks-like-a-heartbeat-in-emacs
 ;;(setq-default blink-cursor-alist '((t . (hbar . 5))))
 ;;(setq-default blink-cursor-alist '((t . nil)))
-(global-hl-line-mode 1)
+(global-hl-line-mode 0)
 (setq blink-matching-paren nil)  ;; We use the mic-paren package instead.
 (which-function-mode -1)         ;; Slow and pointless and some modes have a nasty habit of enabling it,
 (setq which-func-modes nil)      ;; such as Powershell mode. Together, these two lines disable it.
