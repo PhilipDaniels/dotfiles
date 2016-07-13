@@ -793,19 +793,19 @@ search at index 0."
 (message "HYDRAS - BEGIN.")
 
 (defhydra hydra-windows ()
-  "C-arrow = switch, S-arrow = size, M-arrow = move"
-  ("C-<left>" windmove-left nil)
-  ("C-<right>" windmove-right nil)
-  ("C-<up>" windmove-up nil)
-  ("C-<down>" windmove-down nil)
+  "M-arrow = switch, S-arrow = size, C-arrow = move"
+  ("M-<left>" windmove-left nil)
+  ("M-<right>" windmove-right nil)
+  ("M-<up>" windmove-up nil)
+  ("M-<down>" windmove-down nil)
   ("S-<left>" hydra-move-splitter-left nil)
   ("S-<right>" hydra-move-splitter-right  nil)
   ("S-<up>" hydra-move-splitter-up nil)
   ("S-<down>" hydra-move-splitter-down nil)
-  ("M-<left>" buf-move-left nil)
-  ("M-<right>" buf-move-right nil)
-  ("M-<up>" buf-move-up nil)
-  ("M-<down>" buf-move-down nil)
+  ("C-<left>" buf-move-left nil)
+  ("C-<right>" buf-move-right nil)
+  ("C-<up>" buf-move-up nil)
+  ("C-<down>" buf-move-down nil)
   ("p" previous-buffer "prev-buf")
   ("n" next-buffer "next-buf")
   ("1" delete-other-windows "1")
@@ -821,17 +821,13 @@ search at index 0."
   ("q" nil "cancel")
   )
 
-(global-set-key (kbd "M-#") 'hydra-windows/body)
-
 (defhydra hydra-fonts ()
-  "Adjust font size and face with hydra."
-  ("i" text-scale-increase "increase")
-  ("d" text-scale-decrease "decrease")
-  ("n" (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)) "next font")
-  ("p" (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)) "previous font")
+  "Adjust font size and face"
+  ("+" text-scale-increase "larger")
+  ("-" text-scale-decrease "smaller")
+  ("n" (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)) "next")
+  ("p" (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)) "prev")
   ("q" nil "cancel"))
-
-(global-set-key (kbd "C-<f12> f") 'hydra-fonts/body)
 
 ;; Create a hydra to switch themes. We use the Emacs 24 theme engine (aka
 ;; deftheme) only, not the old color-theme.el engine.
@@ -966,8 +962,11 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   ("q"  nil)
   )
 
-(global-set-key (kbd "C-<f12> t") 'hydra-themes/body)
 (pd-load-theme 'solarized 'dark)
+
+(global-set-key (kbd "M-#") 'hydra-windows/body)
+(global-set-key (kbd "C-<f12> f") 'hydra-fonts/body)
+(global-set-key (kbd "C-<f12> t") 'hydra-themes/body)
 
 (message "HYDRAS - END.")
 

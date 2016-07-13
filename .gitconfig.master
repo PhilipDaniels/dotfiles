@@ -13,11 +13,11 @@
     # editor = emacsclient-w32   - works if using we to start Windows Emacs server
     # editor = emacsclient       - works if using ce to start Cywgin Emacs. Normally would do "ce -nw" to run without X
     #                              However, this open the commit message in the original console window
-    # editor = emacsclient -nw   - better than the above, opens the commit message in the current console window
+    # editor = emacsclient --tty - better than the above, opens the commit message in the current console window
     #
-    # The best console experience is to start emacs using 'ce -nw' and then use
-    # emacsclient -nw as the Git editor.
-    editor = emacsclient-w32 -c
+    # The standard emacsclient --tty appears to be able to talk to both Cygwin and
+    # Windows variants of Emacs.
+    editor = emacsclient --tty
     pager = less -x4
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems
