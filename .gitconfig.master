@@ -10,14 +10,28 @@
     # Store passwords in RAM for 6 days (6 * 24 * 60 * 60).
     helper = cache --timeout=518400
 [core]
-    # editor = emacsclient-w32   - works if using we to start Windows Emacs server
-    # editor = emacsclient       - works if using ce to start Cywgin Emacs. Normally would do "ce -nw" to run without X
-    #                              However, this open the commit message in the original console window
-    # editor = emacsclient --tty - better than the above, opens the commit message in the current console window
+    # When running from a non-internal shell,
+    # If server is     and client is          Then...
+    # 1) emacs-w32     emacsclient-w32        The existing GUI window is reused
+    # 2) emacs-w32     emacsclient-w32 --tty  Emacs opens in the current console
+    # 3) emacs-w32     emacsclient-w32 -c     Emacs opens a new GUI window, but also brings the existing window forward and focuses it, which is annoying
+    # 4) emacs-w32     emacsclient            Behaves as per 1)
+    # 5) emacs-w32     emacsclient --tty      Behaves as per 2)
+    # 6) emacs-w32     emacsclient -c         Behaves as per 2)
     #
-    # The standard emacsclient --tty appears to be able to talk to both Cygwin and
-    # Windows variants of Emacs.
-    editor = emacsclient --tty
+    # When running from an ansi-term shell,
+    # If server is     and client is          Then...
+    # 1) emacs-w32     emacsclient-w32        A GUI buffer is opened in the window that contains ansi-term, behaviour is good, except for annoying "waiting for Emacs" prompt from Git.
+    # 2) emacs-w32     emacsclient-w32 --tty  A console Emacs buffer is opened, running under ansi-term. Very confusing, colors are wrong.
+    # 3) emacs-w32     emacsclient-w32 -c     A new GUI window pops up, behaviour is good, but ansi-term seems to get a bit confused by cursor position.
+    # 4) emacs-w32     emacsclient            Behaves as per 1)
+    # 5) emacs-w32     emacsclient --tty      Behaves as per 2)
+    # 6) emacs-w32     emacsclient -c         Behaves as per 1)
+    #
+    # Conclusions: the --tty variants are not safe.
+    #              -c is tolerable
+    #              emacsclient with no args is probably the best all round solution
+    editor = emacsclient
     pager = less -x4
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems
