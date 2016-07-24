@@ -336,22 +336,76 @@ If region is active, apply to active region instead."
   ;; From http://stackoverflow.com/questions/730751/hiding-m-in-emacs
   (interactive)
   (setq buffer-display-table (make-display-table))
-    (aset buffer-display-table ?\^M []))
+  (aset buffer-display-table ?\^M []))
 
-(defun pd-new-terminal-for-buffer ()
-  "Create a new terminal window with a name appropriate to the
-current buffer , which may be a dired buffer, or a remote buffer.
-If such a buffer already exists, switch to it instead of creating
-a new one."
-  (interactive)
-  (let ((desired-buffer-name (cond ((derived-mode-p 'dired-mode) (dired-current-directory))
-                                   (buffer-file-name (file-name-directory buffer-file-name))
-                                   (t "ansi-term"))))
-    (if (get-buffer desired-buffer-name)
-        (switch-to-buffer desired-buffer-name)
-      (message "dbn = %s" desired-buffer-name)
-      (ansi-term "/bin/bash" desired-buffer-name)
-      )))
+;; (defun pd-ansi-term ()
+;;   "Create or switch to an ansi-term buffer with an initial working directory
+;; that is appropriate for the current buffer.
+;;
+;; If the current buffer is a dired buffer or a buffer visiting a file, then the
+;; desired buffer name will be the name of the directory that dired is visiting, or
+;; the directory name of the file, for example '*/c/temp/foo.el*' or an ssh name
+;; such as '*ssh:phil@debbox:/home/phil/foo.el*'. If an ansi-term buffer with such
+;; a name already exists then it is switched to rather than created. If the buffer
+;; does not exist then it is created and a 'cd' command is sent to set the initial
+;; directory.
+;;
+;; If the current buffer is already a terminal buffer, then a new buffer will be
+;; created with the same name as the original buffer. It is not yet possible to
+;; change to the same directory, because we can't tell what the current directory
+;; inside the ansi-term is.
+;;
+;; If none of the above apply, create a new buffer named '*ansi-term*'.
+;;
+;; The 'ansi-term buf-name' call requires buf-name to not have * around it, but
+;; buf-name does not have to be unique.
+;; "
+;;   (interactive)
+;;   (setq dbn nil)
+;;   (when (derived-mode-p 'dired-mode)
+;;     (setq dbn (dired-current-directory)))
+;;   (message "DBN: %s" dbn)
+;;   )
+;;
+;;
+;; (define-key global-map (kbd "C-c !") 'pd-ansi-term)
+;;
+;;
+;;
+;; (defun pd-buffer-directory ()
+;;   "Returns the directory of the current buffer, whatever the
+;; current buffer type."
+;;   (interactive)
+;;   (if (derived-mode-p 'dired-mode)
+;;       (concat "*" (dired-current-directory) "*")
+;;     (if (derived-mode-p 'term-mode)
+;;         term-ansi-buffer-name              ;; The name of the buffer, not the dir it is in.
+;;       (if (buffer-file-name)
+;;           (concat "*" (file-name-directory buffer-file-name) "*")
+;;         "*ansi-term*"))))
+;;
+;;
+;; (defun pd-new-terminal-for-buffer ()
+;;   "Create a new terminal window with a name appropriate to the
+;; current buffer , which may be a dired buffer, or a remote buffer.
+;; If such a buffer already exists, switch to it instead of creating
+;; a new one."
+;;   (interactive)
+;;   (setq dbn (pd-buffer-directory))
+;;   (message "DBN: %s" dbn))
+;;
+;;   ;; (let* ((desired-buffer-name (cond ((derived-mode-p 'dired-mode) (dired-current-directory))
+;;   ;;                                   ((derived-mode-p 'term-mode) (term-ansi-buffer-base-name))
+;;   ;;                                  (buffer-file-name (file-name-directory buffer-file-name))
+;;   ;;                                  (t "ansi-term"))))
+;;   ;;        (setq desired-buffer-name (concat "*" desired-buffer-name "*"))
+;;   ;;   (message "dbn = %s" desired-buffer-name)
+;;   ;;   (if (get-buffer desired-buffer-name)
+;;   ;;       (switch-to-buffer desired-buffer-name)
+;;   ;;     (ansi-term "/bin/bash" desired-buffer-name)
+;;   ;;     )))
+;;
+;; (define-key global-map (kbd "C-c !") 'pd-new-terminal-for-buffer)
 
 
 (defun pd-terminal ()
@@ -363,7 +417,7 @@ From http://oremacs.com/2015/01/10/dired-ansi-term/"
   (if (get-buffer "*ansi-term*")
       (switch-to-buffer "*ansi-term*")
     (ansi-term "/bin/bash"))
-    (get-buffer-process "*ansi-term*"))
+  (get-buffer-process "*ansi-term*"))
 
 (defun pd-dired-open-terminal ()
   "Open an `ansi-term' that corresponds to current dired directory.
@@ -377,7 +431,7 @@ From http://oremacs.com/2015/01/10/dired-ansi-term/"
          (let ((v (tramp-dissect-file-name current-dir t)))
            (format "ssh %s@%s\n"
                    (aref v 1) (aref v 2)))
-              (format "cd '%s'\n" current-dir)))))
+       (format "cd '%s'\n" current-dir)))))
 
 (message "FUNCTIONS - END.")
 
@@ -1220,7 +1274,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-x b")     'helm-mini)
 (define-key global-map (kbd "C-x g")     'magit-status)
 (define-key global-map (kbd "C-x z")     'undo)
-;(define-key global-map (kbd "C-z")       'pd-replace-all-in-buffer)
+                                        ;(define-key global-map (kbd "C-z")       'pd-replace-all-in-buffer)
 (define-key global-map (kbd "C-%")       'pd-replace-all-in-buffer)
 (define-key global-map (kbd "M-j")       'pd-join-line)
 (define-key global-map (kbd "M-x")       'helm-M-x)

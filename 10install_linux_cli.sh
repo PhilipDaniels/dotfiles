@@ -45,7 +45,6 @@ sudo apt-get install \
      exuberant-ctags \
      flex \
      font-manager \
-     fonts-droid \
      fonts-inconsolata \
      fonts-jura \
      fonts-linuxlibertine \
@@ -69,7 +68,7 @@ sudo apt-get install \
      libm17n-dev \
      libncurses5-dev \
      libotf-dev \
-     libpng12-dev \
+     libpng-dev \
      librsvg2-dev \
      libssl-dev \
      libtiff-dev \
