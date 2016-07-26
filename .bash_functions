@@ -383,15 +383,17 @@ f_SetupSSH()
     # different purpose in SSH.
     env=~/.ssh/agent.env
 
-    if ! f_AgentIsRunning; then
-        f_AgentLoadEnv
-    fi
+    if [ -f ~/.ssh/id_phil ]; then
+        if ! f_AgentIsRunning; then
+            f_AgentLoadEnv
+        fi
 
-    if ! f_AgentIsRunning; then
-        f_AgentStart
-        ssh-add ~/.ssh/id_phil
-    elif ! f_AgentHasKeys; then
-        ssh-add ~/.ssh/id_phil
+        if ! f_AgentIsRunning; then
+            f_AgentStart
+            ssh-add ~/.ssh/id_phil
+        elif ! f_AgentHasKeys; then
+            ssh-add ~/.ssh/id_phil
+        fi
     fi
 
     unset env
