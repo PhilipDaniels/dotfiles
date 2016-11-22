@@ -31,7 +31,7 @@
     # Conclusions: the --tty variants are not safe.
     #              -c is tolerable
     #              emacsclient with no args is probably the best all round solution
-    editor = emacsclient
+    editor = emacsclient -tty
     pager = less -x4
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems
@@ -100,13 +100,13 @@
 # the relevant lines.
 [merge]
     conflictstyle = diff3
-    tool = vs2015
+    tool = kdiff3
 [mergetool]
     prompt = false
     keepBackup = false
 [diff]
-    guitool = vs2015
-    tool = vs2015
+    guitool = kdiff3
+    tool = kdiff3
 [difftool]
     prompt = false
 
