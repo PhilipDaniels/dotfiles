@@ -439,6 +439,7 @@ From http://oremacs.com/2015/01/10/dired-ansi-term/"
 ;;; $$ MODES.
 (message "MODES - BEGIN.")
 
+(persistent-scratch-setup-default)
 (winner-mode 1)
 (semantic-mode 1)
 (delete-selection-mode 1)

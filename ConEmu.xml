@@ -619,8 +619,8 @@
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
-					<value name="Cmd1" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd2" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd1" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Active" type="dword" data="00000000"/>
 					<value name="Count" type="dword" data="00000001"/>
 				</key>
@@ -629,88 +629,88 @@
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
-					<value name="Cmd1" type="string" data="&gt; %CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Active" type="dword" data="00000001"/>
 					<value name="Count" type="dword" data="00000002"/>
-					<value name="Cmd2" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task6" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Sol Dark::2V}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
-					<value name="Cmd1" type="string" data="&gt; %CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Active" type="dword" data="00000001"/>
 					<value name="Count" type="dword" data="00000002"/>
-					<value name="Cmd2" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1TVn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd3" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd4" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1TVn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task7" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Sol Dark::x4}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
-					<value name="Cmd1" type="string" data="&gt; %CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Active" type="dword" data="00000001"/>
 					<value name="Count" type="dword" data="00000004"/>
-					<value name="Cmd2" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1TVn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd3" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd4" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1TVn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task8" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Sol Light::Single}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
-					<value name="Cmd1" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd1" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Active" type="dword" data="00000000"/>
 					<value name="Count" type="dword" data="00000001"/>
-					<value name="Cmd2" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task9" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Sol Light::2H}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
-					<value name="Cmd1" type="string" data="&gt; %CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Active" type="dword" data="00000001"/>
 					<value name="Count" type="dword" data="00000002"/>
-					<value name="Cmd2" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd3" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd4" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task10" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Sol Light::2V}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
-					<value name="Cmd1" type="string" data="&gt; %CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Active" type="dword" data="00000001"/>
 					<value name="Count" type="dword" data="00000002"/>
-					<value name="Cmd2" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1TVn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd3" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd4" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1TVn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task11" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Sol Light::x4}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
-					<value name="Cmd1" type="string" data="&gt; %CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd2" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1TVn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1TVn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Active" type="dword" data="00000001"/>
 					<value name="Count" type="dword" data="00000004"/>
-					<value name="Cmd3" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd4" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task12" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Mintty::2H}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
-					<value name="Cmd1" type="string" data="&gt; %CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -new_console:n:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd2" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Active" type="dword" data="00000001"/>
 					<value name="Count" type="dword" data="00000002"/>
 				</key>
@@ -719,8 +719,8 @@
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
-					<value name="Cmd1" type="string" data="&gt; %CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -new_console:n:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd2" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -cur_console:s1TVn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -cur_console:s1TVn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Active" type="dword" data="00000001"/>
 					<value name="Count" type="dword" data="00000002"/>
 				</key>
@@ -733,8 +733,8 @@
 					<value name="Cmd2" type="string" data="&quot;%windir%\syswow64\cmd.exe&quot; /k &quot;&quot;%ConEmuBaseDir%\CmdInit.cmd&quot; &amp; echo This is 32 bit cmd.exe -new_console:s50V&quot;"/>
 					<value name="Active" type="dword" data="00000000"/>
 					<value name="Count" type="dword" data="00000001"/>
-					<value name="Cmd3" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd4" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task15" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Shells::cmd (Admin)}"/>
@@ -745,8 +745,8 @@
 					<value name="Cmd2" type="string" data="&quot;%windir%\syswow64\cmd.exe&quot; /k &quot;&quot;%ConEmuBaseDir%\CmdInit.cmd&quot; &amp; echo This is 32 bit cmd.exe -new_console:s50V&quot;"/>
 					<value name="Active" type="dword" data="00000000"/>
 					<value name="Count" type="dword" data="00000001"/>
-					<value name="Cmd3" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd4" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task16" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Shells::cmd 64/32}"/>
@@ -757,8 +757,8 @@
 					<value name="Cmd2" type="string" data="&quot;%windir%\syswow64\cmd.exe&quot; /k &quot;&quot;%ConEmuBaseDir%\CmdInit.cmd&quot; &amp; echo This is 32 bit cmd.exe -new_console:s50V&quot;"/>
 					<value name="Active" type="dword" data="00000001"/>
 					<value name="Count" type="dword" data="00000002"/>
-					<value name="Cmd3" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd4" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task17" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Shells::PowerShell}"/>
@@ -767,8 +767,8 @@
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="powershell.exe"/>
 					<value name="Cmd2" type="string" data="powershell.exe -cur_console:s1THn"/>
-					<value name="Cmd3" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd4" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Active" type="dword" data="00000000"/>
 					<value name="Count" type="dword" data="00000001"/>
 				</key>
@@ -781,8 +781,8 @@
 					<value name="Cmd2" type="string" data="powershell.exe -cur_console:s1THn"/>
 					<value name="Active" type="dword" data="00000000"/>
 					<value name="Count" type="dword" data="00000001"/>
-					<value name="Cmd3" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd4" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task19" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Shells::PowerShell 2H}"/>
@@ -793,8 +793,8 @@
 					<value name="Cmd2" type="string" data="powershell.exe -cur_console:s1THn"/>
 					<value name="Active" type="dword" data="00000001"/>
 					<value name="Count" type="dword" data="00000002"/>
-					<value name="Cmd3" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:%CYGROOT%\Cygwin.ico"/>
-					<value name="Cmd4" type="string" data="%CYGROOT%\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:%CYGROOT%\Cygwin.ico"/>
+					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
+					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
 				<key name="Task20" modified="2016-06-12 14:58:40" build="151210">
 					<value name="Name" type="string" data="{Shells::PowerShell 2V}"/>

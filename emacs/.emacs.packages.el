@@ -35,6 +35,7 @@
                      mic-paren
                      multi-term
                      outline-magic
+                     persistent-scratch
                      powerline              ;; Powerline (modeline) package. Not sure which variant.
                      powershell             ;; Run Powershell as an inferior process.
                      projectile
