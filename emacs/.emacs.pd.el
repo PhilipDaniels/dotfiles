@@ -1164,6 +1164,8 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;;(define-key global-map (kbd "S-<f2>") (lambda () (interactive) (find-file "~/work.org")))
 ;;(define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
 
+(define-key global-map (kbd "<f1>")      'dired-jump)
+(define-key global-map (kbd "<f2>")      'pd-ansi-term)
 (define-key global-map (kbd "<f9>")      'cycle-buffer-backward)
 (define-key global-map (kbd "<f10>")     'cycle-buffer)
 (define-key global-map (kbd "S-<f9>")    'cycle-buffer-backward-permissive)
