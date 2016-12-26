@@ -338,100 +338,57 @@ If region is active, apply to active region instead."
   (setq buffer-display-table (make-display-table))
   (aset buffer-display-table ?\^M []))
 
-;; (defun pd-ansi-term ()
-;;   "Create or switch to an ansi-term buffer with an initial working directory
-;; that is appropriate for the current buffer.
-;;
-;; If the current buffer is a dired buffer or a buffer visiting a file, then the
-;; desired buffer name will be the name of the directory that dired is visiting, or
-;; the directory name of the file, for example '*/c/temp/foo.el*' or an ssh name
-;; such as '*ssh:phil@debbox:/home/phil/foo.el*'. If an ansi-term buffer with such
-;; a name already exists then it is switched to rather than created. If the buffer
-;; does not exist then it is created and a 'cd' command is sent to set the initial
-;; directory.
-;;
-;; If the current buffer is already a terminal buffer, then a new buffer will be
-;; created with the same name as the original buffer. It is not yet possible to
-;; change to the same directory, because we can't tell what the current directory
-;; inside the ansi-term is.
-;;
-;; If none of the above apply, create a new buffer named '*ansi-term*'.
-;;
-;; The 'ansi-term buf-name' call requires buf-name to not have * around it, but
-;; buf-name does not have to be unique.
-;; "
-;;   (interactive)
-;;   (setq dbn nil)
-;;   (when (derived-mode-p 'dired-mode)
-;;     (setq dbn (dired-current-directory)))
-;;   (message "DBN: %s" dbn)
-;;   )
-;;
-;;
-;; (define-key global-map (kbd "C-c !") 'pd-ansi-term)
-;;
-;;
-;;
-;; (defun pd-buffer-directory ()
-;;   "Returns the directory of the current buffer, whatever the
-;; current buffer type."
-;;   (interactive)
-;;   (if (derived-mode-p 'dired-mode)
-;;       (concat "*" (dired-current-directory) "*")
-;;     (if (derived-mode-p 'term-mode)
-;;         term-ansi-buffer-name              ;; The name of the buffer, not the dir it is in.
-;;       (if (buffer-file-name)
-;;           (concat "*" (file-name-directory buffer-file-name) "*")
-;;         "*ansi-term*"))))
-;;
-;;
-;; (defun pd-new-terminal-for-buffer ()
-;;   "Create a new terminal window with a name appropriate to the
-;; current buffer , which may be a dired buffer, or a remote buffer.
-;; If such a buffer already exists, switch to it instead of creating
-;; a new one."
-;;   (interactive)
-;;   (setq dbn (pd-buffer-directory))
-;;   (message "DBN: %s" dbn))
-;;
-;;   ;; (let* ((desired-buffer-name (cond ((derived-mode-p 'dired-mode) (dired-current-directory))
-;;   ;;                                   ((derived-mode-p 'term-mode) (term-ansi-buffer-base-name))
-;;   ;;                                  (buffer-file-name (file-name-directory buffer-file-name))
-;;   ;;                                  (t "ansi-term"))))
-;;   ;;        (setq desired-buffer-name (concat "*" desired-buffer-name "*"))
-;;   ;;   (message "dbn = %s" desired-buffer-name)
-;;   ;;   (if (get-buffer desired-buffer-name)
-;;   ;;       (switch-to-buffer desired-buffer-name)
-;;   ;;     (ansi-term "/bin/bash" desired-buffer-name)
-;;   ;;     )))
-;;
-;; (define-key global-map (kbd "C-c !") 'pd-new-terminal-for-buffer)
-
-
-(defun pd-terminal ()
-  "Switch to a buffer named *ansi-term*, creating it if necessary.
-To create new terminals, simply rename existing ones with M-x rename-buffer
-to reflect what they are actually being used for.
-From http://oremacs.com/2015/01/10/dired-ansi-term/"
+(defun pd-get-or-create-ansi-term (bufname)
+  "Switch to an ansi-term buffer named BUFNAME if it exists, or
+create one if no such buffer does not exist."
   (interactive)
-  (if (get-buffer "*ansi-term*")
-      (switch-to-buffer "*ansi-term*")
-    (ansi-term "/bin/bash"))
-  (get-buffer-process "*ansi-term*"))
+  (let ((dbn (concat "*" bufname "*")))
+    (if (get-buffer dbn)
+        (switch-to-buffer dbn)
+      (ansi-term "/bin/bash" bufname))
+  (get-buffer-process dbn)))
 
-(defun pd-dired-open-terminal ()
-  "Open an `ansi-term' that corresponds to current dired directory.
-Usually bound to the ` key in dired-mode-map.
-From http://oremacs.com/2015/01/10/dired-ansi-term/"
+(defun pd-ansi-term ()
+  "Create or switch to an ansi-term buffer with an initial
+working directory that is the same as the current buffer's
+DEFAULT-DIRECTORY. This is a quick way to bring up a terminal in
+the same directory as the buffer.
+
+The new ansi-term buffer will have a name that matches the
+DEFAULT-DIRECTORY. If such a buffer already exists, it is
+switched to rather than created.
+
+If the current buffer is a remote buffer then an 'ssh' command
+followed by a 'cd' command will be sent to the new ansi-term to
+leave you in the correct directory.
+
+Based on http://oremacs.com/2015/01/10/dired-ansi-term/
+
+TODO
+1) Make ansi-term mode update the buffer name when you change
+directory. At the moment the buffer keeps its original name,
+which means there is a chance this function will give you a
+buffer that is not actually in that directory.
+
+2) If called when already in an ansi-term, generate another term
+with a unique buffer name. See
+https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.html
+"
   (interactive)
-  (let ((current-dir (dired-current-directory)))
-    (term-send-string
-     (pd-terminal)
-     (if (file-remote-p current-dir)
-         (let ((v (tramp-dissect-file-name current-dir t)))
-           (format "ssh %s@%s\n"
-                   (aref v 1) (aref v 2)))
-       (format "cd '%s'\n" current-dir)))))
+  (if (not (file-remote-p default-directory))
+      (pd-get-or-create-ansi-term default-directory)
+    ;;(message "Remote file %s" default-directory)
+    (let* ((parts (tramp-dissect-file-name default-directory t))
+           (uid (aref parts 1))
+           (host (aref parts 2))
+           (dir (aref parts 3))
+           (cmd (format "ssh %s@%s\ncd '%s'\n" uid host dir))
+           (bname (format "ansi-term:%s" default-directory))
+          )
+      (term-send-string
+       (pd-get-or-create-ansi-term bname)
+       cmd)
+     )))
 
 (message "FUNCTIONS - END.")
 
@@ -1274,8 +1231,9 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-x C-g")   'magit-status)
 (define-key global-map (kbd "C-x b")     'helm-mini)
 (define-key global-map (kbd "C-x g")     'magit-status)
+(define-key global-map (kbd "C-x C-t")   'pd-ansi-term)
 (define-key global-map (kbd "C-x z")     'undo)
-                                        ;(define-key global-map (kbd "C-z")       'pd-replace-all-in-buffer)
+;;(define-key global-map (kbd "C-z")       'pd-replace-all-in-buffer)
 (define-key global-map (kbd "C-%")       'pd-replace-all-in-buffer)
 (define-key global-map (kbd "M-j")       'pd-join-line)
 (define-key global-map (kbd "M-x")       'helm-M-x)
@@ -1324,7 +1282,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action) ; make TAB works in terminal
 (define-key helm-map (kbd "C-z")   'helm-select-action) ; list actions using C-z
 
-(define-key dired-mode-map (kbd "`") 'pd-dired-open-terminal)
+(define-key dired-mode-map (kbd "`") 'pd-ansi-term)
 
 ;; ******************* C/C++ mode keys ********************
 ;; Create a keymap with Visual Studio compatible keymappings.
