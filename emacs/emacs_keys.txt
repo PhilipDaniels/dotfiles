@@ -1,0 +1,65 @@
+Basic Editing                            Movement   backward  forward        Function Keys           S-                     C-
+======================================   ================================    =======================================================================
+C-'  M-'   expand/contract region        word       M-b       M-f            F1  dired               S-F1 open this file
+C-S-w      pd-copy-current-line          line       C-p       C-n            F2  terminal
+C-S-o      pd-duplicate-line-or-region   sentence   M-a       M-e            F3  start macro
+C-%        pd-replace-all-in-buffer      paragraph  M-{       M-}            F4  end macro
+M-%        query replace                 sexp       M-[       M-]            F5
+M-j        pd-join-line                  function   C-M-left  C-M-right      F6
+M-y        helm-show-kill-ring           buffer     M-<       M->            F7
+M-SPC      pd-no-space                                                       F8
+H-SPC      pd-no-space                   Marking                             F9  cycle buffer back   S-F9  perm. c.b.b.     C-F9  kill buffer
+M-u        uppercase word                ================================    F10 cycle buffer        S-F10 perm. c.b.       C-F10 bury buffer
+M-l        lowercase word                C-x C-x  exchange point and mark    F11 menu bar open       S-F11 ditto            C-F11 ditto
+M-c        capitalize word               M-h      mark paragraph             F12 speedbar toggle     S-F12 speedbar select  C-F12 hydra prefix (wtf)
+C-x b      helm-mini                     C-M-h    mark function
+C-x C-f    helm-find-files               C-x h    mark whole buffer          Extended Commands (Hyper/apps)          Rectangles
+C-x g      magit-status                                                      ==============================          =========================================
+C-x =      what-cursor-position          Helm (Prefix = C-;)                 a    pd-cpp-add-using                   C-x r k     kill-rectangle
+C-x s      save all files                ================================    cc   pd-cleanup-programming-buffer      C-x r M-w   copy-rectangle-as-kill
+C-x C-w    save as                       SPC   helm-all-mark-rings           dl   pd-duplicate-line-or-region        C-x r d     delete-rectangle
+C-x C-q    toggle buffer R/O             a     helm-apropos                  dw   delete-trailing-whitespace         C-x r y     yank-rectangle
+C-x i      insert file into buffer       c     helm-colors                   g    magit-status                       C-x r o     open-rectangle (insert blanks)
+C-u C-l    center current line           f     helm-find                     rb   pd-revert-buffer                   C-x r N     rectangle-number-lines
+C-M-\      indent region                 i     insert-char                   rj   jump-to-register                   C-x r c     clear-rectangle
+C-M-q      indent sexp                   m     helm-man-woman                rp   point-to-register                  M-x string-insert-rectangle RET string RET
+M-x        insert-table                  o     helm-occur                    rw   window-configuration-to-register   C-x SPC
+C-\        hs-toggle-hiding              s     helm-semantic-or-imenu        sp   pd-sort-paragraph-dwim
+C-|        hs-show-all                   r     helm-all-mark-rings           w    pd-copy-current-line
+
+Opening Files                                                                       Searching in Files
+=================================================================================   ============================================
+See http://www.gnu.org/software/emacs/manual/html_node/emacs/Remote-Files.html      C-x C-f	            helm-find-files, then
+And https://www.emacswiki.org/emacs/TrampMode                                       BACKSPACE C-s	      grep in current dir, or:
+/sudo::/home/user/file	  Open local file as root (will be prompted for password)   BACKSPACE C-u C-s	  recursive grep
+/host:filename	          Open remote file as default user (phil)
+/user@host:filename	      Open remote file specifying user
+/ssh:you@remotehost:	    Remote dired
+/ssh:you@remotehost|sudo:remotehost:/path/to/file    Open remote file as root
+
+Dired
+=================================================================================
+^   parent dir                   m    mark              C    copy files
+f   open file                    u    unmark            R    rename/move
+o   open file in other window    * .  mark extension    D    delete files
+a   open file, replace dired     * *  mark exes         % l  change to lower case
+v   view file (q to close)       t    invert marking    % u  change to upper case
++   new subdir                                          O    change owner
+=   compare file at point with one at mark              G    change group
+                                                        M    change mode
+
+Ansi-Term
+==============================
+C-c C-j    line mode
+C-c C-k    char mode (default)
+S-arrow    scroll up / down
+
+
+M-1  jump to register z
+M-2  save window config to register z
+M-3  save point to register z
+
+
+TODO
+====
+Bookmarks

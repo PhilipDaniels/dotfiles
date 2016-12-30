@@ -1166,10 +1166,10 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 
 ;; ******************* Global Function keys ********************
 ;;(define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/.emacs.pd.el")))
-;;(define-key global-map (kbd "S-<f2>") (lambda () (interactive) (find-file "~/work.org")))
 ;;(define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
 
 (define-key global-map (kbd "<f1>")      'dired-jump)
+(define-key global-map (kbd "S-<f1>")    (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs_keys.txt"))) 
 (define-key global-map (kbd "<f2>")      'pd-ansi-term)
 (define-key global-map (kbd "<f9>")      'cycle-buffer-backward)
 (define-key global-map (kbd "<f10>")     'cycle-buffer)
@@ -1212,8 +1212,6 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "M-1") (lambda () (interactive) (jump-to-register ?z)))
 (define-key global-map (kbd "M-2") (lambda () (interactive) (window-configuration-to-register ?z) (message "Window configuration saved")))
 (define-key global-map (kbd "M-3") (lambda () (interactive) (point-to-register ?z) (message "Point saved")))
-(define-key global-map (kbd "M-9") 'backward-sexp)
-(define-key global-map (kbd "M-0") 'forward-sexp)
 
 ;; ******************* Letter/main section keys ********************
 ;; The keys C-` , . ' ; ? are all available.
@@ -1226,6 +1224,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-; i")     'insert-char)
 (define-key global-map (kbd "C-; m")     'helm-man-woman)
 (define-key global-map (kbd "C-; o")     'helm-occur)
+(define-key global-map (kbd "C-; r")     'helm-all-mark-rings)
 (define-key global-map (kbd "C-; s")     'helm-semantic-or-imenu)
 (define-key global-map (kbd "C-=")       'fci-mode)
 (define-key global-map (kbd "M-'")       (lambda () (interactive) (er/expand-region -1)))
@@ -1234,10 +1233,13 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-|")       'hs-show-all)
 (define-key global-map (kbd "M-/")       'hippie-expand)
 (define-key global-map (kbd "M-;")       'endless/comment-line-or-region)
+(define-key global-map (kbd "M-[")       'backward-sexp)
+(define-key global-map (kbd "M-]")       'forward-sexp)
 (define-key global-map (kbd "M-{")       'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
 (define-key global-map (kbd "M-}")       'endless/forward-paragraph)
 
 (define-key global-map (kbd "C-S-o")     'pd-duplicate-line-or-region)
+(define-key global-map (kbd "C-S-w")     'pd-copy-current-line)
 (define-key global-map (kbd "C-a")       'pd-back-to-indentation-or-beginning)
 (define-key global-map (kbd "C-x C-b")   'helm-mini)
 (define-key global-map (kbd "C-x C-f")   'helm-find-files)
@@ -1252,6 +1254,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "M-x")       'helm-M-x)
 (define-key global-map (kbd "M-y")       'helm-show-kill-ring)
 (define-key global-map (kbd "M-SPC")     'pd-no-space)
+(define-key global-map (kbd "H-SPC")     'pd-no-space)
 
 (defun pd-bind-key (keyseq func)
   "Helper function to bind keys to both <apps> and H-."
@@ -1269,14 +1272,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (pd-bind-key "dl" 'pd-duplicate-line-or-region)
 (pd-bind-key "dw" 'delete-trailing-whitespace)
 (pd-bind-key "g"  'magit-status)
-(pd-bind-key "ha" 'helm-apropos)
-(pd-bind-key "hc" 'helm-colors)
-(pd-bind-key "hi" 'helm-semantic-or-imenu)
-(pd-bind-key "hf" 'helm-find)
-(pd-bind-key "hm" 'helm-man-woman)
-(pd-bind-key "ho" 'helm-occur)
-(pd-bind-key "hr" 'helm-all-mark-rings)
-(pd-bind-key "rb" 'pd-revert-buffer)
+(pd-bind-key "rb" 'pd-revert-buffer
 (pd-bind-key "rj" 'jump-to-register)
 (pd-bind-key "rp" 'point-to-register)
 (pd-bind-key "rw" 'window-configuration-to-register)
