@@ -331,6 +331,11 @@ If region is active, apply to active region instead."
       (rectangle-mark-mode 1)
       (goto-char mk))))
 
+(defun pd-revert-buffer ()
+  "Reverts a buffer back to its last saved state."
+  (interactive)
+  (revert-buffer nil t))
+
 (defun pd-hide-dos-eol ()
   "Do not show ^M in files containing mixed UNIX and DOS line endings."
   ;; From http://stackoverflow.com/questions/730751/hiding-m-in-emacs
@@ -976,11 +981,6 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 
 (pd-load-theme 'solarized 'dark)
 
-(global-set-key (kbd "M-#") 'hydra-windows/body)
-(global-set-key (kbd "C-<f12> w") 'hydra-windows/body)
-(global-set-key (kbd "C-<f12> f") 'hydra-fonts/body)
-(global-set-key (kbd "C-<f12> t") 'hydra-themes/body)
-
 (message "HYDRAS - END.")
 
 
@@ -1152,6 +1152,11 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (if (equal system-type 'gnu/linux)
     (define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))
 
+;; On X, e.g. in Mint, make the left Windows key, which is normally super,
+;; send hyper instead.
+(setq x-super-keysym 'hyper)
+
+
 ;;(when (equal window-system 'w32)
 ;;  (setq w32-pass-apps-to-system nil w32-apps-modifier 'hyper))
 
@@ -1177,6 +1182,10 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-<f11>")   'menu-bar-open)
 (define-key global-map (kbd "<f12>")     'sr-speedbar-toggle)
 (define-key global-map (kbd "S-<f12>")   'sr-speedbar-select-window)
+(define-key global-map (kbd "C-<f12> w") 'hydra-windows/body)
+(define-key global-map (kbd "C-<f12> f") 'hydra-fonts/body)
+(define-key global-map (kbd "C-<f12> t") 'hydra-themes/body)
+
 ;; f3, f4 = macros start and end.
 ;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
 ;; f9 = undefined
@@ -1220,6 +1229,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-; s")     'helm-semantic-or-imenu)
 (define-key global-map (kbd "C-=")       'fci-mode)
 (define-key global-map (kbd "M-'")       (lambda () (interactive) (er/expand-region -1)))
+(define-key global-map (kbd "M-#")       'hydra-windows/body)
 (define-key global-map (kbd "C-\\")      'hs-toggle-hiding)
 (define-key global-map (kbd "C-|")       'hs-show-all)
 (define-key global-map (kbd "M-/")       'hippie-expand)
@@ -1243,49 +1253,40 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "M-y")       'helm-show-kill-ring)
 (define-key global-map (kbd "M-SPC")     'pd-no-space)
 
-(define-key global-map (kbd "<apps> a")  'pd-cpp-add-using)
-(define-key global-map (kbd "<apps> cc") 'pd-cleanup-programming-buffer)
-(define-key global-map (kbd "<apps> dl") 'pd-duplicate-line-or-region)
-(define-key global-map (kbd "<apps> dw") 'delete-trailing-whitespace)
-(define-key global-map (kbd "<apps> g")  'magit-status)
-(define-key global-map (kbd "<apps> ha") 'helm-apropos)
-(define-key global-map (kbd "<apps> ho") 'helm-occur)
-(define-key global-map (kbd "<apps> hi") 'helm-semantic-or-imenu)
-(define-key global-map (kbd "<apps> hc") 'helm-colors)
-(define-key global-map (kbd "<apps> hm") 'helm-man-woman)
-(define-key global-map (kbd "<apps> hf") 'helm-find)
-(define-key global-map (kbd "<apps> hr") 'helm-all-mark-rings)
-(define-key global-map (kbd "<apps> rb") (lambda () (interactive) (revert-buffer nil t)))
-(define-key global-map (kbd "<apps> rj") 'jump-to-register)
-(define-key global-map (kbd "<apps> rp") 'point-to-register)
-(define-key global-map (kbd "<apps> rw") 'window-configuration-to-register)
-(define-key global-map (kbd "<apps> sp") 'pd-sort-paragraph-dwim)
-(define-key global-map (kbd "<apps> w")  'pd-copy-current-line)
+(defun pd-bind-key (keyseq func)
+  "Helper function to bind keys to both <apps> and H-."
+  (let ((e1 (concat "<apps> " keyseq))
+        (e2 (format "H-%s%s" (substring keyseq 0 1)
+                    (if (equal 1 (length keyseq))
+                        ""
+                      (concat " " (substring keyseq 1 2)))))
+        )
+    (define-key global-map (kbd e1) func)
+    (define-key global-map (kbd e2) func)))
 
-(define-key global-map (kbd "H-a")   'pd-cpp-add-using)
-(define-key global-map (kbd "H-c c") 'pd-cleanup-programming-buffer)
-(define-key global-map (kbd "H-d l") 'pd-duplicate-line-or-region)
-(define-key global-map (kbd "H-d w") 'delete-trailing-whitespace)
-(define-key global-map (kbd "H-g")   'magit-status)
-(define-key global-map (kbd "H-h a") 'helm-apropos)
-(define-key global-map (kbd "H-h o") 'helm-occur)
-(define-key global-map (kbd "H-h i") 'helm-semantic-or-imenu)
-(define-key global-map (kbd "H-h c") 'helm-colors)
-(define-key global-map (kbd "H-h m") 'helm-man-woman)
-(define-key global-map (kbd "H-h f") 'helm-find)
-(define-key global-map (kbd "H-h r") 'helm-all-mark-rings)
-(define-key global-map (kbd "H-r b") (lambda () (interactive) (revert-buffer nil t)))
-(define-key global-map (kbd "H-r j") 'jump-to-register)
-(define-key global-map (kbd "H-r p") 'point-to-register)
-(define-key global-map (kbd "H-r w") 'window-configuration-to-register)
-(define-key global-map (kbd "H-s p") 'pd-sort-paragraph-dwim)
-(define-key global-map (kbd "H-w")   'pd-copy-current-line)
+(pd-bind-key "a"  'pd-cpp-add-using)
+(pd-bind-key "cc" 'pd-cleanup-programming-buffer)
+(pd-bind-key "dl" 'pd-duplicate-line-or-region)
+(pd-bind-key "dw" 'delete-trailing-whitespace)
+(pd-bind-key "g"  'magit-status)
+(pd-bind-key "ha" 'helm-apropos)
+(pd-bind-key "hc" 'helm-colors)
+(pd-bind-key "hi" 'helm-semantic-or-imenu)
+(pd-bind-key "hf" 'helm-find)
+(pd-bind-key "hm" 'helm-man-woman)
+(pd-bind-key "ho" 'helm-occur)
+(pd-bind-key "hr" 'helm-all-mark-rings)
+(pd-bind-key "rb" 'pd-revert-buffer)
+(pd-bind-key "rj" 'jump-to-register)
+(pd-bind-key "rp" 'point-to-register)
+(pd-bind-key "rw" 'window-configuration-to-register)
+(pd-bind-key "sp" 'pd-sort-paragraph-dwim)
+(pd-bind-key "w"  'pd-copy-current-line)
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action) ; make TAB works in terminal
 (define-key helm-map (kbd "C-z")   'helm-select-action) ; list actions using C-z
 
-(define-key dired-mode-map (kbd "`") 'pd-ansi-term)
 
 ;; ******************* C/C++ mode keys ********************
 ;; Create a keymap with Visual Studio compatible keymappings.
