@@ -1169,7 +1169,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;;(define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
 
 (define-key global-map (kbd "<f1>")      'dired-jump)
-(define-key global-map (kbd "S-<f1>")    (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs_keys.txt"))) 
+(define-key global-map (kbd "S-<f1>")    (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs_keys.txt")))
 (define-key global-map (kbd "<f2>")      'pd-ansi-term)
 (define-key global-map (kbd "<f9>")      'cycle-buffer-backward)
 (define-key global-map (kbd "<f10>")     'cycle-buffer)
@@ -1185,6 +1185,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-<f12> w") 'hydra-windows/body)
 (define-key global-map (kbd "C-<f12> f") 'hydra-fonts/body)
 (define-key global-map (kbd "C-<f12> t") 'hydra-themes/body)
+(message "KEYBINDINGS - FUNCTION KEYS DONE.")
 
 ;; f3, f4 = macros start and end.
 ;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
@@ -1203,6 +1204,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 
 (define-key global-map (kbd "C-M-<left>")  'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
 (define-key global-map (kbd "C-M-<right>") 'end-of-defun)
+(message "KEYBINDINGS - ARROWS DONE.")
 
 ;; ******************* Small pad keys ********************
 
@@ -1237,6 +1239,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "M-]")       'forward-sexp)
 (define-key global-map (kbd "M-{")       'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
 (define-key global-map (kbd "M-}")       'endless/forward-paragraph)
+(message "KEYBINDINGS - MAIN KEYS 1 DONE.")
 
 (define-key global-map (kbd "C-S-o")     'pd-duplicate-line-or-region)
 (define-key global-map (kbd "C-S-w")     'pd-copy-current-line)
@@ -1255,6 +1258,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "M-y")       'helm-show-kill-ring)
 (define-key global-map (kbd "M-SPC")     'pd-no-space)
 (define-key global-map (kbd "H-SPC")     'pd-no-space)
+(message "KEYBINDINGS - MAIN KEYS 2 DONE.")
 
 (defun pd-bind-key (keyseq func)
   "Helper function to bind keys to both <apps> and H-."
@@ -1272,7 +1276,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (pd-bind-key "dl" 'pd-duplicate-line-or-region)
 (pd-bind-key "dw" 'delete-trailing-whitespace)
 (pd-bind-key "g"  'magit-status)
-(pd-bind-key "rb" 'pd-revert-buffer
+(pd-bind-key "rb" 'pd-revert-buffer)
 (pd-bind-key "rj" 'jump-to-register)
 (pd-bind-key "rp" 'point-to-register)
 (pd-bind-key "rw" 'window-configuration-to-register)
@@ -1282,6 +1286,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action) ; make TAB works in terminal
 (define-key helm-map (kbd "C-z")   'helm-select-action) ; list actions using C-z
+(message "KEYBINDINGS - PD-BIND-KEY DONE.")
 
 
 ;; ******************* C/C++ mode keys ********************
