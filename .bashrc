@@ -171,6 +171,7 @@ alias ec='emacsclient -nw'
 # -nw does not work and hangs the main Emacs window. DO NOT USE.
 alias wec='emacsclient-w32'
 
+alias emacslatest='~/repos/emacs/src/emacs'
 
 # MSysGit grep does not recognise the --color option.
 if [ "$OS" != "msys" ]; then

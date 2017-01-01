@@ -450,8 +450,8 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 (add-to-list 'auto-mode-alist '("\\.gitconfig$" . conf-mode))
 
 ;; Teach dired to unzip zip files (use the Z key).
-(eval-after-load "dired-aux"
-  '(add-to-list 'dired-compress-file-suffixes '("\\.zip\\'" ".zip" "unzip")))
+;(eval-after-load "dired-aux"
+;  '(add-to-list 'dired-compress-file-suffixes '("\\.zip\\'" ".zip" "unzip")))
 
 ;; Helm mode. Based on http://tuhdo.github.io/helm-intro.html
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
