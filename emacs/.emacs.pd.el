@@ -692,7 +692,8 @@ search at index 0."
 ;; Some example frame titles. See Emacs wiki.
 ;; (setq frame-title-format (list "\u25b6 %f \u25c0 " user-login-name "@" system-name))
 ;; (setq frame-title-format (list "\u27a4 %f    \u27a4 " user-login-name "@" system-name))
-(setq frame-title-format (list "\u2b24 %f    \u2b24 " user-login-name "@" system-name))
+;; (setq frame-title-format (list "\u2b24 %f    \u2b24 " user-login-name "@" system-name))
+(setq frame-title-format (list user-login-name "@" system-name ":%f"))
 
 ;; fci-mode can cause an increase in the vertical separation of lines, so leave
 ;; it off by default. It is bound to C-= below, for ease of use.
