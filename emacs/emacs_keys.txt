@@ -1,17 +1,17 @@
-Basic Editing                            Movement   backward  forward        Function Keys           S-                     C-                M-
+Basic Editing                            Movement   backward  forward        Function Keys           S-                       C-                    M-
 ======================================   ================================    ==================================================================================
-C-'  M-'   expand/contract region        word       M-b       M-f            F1  dired               S-F1  open this file   C-F1  terminal
-C-S-w      pd-copy-current-line          line       C-p       C-n            F2  bm-next             S-F2  bm-previous      C-F2  bm-toggle   M-F2  bm-show-all
+C-'  M-'   expand/contract region        word       M-b       M-f            F1  dired               S-F1  open this file     C-F1  terminal
+C-S-w      pd-copy-current-line          line       C-p       C-n            F2  next bmark          S-F2  previous bmark     C-F2  toggle bmark    M-F2  helm bmarks
 C-S-o      pd-duplicate-line-or-region   sentence   M-a       M-e            F3  start macro
 C-%        pd-replace-all-in-buffer      paragraph  M-{       M-}            F4  end macro
 M-%        query replace                 sexp       M-[       M-]            F5
 M-j        pd-join-line                  function   C-M-left  C-M-right      F6
 M-y        helm-show-kill-ring           buffer     M-<       M->            F7
 M-SPC      pd-no-space                   C-x C-SPC  previous position        F8
-H-SPC      pd-no-space                                                       F9  cycle buffer back   S-F9  perm. c.b.b.     C-F9  kill buffer
-M-u        uppercase word                Marking                             F10 cycle buffer        S-F10 perm. c.b.       C-F10 bury buffer
-M-l        lowercase word                ================================    F11 menu bar open       S-F11 ditto            C-F11 ditto
-M-c        capitalize word               C-x C-x  exchange point and mark    F12 speedbar toggle     S-F12 speedbar select  C-F12 hydra prefix (wtf)
+H-SPC      pd-no-space                                                       F9  cycle buffer back   S-F9  perm. c.b.b.       C-F9  kill buffer
+M-u        uppercase word                Marking                             F10 cycle buffer        S-F10 perm. c.b.         C-F10 bury buffer
+M-l        lowercase word                ================================    F11 menu bar open       S-F11 ditto              C-F11 ditto
+M-c        capitalize word               C-x C-x  exchange point and mark    F12 speedbar toggle     S-F12 speedbar select    C-F12 hydra prefix (wtf)
 C-x b      helm-mini                     M-h      mark paragraph
 C-x C-f    helm-find-files               C-M-h    mark function              Extended Commands (Hyper/apps)          Rectangles
 C-x g      magit-status                  C-x h    mark whole buffer          ==============================          =========================================
@@ -37,7 +37,7 @@ And https://www.emacswiki.org/emacs/TrampMode                                   
 /user@host:filename	      Open remote file specifying user                          Macros
 /ssh:you@remotehost:	    Remote dired                                              ============================================
 /ssh:you@remotehost|sudo:remotehost:/path/to/file    Open remote file as root       C-x (  C-x )  start/stop defining a macro
-                                                                                    C-x e         execute macro
+C-x C-r                   find file in read only mode                               C-x e         execute macro
                                                                                     M-x apply-macro-to-region-lines
 
 Dired                                                                               Bookmarks

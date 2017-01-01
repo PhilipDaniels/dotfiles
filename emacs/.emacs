@@ -15,8 +15,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(bmkp-last-as-first-bookmark-file "/home/phil/.emacs.d/bookmarks")
  '(custom-safe-themes t)
- )
+ '(package-selected-packages
+   (quote
+    (bookmark+ zenburn-theme yasnippet yaml-mode underwater-theme unbound tangotango-theme tango-plus-theme sunrise-x-buttons sr-speedbar soothe-theme soft-morning-theme smartparens smart-mode-line-powerline-theme shackle sass-mode recentf-ext rainbow-mode rainbow-delimiters powershell persistent-scratch outline-magic occidental-theme obsidian-theme multi-term monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme mic-paren material-theme markdown-mode magit lua-mode leuven-theme key-chord json-mode jade-mode hydra hlinum heroku-theme hemisu-theme helm-projectile helm-gtags hc-zenburn-theme haskell-mode gruvbox-theme gruber-darker-theme green-phosphor-theme grandshell-theme golden-ratio gitignore-mode gitattributes-mode git-timemachine ggtags fsharp-mode flatui-theme flatland-theme firebelly-theme fill-column-indicator f expand-region espresso-theme distinguished-theme dedicated darkburn-theme dakrone-theme cyberpunk-theme csharp-mode company-irony color-theme-solarized color-theme-sanityinc-tomorrow color-theme-modern clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme bm badger-theme autopair anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

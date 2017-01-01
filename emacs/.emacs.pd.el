@@ -14,7 +14,8 @@
 (add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 
 (setq bm-restore-repository-on-load t)
-(require 'bm)
+;;(require 'bm)
+(require 'bookmark+)
 (require 'buffer-move)
 (require 'cycle-buffer)
 (require 'dash)
@@ -559,19 +560,23 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 ;; Turn on rainbow delimiters in all programming modes.
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
-;; Visible Bookmarks (package bm, https://github.com/joodland/bm)
-(setq bm-cycle-all-buffers t)
-(setq-default bm-buffer-persistence t)
-(setq bm-repository-file "~/.emacs.d/bm-repository")
-(add-hook' after-init-hook #'bm-repository-load)
-(add-hook 'find-file-hooks #'bm-buffer-restore)
-(add-hook 'kill-buffer-hook #'bm-buffer-save)
-(add-hook 'kill-emacs-hook #'(lambda nil
-                              (bm-buffer-save-all)
-                              (bm-repository-save)))
-(add-hook 'after-save-hook #'bm-buffer-save)
-(add-hook 'after-revert-hook #'bm-buffer-restore)
-(add-hook 'vc-before-checkin-hook #'bm-buffer-save)
+;; ;; Visible Bookmarks (package bm, https://github.com/joodland/bm)
+;; (setq bm-cycle-all-buffers t)
+;; (setq-default bm-buffer-persistence t)
+;; (setq bm-repository-file "~/.emacs.d/bm-repository")
+;; (add-hook' after-init-hook #'bm-repository-load)
+;; (add-hook 'find-file-hooks #'bm-buffer-restore)
+;; (add-hook 'kill-buffer-hook #'bm-buffer-save)
+;; (add-hook 'kill-emacs-hook #'(lambda nil
+;;                               (bm-buffer-save-all)
+;;                               (bm-repository-save)))
+;; (add-hook 'after-save-hook #'bm-buffer-save)
+;; (add-hook 'after-revert-hook #'bm-buffer-restore)
+;; (add-hook 'vc-before-checkin-hook #'bm-buffer-save)
+
+;; Bookmark+.
+(setq bookmark-version-control t)
+(setq bookmark-save-flag 1)
 
 ;; Shells.
 ;; M-x shell runs a shell as a sub-process, communicating with it via pipes.
@@ -1184,10 +1189,10 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "<f1>")      'dired-jump)
 (define-key global-map (kbd "S-<f1>")    (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs_keys.txt")))
 (define-key global-map (kbd "C-<f1>")    'pd-ansi-term)
-(global-set-key (kbd "<f2>")             'bm-next)
-(global-set-key (kbd "S-<f2>")           'bm-previous)
-(global-set-key (kbd "C-<f2>")           'bm-toggle)
-(global-set-key (kbd "M-<f2>")           'bm-show-all)
+(define-key global-map (kbd "<f2>")      'bmkp-next-bookmark)
+(define-key global-map (kbd "S-<f2>")    'bmkp-previous-bookmark)
+(define-key global-map (kbd "C-<f2>")    'bmkp-toggle-autonamed-bookmark-set/delete)
+(define-key global-map (kbd "M-<f2>")    'helm-filtered-bookmarks)
 (define-key global-map (kbd "<f9>")      'cycle-buffer-backward)
 (define-key global-map (kbd "<f10>")     'cycle-buffer)
 (define-key global-map (kbd "S-<f9>")    'cycle-buffer-backward-permissive)
@@ -1225,9 +1230,11 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 
 ;; ******************* Small pad keys ********************
 
+
 ;; ******************* Main number keys ********************
 ;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via
-;; C-u anyway, so feel free to grab them for other uses.
+;; C-u anyway, so feel free to grab them for other uses. C-n are available in
+;; the terminal, so they should be used in preference.
 (define-key global-map (kbd "M-1") (lambda () (interactive) (jump-to-register ?z)))
 (define-key global-map (kbd "M-2") (lambda () (interactive) (window-configuration-to-register ?z) (message "Window configuration saved")))
 (define-key global-map (kbd "M-3") (lambda () (interactive) (point-to-register ?z) (message "Point saved")))
@@ -1235,6 +1242,8 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; ******************* Letter/main section keys ********************
 ;; The keys C-` , . ' ; ? are all available.
 ;; C-c <any letter> is always available in any mode, they are reserved for you.
+;; (global-set-key (kbd "C-;") 'helm-command-prefix)
+
 (define-key global-map (kbd "C-'")       'er/expand-region)
 (define-key global-map (kbd "C-; SPC")   'helm-all-mark-rings)
 (define-key global-map (kbd "C-; a")     'helm-apropos)
