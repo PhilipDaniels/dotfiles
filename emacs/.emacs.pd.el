@@ -13,6 +13,8 @@
 ;; Just a few packages that are not available on MELPA.
 (add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 
+(setq bm-restore-repository-on-load t)
+(require 'bm)
 (require 'buffer-move)
 (require 'cycle-buffer)
 (require 'dash)
@@ -457,7 +459,6 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 (setq helm-imenu-fuzzy-match nil)
 (setq helm-M-x-fuzzy-match nil)
 (setq helm-apropos-fuzzy-match nil)
-(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
 (defun pd-helm-alive-p ()
   (if (boundp 'helm-alive-p)
@@ -557,6 +558,20 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 
 ;; Turn on rainbow delimiters in all programming modes.
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
+;; Visible Bookmarks (package bm, https://github.com/joodland/bm)
+(setq bm-cycle-all-buffers t)
+(setq-default bm-buffer-persistence t)
+(setq bm-repository-file "~/.emacs.d/bm-repository")
+(add-hook' after-init-hook #'bm-repository-load)
+(add-hook 'find-file-hooks #'bm-buffer-restore)
+(add-hook 'kill-buffer-hook #'bm-buffer-save)
+(add-hook 'kill-emacs-hook #'(lambda nil
+                              (bm-buffer-save-all)
+                              (bm-repository-save)))
+(add-hook 'after-save-hook #'bm-buffer-save)
+(add-hook 'after-revert-hook #'bm-buffer-restore)
+(add-hook 'vc-before-checkin-hook #'bm-buffer-save)
 
 ;; Shells.
 ;; M-x shell runs a shell as a sub-process, communicating with it via pipes.
@@ -1165,12 +1180,13 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; Over ssh to Linux, window-system is 'x and system-type is 'gnu/linux.
 
 ;; ******************* Global Function keys ********************
-;;(define-key global-map (kbd "<f2>") (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/.emacs.pd.el")))
-;;(define-key helm-map (kbd "<f11>") 'pd-make-helm-full-frame)
-
 (define-key global-map (kbd "<f1>")      'dired-jump)
 (define-key global-map (kbd "S-<f1>")    (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs_keys.txt")))
-(define-key global-map (kbd "<f2>")      'pd-ansi-term)
+(define-key global-map (kbd "C-<f1>")    'pd-ansi-term)
+(global-set-key (kbd "<f2>")             'bm-next)
+(global-set-key (kbd "S-<f2>")           'bm-previous)
+(global-set-key (kbd "C-<f2>")           'bm-toggle)
+(global-set-key (kbd "M-<f2>")           'bm-show-all)
 (define-key global-map (kbd "<f9>")      'cycle-buffer-backward)
 (define-key global-map (kbd "<f10>")     'cycle-buffer)
 (define-key global-map (kbd "S-<f9>")    'cycle-buffer-backward-permissive)

@@ -1,7 +1,7 @@
-Basic Editing                            Movement   backward  forward        Function Keys           S-                     C-
-======================================   ================================    =======================================================================
-C-'  M-'   expand/contract region        word       M-b       M-f            F1  dired               S-F1 open this file
-C-S-w      pd-copy-current-line          line       C-p       C-n            F2  terminal
+Basic Editing                            Movement   backward  forward        Function Keys           S-                     C-                M-
+======================================   ================================    ==================================================================================
+C-'  M-'   expand/contract region        word       M-b       M-f            F1  dired               S-F1  open this file   C-F1  terminal
+C-S-w      pd-copy-current-line          line       C-p       C-n            F2  bm-next             S-F2  bm-previous      C-F2  bm-toggle   M-F2  bm-show-all
 C-S-o      pd-duplicate-line-or-region   sentence   M-a       M-e            F3  start macro
 C-%        pd-replace-all-in-buffer      paragraph  M-{       M-}            F4  end macro
 M-%        query replace                 sexp       M-[       M-]            F5
@@ -46,7 +46,7 @@ a   open file, replace dired     * *  mark exes         % l  change to lower cas
 v   view file (q to close)       t    invert marking    % u  change to upper case
 +   new subdir                                          O    change owner
 =   compare file at point with one at mark              G    change group
-                                                        M    change mode
+C-x C-f  new file                                       M    change mode
 
 Ansi-Term
 ==============================

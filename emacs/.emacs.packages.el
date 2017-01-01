@@ -6,6 +6,7 @@
 ;;; Specify list of packages we want to install.
 (setq package-list '(
                      autopair
+                     bm
                      csharp-mode
                      company                ;; Modular in-buffer completion framework
                      company-irony          ;; Completion back-end for irony-mode
