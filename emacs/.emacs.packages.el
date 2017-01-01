@@ -6,7 +6,8 @@
 ;;; Specify list of packages we want to install.
 (setq package-list '(
                      autopair
-                     bm
+                     bm                     ;; https://github.com/joodland/bm
+                     bookmark+              ;; https://www.emacswiki.org/emacs/BookmarkPlus
                      csharp-mode
                      company                ;; Modular in-buffer completion framework
                      company-irony          ;; Completion back-end for irony-mode
