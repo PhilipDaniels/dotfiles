@@ -1162,20 +1162,20 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;;
 ;; Alternatively, we can turn it into a leader key like this.
 ;; See http://ergoemacs.org/emacs/emacs_menu_app_keys.html
-(if (equal system-type 'cygwin)
-    (if (equal window-system 'w32)
-        (setq w32-pass-apps-to-system nil
-              w32-apps-modifier nil)
-      ;; force all alternatives to <apps> so we can write one set of keybindings.
-      (define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
-      (define-key key-translation-map (kbd "<menu>") (kbd "<apps>"))))
-
-(if (equal system-type 'gnu/linux)
-    (define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))
-
-;; On X, e.g. in Mint, make the left Windows key, which is normally super,
-;; send hyper instead.
-(setq x-super-keysym 'hyper)
+;; (if (equal system-type 'cygwin)
+;;     (if (equal window-system 'w32)
+;;         (setq w32-pass-apps-to-system nil
+;;               w32-apps-modifier nil)
+;;       ;; force all alternatives to <apps> so we can write one set of keybindings.
+;;       (define-key key-translation-map (kbd "<print>") (kbd "<apps>"))
+;;       (define-key key-translation-map (kbd "<menu>") (kbd "<apps>"))))
+;;
+;; (if (equal system-type 'gnu/linux)
+;;     (define-key key-translation-map (kbd "<menu>") (kbd "<apps>")))
+;;
+;; ;; On X, e.g. in Mint, make the left Windows key, which is normally super,
+;; ;; send hyper instead.
+;; (setq x-super-keysym 'hyper)
 
 
 ;;(when (equal window-system 'w32)
@@ -1219,6 +1219,8 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; ******************* Arrow keys ********************
 ;; Hopefully this will have better compatibility with org-mode
 ;; (org-mode uses M-arrow to change the order of items).
+;; S-<arrow> is shown as available by describe-unbound-keys, but
+;; it is actually bound - it selects a region.
 (define-key global-map (kbd "C-<up>")      'windmove-up)
 (define-key global-map (kbd "C-<down>")    'windmove-down)
 (define-key global-map (kbd "C-<left>")    'windmove-left)
@@ -1240,10 +1242,6 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "M-3") (lambda () (interactive) (point-to-register ?z) (message "Point saved")))
 
 ;; ******************* Letter/main section keys ********************
-;; The keys C-` , . ' ; ? are all available.
-;; C-c <any letter> is always available in any mode, they are reserved for you.
-;; (global-set-key (kbd "C-;") 'helm-command-prefix)
-
 (define-key global-map (kbd "C-'")       'er/expand-region)
 (define-key global-map (kbd "C-; SPC")   'helm-all-mark-rings)
 (define-key global-map (kbd "C-; a")     'helm-apropos)
@@ -1286,28 +1284,47 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "H-SPC")     'pd-no-space)
 (message "KEYBINDINGS - MAIN KEYS 2 DONE.")
 
-(defun pd-bind-key (keyseq func)
-  "Helper function to bind keys to both <apps> and H-."
-  (let ((e1 (concat "<apps> " keyseq))
-        (e2 (format "H-%s%s" (substring keyseq 0 1)
-                    (if (equal 1 (length keyseq))
-                        ""
-                      (concat " " (substring keyseq 1 2)))))
-        )
-    (define-key global-map (kbd e1) func)
-    (define-key global-map (kbd e2) func)))
+;; (defun pd-bind-key (keyseq func)
+;;   "Helper function to bind keys to both <apps> and H-."
+;;   (let ((e1 (concat "<apps> " keyseq))
+;;         (e2 (format "H-%s%s" (substring keyseq 0 1)
+;;                     (if (equal 1 (length keyseq))
+;;                         ""
+;;                       (concat " " (substring keyseq 1 2)))))
+;;         )
+;;     (define-key global-map (kbd e1) func)
+;;     (define-key global-map (kbd e2) func)))
+;;
+;; (pd-bind-key "a"  'pd-cpp-add-using)
+;; (pd-bind-key "cc" 'pd-cleanup-programming-buffer)
+;; (pd-bind-key "dl" 'pd-duplicate-line-or-region)
+;; (pd-bind-key "dw" 'delete-trailing-whitespace)
+;; (pd-bind-key "g"  'magit-status)
+;; (pd-bind-key "rb" 'pd-revert-buffer)
+;; (pd-bind-key "rj" 'jump-to-register)
+;; (pd-bind-key "rp" 'point-to-register)
+;; (pd-bind-key "rw" 'window-configuration-to-register)
+;; (pd-bind-key "sp" 'pd-sort-paragraph-dwim)
+;; (pd-bind-key "w"  'pd-copy-current-line)
 
-(pd-bind-key "a"  'pd-cpp-add-using)
-(pd-bind-key "cc" 'pd-cleanup-programming-buffer)
-(pd-bind-key "dl" 'pd-duplicate-line-or-region)
-(pd-bind-key "dw" 'delete-trailing-whitespace)
-(pd-bind-key "g"  'magit-status)
-(pd-bind-key "rb" 'pd-revert-buffer)
-(pd-bind-key "rj" 'jump-to-register)
-(pd-bind-key "rp" 'point-to-register)
-(pd-bind-key "rw" 'window-configuration-to-register)
-(pd-bind-key "sp" 'pd-sort-paragraph-dwim)
-(pd-bind-key "w"  'pd-copy-current-line)
+(define-key global-map (kbd "C-# au") 'pd-cpp-add-using)
+(define-key global-map (kbd "C-# cl") 'pd-copy-current-line)
+(define-key global-map (kbd "C-# cp") 'pd-cleanup-programming-buffer)
+(define-key global-map (kbd "C-# df") 'pd-delete-file-and-buffer)
+(define-key global-map (kbd "C-# dl") 'pd-duplicate-line-or-region)
+(define-key global-map (kbd "C-# dw") 'delete-trailing-whitespace)
+(define-key global-map (kbd "C-# ib") 'pd-indent-buffer)
+(define-key global-map (kbd "C-# ir") 'indent-region)
+(define-key global-map (kbd "C-# jr") 'jump-to-register)
+(define-key global-map (kbd "C-# mb") 'mark-whole-buffer)
+(define-key global-map (kbd "C-# mf") 'mark-defun)
+(define-key global-map (kbd "C-# mp") 'mark-paragraph)
+(define-key global-map (kbd "C-# pr") 'point-to-register)
+(define-key global-map (kbd "C-# rb") 'pd-revert-buffer)
+(define-key global-map (kbd "C-# rf") 'pd-rename-file-and-buffer)
+(define-key global-map (kbd "C-# sp") 'pd-sort-paragraph-dwim)
+(define-key global-map (kbd "C-# ut") 'pd-untabify-buffer)
+(define-key global-map (kbd "C-# wr") 'window-configuration-to-register)
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action) ; make TAB works in terminal
