@@ -42,31 +42,31 @@
     }
 
     /// <summary>
-    /// Returns true if <paramref name="value"/> is equal to this $classname$.
+    /// Returns true if <paramref name="obj"/> is equal to this $classname$.
     /// </summary>
-    /// <param name="value">The object to check for equality.</param>
+    /// <param name="obj">The object to check for equality.</param>
     /// <returns>True if the object is equal to this one.</returns>
-    public override bool Equals(object value) {
-        return Equals(($classname$)value);
+    public override bool Equals(object obj) {
+        return Equals(($classname$)obj);
     }
 
     /// <summary>
-    /// Returns true if <paramref name="value"/> is equal to this $classname$.
+    /// Returns true if <paramref name="other"/> is equal to this $classname$.
     /// </summary>
-    /// <param name="value">The object to check for equality.</param>
+    /// <param name="other">The object to check for equality.</param>
     /// <returns>True if the object is equal to this one.</returns>
-    public bool Equals($classname$ value) {
+    public bool Equals($classname$ other) {
         // Use object.ReferenceEquals to avoid infinite loops.
-        if (object.ReferenceEquals(value, null))
+        if (object.ReferenceEquals(other, null))
             return false;
-        
+
         // First check for an exact type match.
-        if (!object.ReferenceEquals(GetType(), value.GetType()))
+        if (!object.ReferenceEquals(GetType(), other.GetType()))
             return false;
 
         throw new NotImplementedException("Remember to write $classname$.Equals()!!!");
-        //return Property1 == value.Property1 &&
-        //       Property2 == value.Property2 && ...
+        //return Property1 == other.Property1 &&
+        //       Property2 == other.Property2 && ...
         // If this type does not derive from object then add a call to base.Equals()
         // as the last line of this expression.
     }
