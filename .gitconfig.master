@@ -31,7 +31,7 @@
     # Conclusions: the --tty variants are not safe.
     #              -c is tolerable
     #              emacsclient with no args is probably the best all round solution
-    editor = emacsclient -tty
+    editor = emacsclient-w32 -c
     pager = less -x4
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems

@@ -1083,9 +1083,17 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; * Make the apps/menu key send the "<apps>" leader.
 ;; * Do not use the super s- prefix.
 ;;
-;; A full size keyboard is CTRL    WIN ALT SPACE ALTGR WIN APPS   CTRL
-;; My work laptop is       CTRL FN WIN ALT SPACE ALTGR     APPS   CTRL
-;; So my prefixes/leaders  C-          M-                  <apps> C-
+;; A full size keyboard is CTRL    WIN ALT SPACE ALTGR WIN APPS  CTRL
+;; My work laptop is       CTRL FN WIN ALT SPACE ALTGR           CTRL
+;; My home laptop is       CTRL FN WIN ALT SPACE ALTGR           CTRL
+;; MK Disco is             CTRL    WIN ALT SPACE ALT   WIN FN    CTRL (FN is really APPS) This is standard US layout
+;; So the common set is    CTRL    WIN ALT SPACE ALTGR           CTRL
+;;
+;; Reserving WIN for Windows, we are left with
+;;
+;;                         C-          M-                        C-
+;;
+;; WIN is usually super in Linux.
 ;;
 ;; Some standard keybindings
 ;; =========================
@@ -1184,6 +1192,19 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;;(define-key global-map (kbd "H-h") (lambda () (interactive) (message "hello from menu key via H- prefix")))
 
 ;; Over ssh to Linux, window-system is 'x and system-type is 'gnu/linux.
+
+;; Helpful links
+;; http://emacs.stackexchange.com/questions/1020/problems-with-keybindings-when-using-terminal
+;; http://unix.stackexchange.com/questions/116629/how-do-keyboard-input-and-text-output-work/116630#116630
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Translation-Keymaps.html#Translation-Keymaps
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Modifier-Keys.html
+;; http://stackoverflow.com/questions/10730775/emacs-create-key-modifier   (for faking using event-apply-hyper-modifier etc.)
+;; http://ergoemacs.org/emacs/emacs_hyper_super_keys.html
+;;
+;; and especially
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Keyboard-Events.html#Keyboard-Events
+
+
 
 ;; ******************* Global Function keys ********************
 (define-key global-map (kbd "<f1>")      'dired-jump)
