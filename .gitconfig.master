@@ -27,11 +27,7 @@
     # 4) emacs-w32     emacsclient            Behaves as per 1)
     # 5) emacs-w32     emacsclient --tty      Behaves as per 2)
     # 6) emacs-w32     emacsclient -c         Behaves as per 1)
-    #
-    # Conclusions: the --tty variants are not safe.
-    #              -c is tolerable
-    #              emacsclient with no args is probably the best all round solution
-    editor = emacsclient-w32 -c
+    editor = ~/repos/dotfiles/giteditor.sh
     pager = less -x4
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems
