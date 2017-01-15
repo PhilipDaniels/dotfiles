@@ -12,7 +12,7 @@ if [ "$WINDIR" == "" ]; then
     fi
 else
     if [ "$INSIDE_EMACS" == "" ]; then
-        emacsclient-w32 -c $1;
+        emacsclient-w32 $1;
     else
         emacsclient-w32 $1;
     fi
