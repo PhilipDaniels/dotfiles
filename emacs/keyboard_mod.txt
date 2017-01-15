@@ -1,0 +1,17 @@
+keyboard.c
+==========
+make_lispy_event : convert struct input_event into a lisp event
+there is stuff about Kana in here as well
+
+termhooks.h: line 266, defn of struct input_event
+
+w32inevt.c: there is interesting code in here, around line 200,
+which checks and sets modifier states. The function is key_event.
+
+w32term.c: function w32_read_socket is the one that reads messages
+from the Windows message queue and converts them into struct input_events.
+At line 5318 calls kbd_buffer_store_event_hold which is a macro
+in keyboard.h at line 470 which then calls
+  kbd_buffer_store_buffered_event in keyboard.c
+
+The *event is expected to have a hyper or super modifier by then.
