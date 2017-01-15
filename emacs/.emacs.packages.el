@@ -96,6 +96,7 @@
                      obsidian-theme
                      occidental-theme
                      soft-morning-theme
+                     solarized-theme       ;; https://github.com/bbatsov/solarized-emacs
                      soothe-theme
                      tango-plus-theme
                      tangotango-theme

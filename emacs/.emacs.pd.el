@@ -35,7 +35,6 @@
 (require 'hideshow)
 (require 'hlinum)
 (require 'mic-paren)
-;;(require 'moe-theme)
 (require 'org)
 (require 'pd)
 (require 'pd-cpp)
@@ -924,11 +923,13 @@ search at index 0."
   ;; In terminal Emacs, these color names appear to map to the corresponding
   ;; solarized colors automatically (see list-colors-display).
   (set-cursor-color "red")
-  (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil)
+  (set-face-attribute 'helm-selection         nil :background "red"   :foreground "white" :inverse-video nil)
   (set-face-attribute 'menu                   nil :background "black" :foreground "white")
   (set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")
   (set-face-attribute 'tty-menu-selected-face nil :background "white" :foreground "black")
   (set-face-attribute 'tty-menu-disabled-face nil :background "black" :foreground "red")
+  ;; Provide a sort of "on-off" modeline whereby the current buffer has a nice bright blue
+  ;; background, and all the others are in cream.
   (when (eq theme 'solarized)
     (set-face-attribute 'mode-line nil          :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
     (set-face-attribute 'mode-line-inactive nil :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil))
@@ -951,8 +952,8 @@ Valid values are nil, 'dark and 'light."
   ;; Solarized (the only one I am sure about) uses the frame-background-mode to
   ;; determine how to display itself. The default for this variable is nil,
   ;; which most themes seem happy with.
-;  (setq frame-background-mode bg-mode)
-;  (mapc 'frame-set-background-mode (frame-list))
+  (setq frame-background-mode bg-mode)
+  (mapc 'frame-set-background-mode (frame-list))
   (load-theme theme t)
   (message "Theme set to %s" theme)
   (pd-apply-theme-overrides))
@@ -961,9 +962,9 @@ Valid values are nil, 'dark and 'light."
 (defhydra hydra-themes (:hint nil)
   "
 Favourite : _sd_ Sol Dark       _sl_ Sol Light       _zb_ Zenburn        _ob_ Obsidian        _ty_ TTY Dark
-Dark      : _gd_ Gruber Darker  _cp_ Cyberpunk       _gb_ Gruvbox        _bb_ BusyBee         _me_ Moe Dark
-            _uw_ Underwater     _md_ Minimal Dark    _mn_ Monokai        _ml_ Molokai         _cf_ Calm Forest
-Light     : _lv_ Leuven         _hl_ Hemisu-Light    _mi_ Minimal Light  _ao_ Aalto Light     _mt_ Moe Light
+Dark      : _gd_ Gruber Darker  _cp_ Cyberpunk       _gb_ Gruvbox        _bb_ BusyBee         _uw_ Underwater
+            _md_ Minimal Dark    _mn_ Monokai        _ml_ Molokai        _cf_ Calm Forest
+Light     : _lv_ Leuven         _hl_ Hemisu-Light    _mi_ Minimal Light  _ao_ Aalto Light
 Grey      : _ma_ Material       _az_ Anti-Zenburn    _fu_ Flat UI        _sm_ Soft Morning    _tt_ TangoTango
             _je_ JEdit Grey     _cb_ Charcoal Black
 Blue      : _rs_ Resolve        _bs_ Blue Sea        _rp_ Raspopovic     _ad_ Aalto Dark      _pr_ Parus
@@ -992,12 +993,10 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   ("lv" (pd-load-theme 'leuven))
   ("ma" (pd-load-theme 'material))
   ("md" (pd-load-theme 'minimal))
-  ("me" (pd-load-theme 'moe-dark))
   ("mi" (pd-load-theme 'minimal-light))
   ("ml" (pd-load-theme 'molokai))
   ("mn" (pd-load-theme 'monokai))
   ("mo" (pd-load-theme 'monochrome))
-  ("mt" (pd-load-theme 'moe-light))
   ("ob" (pd-load-theme 'obsidian))
   ("pr" (pd-load-theme 'parus))
   ("rg" (pd-load-theme 'retro-green))
@@ -1014,6 +1013,20 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   ("q"  nil)
   )
 
+;;(pd-load-theme 'gruber-darker)
+
+;; This is package "solarized-theme" from https://github.com/bbatsov/solarized-emacs
+;; Problems: increases size of the characters '(' and ')' which causes a jarring effect.
+;; Avoid all font-size changes
+(setq solarized-height-minus-1 1)
+(setq solarized-height-plus-1 1)
+(setq solarized-height-plus-2 1)
+(setq solarized-height-plus-3 1)
+(setq solarized-height-plus-4 1)
+;;(pd-load-theme 'solarized-dark)
+
+;; This is package "color-theme-solarized" from https://github.com/sellout/emacs-color-theme-solarized
+;; Problems: has wrong background color on Emacs 25.
 (pd-load-theme 'solarized 'dark)
 
 (message "HYDRAS - END.")
