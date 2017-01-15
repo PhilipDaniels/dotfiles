@@ -103,10 +103,10 @@ find ~/.git-credential-cache -mmin +720 -delete 2> /dev/null
 
 # Now we always setup ssh because I use it for connecting to my Debian
 # VM at work.
-#if f_AtHome; then
-    #echo "You are at home, setting up ssh..."
+if f_AtHome; then
+    echo "You are at home, setting up ssh..."
     f_SetupSSH
-#fi
+fi
 
 
 GIT_PROMPT_ONLY_IN_REPO=1
