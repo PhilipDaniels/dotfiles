@@ -3,9 +3,10 @@
 ;;; Local Variables:
 ;;; End:
 
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-
+(if (functionp 'tool-bar-mode)
+    (tool-bar-mode -1))
+(if (functionp 'scroll-bar-mode)
+    (scroll-bar-mode -1))
 
 ;;; $$ REQUIRES.
 (message "REQUIRES - BEGIN.")

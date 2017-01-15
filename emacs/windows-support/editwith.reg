@@ -12,7 +12,7 @@ Windows Registry Editor Version 5.00
 ; REMOVE BASH - DOES NOT WORK @="C:\\cygwin\\bin\\run.exe \\\"emacsclient-w32 \\\\\\\"$(cygpath \\\\\\\"%1\\\\\\\")\\\\\\\" \\\" "
 
 ; THIS DOES WORK BUT POPS UP A WINDOW on WINDOWS 10
-@="C:\\cygwin\\bin\\run.exe bash \"-l -c \\\"emacsclient-w32 --alternate-editor=emacs-w32 \\\\\\\"$(cygpath \\\\\\\"%1\\\\\\\")\\\\\\\" \\\"  \" "
+@="C:\\cygwin\\bin\\run.exe bash \"-l -c \\\"emacsclient-w32 -c --alternate-editor=emacs-w32 \\\\\\\"$(cygpath \\\\\\\"%1\\\\\\\")\\\\\\\" \\\"  \" "
 
 ;@="C:\\cygwin\\bin\\run.exe mintty "emacsclient-w32 --alternate-editor=emacs-w32 \\\\\\\"$(cygpath \\\\\\\"%1\\\\\\\")\\\\\\\" \\\"  "
 ; This almost works.
