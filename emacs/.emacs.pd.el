@@ -615,14 +615,15 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 ;; fonts. To determine the name that Emacs uses for a font, the easiest way I
 ;; know is to use the customize system to pick a default font, then save
 ;; options, the name of the font then appears in the .emacs file.
-(defvar pd-font-candidates '("Consolas-12"
+(defvar pd-font-candidates '("Consolas-10"
+                             "Consolas-12"
                              "Consolas-11"
                              "Cousine-10"
-                             "Courier New-10"
-                             "Aurulent Sans Mono-10"
                              "Source Code Pro-12"
                              "DejaVu Sans Mono-12"
                              "Droid Sans Mono-12"
+                             "Courier New-10"
+                             "Aurulent Sans Mono-10"
                              "Liberation Mono-12"
                              "Anonymous Pro-12"
                              "Liberation Mono-12"
@@ -1026,6 +1027,8 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;;
 ;; Keynames for a PC keyboard
 ;; ==========================
+;; See https://www.gnu.org/software/emacs/manual/html_node/emacs/Function-Keys.html#Function-Keys
+;;
 ;; Function keys:
 ;;    [f5] (must be in lower case, f1 is help by default)
 ;; Cursor arrow keys:
@@ -1086,14 +1089,16 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; A full size keyboard is CTRL    WIN ALT SPACE ALTGR WIN APPS  CTRL
 ;; My work laptop is       CTRL FN WIN ALT SPACE ALTGR           CTRL
 ;; My home laptop is       CTRL FN WIN ALT SPACE ALTGR           CTRL
-;; MK Disco is             CTRL    WIN ALT SPACE ALT   WIN FN    CTRL (FN is really APPS) This is standard US layout
+;; MK Disco is             CTRL    WIN ALT SPACE ALT   WIN FN    CTRL (FN is really APPS) This is standard US layout.
 ;; So the common set is    CTRL    WIN ALT SPACE ALTGR           CTRL
 ;;
 ;; Reserving WIN for Windows, we are left with
 ;;
 ;;                         C-          M-                        C-
 ;;
-;; WIN is usually super in Linux.
+;; WIN is usually super in Linux, so super is a good modifier to bind keys to,
+;; assuming we can make a proper super key in Windows. In Linux, it should be
+;; possible to do this with xkb quite easily, see http://www.charvolant.org/%7Edoug/xkb/html/node5.html
 ;;
 ;; Some standard keybindings
 ;; =========================
@@ -1184,16 +1189,11 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;; ;; On X, e.g. in Mint, make the left Windows key, which is normally super,
 ;; ;; send hyper instead.
 ;; (setq x-super-keysym 'hyper)
-
-
-;;(when (equal window-system 'w32)
-;;  (setq w32-pass-apps-to-system nil w32-apps-modifier 'hyper))
-
-;;(define-key global-map (kbd "H-h") (lambda () (interactive) (message "hello from menu key via H- prefix")))
-
+;;                                        ;
 ;; Over ssh to Linux, window-system is 'x and system-type is 'gnu/linux.
-
+;;
 ;; Helpful links
+;; =============
 ;; http://emacs.stackexchange.com/questions/1020/problems-with-keybindings-when-using-terminal
 ;; http://unix.stackexchange.com/questions/116629/how-do-keyboard-input-and-text-output-work/116630#116630
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Translation-Keymaps.html#Translation-Keymaps
