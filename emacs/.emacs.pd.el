@@ -199,6 +199,11 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 
 (add-hook 'before-save-hook 'pd-cpp-cleanup-buffer-maybe)
 
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+              (ggtags-mode 1))))
+
 (when (eq system-type 'cygwin)
   (setq powershell-location-of-exe
         (s-trim (shell-command-to-string "which powershell.exe"))))
