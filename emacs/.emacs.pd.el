@@ -7,6 +7,11 @@
 ;;(with-current-buffer " *load*"
 ;;  (goto-char (point-max)))
 
+;; TODO: Move into separate files?
+;; make daemon mode work.
+;; check still works on Linux
+;; Windows compatible keybindings for copy/paste/save/find and ctrl-arrow for word movement
+;; underline function
 
 (if (functionp 'tool-bar-mode)
     (tool-bar-mode -1))
@@ -16,7 +21,7 @@
 ;;; $$ REQUIRES.
 (message "REQUIRES - BEGIN.")
 
-;; Just a few packages that are not available on MELPA.
+;; Just a few of my own libraries and packages that are not available on MELPA.
 (add-to-list 'load-path "~/repos/dotfiles/emacs/lisp")
 
 (setq bm-restore-repository-on-load t)
@@ -67,237 +72,6 @@
 ;;; $$ FUNCTIONS.
 (message "FUNCTIONS - BEGIN.")
 
-(defun pd-utf8 ()
-  "Inserts a utf-8 file coding marker."
-  (interactive)
-  (insert "-*- coding: utf-8 -*-"))
-
-(defun pd-timestamp()
-  "Inserts an Emacs timestamp at point."
-  (interactive)
-  (insert "Time-stamp: <>"))
-
-(defun pd-copy-current-line ()
-  "Copy the current line (including the newline character at the end)"
-  (interactive)
-  (kill-new (buffer-substring (point-at-bol) (+ (point-at-eol) 1))))
-
-(defun pd-duplicate-line-or-region (&optional n)
-  "Duplicate current line, or region if active.
-With argument N, make N copies.
-With negative N, comment out original line and use the absolute value.
-From http://stackoverflow.com/questions/88399"
-  (interactive "*p")
-  (let ((use-region (use-region-p)))
-    (save-excursion
-      (let ((text (if use-region        ;Get region if active, otherwise line
-                      (buffer-substring (region-beginning) (region-end))
-                    (prog1 (thing-at-point 'line)
-                      (end-of-line)
-                      (if (< 0 (forward-line 1)) ;Go to beginning of next line, or make a new one
-                          (newline))))))
-        (dotimes (i (abs (or n 1)))     ;Insert N times, or once if not specified
-          (insert text))))
-    (if use-region nil                  ;Only if we're working with a line (not a region)
-      (let ((pos (- (point) (line-beginning-position)))) ;Save column
-        (if (> 0 n)                             ;Comment out original with negative arg
-            (comment-region (line-beginning-position) (line-end-position)))
-        (forward-line 1)
-        (forward-char pos)))))
-
-(defun pd-back-to-indentation-or-beginning ()
-  "Toggle between indentation and true beginning of line."
-  (interactive)
-  (if (= (point) (save-excursion (back-to-indentation) (point)))
-      (beginning-of-line)
-    (back-to-indentation)))
-
-(defun pd-rename-file-and-buffer (new-name)
-  "Rename the current buffer and the file it's visiting to NEW-NAME."
-  (interactive "sNew name: ")
-  (let ((name (buffer-name))
-        (filename (buffer-file-name)))
-    (if (not filename)
-        (message "Buffer '%s' is not visiting a file!" name)
-      (if (get-buffer new-name)
-          (message "A buffer named '%s' already exists!" new-name)
-        (progn
-          (rename-file name new-name 1)
-          (rename-buffer new-name)
-          (set-visited-file-name new-name)
-          (set-buffer-modified-p nil))))))
-
-(defun pd-delete-file-and-buffer ()
-  "Delete the current buffer and its backing file."
-  (interactive)
-  (let ((filename (buffer-file-name))
-        (buffer (current-buffer))
-        (name (buffer-name)))
-    (if (not (and filename (file-exists-p filename)))
-        (ido-kill-buffer)
-      (when (yes-or-no-p "Are you sure you want to remove this file? ")
-        (delete-file filename)
-        (kill-buffer buffer)
-        (message "File '%s' successfully removed" filename)))))
-
-(defun pd-replace-all-in-buffer ()
-  "Replace all occurrences of a string in the buffer."
-  (interactive)
-  (save-excursion
-    (if (equal mark-active nil) (mark-word))
-    (let* ((curr-word (buffer-substring-no-properties (mark) (point)))
-           (old-string (read-string "OLD string: " curr-word))
-           (new-string (read-string "NEW string: " old-string)))
-      (replace-string old-string new-string nil (point-min) (point-max)))))
-
-(defun pd-join-line ()
-  "Joins a line with the next line, leaving no space."
-  (interactive)
-  (join-line -1))
-
-(defun pd-no-space ()
-  "A version of just-one-space that leaves no spaces. If at the end
-of a line, calls pd-join-line."
-  (interactive)
-  (if (eolp)
-      (pd-join-line)
-    (just-one-space 0)))
-
-(defun pd-untabify-buffer ()
-  "Run untabify on the entire buffer."
-  (interactive)
-  (untabify (point-min) (point-max)))
-
-(defun pd-indent-buffer ()
-  "Run indent on the entire buffer."
-  (interactive)
-  (indent-region (point-min) (point-max)))
-
-(defun pd-group-number (num &optional size char)
-  "Format NUM as string grouped to SIZE with CHAR."
-  ;; Based on code for `math-group-float' in calc-ext.el
-  (let* ((size (or size 3))
-         (char (or char ","))
-         (str (if (stringp num)
-                  num
-                (number-to-string num)))
-         ;; omitting any trailing non-digit chars
-         ;; NOTE: Calc supports BASE up to 36 (26 letters and 10 digits ;)
-         (pt (or (string-match "[^0-9a-zA-Z]" str) (length str))))
-    (while (> pt size)
-      (setq str (concat (substring str 0 (- pt size))
-                        char
-                        (substring str (- pt size)))
-            pt (- pt size)))
-    str))
-
-(defun pd-sort-paragraph-dwim (&optional special-c-sort)
-  "Sorts the current paragraph and leaves point after the last line.
-
-If a prefix argument is supplied, and if the paragraph starts
-with '#include', then it is sorted specially to ensure that
-system library includes such as #include <...> appear before
-#include \"...\"."
-  (interactive "P")
-  (let* ((bounds (bounds-of-thing-at-point 'paragraph))
-         (beg (car bounds))
-         (end (cdr bounds)))
-    (when special-c-sort
-      (setq start (buffer-substring-no-properties (+ 1 beg) (+ beg 9)))
-      (unless (string= start "#include")
-        (setq special-c-sort nil)))
-    (if special-c-sort
-        (pd-sort-lines nil beg end 'pd-c-cmp-includes)
-      (sort-lines nil beg end))
-    (goto-char end)))
-
-(defun pd-find-first-paragraph-starting (s)
-  "Returns the (BEG . END) point of the first paragraph, if any, that starts
-with the specified string S.
-
-For some reason this function tends to return leading whitespace. I consider
-this to be a bug."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (let ((p (re-search-forward s nil t)))
-      (when p
-        (bounds-of-thing-at-point 'paragraph)))))
-
-(defun pd-cleanup-programming-buffer ()
-  "Runs various cleanups; recommended for programming modes only.
-
-Also not recommended when working with other people's code
-because it will re-indent the entire buffer."
-  (interactive)
-  (pd-indent-buffer)
-  (pd-untabify-buffer)
-  (delete-trailing-whitespace)
-  (when (or (derived-mode-p 'c-mode) (derived-mode-p 'c++-mode))
-    (pd-c-sort-includes))
-  (when (derived-mode-p 'c++-mode)
-    (pd-cpp-sort-usings))
-  (message "Reindent, untabify, delete trailing whitespace."))
-
-(defun pd-compile-without-confirmation ()
-  "Runs last compilation without asking for confirmation."
-  (interactive)
-  (save-window-excursion
-    (compile compile-command))
-  (pop-to-buffer (get-buffer "*compilation*")))
-
-(defun pd-compile-clean-one-shot ()
-  "Runs make clean, but restores compile command after it."
-  (interactive)
-  (let (oldcc compile-command)
-    (save-window-excursion
-      (compile "make clean"))
-    (pop-to-buffer (get-buffer "*compilation*"))
-    (setq compile-command oldcc)))
-
-(defun endless/comment-line-or-region (n)
-  "Comment or uncomment current line and leave point after it.
-With positive prefix, apply to N lines including current one.
-With negative prefix, apply to -N lines above.
-If region is active, apply to active region instead."
-  (interactive "p")
-  (if (use-region-p)
-      (comment-or-uncomment-region
-       (region-beginning) (region-end))
-    (let ((range
-           (list (line-beginning-position)
-                 (goto-char (line-end-position n)))))
-      (comment-or-uncomment-region
-       (apply #'min range)
-       (apply #'max range)))
-    (forward-line 1)
-    (back-to-indentation)))
-
-(defun endless/forward-paragraph (&optional n)
-  "Advance just past next blank line."
-  (interactive "p")
-  (let ((para-commands
-         '(endless/forward-paragraph endless/backward-paragraph)))
-    ;; Only push mark if it's not active and we're not repeating.
-    (or (use-region-p)
-        (not (member this-command para-commands))
-        (member last-command para-commands)
-        (push-mark))
-    ;; The actual movement.
-    (dotimes (_ (abs n))
-      (if (> n 0)
-          (skip-chars-forward "\n[:blank:]")
-        (skip-chars-backward "\n[:blank:]"))
-      (if (search-forward-regexp
-           "\n[[:blank:]]*\n[[:blank:]]*" nil t (cl-signum n))
-          (goto-char (match-end 0))
-        (goto-char (if (> n 0) (point-max) (point-min)))))))
-
-(defun endless/backward-paragraph (&optional n)
-  "Go back up to previous blank line."
-  (interactive "p")
-  (endless/forward-paragraph (- n)))
-
 (defun hydra-move-splitter-left (arg)
   "Move window splitter left."
   (interactive "p")
@@ -339,18 +113,6 @@ If region is active, apply to active region instead."
     (let ((mk (mark)))
       (rectangle-mark-mode 1)
       (goto-char mk))))
-
-(defun pd-revert-buffer ()
-  "Reverts a buffer back to its last saved state."
-  (interactive)
-  (revert-buffer nil t))
-
-(defun pd-hide-dos-eol ()
-  "Do not show ^M in files containing mixed UNIX and DOS line endings."
-  ;; From http://stackoverflow.com/questions/730751/hiding-m-in-emacs
-  (interactive)
-  (setq buffer-display-table (make-display-table))
-  (aset buffer-display-table ?\^M []))
 
 (defun pd-get-or-create-ansi-term (bufname)
   "Switch to an ansi-term buffer named BUFNAME if it exists, or
@@ -596,18 +358,6 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 ;; There is also multi-term, not sure what that adds though.
 ;; tl;dr - use ansi-term for starting shells.
 
-;; Make magit take up the entire screen.
-;;(defadvice magit-status (around magit-fullscreen activate)
-;;  (window-configuration-to-register :magit-fullscreen)
-;;   ad-do-it
-;;   (delete-other-windows))
-;; (defun magit-quit-session ()
-;;   "Restores the previous window configuration and kills the magit buffer"
-;;   (interactive)
-;;   (kill-buffer)
-;;   (jump-to-register :magit-fullscreen))
-;; (define-key magit-status-mode-map (kbd "q") 'magit-quit-session)
-
 ;; Make commits done from the command line also use the Magit COMMIT_MSG mode.
 (global-git-commit-mode)
 
@@ -620,6 +370,14 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 (defun pd-font-exists (font &optional frame)
   "Return a font if it exists, nil otherwise. Does not work in daemon mode."
   (find-font (font-spec :name font) frame))
+
+;; When emacs starts in daemon mode there is no frame and hence some GUI related
+;; functions such as find-font do not work. There is however a special
+;; non-visible daemon frame.
+;; See https://github.com/syl20bnr/spacemacs/issues/6197 at 7 Jun 2016
+;; http://emacs.stackexchange.com/questions/12351/when-to-call-find-font-if-launching-emacs-in-daemon-mode
+;; and https://github.com/syl20bnr/spacemacs/blob/master/core/core-display-init.el
+;; and http://emacs.1067599.n8.nabble.com/bug-23689-Daemon-mode-on-Windows-quot-w32-initialized-quot-is-set-too-early-td399455.html
 
 ;; See https://github.com/chrissimpkins/codeface to get a big zip of ttf and otf
 ;; fonts. To determine the name that Emacs uses for a font, the easiest way I
@@ -928,8 +686,8 @@ search at index 0."
   (set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")
   (set-face-attribute 'tty-menu-selected-face nil :background "white" :foreground "black")
   (set-face-attribute 'tty-menu-disabled-face nil :background "black" :foreground "red")
-  ;; Provide a sort of "on-off" modeline whereby the current buffer has a nice bright blue
-  ;; background, and all the others are in cream.
+  ;; Provide a sort of "on-off" modeline whereby the current buffer has a nice
+  ;; bright blue background, and all the others are in cream.
   (when (eq theme 'solarized)
     (set-face-attribute 'mode-line nil          :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
     (set-face-attribute 'mode-line-inactive nil :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil))
