@@ -3,6 +3,11 @@
 ;;; Local Variables:
 ;;; End:
 
+;; You can use this technique to exit the file early.
+;;(with-current-buffer " *load*"
+;;  (goto-char (point-max)))
+
+
 (if (functionp 'tool-bar-mode)
     (tool-bar-mode -1))
 (if (functionp 'scroll-bar-mode)
@@ -30,7 +35,7 @@
 (require 'hideshow)
 (require 'hlinum)
 (require 'mic-paren)
-(require 'moe-theme)
+;;(require 'moe-theme)
 (require 'org)
 (require 'pd)
 (require 'pd-cpp)
@@ -48,6 +53,7 @@
 (require 'yasnippet)
 
 (message "REQUIRES - END.")
+
 
 ;; $$ DO THIS EARLY.
 (defvar pd-at-home t "t if this Emacs is being run at home, nil if at work.")
@@ -455,6 +461,7 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 ;(eval-after-load "dired-aux"
 ;  '(add-to-list 'dired-compress-file-suffixes '("\\.zip\\'" ".zip" "unzip")))
 
+
 ;; Helm mode. Based on http://tuhdo.github.io/helm-intro.html
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 (setq helm-semantic-fuzzy-match nil)
@@ -494,6 +501,7 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 (yas-reload-all)
 (add-hook 'prog-mode-hook #'yas-minor-mode)
 (add-hook 'markdown-mode-hook #'yas-minor-mode)
+
 
 ;; Automatically cleanup files before save in programming modes. Based on
 ;; http://stackoverflow.com/questions/19174302. An alternative, using ws-trim or
@@ -546,6 +554,7 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 (setq tramp-default-method "sshx")
 (setq tramp-default-user "phil")
 
+
 ;; Org mode.
 (setq org-directory "~/repos/org")
 (setq org-log-done t)
@@ -560,6 +569,7 @@ https://ftp.gnu.org/old-gnu/Manuals/elisp-manual-21-2.8/html_chapter/elisp_27.ht
 
 ;; Turn on rainbow delimiters in all programming modes.
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
 
 ;; ;; Visible Bookmarks (package bm, https://github.com/joodland/bm)
 ;; (setq bm-cycle-all-buffers t)
@@ -679,6 +689,7 @@ search at index 0."
     (pd-set-candidate-font 0 (selected-frame) t))
 
 (setq custom-theme-directory "~/repos/dotfiles/emacs/themes")
+
 (setq x-gtk-use-system-tooltips nil)
 (setq ring-bell-function nil)
 (setq visible-bell 1)
@@ -706,6 +717,7 @@ search at index 0."
 ;; it off by default. It is bound to C-= below, for ease of use.
 (setq fci-rule-width 2)
 ;;(setq fci-rule-color "blue")
+
 
 ;; Show a red rectangle for trailing whitespace, and color long lines.
 (setq-default show-trailing-whitespace t)
@@ -939,8 +951,8 @@ Valid values are nil, 'dark and 'light."
   ;; Solarized (the only one I am sure about) uses the frame-background-mode to
   ;; determine how to display itself. The default for this variable is nil,
   ;; which most themes seem happy with.
-  (setq frame-background-mode bg-mode)
-  (mapc 'frame-set-background-mode (frame-list))
+;  (setq frame-background-mode bg-mode)
+;  (mapc 'frame-set-background-mode (frame-list))
   (load-theme theme t)
   (message "Theme set to %s" theme)
   (pd-apply-theme-overrides))
@@ -1231,6 +1243,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-<f12> t") 'hydra-themes/body)
 (message "KEYBINDINGS - FUNCTION KEYS DONE.")
 
+
 ;; f3, f4 = macros start and end.
 ;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
 ;; f9 = undefined
@@ -1251,6 +1264,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-M-<left>")  'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
 (define-key global-map (kbd "C-M-<right>") 'end-of-defun)
 (message "KEYBINDINGS - ARROWS DONE.")
+
 
 ;; ******************* Small pad keys ********************
 
@@ -1281,11 +1295,13 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "C-|")       'hs-show-all)
 (define-key global-map (kbd "M-/")       'hippie-expand)
 (define-key global-map (kbd "M-;")       'endless/comment-line-or-region)
-(define-key global-map (kbd "M-[")       'backward-sexp)
-(define-key global-map (kbd "M-]")       'forward-sexp)
+;; (define-key global-map (kbd "M-[")       'backward-sexp)  Screws up in terminal Emacs
+;; fine-key global-map (kbd "M-]")       'forward-sexp)
 (define-key global-map (kbd "M-{")       'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
 (define-key global-map (kbd "M-}")       'endless/forward-paragraph)
 (message "KEYBINDINGS - MAIN KEYS 1 DONE.")
+
+
 
 (define-key global-map (kbd "C-S-o")     'pd-duplicate-line-or-region)
 (define-key global-map (kbd "C-S-w")     'pd-copy-current-line)

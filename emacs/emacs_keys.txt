@@ -4,7 +4,7 @@ C-'  M-'   expand/contract region        word       M-b       M-f            F1 
 C-S-w      pd-copy-current-line          line       C-p       C-n            F2  next bmark          S-F2  previous bmark     C-F2  toggle bmark    M-F2  helm bmarks
 C-S-o      pd-duplicate-line-or-region   sentence   M-a       M-e            F3  start macro
 C-%        pd-replace-all-in-buffer      paragraph  M-{       M-}            F4  end macro
-M-%        query replace                 sexp       M-[       M-]            F5
+M-%        query replace                 sexp                                F5
 M-j        pd-join-line                  function   C-M-left  C-M-right      F6
 M-y        helm-show-kill-ring           buffer     M-<       M->            F7
 M-SPC      pd-no-space                   C-x C-SPC  previous position        F8
