@@ -947,19 +947,18 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 ;;      w32-rwindow-modifier 'super))
 ;;
 ;; Mintty has been hacked by the maintainer to allow the APPS/MENU key to be
-;; passed through to the underlying program. Adding the line
-;; "Key_Menu=29" to the .minttyrc file causes terminal Emacs to see it as the
-;; "<print"> key. The hack was on 2015-11-19 in commit
-;; 429cb080e6bfee6136227ca5d41ea61494b36c2d.
+;; passed through to the underlying program. Adding the line "Key_Menu=29" to
+;; the .minttyrc file causes terminal Emacs to see it as the "<print"> key. The
+;; hack was on 2015-11-19 in commit 429cb080e6bfee6136227ca5d41ea61494b36c2d.
 ;; Given this hack, we can make APPS send the s- (super) prefix like this in
-;; both W32 and terminal Emacs. Unfortunately, APPS still does not work like
-;; the Alt or Control keys, if you hold it down by itself you get lots of input
-;; in the output buffer.
-;; (if (equal system-type 'cygwin)
-;;     (if (equal window-system 'w32)
-;;      (setq w32-pass-apps-to-system nil
-;;            w32-apps-modifier 'super)
-;;       (define-key local-function-key-map (kbd "<print>") 'event-apply-super-modifier)))
+;; both W32 and terminal Emacs. Unfortunately, APPS still does not work like the
+;; Alt or Control keys in the terminal, if you hold it down by itself you get
+;; lots of input in the output buffer. It does work ok in GUI Emacs though.
+(if (equal system-type 'cygwin)
+    (if (equal window-system 'w32)
+     (setq w32-pass-apps-to-system nil
+           w32-apps-modifier 'hyper)
+      (define-key local-function-key-map (kbd "<print>") 'event-apply-hyper-modifier)))
 ;; (define-key global-map (kbd "s-h") (lambda () (interactive) (message "hello from menu key via s- prefix")))
 ;;
 ;; Alternatively, we can turn it into a leader key like this.
@@ -996,9 +995,7 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 
 
 ;; ******************* Global Function keys ********************
-(define-key global-map (kbd "<f1>")      'dired-jump)
-(define-key global-map (kbd "S-<f1>")    (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs_keys.txt")))
-(define-key global-map (kbd "C-<f1>")    'pd-ansi-term)
+(define-key global-map (kbd "<f1>")      (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs_keys.txt")))
 (define-key global-map (kbd "<f2>")      'bmkp-next-bookmark)
 (define-key global-map (kbd "S-<f2>")    'bmkp-previous-bookmark)
 (define-key global-map (kbd "C-<f2>")    'bmkp-toggle-autonamed-bookmark-set/delete)
@@ -1044,6 +1041,18 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 
 ;; ******************* Small pad keys ********************
 
+;; CUA compatibility.
+(define-key global-map (kbd "C-z")       'undo)   ;; Emacs default = suspend-emacs
+
+
+;; https://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts
+;;(define-key global-map (kbd "C-y")       'redo last operation)
+;;(define-key global-map (kbd "C-x")       'cut and place in clipboard) Emacs = prefix key
+;;(define-key global-map (kbd "C-c")       'copy to clipboard)  Emacs = prefix key
+;;(define-key global-map (kbd "C-v")       'paste clipboard)  Emacs = scroll-up-command
+;;(define-key global-map (kbd "C-a")       'select all)  Emacs = pd-back-to-indentation-or-beginning
+;; o = open, s = save, n = new, p = print, f = find/search
+;; w = save as, r/h = replace, C-S-s = save all, g = goto line
 
 ;; ******************* Main number keys ********************
 ;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via
@@ -1078,7 +1087,6 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (message "KEYBINDINGS - MAIN KEYS 1 DONE.")
 
 
-
 (define-key global-map (kbd "C-S-o")     'pd-duplicate-line-or-region)
 (define-key global-map (kbd "C-S-w")     'pd-copy-current-line)
 (define-key global-map (kbd "C-a")       'pd-back-to-indentation-or-beginning)
@@ -1098,18 +1106,32 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
 (define-key global-map (kbd "H-SPC")     'pd-no-space)
 (message "KEYBINDINGS - MAIN KEYS 2 DONE.")
 
-;; (defun pd-bind-key (keyseq func)
-;;   "Helper function to bind keys to both <apps> and H-."
-;;   (let ((e1 (concat "<apps> " keyseq))
-;;         (e2 (format "H-%s%s" (substring keyseq 0 1)
-;;                     (if (equal 1 (length keyseq))
-;;                         ""
-;;                       (concat " " (substring keyseq 1 2)))))
-;;         )
-;;     (define-key global-map (kbd e1) func)
-;;     (define-key global-map (kbd e2) func)))
-;;
-;; (pd-bind-key "a"  'pd-cpp-add-using)
+(defun pd-bind-key (keyseq func)
+  "Helper function to bind keys to both <apps> and H-."
+  (let ((e1 (concat "<apps> " keyseq))
+        (e2 (format "H-%s%s" (substring keyseq 0 1)
+                    (if (equal 1 (length keyseq))
+                        ""
+                      (concat " " (substring keyseq 1 2)))))
+        )
+    ;;(define-key global-map (kbd e1) func)
+    (define-key global-map (kbd e2) func)))
+
+
+;; Consider arrow keys too.
+;; Want for bookmarks, macros, ggtags, rectangles?
+(pd-bind-key "b"  'cycle-buffer-backward-permissive)
+(pd-bind-key "d"  'dired-jump)
+(pd-bind-key "f"  'cycle-buffer-permissive)
+(pd-bind-key "g"  'magit-status)
+(pd-bind-key "o"  'pd-duplicate-line-or-region)
+(pd-bind-key "t"  'pd-ansi-term)
+(pd-bind-key "w"  'pd-copy-current-line)
+
+
+
+
+
 ;; (pd-bind-key "cc" 'pd-cleanup-programming-buffer)
 ;; (pd-bind-key "dl" 'pd-duplicate-line-or-region)
 ;; (pd-bind-key "dw" 'delete-trailing-whitespace)

@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name : code highlight snippet
+# key: code
+# Used to be just -->>    {{< highlight ${1:csharp} >}}
+# --
+{{< highlight ${1:$$(yas-choose-value '("ada" "apacheconf" "awk" "bash" "bat" "c" "clojure" "clojurescript" "cmake" "coffee-script" "common-lisp" "console" "cpp"
+"csharp" "css" "cucumber" "d" "diff" "docker" "dtd" "fsharp" "go" "haml" "handlebars" "haskell" "html" "html+handlebars"
+"http" "ini" "jade" "java" "js" "json" "llvm" "lua" "make" "mysql" "nginx" "nimrod" "perl" "perl6" "php" "postgresql"
+"postscript" "powershell" "properties" "protobuf" "psql" "puppet" "python" "python3" "qml" "rb" "registry" "rust" "sass"
+"scala" "sql" "sqlite3" "swift" "tcl" "tex" "text" "ts" "vb.net" "vim" "xml" "xquery" "xslt" "yaml"))} >}}
+$0
+{{< /highlight >}}
+

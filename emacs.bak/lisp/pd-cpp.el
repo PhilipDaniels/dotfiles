@@ -1,11 +1,31 @@
-;;; Coding enhancement for C++ mode
-;;; Usage:  (require 'pd-cpp)
-;;;
-;;; pd-cpp provides functions that enhance the experience of coding C++. The main
-;;; feature is the ability to automatically look up the standard header file that
-;;; a symbol resides in and add a #include<...> statement at the top of the file.
-;;; Furthermore, a 'using' statement will be added, but only in .cpp files
-;;; because it is bad practice to do so in header files.
+;;; pd-cpp.el --- coding enhancement for C++ mode
+
+;; Author:     Philip Daniels <philip.daniels1971@gmail.com>
+;; Maintainer: same
+;; Created: 09 Feb 2016
+;; Keywords: C++, using, #insert, STL
+
+;;; Commentary:
+
+;; Description:
+;; ------------
+
+;; pd-cpp provides functions that enhance the experience of coding C++. The main
+;; feature is the ability to automatically look up the standard header file that
+;; a symbol resides in and add a #include<...> statement at the top of the file.
+;; Furthermore, a 'using' statement will be added, but only in .cpp files
+;; because it is bad practice to do so in header files.
+
+;; Installation:
+;; -------------
+;; Add these lines in your .emacs:
+;;   (require 'pd-cpp)
+
+;; TODO
+;; ----
+
+;; ChangeLog
+;; ---------
 
 (eval-when-compile (require 'pd))
 
@@ -388,3 +408,5 @@ for the symbol just typed."
     nil "caut" pd-cpp-auto-keymap)
 
 (provide 'pd-cpp)
+
+;;; end of pd-cpp.el

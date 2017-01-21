@@ -1,0 +1,85 @@
+keyboard.c
+==========
+make_lispy_event : convert struct input_event into a lisp event
+there is stuff about Kana in here as well
+
+termhooks.h: line 266, defn of struct input_event
+
+w32inevt.c: there is interesting code in here, around line 200,
+which checks and sets modifier states. The function is key_event.
+
+  See in particular line 388 "modifiers = w32_kbd_mods_to_emacs"
+
+w32term.c: function w32_read_socket is the one that reads messages
+from the Windows message queue and converts them into struct input_events.
+At line 5318 calls kbd_buffer_store_event_hold which is a macro
+in keyboard.h at line 470 which then calls
+  kbd_buffer_store_buffered_event in keyboard.c
+
+The *event is expected to have a hyper or super modifier by then.
+
+W32Msg is defined in w32term.h as
+
+typedef struct W32Msg {
+    MSG msg;
+    DWORD dwModifiers;
+    RECT rect;
+} W32Msg;
+
+Also in there are some constants such as VK_APPS see line 794.
+
+Again
+=====
+The fundamental W32 function is GetMessageW which is called from
+
+  w32fns.c / w32_msg_pump
+
+That function has a description of how the whole Win32 message system works.
+It calls the main window procedure for the entire Emacs application:
+
+  w32fns.c / w32_wnd_proc
+
+    static LRESULT CALLBACK
+    w32_wnd_proc (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+    {
+      struct frame *f;
+      struct w32_display_info *dpyinfo = &one_w32_display_info;
+      W32Msg wmsg;    <<<<<<<<<<<<<<<<<<<
+      int windows_translate;
+      int key;
+
+  w32fns.c / w32_kbd_mods_to_emacs
+  returns an int which is a bitmask of which modifiers are in effect.
+  The bitmask is based on ? and the conversion is performed by
+  w32_key_to_modifier WHICH HAS NO SUPPORT FOR VK_OEM_8!    <<<<<<< Needs changing.
+  just the usual suspects. See also the function construct_console_modifiers
+  just below it.
+
+The functions record_keydown and record_keyup are interesting. I think they
+monitor the key sequence needed to record a C-a combination key. In fact,
+record_keydown is called ONLY from w32_wnd_proc's WM_KEYDOWN case.   <<< LOOK HERE.
+
+Why do some of these functions only deal with Ctrl and Alt and ignore Shift?
+
+
+
+
+
+
+which calls my_post_msg, which inserts messages into the input queue
+servied by
+
+  w32_read_socket
+
+
+   w32_read_socket runs in the main (a.k.a. "Lisp") thread, and is
+   called synchronously from keyboard.c when it is known or suspected
+   that some input is available.  w32_read_socket either handles
+   messages immediately, or converts them into Emacs input events and
+   stuffs them into kbd_buffer, where kbd_buffer_get_event can get at
+   them and process them when read_char and its callers require
+   input.
+
+   Under Cygwin with the W32 toolkit, the use of /dev/windows with
+   select(2) takes the place of w32_read_socket.
+

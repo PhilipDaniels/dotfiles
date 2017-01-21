@@ -1,6 +1,6 @@
 Basic Editing                            Movement   backward  forward        Function Keys           S-                       C-                    M-
 ======================================   ================================    ==================================================================================
-C-'  M-'   expand/contract region        word       M-b       M-f            F1  dired               S-F1  open this file     C-F1  terminal
+C-'  M-'   expand/contract region        word       M-b       M-f            F1  open this file
 C-S-w      pd-copy-current-line          line       C-p       C-n            F2  next bmark          S-F2  previous bmark     C-F2  toggle bmark    M-F2  helm bmarks
 C-S-o      pd-duplicate-line-or-region   sentence   M-a       M-e            F3  start macro
 C-%        pd-replace-all-in-buffer      paragraph  M-{       M-}            F4  end macro

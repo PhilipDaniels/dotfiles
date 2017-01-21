@@ -14,14 +14,16 @@ if [ "$WINDIR" == "" ]; then
     fi
 else
     # Windows, probably Cygwin.
-    if [ "$INSIDE_EMACS" == "" ]; then
-        # Running inside an external terminal emulator.
-        # emacsclient-w32 --tty $1;   # This causes Emacs to hang.
-        emacsclient -q $1;
-    else
-        # Running inside Emacs - probably ansi-term or Magit.
-        emacsclient -q $1;
-    fi
+    emacsclient-w32 -q $1;
+
+    # if [ "$INSIDE_EMACS" == "" ]; then
+    #     # Running inside an external terminal emulator.
+    #     # emacsclient-w32 --tty $1;   # This causes Emacs to hang.
+    #     emacsclient  $1;
+    # else
+    #     # Running inside Emacs - probably ansi-term or Magit.
+    #     emacsclient-w32 $1;
+    # fi
 fi
 
 

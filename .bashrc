@@ -160,16 +160,15 @@ alias ce='emacs'
 alias we='emacs-w32'
 
 # {C}ygwin{E}macs{C}lient
-# -c means create a new window.
+# -c creates a new frame.
 # -t, -nw or -tty means use current terminal.
-alias cec='emacsclient'
-alias ec='emacsclient -nw'
+alias cec='emacsclient -q'
 
 # {W}indows{E}macs{C}lient
 # With no arg, tries to use current frame.
 # -c creates a new frame
-# -nw does not work and hangs the main Emacs window. DO NOT USE.
-alias wec='emacsclient-w32'
+# -t, -nw or -tty means use current terminal.
+alias wec='emacsclient-w32 -q'
 
 alias emacslatest='~/repos/emacs/src/emacs'
 
