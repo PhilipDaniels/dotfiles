@@ -15,12 +15,7 @@ function f_Inst()
 {
     local src=$1
     local dest=$2
-
-    if [ "$OS" == "linux" ] ; then
-	      f_Relink $src $dest
-    else
-	      f_CopyFileWithBackup $src $dest
-    fi
+    f_Relink $src $dest
 }
 
 
@@ -32,6 +27,11 @@ if f_AtWork; then
     sed -i.bak 's/email = Philip.Daniels1971@gmail.com/email = Philip.Daniels@landmark.co.uk/g' ~/.gitconfig
 fi
 
+# Ensure we have the right git client.
+if [ "$OS" == "cygwin" ] ; then
+    echo "This is Cygwin, updating ~/.gitconfig to set git core.editor to emacsclient-w32"
+    sed -i.bak 's/editor = emacsclient/editor = emacsclient-w32.exe/g' ~/.gitconfig
+fi
 
 if f_AtWork; then
     echo "You are at work, setting the Git proxy server"
@@ -59,7 +59,7 @@ f_Inst $DIR/.bash_profile ~/.bash_profile
 f_Inst $DIR/.bashrc ~/.bashrc
 f_Inst $DIR/.profile ~/.profile
 f_Inst $DIR/colors/.dircolors.solarized.ansi-universal ~/.dircolors
-f_Inst $DIR/emacs/.emacs ~/.emacs
+f_Inst $DIR/emacs/emacs.el ~/.emacs
 f_Inst $DIR/.tmux.conf ~/.tmux.conf
 
 if [ -f /etc/debian_version ]; then

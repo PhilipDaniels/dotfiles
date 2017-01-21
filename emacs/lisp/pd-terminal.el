@@ -68,8 +68,8 @@ From http://stackoverflow.com/questions/2706527/make-emacs-stop-asking-active-pr
   (set-process-query-on-exit-flag
    (get-buffer-process (current-buffer)) nil))
   
-(add-hook 'comint-exec-hook 'pd-dont-prompt-on-exit)
-(add-hook 'term-exec-hook 'pd-dont-prompt-on-exit)
+(add-hook 'comint-exec-hook 'pd-term-dont-prompt-on-exit)
+(add-hook 'term-exec-hook 'pd-term-dont-prompt-on-exit)
 
 (defun pd-term-exec-hook ()
   "Make exiting ansi-term kill the buffer.

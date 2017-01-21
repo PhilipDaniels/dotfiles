@@ -65,6 +65,7 @@ f_AddToPath "/usr/sbin"
 f_AddToPath "$HOME/bin"
 f_AddToPath "$HOME/bin/p4merge/bin"
 f_AddToPath "$HOME/repos/dotfiles/fancontrol"
+f_AddToPath "$HOME/repos/dotfiles/bin"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -148,28 +149,17 @@ fi
 # explicitly in my ~/.gitconfig.
 export NO_AT_BRIDGE=1
 
-# {C}ygwin{E}macs.
-# If X is running opens X window, else opens console window.
-# Use -nw to force open in the console.
-alias ce='emacs'
+ALTERNATE_EDITOR=""
+if [ "$OS" == "cygwin" ]; then
+    export EDITOR="emacsclient-w32 -q"
+else
+    export EDITOR="emacsclient -q"
+fi
 
-# {W}indows{E}macs
-# Will open a new Windows window. emacs-w32 is also from Cygwin, but runs using
-# native Windows fonts and without having to start an X server.
-# Use -nw to force open in the console (like normal 'emacs')
+alias le='emacs'
 alias we='emacs-w32'
-
-# {C}ygwin{E}macs{C}lient
-# -c creates a new frame.
-# -t, -nw or -tty means use current terminal.
-alias cec='emacsclient -q'
-
-# {W}indows{E}macs{C}lient
-# With no arg, tries to use current frame.
-# -c creates a new frame
-# -t, -nw or -tty means use current terminal.
+alias lec='emacsclient -q'
 alias wec='emacsclient-w32 -q'
-
 alias emacslatest='~/repos/emacs/src/emacs'
 
 # MSysGit grep does not recognise the --color option.
