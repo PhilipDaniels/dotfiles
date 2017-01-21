@@ -62,40 +62,10 @@ re-downloaded in order to locate PACKAGE."
 (require 'pd-keys)
 
 
-;;; $$ Server (aka daemon) mode.
-;; There are two ways to start Emacs in daemon mode.
-;;   1. Run 'emacs-w32 --daemon' in .bashrc or other startup script.
-;;      This creates an Emacs process which runs in the background and is not
-;;      attached to any tty.
-;;   2. Start Emacs normally after logging in, then call the 'server-start'
-;;      function, either manually or at the end of your .emacs file.
-;;
-;; 1) may seem simpler, but in fact when Emacs is started this way some (hard to
-;; determine) functions, variables and settings do not work because there is no
-;; frame or window system defined. This can make configuration difficult. Cursor
-;; colors, fonts etc. do not get set when you expect them to be.
-;; Therefore, I recommend method 2. This .emacs file has been designed with it
-;; in mind. So, after I logon I just do "we &" to create a new graphical Win32
-;; Emacs with an initial frame - which, typically, I never close. The call to
-;; server-start turns this initial Emacs into a server.
-;;
-;; Other info: daemonp - predicate can be used to detect daemon mode.
-;;(load "server")
-;;(unless (server-running-p)
-;;  (server-start))
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TODO
-;; [ ] Get daemon mode working correctly and start Emacs as a daemon rather
-;;     than in emacs.el.
-;; [ ] Get Emacs client working properly for git. Maybe just start a new Emacs
-;;     with a very minimal setup, by using an environment variable and invoking
-;;     Emacs like this:    CLI_GIT=true emacs-w32.
-;;     In elisp, we can use   (getenv "CLI_GIT")
-
+;; [ ] Check everything still works in Linux.
 
 ;; [ ] Move to use-package - this looks awesome.
 ;; [ ] Log bug about solarized dark messing up rainbow delimiters.

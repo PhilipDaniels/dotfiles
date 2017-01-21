@@ -152,14 +152,14 @@ export NO_AT_BRIDGE=1
 ALTERNATE_EDITOR=""
 if [ "$OS" == "cygwin" ]; then
     export EDITOR="emacsclient-w32 -q"
+    alias e='emacs-w32'
+    alias ec='emacsclient-w32 -q'
 else
     export EDITOR="emacsclient -q"
+    alias e='emacs'
+    alias ec='emacsclient -q'
 fi
 
-alias le='emacs'
-alias we='emacs-w32'
-alias lec='emacsclient -q'
-alias wec='emacsclient-w32 -q'
 alias emacslatest='~/repos/emacs/src/emacs'
 
 # MSysGit grep does not recognise the --color option.
