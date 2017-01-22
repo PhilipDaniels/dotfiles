@@ -69,8 +69,7 @@ re-downloaded in order to locate PACKAGE.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TODO
 ;; [ ] Check everything still works in Linux.
-;; [ ] Use keychain.
-;; [ ] Log bug about solarized dark messing up rainbow delimiters.
+;; [ ] Get hyper working again.
 
 ;; [ ] Requires in my files. Nominal order is require-package, require built-ins,
 ;;     require pd-*, however, should we use eval-when-compile, as seen in pd-cpp?

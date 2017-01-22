@@ -74,19 +74,6 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; This is package "solarized-theme" from https://github.com/bbatsov/solarized-emacs
-;; Problems: increases size of the characters '(' and ')' which causes a jarring effect.
-;; I am not using it. This is from its wiki:
-;; Avoid all font-size changes
-;;(setq solarized-height-minus-1 1)
-;;(setq solarized-height-plus-1 1)
-;;(setq solarized-height-plus-2 1)
-;;(setq solarized-height-plus-3 1)
-;;(setq solarized-height-plus-4 1)
-;;(pd-load-theme 'solarized-dark)
-
-
-
 ;;(add-to-list 'default-frame-alist '(height . 50))
 ;;(add-to-list 'default-frame-alist '(width . 86))
 ;;(show-paren-mode 1)             ;; Superceded by smartparens mode.

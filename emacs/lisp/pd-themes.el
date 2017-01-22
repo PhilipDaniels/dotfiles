@@ -93,8 +93,34 @@ Valid values are nil, 'dark and 'light."
   (message "Theme set to %s" theme)
   (pd-theme-apply-overrides))
 
+
 ;; This is package "color-theme-solarized" from https://github.com/sellout/emacs-color-theme-solarized
+;; It is stored in elpa\color-theme-solarized-20160626.743
+;; It has a bug https://github.com/sellout/emacs-color-theme-solarized/issues/165
+;; which requires us to toggle outline-minor-mode to get rainbow delimiters to work.
+;; It is not needed with other themes, but there is no downside to always running it.
 (pd-theme-load 'solarized 'dark)
+
+(outline-minor-mode t)
+(outline-minor-mode nil)
+
+
+
+;; This is package "solarized-theme" from https://github.com/bbatsov/solarized-emacs
+;; It is stored in elpa\solarized-theme-20161222.109
+;; It supposedly supports child themes.
+;; Problems: increases size of the characters '(' and ')' which causes a jarring effect.
+;; I am not using it. This is from its wiki:
+;; Avoid all font-size changes
+;;(setq solarized-height-minus-1 1)
+;;(setq solarized-height-plus-1 1)
+;;(setq solarized-height-plus-2 1)
+;;(setq solarized-height-plus-3 1)
+;;(setq solarized-height-plus-4 1)
+;;(pd-theme-load 'solarized-dark)
+
+
+;; Default decent theme if having problems with solarized.
 ;; (pd-theme-load 'gruvbox)
 
 (provide 'pd-themes)
