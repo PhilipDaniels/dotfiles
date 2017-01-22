@@ -1,6 +1,7 @@
 ;;; Customizations related to programming modes.
 ;;; Usage:  (require 'pd-programming)
 
+(require-package 'cargo)
 (require-package 'csharp-mode)
 (require-package 'fsharp-mode)
 (require-package 'ggtags)
@@ -9,6 +10,8 @@
 (require-package 'json-mode)
 (require-package 'lua-mode)
 (require-package 'powershell)          ;; Run powershell as an inferior process.
+(require-package 'rust-mode)
+(require-package 'rustfmt)
 (require-package 'sass-mode)
 (require-package 'yaml-mode)
 

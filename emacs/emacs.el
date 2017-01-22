@@ -111,6 +111,9 @@ re-downloaded in order to locate PACKAGE.
 ;; [ ] pd-helm: Get helm ignores working. This will speed up greps a lot.
 ;; [ ] pd-helm: Use ripgrep or ag?
 
+;; [ ] Spell checking.
+;; [ ] Flymake
+;; [ ] Proper bookmarks.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tricks
