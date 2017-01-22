@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <key name="Software">
 	<key name="ConEmu">
-		<key name=".Vanilla" modified="2016-06-12 14:58:40" build="151210">
+		<key name=".Vanilla" modified="2017-01-22 11:29:21" build="161022">
 			<value name="StartType" type="hex" data="02"/>
 			<value name="CmdLine" type="string" data=""/>
 			<value name="StartTasksFile" type="string" data=""/>
-			<value name="StartTasksName" type="string" data="{Sol Dark::Single}"/>
+			<value name="StartTasksName" type="string" data="{Sol Dark::x4}"/>
 			<value name="StartFarFolders" type="hex" data="00"/>
 			<value name="StartFarEditors" type="hex" data="00"/>
 			<value name="ColorTable00" type="dword" data="00362b00"/>
@@ -56,10 +56,10 @@
 			<value name="Update.UseBuilds" type="hex" data="02"/>
 			<value name="FontUseDpi" type="hex" data="01"/>
 			<value name="FontUseUnits" type="hex" data="01"/>
-			<value name="FontSize" type="dword" data="0000000e"/>
-			<value name="StatusFontHeight" type="dword" data="0000000c"/>
-			<value name="TabFontHeight" type="dword" data="0000000d"/>
-			<key name="HotKeys" modified="2016-06-12 14:58:40" build="151210">
+			<value name="FontSize" type="ulong" data="14"/>
+			<value name="StatusFontHeight" type="long" data="12"/>
+			<value name="TabFontHeight" type="long" data="13"/>
+			<key name="HotKeys" modified="2017-01-22 11:29:21" build="161022">
 				<value name="MinimizeRestore" type="dword" data="00000000"/>
 				<value name="KeyMacroVersion" type="hex" data="02"/>
 				<value name="Multi.Modifier" type="dword" data="0000005b"/>
@@ -240,6 +240,9 @@
 				<value name="Key.DebugProcess" type="dword" data="00105b44"/>
 				<value name="Key.DumpProcess" type="dword" data="00000000"/>
 				<value name="Key.DumpTree" type="dword" data="00000000"/>
+				<value name="Key.AltNumpad" type="dword" data="00000000"/>
+				<value name="Key.JumpActiveMonitor" type="dword" data="00000000"/>
+				<value name="Key.ResetTerm" type="dword" data="00000000"/>
 			</key>
 			<value name="ExtendFonts" type="hex" data="00"/>
 			<value name="ExtendFontNormalIdx" type="hex" data="01"/>
@@ -281,8 +284,8 @@
 			<value name="StoreTaskbarCommands" type="hex" data="00"/>
 			<value name="SaveCmdHistory" type="hex" data="01"/>
 			<value name="CmdLineHistory" type="multi">
-				<line data="{Q-Dir}"/>
 				<line data="{Sol Dark::x4}"/>
+				<line data="{Q-Dir}"/>
 				<line data="{Sol Dark::2H}"/>
 				<line data="{Notepad++.exe}"/>
 				<line data="{Group28}"/>
@@ -333,11 +336,11 @@
 			<value name="FontName" type="string" data="Cousine"/>
 			<value name="FontName2" type="string" data="Consolas"/>
 			<value name="FontAutoSize" type="hex" data="00"/>
-			<value name="FontSizeX" type="dword" data="00000000"/>
-			<value name="FontSizeX2" type="dword" data="00000000"/>
-			<value name="FontSizeX3" type="dword" data="00000000"/>
+			<value name="FontSizeX" type="ulong" data="0"/>
+			<value name="FontSizeX2" type="ulong" data="0"/>
+			<value name="FontSizeX3" type="ulong" data="0"/>
 			<value name="FontCharSet" type="hex" data="00"/>
-			<value name="Anti-aliasing" type="dword" data="00000006"/>
+			<value name="Anti-aliasing" type="ulong" data="6"/>
 			<value name="FontBold" type="hex" data="00"/>
 			<value name="FontItalic" type="hex" data="00"/>
 			<value name="Monospace" type="hex" data="01"/>
@@ -355,30 +358,30 @@
 			<value name="ColorKeyValue" type="dword" data="00010101"/>
 			<value name="UseCurrentSizePos" type="hex" data="01"/>
 			<value name="WindowMode" type="dword" data="00000520"/>
-			<value name="ConWnd Width" type="dword" data="000000a0"/>
-			<value name="ConWnd Height" type="dword" data="0000003b"/>
+			<value name="ConWnd Width" type="dword" data="00000076"/>
+			<value name="ConWnd Height" type="dword" data="00000044"/>
 			<value name="Cascaded" type="hex" data="01"/>
-			<value name="ConWnd X" type="dword" data="000008ac"/>
-			<value name="ConWnd Y" type="dword" data="ffffffe7"/>
-			<value name="16bit Height" type="dword" data="00000000"/>
+			<value name="ConWnd X" type="long" data="953"/>
+			<value name="ConWnd Y" type="long" data="0"/>
+			<value name="16bit Height" type="ulong" data="0"/>
 			<value name="AutoSaveSizePos" type="hex" data="01"/>
 			<value name="IntegralSize" type="hex" data="00"/>
-			<value name="QuakeAnimation" type="dword" data="0000012c"/>
+			<value name="QuakeAnimation" type="ulong" data="300"/>
 			<value name="HideCaption" type="hex" data="00"/>
 			<value name="HideChildCaption" type="hex" data="01"/>
 			<value name="FocusInChildWindows" type="hex" data="01"/>
 			<value name="HideCaptionAlways" type="hex" data="00"/>
 			<value name="HideCaptionAlwaysFrame" type="hex" data="ff"/>
-			<value name="HideCaptionAlwaysDelay" type="dword" data="000007d0"/>
-			<value name="HideCaptionAlwaysDisappear" type="dword" data="000007d0"/>
+			<value name="HideCaptionAlwaysDelay" type="ulong" data="2000"/>
+			<value name="HideCaptionAlwaysDisappear" type="ulong" data="2000"/>
 			<value name="DownShowHiddenMessage" type="hex" data="00"/>
 			<value name="ConsoleFontName" type="string" data="Lucida Console"/>
-			<value name="ConsoleFontWidth" type="dword" data="00000003"/>
-			<value name="ConsoleFontHeight" type="dword" data="00000005"/>
-			<value name="DefaultBufferHeight" type="dword" data="000003e8"/>
+			<value name="ConsoleFontWidth" type="long" data="3"/>
+			<value name="ConsoleFontHeight" type="long" data="5"/>
+			<value name="DefaultBufferHeight" type="long" data="1000"/>
 			<value name="AutoBufferHeight" type="hex" data="01"/>
 			<value name="UseScrollLock" type="hex" data="01"/>
-			<value name="CmdOutputCP" type="dword" data="00000000"/>
+			<value name="CmdOutputCP" type="long" data="0"/>
 			<value name="ComSpec.Type" type="hex" data="00"/>
 			<value name="ComSpec.Bits" type="hex" data="00"/>
 			<value name="ComSpec.UpdateEnv" type="hex" data="00"/>
@@ -402,7 +405,7 @@
 			<value name="CTS.MBtnAction" type="hex" data="00"/>
 			<value name="CTS.ColorIndex" type="hex" data="e0"/>
 			<value name="ClipboardConfirmEnter" type="hex" data="01"/>
-			<value name="ClipboardConfirmLonger" type="dword" data="000000c8"/>
+			<value name="ClipboardConfirmLonger" type="ulong" data="200"/>
 			<value name="FarGotoEditorOpt" type="hex" data="01"/>
 			<value name="FarGotoEditorPath" type="string" data="far.exe /e%1:%2 &quot;%3&quot;"/>
 			<value name="HighlightMouseRow" type="hex" data="00"/>
@@ -435,7 +438,7 @@
 			<value name="MouseSkipActivation" type="hex" data="01"/>
 			<value name="MouseSkipMoving" type="hex" data="01"/>
 			<value name="FarHourglass" type="hex" data="01"/>
-			<value name="FarHourglassDelay" type="dword" data="000001f4"/>
+			<value name="FarHourglassDelay" type="ulong" data="500"/>
 			<value name="Dnd" type="hex" data="01"/>
 			<value name="DndDrop" type="hex" data="01"/>
 			<value name="DefCopy" type="hex" data="01"/>
@@ -449,7 +452,7 @@
 			<value name="StatusBar.Show" type="hex" data="00"/>
 			<value name="StatusBar.Flags" type="dword" data="00000002"/>
 			<value name="StatusFontFace" type="string" data="Segoe UI"/>
-			<value name="StatusFontCharSet" type="dword" data="00000000"/>
+			<value name="StatusFontCharSet" type="ulong" data="0"/>
 			<value name="StatusBar.Color.Back" type="dword" data="00423607"/>
 			<value name="StatusBar.Color.Light" type="dword" data="00e3f6fd"/>
 			<value name="StatusBar.Color.Dark" type="dword" data="00a1a193"/>
@@ -499,18 +502,18 @@
 			<value name="ActivateSplitMouseOver" type="hex" data="01"/>
 			<value name="TabSelf" type="hex" data="01"/>
 			<value name="TabLazy" type="hex" data="01"/>
-			<value name="TabFlashChanged" type="dword" data="00000008"/>
+			<value name="TabFlashChanged" type="long" data="8"/>
 			<value name="TabRecent" type="hex" data="01"/>
-			<value name="TabDblClick" type="dword" data="00000001"/>
-			<value name="TabBtnDblClick" type="dword" data="00000000"/>
+			<value name="TabDblClick" type="ulong" data="1"/>
+			<value name="TabBtnDblClick" type="ulong" data="0"/>
 			<value name="TabsOnTaskBar" type="hex" data="02"/>
 			<value name="TaskBarOverlay" type="hex" data="01"/>
 			<value name="TaskbarProgress" type="hex" data="01"/>
 			<value name="TabCloseMacro" type="string" data=""/>
 			<value name="TabFontFace" type="string" data="Segoe UI"/>
-			<value name="TabFontCharSet" type="dword" data="00000000"/>
+			<value name="TabFontCharSet" type="ulong" data="0"/>
 			<value name="SaveAllEditors" type="string" data=""/>
-			<value name="ToolbarAddSpace" type="dword" data="00000000"/>
+			<value name="ToolbarAddSpace" type="long" data="0"/>
 			<value name="TabConsole" type="string" data="&lt;%c&gt; %s"/>
 			<value name="TabModifiedSuffix" type="string" data="[*]"/>
 			<value name="TabSkipWords" type="string" data="Administrator:|Администратор:"/>
@@ -518,19 +521,19 @@
 			<value name="TabEditor" type="string" data="&lt;%c.%i&gt;{%s}"/>
 			<value name="TabEditorModified" type="string" data="&lt;%c.%i&gt;[%s] *"/>
 			<value name="TabViewer" type="string" data="&lt;%c.%i&gt;[%s]"/>
-			<value name="TabLenMax" type="dword" data="00000014"/>
+			<value name="TabLenMax" type="ulong" data="20"/>
 			<value name="AdminTitleSuffix" type="string" data=" (Admin)"/>
 			<value name="AdminShowShield" type="hex" data="01"/>
 			<value name="HideInactiveConsoleTabs" type="hex" data="00"/>
 			<value name="ShowFarWindows" type="hex" data="01"/>
 			<value name="TryToCenter" type="hex" data="00"/>
-			<value name="CenterConsolePad" type="dword" data="00000000"/>
+			<value name="CenterConsolePad" type="ulong" data="0"/>
 			<value name="ShowScrollbar" type="hex" data="02"/>
-			<value name="ScrollBarAppearDelay" type="dword" data="00000064"/>
-			<value name="ScrollBarDisappearDelay" type="dword" data="000003e8"/>
-			<value name="IconID" type="dword" data="00000001"/>
-			<value name="MainTimerElapse" type="dword" data="0000000a"/>
-			<value name="MainTimerInactiveElapse" type="dword" data="000003e8"/>
+			<value name="ScrollBarAppearDelay" type="ulong" data="100"/>
+			<value name="ScrollBarDisappearDelay" type="ulong" data="1000"/>
+			<value name="IconID" type="ulong" data="1"/>
+			<value name="MainTimerElapse" type="ulong" data="10"/>
+			<value name="MainTimerInactiveElapse" type="ulong" data="1000"/>
 			<value name="AffinityMask" type="dword" data="00000000"/>
 			<value name="SkipFocusEvents" type="hex" data="00"/>
 			<value name="MonitorConsoleLang" type="hex" data="03"/>
@@ -547,32 +550,32 @@
 			<value name="FindMatchWholeWords" type="hex" data="00"/>
 			<value name="FindTransparent" type="hex" data="01"/>
 			<value name="PanView.BackColor" type="dword" data="30ffffff"/>
-			<value name="PanView.PFrame" type="dword" data="00000001"/>
+			<value name="PanView.PFrame" type="long" data="1"/>
 			<value name="PanView.PFrameColor" type="dword" data="28808080"/>
-			<value name="PanView.SFrame" type="dword" data="00000001"/>
+			<value name="PanView.SFrame" type="long" data="1"/>
 			<value name="PanView.SFrameColor" type="dword" data="07c0c0c0"/>
-			<value name="PanView.Thumbs.ImgSize" type="dword" data="00000060"/>
-			<value name="PanView.Thumbs.SpaceX1" type="dword" data="00000001"/>
-			<value name="PanView.Thumbs.SpaceY1" type="dword" data="00000001"/>
-			<value name="PanView.Thumbs.SpaceX2" type="dword" data="00000005"/>
-			<value name="PanView.Thumbs.SpaceY2" type="dword" data="00000014"/>
-			<value name="PanView.Thumbs.LabelSpacing" type="dword" data="00000002"/>
-			<value name="PanView.Thumbs.LabelPadding" type="dword" data="00000000"/>
+			<value name="PanView.Thumbs.ImgSize" type="long" data="96"/>
+			<value name="PanView.Thumbs.SpaceX1" type="long" data="1"/>
+			<value name="PanView.Thumbs.SpaceY1" type="long" data="1"/>
+			<value name="PanView.Thumbs.SpaceX2" type="long" data="5"/>
+			<value name="PanView.Thumbs.SpaceY2" type="long" data="20"/>
+			<value name="PanView.Thumbs.LabelSpacing" type="long" data="2"/>
+			<value name="PanView.Thumbs.LabelPadding" type="long" data="0"/>
 			<value name="PanView.Thumbs.FontName" type="string" data="Segoe UI"/>
-			<value name="PanView.Thumbs.FontHeight" type="dword" data="0000000e"/>
-			<value name="PanView.Tiles.ImgSize" type="dword" data="00000030"/>
-			<value name="PanView.Tiles.SpaceX1" type="dword" data="00000004"/>
-			<value name="PanView.Tiles.SpaceY1" type="dword" data="00000004"/>
-			<value name="PanView.Tiles.SpaceX2" type="dword" data="000000ac"/>
-			<value name="PanView.Tiles.SpaceY2" type="dword" data="00000004"/>
-			<value name="PanView.Tiles.LabelSpacing" type="dword" data="00000004"/>
-			<value name="PanView.Tiles.LabelPadding" type="dword" data="00000001"/>
+			<value name="PanView.Thumbs.FontHeight" type="long" data="14"/>
+			<value name="PanView.Tiles.ImgSize" type="long" data="48"/>
+			<value name="PanView.Tiles.SpaceX1" type="long" data="4"/>
+			<value name="PanView.Tiles.SpaceY1" type="long" data="4"/>
+			<value name="PanView.Tiles.SpaceX2" type="long" data="172"/>
+			<value name="PanView.Tiles.SpaceY2" type="long" data="4"/>
+			<value name="PanView.Tiles.LabelSpacing" type="long" data="4"/>
+			<value name="PanView.Tiles.LabelPadding" type="long" data="1"/>
 			<value name="PanView.Tiles.FontName" type="string" data="Segoe UI"/>
-			<value name="PanView.Tiles.FontHeight" type="dword" data="0000000e"/>
+			<value name="PanView.Tiles.FontHeight" type="long" data="14"/>
 			<value name="PanView.LoadPreviews" type="hex" data="03"/>
 			<value name="PanView.LoadFolders" type="hex" data="01"/>
-			<value name="PanView.LoadTimeout" type="dword" data="0000000f"/>
-			<value name="PanView.MaxZoom" type="dword" data="00000258"/>
+			<value name="PanView.LoadTimeout" type="ulong" data="15"/>
+			<value name="PanView.MaxZoom" type="ulong" data="600"/>
 			<value name="PanView.UsePicView2" type="hex" data="01"/>
 			<value name="PanView.RestoreOnStartup" type="hex" data="00"/>
 			<value name="Update.VerLocation" type="string" data=""/>
@@ -585,182 +588,182 @@
 			<value name="Update.DownloadPath" type="string" data="%TEMP%\ConEmu"/>
 			<value name="Update.LeavePackages" type="hex" data="00"/>
 			<value name="Update.PostUpdateCmd" type="string" data="echo Last successful update&gt;ConEmuUpdate.info &amp;&amp; date /t&gt;&gt;ConEmuUpdate.info &amp;&amp; time /t&gt;&gt;ConEmuUpdate.info"/>
-			<key name="Tasks" modified="2016-06-12 14:58:40" build="151210">
-				<value name="Count" type="dword" data="0000001c"/>
-				<key name="Task1" modified="2016-06-12 14:58:40" build="151210">
+			<key name="Tasks" modified="2017-01-22 11:29:21" build="161022">
+				<value name="Count" type="long" data="28"/>
+				<key name="Task1" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Far::home dir}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; Far.exe %USERPROFILE% %USERPROFILE%"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
-				<key name="Task2" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task2" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Far::x2}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; Far.exe %USERPROFILE% %USERPROFILE% -cur_console:s1THn:d:"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
-				<key name="Task3" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task3" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Far::his way}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="set &quot;FARHOME=%ConEmuDir%\..\Far Manager&quot; &amp; &quot;%FARHOME%\far.exe&quot; /w /p&quot;%ConEmuDir%\Plugins\ConEmu;%FARHOME%\Plugins&quot;"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
-				<key name="Task4" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task4" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Sol Dark::Single}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
-				<key name="Task5" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task5" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Sol Dark::2H}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000002"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="2"/>
 					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task6" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task6" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Sol Dark::2V}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000002"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="2"/>
 					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1TVn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task7" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task7" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Sol Dark::x4}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000004"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="4"/>
 					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1TVn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task8" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task8" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Sol Light::Single}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task9" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task9" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Sol Light::2H}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000002"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="2"/>
 					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task10" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task10" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Sol Light::2V}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000002"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="2"/>
 					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1TVn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task11" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task11" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Sol Light::x4}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1TVn:C:C:\cygwin\Cygwin.ico"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000004"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="4"/>
 					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task12" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task12" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Mintty::2H}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000002"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="2"/>
 				</key>
-				<key name="Task13" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task13" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Mintty::2V}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -new_console:n:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd2" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\MinttyDefault - -cur_console:s1TVn:C:C:\cygwin\Cygwin.ico"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000002"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="2"/>
 				</key>
-				<key name="Task14" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task14" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Shells::cmd}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="cmd.exe /k &quot;%ConEmuBaseDir%\CmdInit.cmd&quot;"/>
 					<value name="Cmd2" type="string" data="&quot;%windir%\syswow64\cmd.exe&quot; /k &quot;&quot;%ConEmuBaseDir%\CmdInit.cmd&quot; &amp; echo This is 32 bit cmd.exe -new_console:s50V&quot;"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task15" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task15" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Shells::cmd (Admin)}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="cmd.exe /k &quot;%ConEmuBaseDir%\CmdInit.cmd&quot; -new_console:a"/>
 					<value name="Cmd2" type="string" data="&quot;%windir%\syswow64\cmd.exe&quot; /k &quot;&quot;%ConEmuBaseDir%\CmdInit.cmd&quot; &amp; echo This is 32 bit cmd.exe -new_console:s50V&quot;"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task16" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task16" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Shells::cmd 64/32}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; &quot;%windir%\system32\cmd.exe&quot; /k &quot;&quot;%ConEmuBaseDir%\CmdInit.cmd&quot; &amp; echo This is Native cmd.exe&quot;"/>
 					<value name="Cmd2" type="string" data="&quot;%windir%\syswow64\cmd.exe&quot; /k &quot;&quot;%ConEmuBaseDir%\CmdInit.cmd&quot; &amp; echo This is 32 bit cmd.exe -new_console:s50V&quot;"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000002"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="2"/>
 					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedDark - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task17" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task17" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Shells::PowerShell}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
@@ -769,116 +772,116 @@
 					<value name="Cmd2" type="string" data="powershell.exe -cur_console:s1THn"/>
 					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
-				<key name="Task18" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task18" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Shells::PowerShell (Admin)}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="powershell.exe -new_console:a"/>
 					<value name="Cmd2" type="string" data="powershell.exe -cur_console:s1THn"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task19" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task19" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Shells::PowerShell 2H}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; powershell.exe -new_console:n"/>
 					<value name="Cmd2" type="string" data="powershell.exe -cur_console:s1THn"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000002"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="2"/>
 					<value name="Cmd3" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s1THn:C:C:\cygwin\Cygwin.ico"/>
 					<value name="Cmd4" type="string" data="C:\cygwin\bin\mintty.exe -c %USERPROFILE%\repos\dotfiles\colors\mintty-themes\SolarizedLight - -cur_console:s2THn:C:C:\cygwin\Cygwin.ico"/>
 				</key>
-				<key name="Task20" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task20" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Shells::PowerShell 2V}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; powershell.exe -new_console:n"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000002"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="2"/>
 					<value name="Cmd2" type="string" data="powershell.exe -cur_console:s1TVn"/>
 				</key>
-				<key name="Task21" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task21" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Shells::PowerShell ISE}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="powershell_ise.exe"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
-				<key name="Task22" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task22" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Shells::PowerShell ISE 2H}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="&gt; powershell_ise.exe  -new_console:n"/>
-					<value name="Active" type="dword" data="00000001"/>
-					<value name="Count" type="dword" data="00000002"/>
+					<value name="Active" type="long" data="1"/>
+					<value name="Count" type="long" data="2"/>
 					<value name="Cmd2" type="string" data="powershell_ise.exe  -cur_console:s1THn"/>
 				</key>
-				<key name="Task23" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task23" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Shells::VS2013 Dev prompt}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="%comspec% /k &quot;&quot;C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\VsDevCmd.bat&quot;&quot;"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
-				<key name="Task24" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task24" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Shells::VS2015 Dev prompt}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="%comspec% /k &quot;&quot;C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCmd.bat&quot;&quot;"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
-				<key name="Task25" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task25" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Notepad++.exe}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="Notepad++.exe"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
-				<key name="Task26" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task26" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Putty}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="Putty.exe"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
-				<key name="Task27" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task27" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Tests::Show ANSI colors}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="cmd /k type &quot;%ConEmuBaseDir%\Addons\AnsiColors16t.ans&quot; -cur_console:n"/>
 					<value name="Cmd2" type="string" data="powershell_ise.exe - -cur_console:s1THn"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
-				<key name="Task28" modified="2016-06-12 14:58:40" build="151210">
+				<key name="Task28" modified="2017-01-22 11:29:21" build="161022">
 					<value name="Name" type="string" data="{Scripts::Chocolatey (Admin)}"/>
 					<value name="Flags" type="dword" data="00000000"/>
 					<value name="Hotkey" type="dword" data="00000000"/>
 					<value name="GuiArgs" type="string" data=""/>
 					<value name="Cmd1" type="string" data="*cmd /k Title Chocolatey &amp; &quot;%ConEmuBaseDir%\Addons\ChocolateyAbout.cmd&quot;"/>
-					<value name="Active" type="dword" data="00000000"/>
-					<value name="Count" type="dword" data="00000001"/>
+					<value name="Active" type="long" data="0"/>
+					<value name="Count" type="long" data="1"/>
 				</key>
 				<key name="Task29" modified="2016-05-30 15:26:17" build="151210">
 					<value name="Name" type="string" data="{Q-Dir}"/>
@@ -890,9 +893,9 @@
 					<value name="Count" type="dword" data="00000001"/>
 				</key>
 			</key>
-			<key name="Apps" modified="2016-06-12 14:58:40" build="151210">
-				<value name="Count" type="dword" data="00000002"/>
-				<key name="App1" modified="2016-06-12 14:58:40" build="151210">
+			<key name="Apps" modified="2017-01-22 11:29:21" build="161022">
+				<value name="Count" type="long" data="2"/>
+				<key name="App1" modified="2017-01-22 11:29:21" build="161022">
 					<value name="AppNames" type="string" data="powershell.exe"/>
 					<value name="Elevated" type="hex" data="00"/>
 					<value name="OverridePalette" type="hex" data="01"/>
@@ -916,7 +919,7 @@
 					<value name="ClipboardClickPromptPosition" type="hex" data="00"/>
 					<value name="ClipboardDeleteLeftWord" type="hex" data="00"/>
 				</key>
-				<key name="App2" modified="2016-06-12 14:58:40" build="151210">
+				<key name="App2" modified="2017-01-22 11:29:21" build="161022">
 					<value name="AppNames" type="string" data="far.exe"/>
 					<value name="Elevated" type="hex" data="00"/>
 					<value name="OverridePalette" type="hex" data="01"/>
@@ -941,18 +944,37 @@
 					<value name="ClipboardDeleteLeftWord" type="hex" data="00"/>
 				</key>
 			</key>
-			<key name="Colors" modified="2016-06-12 14:58:40" build="151210">
-				<value name="Count" type="dword" data="00000000"/>
+			<key name="Colors" modified="2017-01-22 11:29:21" build="161022">
+				<value name="Count" type="long" data="0"/>
 			</key>
-			<value name="StartCreateDelay" type="dword" data="00000064"/>
+			<value name="StartCreateDelay" type="ulong" data="100"/>
 			<value name="DefaultTerminalDebugLog" type="hex" data="00"/>
 			<value name="SuppressBells" type="hex" data="01"/>
-			<value name="LastMonitor" type="string" data="1920,0,3840,1160"/>
+			<value name="LastMonitor" type="string" data="0,0,1920,1160"/>
 			<value name="Restore2ActiveMon" type="hex" data="00"/>
 			<value name="DownShowExOnTopMessage" type="hex" data="00"/>
-			<value name="EnvironmentSet" type="multi"/>
+			<value name="EnvironmentSet" type="multi">
+				<line data="set PATH=%ConEmuBaseDir%\Scripts;%PATH%"/>
+			</value>
 			<value name="Update.InetTool" type="hex" data="00"/>
 			<value name="Update.InetToolCmd" type="string" data=""/>
+			<value name="VividColors" type="hex" data="01"/>
+			<value name="AnsiExecution" type="hex" data="01"/>
+			<value name="AnsiAllowedCommands" type="multi">
+				<line data="cmd -cur_console:R /cGitShowBranch.cmd"/>
+			</value>
+			<value name="KillSshAgent" type="hex" data="01"/>
+			<value name="ProcessCtrlZ" type="hex" data="00"/>
+			<value name="JumpListAutoUpdate" type="hex" data="01"/>
+			<value name="CompressLongStrings" type="hex" data="01"/>
+			<value name="CTS.ResetOnRelease" type="hex" data="00"/>
+			<value name="CTS.EraseBeforeReset" type="hex" data="01"/>
+			<value name="Anti-aliasing2" type="hex" data="00"/>
+			<value name="UseAltGrayPlus" type="hex" data="01"/>
+			<value name="MouseDragWindow" type="hex" data="01"/>
+			<value name="DebugLog" type="hex" data="00"/>
+			<value name="StatusBar.Hide.TMode" type="hex" data="01"/>
+			<value name="StatusBar.Hide.RMode" type="hex" data="01"/>
 		</key>
 	</key>
 </key>
