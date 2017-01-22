@@ -333,80 +333,30 @@ function f_RescanWCD()
 
 function f_StartEmacsDaemon()
 {
-    emacs-w32 --daemon
+    if type emacs-w32 > /dev/null 2&>1; then
+        emacs-w32 --daemon
+    else
+        emacs --daemon
+    fi
 }
 
 function f_StopEmacsDaemon()
 {
-    emacsclient-w32 -e '(kill-emacs)'
-}
-
-########################################################################
-# Support for using ssh-agent because keychain doesn't seem to work
-# that well in MSysGit.
-# See https://help.github.com/articles/working-with-ssh-key-passphrases
-# Note: Don't bother checking SSH_AGENT_PID. It's not used
-#       by SSH itself, and it might even be incorrect
-#       (for example, when using agent-forwarding over SSH).
-f_AgentIsRunning()
-{
-    if [ "$SSH_AUTH_SOCK" ]; then
-        # ssh-add returns:
-        #   0 = agent running, has keys
-        #   1 = agent running, no keys
-        #   2 = agent not running
-        ssh-add -l >/dev/null 2>&1 || [ $? -eq 1 ]
+    if type emacsclient-w32 > /dev/null 2>&1; then
+        emacsclient-w32 -e '(kill-emacs)'
     else
-        false
+        emacsclient -e '(kill-emacs)'
     fi
-}
-
-f_AgentHasKeys()
-{
-    ssh-add -l >/dev/null 2>&1
-}
-
-f_AgentLoadEnv()
-{
-    . "$env" >/dev/null
-}
-
-f_AgentStart()
-{
-    (umask 077; ssh-agent >"$env")
-    . "$env" >/dev/null
-}
-
-f_SetupSSH()
-{
-    # Note: ~/.ssh/environment should not be used, as it already has a
-    # different purpose in SSH.
-    env=~/.ssh/agent.env
-
-    if [ -f ~/.ssh/id_phil ]; then
-        if ! f_AgentIsRunning; then
-            f_AgentLoadEnv
-        fi
-
-        if ! f_AgentIsRunning; then
-            f_AgentStart
-            ssh-add ~/.ssh/id_phil
-        elif ! f_AgentHasKeys; then
-            ssh-add ~/.ssh/id_phil
-        fi
-    fi
-
-    unset env
 }
 
 ########################################################################
-# settitle () 
-# { 
-#   echo -ne "\e]2;$@\a\e]1;$@\a"; 
+# settitle ()
+# {
+#   echo -ne "\e]2;$@\a\e]1;$@\a";
 # }
-# 
+#
 # b) function cd_func
-# This function defines a 'cd' replacement function capable of keeping, 
+# This function defines a 'cd' replacement function capable of keeping,
 # displaying and accessing history of visited directories, up to 10 entries.
 # To use it, uncomment it, source this file and try 'cd --'.
 # acd_func 1.0.5, 10-nov-2004
@@ -415,15 +365,15 @@ f_SetupSSH()
 # {
 #   local x2 the_new_dir adir index
 #   local -i cnt
-# 
+#
 #   if [[ $1 ==  "--" ]]; then
 #     dirs -v
 #     return 0
 #   fi
-# 
+#
 #   the_new_dir=$1
 #   [[ -z $1 ]] && the_new_dir=$HOME
-# 
+#
 #   if [[ ${the_new_dir:0:1} == '-' ]]; then
 #     #
 #     # Extract dir N from dirs
@@ -433,21 +383,21 @@ f_SetupSSH()
 #     [[ -z $adir ]] && return 1
 #     the_new_dir=$adir
 #   fi
-# 
+#
 #   #
 #   # '~' has to be substituted by ${HOME}
 #   [[ ${the_new_dir:0:1} == '~' ]] && the_new_dir="${HOME}${the_new_dir:1}"
-# 
+#
 #   #
 #   # Now change to the new dir and add to the top of the stack
 #   pushd "${the_new_dir}" > /dev/null
 #   [[ $? -ne 0 ]] && return 1
 #   the_new_dir=$(pwd)
-# 
+#
 #   #
 #   # Trim down everything beyond 11th entry
 #   popd -n +11 2>/dev/null 1>/dev/null
-# 
+#
 #   #
 #   # Remove any other occurence of this dir, skipping the top of the stack
 #   for ((cnt=1; cnt <= 10; cnt++)); do
@@ -459,10 +409,8 @@ f_SetupSSH()
 #       cnt=cnt-1
 #     fi
 #   done
-# 
+#
 #   return 0
 # }
-# 
+#
 # alias cd=cd_func
-
-

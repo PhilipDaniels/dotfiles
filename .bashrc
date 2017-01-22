@@ -84,31 +84,10 @@ if [ -s ~/.nvm/nvm.sh ]; then
     source ~/.nvm/nvm.sh
 fi
 
-
-#######################################################################
-# Setup ssh-agent.
-# Run the keychain program to cache ssh keys. Keychain comes with Cygwin
-# and is just a shell script which you should copy into the PortableGit
-# folder. MSysGit and Cygwin will interfere with each other so you need
-# to give them separate folders.
-#if IsCygwin; then
-#    keychain --dir ~/.keychain-cygwin --eval id_phil
-#else
-#    keychain --eval id_phil
-#fi
-
 # Remove credential cache files older than 12 hours, which essentially means
 # that they date from yesterday (the file may get updated during the day).
 # This only affects work, at home I use ssh.
 find ~/.git-credential-cache -mmin +720 -delete 2> /dev/null
-
-# Now we always setup ssh because I use it for connecting to my Debian
-# VM at work.
-if f_AtHome; then
-    # echo "You are at home, setting up ssh..."
-    f_SetupSSH
-fi
-
 
 GIT_PROMPT_ONLY_IN_REPO=1
 GIT_PROMPT_FETCH_REMOTE_STATUS=0   # uncomment to avoid fetching remote status
@@ -204,4 +183,3 @@ if [ "$OS" == "cygwin" ]; then
     # To fix 'Failed to connect to server' errors.
     alias tmux="rm -rf /tmp/tmux* && tmux"
 fi
-
