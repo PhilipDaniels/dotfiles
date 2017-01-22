@@ -1,7 +1,6 @@
 ;;; Customization related to Git and Magit.
 ;;; Usage:  (require 'pd-git)
 
-
 (require-package 'git-timemachine)
 (require-package 'gitattributes-mode)
 (require-package 'gitignore-mode)
@@ -22,7 +21,6 @@
 ;; prompt for passwords if none is yet known. In Cygwin, this will require
 ;; X to be started.
 ;; From https://github.com/magit/magit/wiki/Pushing-with-Magit-from-Windows#openssh-passphrase-caching-via-ssh-agent
-
 (when (eq system-type 'cygwin)
   (setq ssh-agency-add-executable "/bin/ssh-add.exe")
   (setq ssh-agency-agent-executable "/bin/ssh-agent.exe"))

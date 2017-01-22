@@ -1,6 +1,6 @@
 ;;; The collection of themes I like to install.
-;;; These are used in pd-hydras, there is a hydra to switch themes.
-;;; Usage:  (require 'pd-themes)
+;;; These are used in pd-hydra, there is a hydra to switch themes.
+;;; Usage:  (require 'pd-theme)
 
 (require-package 'afternoon-theme)
 (require-package 'alect-themes)
@@ -100,7 +100,6 @@ Valid values are nil, 'dark and 'light."
 ;; which requires us to toggle outline-minor-mode to get rainbow delimiters to work.
 ;; It is not needed with other themes, but there is no downside to always running it.
 (pd-theme-load 'solarized 'dark)
-
 (outline-minor-mode t)
 (outline-minor-mode nil)
 
@@ -123,4 +122,4 @@ Valid values are nil, 'dark and 'light."
 ;; Default decent theme if having problems with solarized.
 ;; (pd-theme-load 'gruvbox)
 
-(provide 'pd-themes)
+(provide 'pd-theme)

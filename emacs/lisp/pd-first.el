@@ -15,6 +15,10 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
+;; I actually like to have a menu bar. Modes like gg-tags make good use of it.
+;; (when (fboundp 'menu-bar-mode)
+;;  (menu-bar-mode -1))
+
 (defvar pd-at-home t "t if this Emacs is being run at home, nil if at work.")
 
 (if (s-starts-with-p "rd" system-name t)

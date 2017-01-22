@@ -1,5 +1,5 @@
 ;;; My collection of hydras.
-;;; Usage:  (require 'pd-hydras)
+;;; Usage:  (require 'pd-hydra)
 
 (require-package 'hydra)
 
@@ -8,9 +8,9 @@
 (require 'winner)
 (require 'windmove)
 (require 'pd-helm)
-(require 'pd-themes)
+(require 'pd-theme)
 
-(defun hydra-move-splitter-left (arg)
+(defun pd-hydra-move-splitter-left (arg)
   "Move window splitter left."
   (interactive "p")
   (if (let ((windmove-wrap-around))
@@ -18,7 +18,7 @@
       (shrink-window-horizontally arg)
     (enlarge-window-horizontally arg)))
 
-(defun hydra-move-splitter-right (arg)
+(defun pd-hydra-move-splitter-right (arg)
   "Move window splitter right."
   (interactive "p")
   (if (let ((windmove-wrap-around))
@@ -26,7 +26,7 @@
       (enlarge-window-horizontally arg)
     (shrink-window-horizontally arg)))
 
-(defun hydra-move-splitter-up (arg)
+(defun pd-hydra-move-splitter-up (arg)
   "Move window splitter up."
   (interactive "p")
   (if (let ((windmove-wrap-around))
@@ -34,7 +34,7 @@
       (enlarge-window arg)
     (shrink-window arg)))
 
-(defun hydra-move-splitter-down (arg)
+(defun pd-hydra-move-splitter-down (arg)
   "Move window splitter down."
   (interactive "p")
   (if (let ((windmove-wrap-around))
@@ -44,7 +44,7 @@
 
 (defvar rectangle-mark-mode)
 
-(defun hydra-ex-point-mark ()
+(defun pd-hydra-ex-point-mark ()
   "Exchange point and mark."
   (interactive)
   (if rectangle-mark-mode
@@ -59,10 +59,10 @@
   ("M-<right>" windmove-right nil)
   ("M-<up>" windmove-up nil)
   ("M-<down>" windmove-down nil)
-  ("S-<left>" hydra-move-splitter-left nil)
-  ("S-<right>" hydra-move-splitter-right  nil)
-  ("S-<up>" hydra-move-splitter-up nil)
-  ("S-<down>" hydra-move-splitter-down nil)
+  ("S-<left>" pd-hydra-move-splitter-left nil)
+  ("S-<right>" pd-hydra-move-splitter-right  nil)
+  ("S-<up>" pd-hydra-move-splitter-up nil)
+  ("S-<down>" pd-hydra-move-splitter-down nil)
   ("C-<left>" buf-move-left nil)
   ("C-<right>" buf-move-right nil)
   ("C-<up>" buf-move-up nil)
@@ -74,7 +74,7 @@
   ("k" kill-buffer "kill")
   ("s" save-buffer "save")
   ("u" (progn (winner-undo) (setq this-command 'winner-undo)) "undo")
-  ("r" winner-redo "redo")
+  ("r" winner-redo "restore")
   ("b" helm-mini "helm-mini" :exit t)
   ("f" helm-find-files "helm-find" :exit t)
   ("|" (lambda () (interactive) (split-window-right) (windmove-right)) "split-h")
@@ -179,4 +179,4 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   )
 
 
-(provide 'pd-hydras)
+(provide 'pd-hydra)

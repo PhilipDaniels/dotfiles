@@ -1,7 +1,7 @@
 ;;; Customization related to the Helm package.
 ;;; Usage:  (require 'pd-helm)
 ;;;
-;;; This should be loaded early because pd-themes likes to have the face
+;;; This should be loaded early because pd-theme likes to have the face
 ;;; available for the initial load of my chosen theme.
 
 (require-package 'helm)

@@ -1,5 +1,5 @@
 ;;; Customization relating to bookmarks.
-;;; Usage:  (require 'pd-bookmarks)
+;;; Usage:  (require 'pd-bookmark)
 
 ;;(setq bm-restore-repository-on-load t)
 ;;(require-package 'bm)           ;; https://github.com/joodland/bm
@@ -23,4 +23,4 @@
 ;; (setq bookmark-version-control t)
 ;; (setq bookmark-save-flag 1)
 
-(provide 'pd-bookmarks)
+(provide 'pd-bookmark)

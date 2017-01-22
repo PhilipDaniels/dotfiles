@@ -7,7 +7,22 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ssh-agency expand-region persistent-scratch recentf-ext unbound markdown-mode git-timemachine gitignore-mode gitattributes-mode zenburn-theme underwater-theme tangotango-theme tango-plus-theme soothe-theme solarized-theme soft-morning-theme occidental-theme obsidian-theme monochrome-theme monokai-theme molokai-theme minimal-theme material-theme leuven-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme green-phosphor-theme grandshell-theme flatui-theme flatland-theme firebelly-theme espresso-theme distinguished-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-solarized color-theme-sanityinc-tomorrow color-theme-modern clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme hydra s fill-column-indicator dash))))
+    (ssh-agency expand-region persistent-scratch recentf-ext
+    unbound markdown-mode git-timemachine gitignore-mode
+    gitattributes-mode zenburn-theme underwater-theme
+    tangotango-theme tango-plus-theme soothe-theme
+    solarized-theme soft-morning-theme occidental-theme
+    obsidian-theme monochrome-theme monokai-theme molokai-theme
+    minimal-theme material-theme leuven-theme heroku-theme
+    hemisu-theme hc-zenburn-theme gruvbox-theme
+    gruber-darker-theme green-phosphor-theme grandshell-theme
+    flatui-theme flatland-theme firebelly-theme espresso-theme
+    distinguished-theme darkburn-theme dakrone-theme
+    cyberpunk-theme color-theme-solarized
+    color-theme-sanityinc-tomorrow color-theme-modern clues-theme
+    cherry-blossom-theme busybee-theme bubbleberry-theme
+    anti-zenburn-theme ample-zen-theme ample-theme alect-themes
+    afternoon-theme hydra s fill-column-indicator dash))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -54,14 +69,14 @@ re-downloaded in order to locate PACKAGE.
 (require 'pd-misc)
 (require 'pd-yasnippet)
 (require 'pd-helm)
-(require 'pd-bookmarks)
+(require 'pd-bookmark)
 (require 'pd-git)
 (require 'pd-programming)
 (require 'pd-terminal)
-(require 'pd-fonts)
-(require 'pd-themes)
+(require 'pd-font)
+(require 'pd-theme)
 (require 'pd-appearance)
-(require 'pd-hydras)
+(require 'pd-hydra)
 (require 'pd-keys)
 
 

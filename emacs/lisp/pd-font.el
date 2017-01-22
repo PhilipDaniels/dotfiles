@@ -1,7 +1,7 @@
 ;;; Customizations related to fonts.
-;;; Usage:  (require 'pd-fonts)
+;;; Usage:  (require 'pd-font)
 
-(require 'pd-themes)
+(require 'pd-theme)
 
 
 (defun pd-font-exists (font &optional frame)
@@ -74,4 +74,4 @@ search at index 0."
     ))
 
 
-(provide 'pd-fonts)
+(provide 'pd-font)

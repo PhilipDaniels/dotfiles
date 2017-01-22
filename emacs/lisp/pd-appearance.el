@@ -8,7 +8,7 @@
 (require 'whitespace)
 (require 'windmove)
 (require 'pd)
-(require 'pd-themes)
+(require 'pd-theme)
 
 (setq ring-bell-function nil)
 (setq visible-bell 1)
@@ -78,7 +78,6 @@
 ;;(add-to-list 'default-frame-alist '(width . 86))
 ;;(show-paren-mode 1)             ;; Superceded by smartparens mode.
 ;;(setq-default show-paren-delay 0)
-;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 ;;(global-linum-mode 1)           ;; This is very slow with long lines.
 ;;(setq linum-format "%4d ")      ;; So we don't need this either.
 ;;(display-time-mode 1)

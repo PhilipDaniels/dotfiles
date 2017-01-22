@@ -15,7 +15,7 @@
 (require 'pd)
 (require 'pd-git)
 (require 'pd-helm)
-(require 'pd-hydras)
+(require 'pd-hydra)
 
 ;; On Cygwin, maks apps function as a true hyper key.
 (if (equal system-type 'cygwin)

@@ -50,5 +50,3 @@
 
 
 (provide 'pd-modes)
-
-;;; end of pd-modes.el

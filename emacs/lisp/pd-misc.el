@@ -24,6 +24,15 @@
 (setq-default truncate-lines 1)
 (delete-selection-mode 1)
 
+
+;; http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
+;; https://github.com/lewang/flx
+;; By default Emacs will initiate GC every 0.76 MB allocated (gc-cons-threshold
+;; == 800000). Increase it to 20Mb.
+(setq gc-cons-threshold 20000000)
+(setq garbage-collection-messages t)
+
+
 (setq hippie-expand-try-functions-list
       '(
         try-expand-dabbrev
