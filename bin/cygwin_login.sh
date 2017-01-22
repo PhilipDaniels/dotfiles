@@ -18,6 +18,8 @@ if f_AtHome; then
     eval `keychain --eval id_phil`
 fi
 
+# Start X.
+run xwin -multiwindow
 
 # Start Emacs daemon.
 emacs-w32 --daemon
