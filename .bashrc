@@ -18,9 +18,9 @@ f_IsRoot
 # See http://www.funtoo.org/Keychain
 # and https://thomaswabner.wordpress.com/2009/11/06/using-keychain-under-cygwin/
 # This should be run first time from cygwin_login.sh so it should be a no-op
-# except for bringing in the environment variables.
+# when run in .bashrc, except for bringing in the environment variables.
 if f_AtHome; then
-    eval `keychain --eval id_phil`
+    eval `keychain --quiet --eval id_phil`
 fi
 
 
