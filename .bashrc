@@ -13,6 +13,17 @@ esac
 f_DetermineOS
 f_IsRoot
 
+# Start ssh-agent. This writes a bash script into ~/.keychain and sources it,
+# which ensures that other processes know that ssh-agent is running.
+# See http://www.funtoo.org/Keychain
+# and https://thomaswabner.wordpress.com/2009/11/06/using-keychain-under-cygwin/
+# This should be run first time from cygwin_login.sh so it should be a no-op
+# except for bringing in the environment variables.
+if f_AtHome; then
+    eval `keychain --eval id_phil`
+fi
+
+
 # Ensure that Git sets core.fileMode to false whenever I cd into a repo directory.
 # See http://stackoverflow.com/questions/12457910/how-do-i-prevent-git-on-cygwin-to-set-core-filemode-true
 PROMPT_COMMAND=f_PromptCommand
