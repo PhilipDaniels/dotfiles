@@ -13,6 +13,7 @@
 # which ensures that other processes know that ssh-agent is running.
 # See http://www.funtoo.org/Keychain
 # and https://thomaswabner.wordpress.com/2009/11/06/using-keychain-under-cygwin/
+# There must be a corresponding call in .bashrc to source the existing file.
 if f_AtHome; then
     eval `keychain --eval id_phil`
 fi
