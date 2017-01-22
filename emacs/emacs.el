@@ -27,11 +27,14 @@
 (package-initialize)
 
 
-;; From http://stackoverflow.com/questions/25430029/whats-the-best-way-to-package-my-emacs-installation-packages-and-config-so-tha?noredirect=1&lq=1
+
 (defun require-package (package &optional min-version no-refresh)
   "Install given PACKAGE, optionally requiring MIN-VERSION.
 If NO-REFRESH is non-nil, the available package lists will not be
-re-downloaded in order to locate PACKAGE."
+re-downloaded in order to locate PACKAGE.
+
+;; From http://stackoverflow.com/questions/25430029/whats-the-best-way-to-package-my-emacs-installation-packages-and-config-so-tha?noredirect=1&lq=1
+"
 (if (package-installed-p package min-version)
     t
   (if (or (assoc package package-archive-contents) no-refresh)
@@ -66,27 +69,32 @@ re-downloaded in order to locate PACKAGE."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TODO
 ;; [ ] Check everything still works in Linux.
-
-;; [ ] Move to use-package - this looks awesome.
+;; [ ] Use keychain.
 ;; [ ] Log bug about solarized dark messing up rainbow delimiters.
+
 ;; [ ] Requires in my files. Nominal order is require-package, require built-ins,
 ;;     require pd-*, however, should we use eval-when-compile, as seen in pd-cpp?
-;; [ ] Write a shell script to byte-compile my /lisp directory.
-;; [ ] Setup auto-compile for my /lisp directory so that a local edit of any
-;;     file in there is automatically byte-compiled.
 ;; [ ] Review names of my packages - removal of plural names.
 ;; [ ] Review names of all functions in my packages - ensure they are prefixed
 ;;     with the package name.
 ;; [ ] Should we use setq or setq-default?
 ;; [ ] Should we use ' or #' ?
+
+;; [ ] Move to use-package - this looks awesome.
+;; [ ] Write a shell script to byte-compile my /lisp directory.
+;; [ ] Setup auto-compile for my /lisp directory so that a local edit of any
+;;     file in there is automatically byte-compiled.
+
 ;; [ ] Windows compatible keybindings for copy/paste/save/find and ctrl-arrow
 ;;     for word movement
 ;; [ ] Write an underline function.
-;; [ ] pd-helm: Get helm ignores working. This will speed up greps a lot.
 ;; [ ] pd-terminal: Make ansi-term update a variable which contains the cwd
 ;;     so that it can be smarter about creating new windows. See comment in
 ;;     the file.
+
+;; [ ] pd-helm: Get helm ignores working. This will speed up greps a lot.
 ;; [ ] pd-helm: Use ripgrep or ag?
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tricks
