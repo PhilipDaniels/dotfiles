@@ -54,7 +54,7 @@
       (goto-char mk))))
 
 (defhydra hydra-windows ()
-  "M-arrow = switch, S-arrow = size, C-arrow = move"
+  "C-arrow = switch, S-arrow = size, M-arrow = move"
   ("M-<left>" windmove-left nil)
   ("M-<right>" windmove-right nil)
   ("M-<up>" windmove-up nil)
@@ -77,8 +77,8 @@
   ("r" winner-redo "redo")
   ("b" helm-mini "helm-mini" :exit t)
   ("f" helm-find-files "helm-find" :exit t)
-  ("|" (lambda () (interactive) (split-window-right) (windmove-right)))
-  ("_" (lambda () (interactive) (split-window-below) (windmove-down)))
+  ("|" (lambda () (interactive) (split-window-right) (windmove-right)) "split-h")
+  ("_" (lambda () (interactive) (split-window-below) (windmove-down)) "split-v")
   ("q" nil "cancel")
   )
 

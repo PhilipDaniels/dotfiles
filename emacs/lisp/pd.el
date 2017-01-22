@@ -189,10 +189,11 @@ this to be a bug."
         (bounds-of-thing-at-point 'paragraph)))))
 
 (defun pd-cleanup-programming-buffer ()
-  "Runs various cleanups; recommended for programming modes only.
+  "Reindent, untabify, delete trailing whitespace, sort c includes and C++
+usings; recommended for programming modes only.
 
-Also not recommended when working with other people's code
-because it will re-indent the entire buffer."
+Also not recommended when working with other people's code because it will
+re-indent the entire buffer."
   (interactive)
   (pd-indent-buffer)
   (pd-untabify-buffer)

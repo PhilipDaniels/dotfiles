@@ -17,6 +17,208 @@
 (require 'pd-helm)
 (require 'pd-hydras)
 
+;; On Cygwin, maks apps function as a true hyper key.
+(if (equal system-type 'cygwin)
+    (if (equal window-system 'w32)
+        (setq w32-pass-apps-to-system nil
+              w32-apps-modifier 'hyper)
+      (define-key local-function-key-map (kbd "<print>") 'event-apply-hyper-modifier)
+      (define-key local-function-key-map (kbd "<apps>") 'event-apply-hyper-modifier)
+      ))
+
+;; ******************* Global Function keys ********************
+(define-key global-map (kbd "<f1>")      (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs_keys.txt")))
+(define-key global-map (kbd "<f2>")      'bmkp-next-bookmark)
+(define-key global-map (kbd "S-<f2>")    'bmkp-previous-bookmark)
+(define-key global-map (kbd "C-<f2>")    'bmkp-toggle-autonamed-bookmark-set/delete)
+(define-key global-map (kbd "M-<f2>")    'helm-filtered-bookmarks)
+(define-key global-map (kbd "<f9>")      'cycle-buffer-backward-permissive)
+(define-key global-map (kbd "<f10>")     'cycle-buffer-permissive)
+(define-key global-map (kbd "S-<f9>")    'cycle-buffer-backward)
+(define-key global-map (kbd "S-<f10>")   'cycle-buffer)
+(define-key global-map (kbd "C-<f9>")    (lambda () (interactive) (kill-buffer nil)))
+(define-key global-map (kbd "C-<f10>")   'bury-buffer)
+(define-key global-map (kbd "<f11>")     'menu-bar-open)
+(define-key global-map (kbd "S-<f11>")   'menu-bar-open)
+(define-key global-map (kbd "C-<f11>")   'menu-bar-open)
+(define-key global-map (kbd "<f12>")     'sr-speedbar-toggle)
+(define-key global-map (kbd "S-<f12>")   'sr-speedbar-select-window)
+(define-key global-map (kbd "C-<f12> w") 'hydra-windows/body)
+(define-key global-map (kbd "C-<f12> f") 'hydra-fonts/body)
+(define-key global-map (kbd "C-<f12> t") 'hydra-themes/body)
+;; f3, f4 = macros start and end.
+;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
+;; f9 = undefined
+;; f10 = menu-bar-open
+;; f11 = full-screen
+;; f12 = undefined
+
+;; ******************* Arrow keys ********************
+;; The arrow keys used to be bound to C-, since M- clashes with org-mode
+;; keybindings. However, I do not really use org-mode, and moving them back to
+;; M- allows me to use C- for more natural Windows keybindings.
+(define-key global-map (kbd "M-<up>")      'windmove-up)
+(define-key global-map (kbd "M-<down>")    'windmove-down)
+(define-key global-map (kbd "M-<left>")    'windmove-left)
+(define-key global-map (kbd "M-<right>")   'windmove-right)
+(define-key global-map (kbd "C-M-<left>")  'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
+(define-key global-map (kbd "C-M-<right>") 'end-of-defun)
+
+;; ******************* Windows compatible keybindings  ********************
+(define-key global-map (kbd "C-z")       'undo)   ;; Emacs default = suspend-emacs
+
+;; https://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts
+;;(define-key global-map (kbd "C-y")       'redo last operation)
+;;(define-key global-map (kbd "C-x")       'cut and place in clipboard) Emacs = prefix key
+;;(define-key global-map (kbd "C-c")       'copy to clipboard)  Emacs = prefix key
+;;(define-key global-map (kbd "C-v")       'paste clipboard)  Emacs = scroll-up-command
+;;(define-key global-map (kbd "C-a")       'select all)  Emacs = pd-back-to-indentation-or-beginning
+;; o = open, s = save, n = new, p = print, f = find/search
+;; w = save as, r/h = replace, C-S-s = save all, g = goto line
+
+;; ******************* Main number keys ********************
+;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via
+;; C-u anyway, so feel free to grab them for other uses. C-n are available in
+;; the terminal, so they should be used in preference.
+(define-key global-map (kbd "M-1") (lambda () (interactive) (jump-to-register ?z)))
+(define-key global-map (kbd "M-2") (lambda () (interactive) (window-configuration-to-register ?z) (message "Window configuration saved")))
+(define-key global-map (kbd "M-3") (lambda () (interactive) (point-to-register ?z) (message "Point saved")))
+
+;; ******************* Letter/main section keys ********************
+(define-key global-map (kbd "C-'")       'er/expand-region)
+(define-key global-map (kbd "C-; SPC")   'helm-all-mark-rings)
+(define-key global-map (kbd "C-; a")     'helm-apropos)
+(define-key global-map (kbd "C-; c")     'helm-colors)
+(define-key global-map (kbd "C-; f")     'helm-find)
+(define-key global-map (kbd "C-; i")     'insert-char)
+(define-key global-map (kbd "C-; m")     'helm-man-woman)
+(define-key global-map (kbd "C-; o")     'helm-occur)
+(define-key global-map (kbd "C-; r")     'helm-all-mark-rings)
+(define-key global-map (kbd "C-; s")     'helm-semantic-or-imenu)
+(define-key global-map (kbd "C-=")       'fci-mode)
+(define-key global-map (kbd "M-'")       (lambda () (interactive) (er/expand-region -1)))
+(define-key global-map (kbd "M-#")       'hydra-windows/body)
+(define-key global-map (kbd "C-\\")      'hs-toggle-hiding)
+(define-key global-map (kbd "C-|")       'hs-show-all)
+(define-key global-map (kbd "M-/")       'hippie-expand)
+(define-key global-map (kbd "M-;")       'endless/comment-line-or-region)
+;; (define-key global-map (kbd "M-[")       'backward-sexp)  Screws up in terminal Emacs
+;; fine-key global-map (kbd "M-]")       'forward-sexp)
+(define-key global-map (kbd "M-{")       'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
+(define-key global-map (kbd "M-}")       'endless/forward-paragraph)
+
+(define-key global-map (kbd "C-S-o")     'pd-duplicate-line-or-region)
+(define-key global-map (kbd "C-S-w")     'pd-copy-current-line)
+(define-key global-map (kbd "C-a")       'pd-back-to-indentation-or-beginning)
+(define-key global-map (kbd "C-x C-b")   'helm-mini)
+(define-key global-map (kbd "C-x C-f")   'helm-find-files)
+(define-key global-map (kbd "C-x C-g")   'magit-status)
+(define-key global-map (kbd "C-x b")     'helm-mini)
+(define-key global-map (kbd "C-x g")     'magit-status)
+(define-key global-map (kbd "C-x C-t")   'pd-ansi-term)
+(define-key global-map (kbd "C-x z")     'undo)
+(define-key global-map (kbd "C-%")       'pd-replace-all-in-buffer)
+(define-key global-map (kbd "M-j")       'pd-join-line)
+(define-key global-map (kbd "M-x")       'helm-M-x)
+(define-key global-map (kbd "M-y")       'helm-show-kill-ring)
+(define-key global-map (kbd "M-SPC")     'pd-no-space)
+(define-key global-map (kbd "H-SPC")     'pd-no-space)
+
+
+(defun pd-bind-key (keyseq func)
+  "Helper function to bind keys to both <apps> and H-."
+  (let ((e1 (concat "<apps> " keyseq))
+        (e2 (format "H-%s%s" (substring keyseq 0 1)
+                    (if (equal 1 (length keyseq))
+                        ""
+                      (concat " " (substring keyseq 1 2)))))
+        )
+    (define-key global-map (kbd e1) func)
+    (define-key global-map (kbd e2) func)))
+
+;; Consider arrow keys too.
+;; Want for bookmarks, macros, ggtags, rectangles?
+(pd-bind-key "b"  'cycle-buffer-backward-permissive)
+(pd-bind-key "d"  'dired-jump)
+(pd-bind-key "f"  'cycle-buffer-permissive)
+(pd-bind-key "g"  'magit-status)
+(pd-bind-key "o"  'pd-duplicate-line-or-region)
+(pd-bind-key "p"  'pd-cleanup-programming-buffer)
+(pd-bind-key "s"  'pd-sort-paragraph-dwim)
+(pd-bind-key "t"  'pd-ansi-term)
+(pd-bind-key "w"  'pd-copy-current-line)
+
+;; (pd-bind-key "rb" 'pd-revert-buffer)
+;; (pd-bind-key "rj" 'jump-to-register)
+;; (pd-bind-key "rp" 'point-to-register)
+;; (pd-bind-key "rw" 'window-configuration-to-register)
+
+(define-key global-map (kbd "C-# au") 'pd-cpp-add-using)
+(define-key global-map (kbd "C-# cl") 'pd-copy-current-line)
+(define-key global-map (kbd "C-# cp") 'pd-cleanup-programming-buffer)
+(define-key global-map (kbd "C-# df") 'pd-delete-file-and-buffer)
+(define-key global-map (kbd "C-# dl") 'pd-duplicate-line-or-region)
+(define-key global-map (kbd "C-# dw") 'delete-trailing-whitespace)
+(define-key global-map (kbd "C-# ib") 'pd-indent-buffer)
+(define-key global-map (kbd "C-# ir") 'indent-region)
+(define-key global-map (kbd "C-# jr") 'jump-to-register)
+(define-key global-map (kbd "C-# mb") 'mark-whole-buffer)
+(define-key global-map (kbd "C-# mf") 'mark-defun)
+(define-key global-map (kbd "C-# mp") 'mark-paragraph)
+(define-key global-map (kbd "C-# pr") 'point-to-register)
+(define-key global-map (kbd "C-# rb") 'pd-revert-buffer)
+(define-key global-map (kbd "C-# rf") 'pd-rename-file-and-buffer)
+(define-key global-map (kbd "C-# sp") 'pd-sort-paragraph-dwim)
+(define-key global-map (kbd "C-# ut") 'pd-untabify-buffer)
+(define-key global-map (kbd "C-# wr") 'window-configuration-to-register)
+
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+(define-key helm-map (kbd "C-i")   'helm-execute-persistent-action) ; make TAB works in terminal
+(define-key helm-map (kbd "C-z")   'helm-select-action) ; list actions using C-z
+
+;; ******************* C/C++ mode keys ********************
+;; Create a keymap with Visual Studio compatible keymappings.
+;; See http://ergoemacs.org/emacs/elisp_menu_for_major_mode.html
+;; for what is going on here.
+(defvar pd-vs-minor-mode-map nil "Keymap for Visual Studio compatibility.")
+
+;; TODO: We should really setup the gud commands only in a gud-mode-hook.
+
+(when (not pd-vs-minor-mode-map)
+  (setq pd-vs-minor-mode-map (make-sparse-keymap))
+  ;;  (define-key pd-vs-minor-mode-map (kbd "<f5>") 'gud-run) ; continue (gdb command = continue)
+  ;;   C-F5 = run without debugging
+  ;;   S-F5 = stop debugging
+  ;;  CS-F5 = restart
+  (define-key pd-vs-minor-mode-map (kbd "<f6>") 'pd-compile-without-confirmation)
+  (define-key pd-vs-minor-mode-map (kbd "<S-f6>") 'pd-compile-clean-one-shot)
+  (define-key pd-vs-minor-mode-map (kbd "<C-f6>") 'compile) ; make -k, the original compile command.
+  (define-key pd-vs-minor-mode-map (kbd "<f7>") 'ff-find-other-file) ; View.ToggleDesigner in VS.
+  (define-key pd-vs-minor-mode-map (kbd "<S-f7>") (lambda () (interactive) (ff-find-other-file t))) ; in a split window.
+  (define-key pd-vs-minor-mode-map (kbd "<f8>") 'next-error)
+  (define-key pd-vs-minor-mode-map (kbd "<S-f8>") 'previous-error)
+  ;;(define-key pd-vs-minor-mode-map (kbd "<f9>") 'gud-break) ; toggle breakpoint (gdb command = break)
+  ;;  CS-F9 = delete all breakpoints = typing d.
+  ;; (define-key pd-vs-minor-mode-map (kbd "<f10>") 'gud-next)  ; step over (gdb command = next)
+  ;; (define-key pd-vs-minor-mode-map (kbd "<C-f10>") 'gud-until)  ; run to cursor (gdb command = advance)
+  ;; (define-key pd-vs-minor-mode-map (kbd "<CS-f10>") 'gud-jump)  ; set next statement (gdb command = jump)
+  ;; (define-key pd-vs-minor-mode-map (kbd "<f11>") 'gud-step)  ; step in (gdb command = step)
+  ;; (define-key pd-vs-minor-mode-map (kbd "<S-f11>") 'gud-finish)  ; step out (gdb command = finish)
+  ;;    F12 = go to definition
+  ;; "  C-Brk = cancel current build
+  )
+
+(define-minor-mode pd-vs-minor-mode
+  "A minor mode to establish Visual Studio compatible key mappings."
+  nil " vs" 'pd-vs-minor-mode-map)
+
+(add-hook 'c-mode-common-hook (lambda () (pd-vs-minor-mode 1)))
+(add-hook 'compilation-mode-hook (lambda () (pd-vs-minor-mode 1)))
+(add-hook 'gdb-mode-hook (lambda () (tool-bar-mode 1)))
+
+
+(provide 'pd-keys)
+
 
 ;; Emacs understands the following modifiers:
 ;;    M- (meta)      Alt on my keyboard
@@ -174,11 +376,6 @@
 ;; both W32 and terminal Emacs. Unfortunately, APPS still does not work like the
 ;; Alt or Control keys in the terminal, if you hold it down by itself you get
 ;; lots of input in the output buffer. It does work ok in GUI Emacs though.
-(if (equal system-type 'cygwin)
-    (if (equal window-system 'w32)
-     (setq w32-pass-apps-to-system nil
-           w32-apps-modifier 'hyper)
-      (define-key local-function-key-map (kbd "<print>") 'event-apply-hyper-modifier)))
 ;; (define-key global-map (kbd "s-h") (lambda () (interactive) (message "hello from menu key via s- prefix")))
 ;;
 ;; Alternatively, we can turn it into a leader key like this.
@@ -197,7 +394,7 @@
 ;; ;; On X, e.g. in Mint, make the left Windows key, which is normally super,
 ;; ;; send hyper instead.
 ;; (setq x-super-keysym 'hyper)
-;;                                        ;
+;;
 ;; Over ssh to Linux, window-system is 'x and system-type is 'gnu/linux.
 ;;
 ;; Helpful links
@@ -211,222 +408,3 @@
 ;;
 ;; and especially
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Keyboard-Events.html#Keyboard-Events
-
-
-
-;; ******************* Global Function keys ********************
-(define-key global-map (kbd "<f1>")      (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs_keys.txt")))
-(define-key global-map (kbd "<f2>")      'bmkp-next-bookmark)
-(define-key global-map (kbd "S-<f2>")    'bmkp-previous-bookmark)
-(define-key global-map (kbd "C-<f2>")    'bmkp-toggle-autonamed-bookmark-set/delete)
-(define-key global-map (kbd "M-<f2>")    'helm-filtered-bookmarks)
-(define-key global-map (kbd "<f9>")      'cycle-buffer-backward)
-(define-key global-map (kbd "<f10>")     'cycle-buffer)
-(define-key global-map (kbd "S-<f9>")    'cycle-buffer-backward-permissive)
-(define-key global-map (kbd "S-<f10>")   'cycle-buffer-permissive)
-(define-key global-map (kbd "C-<f9>")    (lambda () (interactive) (kill-buffer nil)))
-(define-key global-map (kbd "C-<f10>")   'bury-buffer)
-(define-key global-map (kbd "<f11>")     'menu-bar-open)
-(define-key global-map (kbd "S-<f11>")   'menu-bar-open)
-(define-key global-map (kbd "C-<f11>")   'menu-bar-open)
-(define-key global-map (kbd "<f12>")     'sr-speedbar-toggle)
-(define-key global-map (kbd "S-<f12>")   'sr-speedbar-select-window)
-(define-key global-map (kbd "C-<f12> w") 'hydra-windows/body)
-(define-key global-map (kbd "C-<f12> f") 'hydra-fonts/body)
-(define-key global-map (kbd "C-<f12> t") 'hydra-themes/body)
-(message "KEYBINDINGS - FUNCTION KEYS DONE.")
-
-
-;; f3, f4 = macros start and end.
-;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
-;; f9 = undefined
-;; f10 = menu-bar-open
-;; f11 = full-screen
-;; f12 = undefined
-
-;; ******************* Arrow keys ********************
-;; Hopefully this will have better compatibility with org-mode
-;; (org-mode uses M-arrow to change the order of items).
-;; S-<arrow> is shown as available by describe-unbound-keys, but
-;; it is actually bound - it selects a region.
-(define-key global-map (kbd "C-<up>")      'windmove-up)
-(define-key global-map (kbd "C-<down>")    'windmove-down)
-(define-key global-map (kbd "C-<left>")    'windmove-left)
-(define-key global-map (kbd "C-<right>")   'windmove-right)
-
-(define-key global-map (kbd "C-M-<left>")  'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
-(define-key global-map (kbd "C-M-<right>") 'end-of-defun)
-(message "KEYBINDINGS - ARROWS DONE.")
-
-
-;; ******************* Small pad keys ********************
-
-;; CUA compatibility.
-(define-key global-map (kbd "C-z")       'undo)   ;; Emacs default = suspend-emacs
-
-
-;; https://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts
-;;(define-key global-map (kbd "C-y")       'redo last operation)
-;;(define-key global-map (kbd "C-x")       'cut and place in clipboard) Emacs = prefix key
-;;(define-key global-map (kbd "C-c")       'copy to clipboard)  Emacs = prefix key
-;;(define-key global-map (kbd "C-v")       'paste clipboard)  Emacs = scroll-up-command
-;;(define-key global-map (kbd "C-a")       'select all)  Emacs = pd-back-to-indentation-or-beginning
-;; o = open, s = save, n = new, p = print, f = find/search
-;; w = save as, r/h = replace, C-S-s = save all, g = goto line
-
-;; ******************* Main number keys ********************
-;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via
-;; C-u anyway, so feel free to grab them for other uses. C-n are available in
-;; the terminal, so they should be used in preference.
-(define-key global-map (kbd "M-1") (lambda () (interactive) (jump-to-register ?z)))
-(define-key global-map (kbd "M-2") (lambda () (interactive) (window-configuration-to-register ?z) (message "Window configuration saved")))
-(define-key global-map (kbd "M-3") (lambda () (interactive) (point-to-register ?z) (message "Point saved")))
-
-;; ******************* Letter/main section keys ********************
-(define-key global-map (kbd "C-'")       'er/expand-region)
-(define-key global-map (kbd "C-; SPC")   'helm-all-mark-rings)
-(define-key global-map (kbd "C-; a")     'helm-apropos)
-(define-key global-map (kbd "C-; c")     'helm-colors)
-(define-key global-map (kbd "C-; f")     'helm-find)
-(define-key global-map (kbd "C-; i")     'insert-char)
-(define-key global-map (kbd "C-; m")     'helm-man-woman)
-(define-key global-map (kbd "C-; o")     'helm-occur)
-(define-key global-map (kbd "C-; r")     'helm-all-mark-rings)
-(define-key global-map (kbd "C-; s")     'helm-semantic-or-imenu)
-(define-key global-map (kbd "C-=")       'fci-mode)
-(define-key global-map (kbd "M-'")       (lambda () (interactive) (er/expand-region -1)))
-(define-key global-map (kbd "M-#")       'hydra-windows/body)
-(define-key global-map (kbd "C-\\")      'hs-toggle-hiding)
-(define-key global-map (kbd "C-|")       'hs-show-all)
-(define-key global-map (kbd "M-/")       'hippie-expand)
-(define-key global-map (kbd "M-;")       'endless/comment-line-or-region)
-;; (define-key global-map (kbd "M-[")       'backward-sexp)  Screws up in terminal Emacs
-;; fine-key global-map (kbd "M-]")       'forward-sexp)
-(define-key global-map (kbd "M-{")       'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
-(define-key global-map (kbd "M-}")       'endless/forward-paragraph)
-(message "KEYBINDINGS - MAIN KEYS 1 DONE.")
-
-
-(define-key global-map (kbd "C-S-o")     'pd-duplicate-line-or-region)
-(define-key global-map (kbd "C-S-w")     'pd-copy-current-line)
-(define-key global-map (kbd "C-a")       'pd-back-to-indentation-or-beginning)
-(define-key global-map (kbd "C-x C-b")   'helm-mini)
-(define-key global-map (kbd "C-x C-f")   'helm-find-files)
-(define-key global-map (kbd "C-x C-g")   'magit-status)
-(define-key global-map (kbd "C-x b")     'helm-mini)
-(define-key global-map (kbd "C-x g")     'magit-status)
-(define-key global-map (kbd "C-x C-t")   'pd-ansi-term)
-(define-key global-map (kbd "C-x z")     'undo)
-;;(define-key global-map (kbd "C-z")       'pd-replace-all-in-buffer)
-(define-key global-map (kbd "C-%")       'pd-replace-all-in-buffer)
-(define-key global-map (kbd "M-j")       'pd-join-line)
-(define-key global-map (kbd "M-x")       'helm-M-x)
-(define-key global-map (kbd "M-y")       'helm-show-kill-ring)
-(define-key global-map (kbd "M-SPC")     'pd-no-space)
-(define-key global-map (kbd "H-SPC")     'pd-no-space)
-(message "KEYBINDINGS - MAIN KEYS 2 DONE.")
-
-(defun pd-bind-key (keyseq func)
-  "Helper function to bind keys to both <apps> and H-."
-  (let ((e1 (concat "<apps> " keyseq))
-        (e2 (format "H-%s%s" (substring keyseq 0 1)
-                    (if (equal 1 (length keyseq))
-                        ""
-                      (concat " " (substring keyseq 1 2)))))
-        )
-    ;;(define-key global-map (kbd e1) func)
-    (define-key global-map (kbd e2) func)))
-
-
-;; Consider arrow keys too.
-;; Want for bookmarks, macros, ggtags, rectangles?
-(pd-bind-key "b"  'cycle-buffer-backward-permissive)
-(pd-bind-key "d"  'dired-jump)
-(pd-bind-key "f"  'cycle-buffer-permissive)
-(pd-bind-key "g"  'magit-status)
-(pd-bind-key "o"  'pd-duplicate-line-or-region)
-(pd-bind-key "t"  'pd-ansi-term)
-(pd-bind-key "w"  'pd-copy-current-line)
-
-
-
-
-
-;; (pd-bind-key "cc" 'pd-cleanup-programming-buffer)
-;; (pd-bind-key "dl" 'pd-duplicate-line-or-region)
-;; (pd-bind-key "dw" 'delete-trailing-whitespace)
-;; (pd-bind-key "g"  'magit-status)
-;; (pd-bind-key "rb" 'pd-revert-buffer)
-;; (pd-bind-key "rj" 'jump-to-register)
-;; (pd-bind-key "rp" 'point-to-register)
-;; (pd-bind-key "rw" 'window-configuration-to-register)
-;; (pd-bind-key "sp" 'pd-sort-paragraph-dwim)
-;; (pd-bind-key "w"  'pd-copy-current-line)
-
-(define-key global-map (kbd "C-# au") 'pd-cpp-add-using)
-(define-key global-map (kbd "C-# cl") 'pd-copy-current-line)
-(define-key global-map (kbd "C-# cp") 'pd-cleanup-programming-buffer)
-(define-key global-map (kbd "C-# df") 'pd-delete-file-and-buffer)
-(define-key global-map (kbd "C-# dl") 'pd-duplicate-line-or-region)
-(define-key global-map (kbd "C-# dw") 'delete-trailing-whitespace)
-(define-key global-map (kbd "C-# ib") 'pd-indent-buffer)
-(define-key global-map (kbd "C-# ir") 'indent-region)
-(define-key global-map (kbd "C-# jr") 'jump-to-register)
-(define-key global-map (kbd "C-# mb") 'mark-whole-buffer)
-(define-key global-map (kbd "C-# mf") 'mark-defun)
-(define-key global-map (kbd "C-# mp") 'mark-paragraph)
-(define-key global-map (kbd "C-# pr") 'point-to-register)
-(define-key global-map (kbd "C-# rb") 'pd-revert-buffer)
-(define-key global-map (kbd "C-# rf") 'pd-rename-file-and-buffer)
-(define-key global-map (kbd "C-# sp") 'pd-sort-paragraph-dwim)
-(define-key global-map (kbd "C-# ut") 'pd-untabify-buffer)
-(define-key global-map (kbd "C-# wr") 'window-configuration-to-register)
-
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-(define-key helm-map (kbd "C-i")   'helm-execute-persistent-action) ; make TAB works in terminal
-(define-key helm-map (kbd "C-z")   'helm-select-action) ; list actions using C-z
-(message "KEYBINDINGS - PD-BIND-KEY DONE.")
-
-
-;; ******************* C/C++ mode keys ********************
-;; Create a keymap with Visual Studio compatible keymappings.
-;; See http://ergoemacs.org/emacs/elisp_menu_for_major_mode.html
-;; for what is going on here.
-(defvar pd-vs-minor-mode-map nil "Keymap for Visual Studio compatibility.")
-
-;; TODO: We should really setup the gud commands only in a gud-mode-hook.
-
-(when (not pd-vs-minor-mode-map)
-  (setq pd-vs-minor-mode-map (make-sparse-keymap))
-  ;;  (define-key pd-vs-minor-mode-map (kbd "<f5>") 'gud-run) ; continue (gdb command = continue)
-  ;;   C-F5 = run without debugging
-  ;;   S-F5 = stop debugging
-  ;;  CS-F5 = restart
-  (define-key pd-vs-minor-mode-map (kbd "<f6>") 'pd-compile-without-confirmation)
-  (define-key pd-vs-minor-mode-map (kbd "<S-f6>") 'pd-compile-clean-one-shot)
-  (define-key pd-vs-minor-mode-map (kbd "<C-f6>") 'compile) ; make -k, the original compile command.
-  (define-key pd-vs-minor-mode-map (kbd "<f7>") 'ff-find-other-file) ; View.ToggleDesigner in VS.
-  (define-key pd-vs-minor-mode-map (kbd "<S-f7>") (lambda () (interactive) (ff-find-other-file t))) ; in a split window.
-  (define-key pd-vs-minor-mode-map (kbd "<f8>") 'next-error)
-  (define-key pd-vs-minor-mode-map (kbd "<S-f8>") 'previous-error)
-  ;;(define-key pd-vs-minor-mode-map (kbd "<f9>") 'gud-break) ; toggle breakpoint (gdb command = break)
-  ;;  CS-F9 = delete all breakpoints = typing d.
-  ;; (define-key pd-vs-minor-mode-map (kbd "<f10>") 'gud-next)  ; step over (gdb command = next)
-  ;; (define-key pd-vs-minor-mode-map (kbd "<C-f10>") 'gud-until)  ; run to cursor (gdb command = advance)
-  ;; (define-key pd-vs-minor-mode-map (kbd "<CS-f10>") 'gud-jump)  ; set next statement (gdb command = jump)
-  ;; (define-key pd-vs-minor-mode-map (kbd "<f11>") 'gud-step)  ; step in (gdb command = step)
-  ;; (define-key pd-vs-minor-mode-map (kbd "<S-f11>") 'gud-finish)  ; step out (gdb command = finish)
-  ;;    F12 = go to definition
-  ;; "  C-Brk = cancel current build
-  )
-
-(define-minor-mode pd-vs-minor-mode
-  "A minor mode to establish Visual Studio compatible key mappings."
-  nil " vs" 'pd-vs-minor-mode-map)
-
-(add-hook 'c-mode-common-hook (lambda () (pd-vs-minor-mode 1)))
-(add-hook 'compilation-mode-hook (lambda () (pd-vs-minor-mode 1)))
-(add-hook 'gdb-mode-hook (lambda () (tool-bar-mode 1)))
-
-
-(provide 'pd-keys)

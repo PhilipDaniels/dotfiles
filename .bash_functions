@@ -306,7 +306,7 @@ function f_RescanWCD()
 
 function f_StartEmacsDaemon()
 {
-    if type emacs-w32 > /dev/null 2&>1; then
+    if type emacs-w32 > /dev/null 2>&1; then
         emacs-w32 --daemon
     else
         emacs --daemon
