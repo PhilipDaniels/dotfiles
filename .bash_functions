@@ -299,33 +299,6 @@ f_GitShowConfig()
     git config --list --local | grep -i 'user.email\|proxy\|fileMode' | sort
 }
 
-function gv()
-{
-    # Favour native Windows gvim when in Windows, even if an X server is
-    # running. This is because it understands Windows paths better.
-    # If you want the Cygwin gvim just do /bin/gvim.
-
-    local filename="$1"
-    if [ "$filename" ]; then
-        filename=`cygpath -w "$filename"`
-    fi
-
-    local exe=`cygpath "C:\Program Files (x86)\vim\vim74\gvim.exe"`
-    "$exe" -T win32 "$filename"
-}
-
-function vh()
-{
-    # Displays my key help for Vim.
-    less -FX ~/repos/dotfiles/vimfiles/_vimkeyhelp.txt
-}
-
-function vp()
-{
-    # Displays my programming/compilation help for Vim.
-    less -FX ~/repos/dotfiles/vimfiles/_vimproghelp.txt
-}
-
 function f_RescanWCD()
 {
     wcd -xf ~/repos/dotfiles/.wcd.exclusions -S /c
