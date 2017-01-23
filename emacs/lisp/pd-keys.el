@@ -95,7 +95,6 @@
 (define-key global-map (kbd "C-; o")     'helm-occur)
 (define-key global-map (kbd "C-; r")     'helm-all-mark-rings)
 (define-key global-map (kbd "C-; s")     'helm-semantic-or-imenu)
-(define-key global-map (kbd "C-=")       'fci-mode)
 (define-key global-map (kbd "M-'")       (lambda () (interactive) (er/expand-region -1)))
 (define-key global-map (kbd "M-#")       'hydra-windows/body)
 (define-key global-map (kbd "C-\\")      'hs-toggle-hiding)

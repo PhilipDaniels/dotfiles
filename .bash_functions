@@ -306,7 +306,7 @@ function f_RescanWCD()
 
 function f_StartEmacsDaemon()
 {
-    if type emacs-w32 > /dev/null 2>&1; then
+    if f_IsCmd "emacs-w32"; then
         emacs-w32 --daemon
     else
         emacs --daemon
@@ -315,7 +315,7 @@ function f_StartEmacsDaemon()
 
 function f_StopEmacsDaemon()
 {
-    if type emacsclient-w32 > /dev/null 2>&1; then
+    if f_IsCmd "emacsclient-w32"; then
         emacsclient-w32 -e '(kill-emacs)'
     else
         emacsclient -e '(kill-emacs)'

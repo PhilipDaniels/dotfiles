@@ -1,10 +1,8 @@
 ;;; Customizations related to appearance.
 ;;; Usage: (require 'pd-appearance)
 
-(require-package 'fill-column-indicator)
 (require-package 'rich-minority)
 
-(require 'fill-column-indicator)
 (require 'whitespace)
 (require 'windmove)
 (require 'pd)
@@ -25,11 +23,6 @@
 ;; (setq frame-title-format (list "\u27a4 %f    \u27a4 " user-login-name "@" system-name))
 ;; (setq frame-title-format (list "\u2b24 %f    \u2b24 " user-login-name "@" system-name))
 (setq frame-title-format (list user-login-name "@" system-name ":%f"))
-
-;; fci-mode can cause an increase in the vertical separation of lines, so leave
-;; it off by default. It is bound to C-= below, for ease of use.
-(setq fci-rule-width 2)
-;;(setq fci-rule-color "blue")
 
 
 ;; Show a red rectangle for trailing whitespace, and color long lines.
