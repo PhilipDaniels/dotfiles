@@ -76,5 +76,5 @@
 
 ;; (semantic-mode 1)
 
-
+(pd-log-complete)
 (provide 'pd-programming)

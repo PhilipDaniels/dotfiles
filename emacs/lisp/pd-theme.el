@@ -122,4 +122,5 @@ Valid values are nil, 'dark and 'light."
 ;; Default decent theme if having problems with solarized.
 ;; (pd-theme-load 'gruvbox)
 
+(pd-log-complete)
 (provide 'pd-theme)

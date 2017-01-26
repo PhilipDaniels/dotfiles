@@ -34,4 +34,5 @@
 (setenv "SSH_ASKPASS" "git-gui--askpass")
 
 
+(pd-log-complete)
 (provide 'pd-git)

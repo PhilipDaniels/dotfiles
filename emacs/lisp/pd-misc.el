@@ -47,4 +47,5 @@
         try-complete-lisp-symbol)
       )
 
+(pd-log-complete)
 (provide 'pd-misc)

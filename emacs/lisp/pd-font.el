@@ -74,4 +74,5 @@ search at index 0."
     ))
 
 
+(pd-log-complete)
 (provide 'pd-font)

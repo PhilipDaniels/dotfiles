@@ -179,4 +179,5 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   )
 
 
+(pd-log-complete)
 (provide 'pd-hydra)

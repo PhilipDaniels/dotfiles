@@ -27,5 +27,24 @@
 (message "Host = %s, pd-at-home = %s, system-type=%s, window-system=%s"
          system-name pd-at-home system-type window-system)
 
+(defvar pd-last-log-time 0 "The last time pd-log was called.")
 
+(defun pd-log (message)
+  "Logs a message with incremental time since last message and
+source file name as a prefix."
+  (interactive)
+  (if (equal pd-last-log-time 0)
+      (setq pd-last-log-time (float-time)))
+  (let ((secs (- (float-time) pd-last-log-time)))
+    (message "%8.5f secs : %s : %s" secs (file-name-nondirectory load-file-name) message)
+        )
+  (setq pd-last-log-time (float-time))
+  )
+
+(defun pd-log-complete ()
+  "Logs a 'loading complete' message for a file."
+  (interactive)
+  (pd-log "Loading complete."))
+
+(pd-log-complete)
 (provide 'pd-first)

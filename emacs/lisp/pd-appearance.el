@@ -62,7 +62,7 @@
 (paren-activate)
 (setq paren-match-face 'mode-line)
 
-
+(pd-log-complete)
 (provide 'pd-appearance)
 
 

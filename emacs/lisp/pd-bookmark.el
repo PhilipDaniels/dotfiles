@@ -23,4 +23,5 @@
 ;; (setq bookmark-version-control t)
 ;; (setq bookmark-save-flag 1)
 
+(pd-log-complete)
 (provide 'pd-bookmark)

@@ -387,4 +387,5 @@ performance reasons)."
 for the symbol just typed."
     nil "caut" pd-cpp-auto-keymap)
 
+(pd-log-complete)
 (provide 'pd-cpp)

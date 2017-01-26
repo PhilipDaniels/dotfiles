@@ -22,7 +22,7 @@
 ;; system-type will be 'cygwin, so we just assume that means we are using the
 ;; Win32 GUI version.
 (when (equal system-type 'cygwin)
-  (message "On Cygwin, therefore making APPS function as a true hyper key (in GUI mode at least)")
+  (pd-log "On Cygwin, therefore making APPS function as a true hyper key (in GUI mode at least)")
   (setq w32-pass-apps-to-system nil w32-apps-modifier 'hyper)
   ;; The following helps in the terminal, however APPS still does not function
   ;; a true hyper key in the terminal because you cannot keep it pressed while
@@ -50,7 +50,7 @@
 (define-key global-map (kbd "C-<f12> w") 'hydra-windows/body)
 (define-key global-map (kbd "C-<f12> f") 'hydra-fonts/body)
 (define-key global-map (kbd "C-<f12> t") 'hydra-themes/body)
-(message "%s: %s" (buffer-name) "Function keys defined.")
+(pd-log "Function keys defined.")
 
 ;; f3, f4 = macros start and end.
 ;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
@@ -69,6 +69,7 @@
 (define-key global-map (kbd "M-<right>")   'windmove-right)
 (define-key global-map (kbd "C-M-<left>")  'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
 (define-key global-map (kbd "C-M-<right>") 'end-of-defun)
+(pd-log "Arrow keys defined.")
 
 ;; ******************* Windows compatible keybindings  ********************
 (define-key global-map (kbd "C-z")       'undo)   ;; Emacs default = suspend-emacs
@@ -81,6 +82,7 @@
 ;;(define-key global-map (kbd "C-a")       'select all)  Emacs = pd-back-to-indentation-or-beginning
 ;; o = open, s = save, n = new, p = print, f = find/search
 ;; w = save as, r/h = replace, C-S-s = save all, g = goto line
+(pd-log "Windows-compatible keys defined.")
 
 ;; ******************* Main number keys ********************
 ;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via
@@ -128,6 +130,7 @@
 (define-key global-map (kbd "M-y")       'helm-show-kill-ring)
 (define-key global-map (kbd "M-SPC")     'pd-no-space)
 (define-key global-map (kbd "H-SPC")     'pd-no-space)
+(pd-log "Main keys defined.")
 
 
 (defun pd-bind-key (keyseq func)
@@ -152,6 +155,7 @@
 (pd-bind-key "s"  'pd-sort-paragraph-dwim)
 (pd-bind-key "t"  'pd-ansi-term)
 (pd-bind-key "w"  'pd-copy-current-line)
+(pd-log "Hyper/apps keys defined.")
 
 ;; (pd-bind-key "rb" 'pd-revert-buffer)
 ;; (pd-bind-key "rj" 'jump-to-register)
@@ -176,10 +180,12 @@
 (define-key global-map (kbd "C-# sp") 'pd-sort-paragraph-dwim)
 (define-key global-map (kbd "C-# ut") 'pd-untabify-buffer)
 (define-key global-map (kbd "C-# wr") 'window-configuration-to-register)
+(pd-log "C-# mnemonic keys defined.")
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i")   'helm-execute-persistent-action) ; make TAB works in terminal
 (define-key helm-map (kbd "C-z")   'helm-select-action) ; list actions using C-z
+(pd-log "Helm mode keys defined.")
 
 ;; ******************* C/C++ mode keys ********************
 ;; Create a keymap with Visual Studio compatible keymappings.
@@ -221,7 +227,9 @@
 (add-hook 'compilation-mode-hook (lambda () (pd-vs-minor-mode 1)))
 (add-hook 'gdb-mode-hook (lambda () (tool-bar-mode 1)))
 
+(pd-log "pd-vs-minor-mode defined and enabled for C mode, compilation mode and gdb mode.")
 
+(pd-log-complete)
 (provide 'pd-keys)
 
 

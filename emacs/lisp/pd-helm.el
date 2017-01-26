@@ -69,4 +69,5 @@
 (setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align below :ratio 0.4)))
 
 
+(pd-log-complete)
 (provide 'pd-helm)
