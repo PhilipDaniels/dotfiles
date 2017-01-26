@@ -17,14 +17,18 @@
 (require 'pd-helm)
 (require 'pd-hydra)
 
-;; On Cygwin, maks apps function as a true hyper key.
-(if (equal system-type 'cygwin)
-    (if (equal window-system 'w32)
-        (setq w32-pass-apps-to-system nil
-              w32-apps-modifier 'hyper)
-      (define-key local-function-key-map (kbd "<print>") 'event-apply-hyper-modifier)
-      (define-key local-function-key-map (kbd "<apps>") 'event-apply-hyper-modifier)
-      ))
+
+;; When started in daemon mode, window-system will be nil (not 'w32), but
+;; system-type will be 'cygwin, so we just assume that means we are using the
+;; Win32 GUI version.
+(when (equal system-type 'cygwin)
+  (message "On Cygwin, therefore making APPS function as a true hyper key (in GUI mode at least)")
+  (setq w32-pass-apps-to-system nil w32-apps-modifier 'hyper)
+  ;; The following helps in the terminal, however APPS still does not function
+  ;; a true hyper key in the terminal because you cannot keep it pressed while
+  ;; repeatedly pressing another key. See also pd-bind-key in this file.
+  (define-key local-function-key-map (kbd "<print>") 'event-apply-hyper-modifier))
+
 
 ;; ******************* Global Function keys ********************
 (define-key global-map (kbd "<f1>")      (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs_keys.txt")))
@@ -46,6 +50,8 @@
 (define-key global-map (kbd "C-<f12> w") 'hydra-windows/body)
 (define-key global-map (kbd "C-<f12> f") 'hydra-fonts/body)
 (define-key global-map (kbd "C-<f12> t") 'hydra-themes/body)
+(message "%s: %s" (buffer-name) "Function keys defined.")
+
 ;; f3, f4 = macros start and end.
 ;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
 ;; f9 = undefined
@@ -126,7 +132,7 @@
 
 (defun pd-bind-key (keyseq func)
   "Helper function to bind keys to both <apps> and H-."
-  (let ((e1 (concat "<apps> " keyseq))
+  (let ((e1 (concat "<print> " keyseq))
         (e2 (format "H-%s%s" (substring keyseq 0 1)
                     (if (equal 1 (length keyseq))
                         ""
