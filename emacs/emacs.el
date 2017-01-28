@@ -69,7 +69,6 @@ re-downloaded in order to locate PACKAGE.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TODO
 ;; [ ] Check everything still works in Linux.
-;; [ ] Get hyper working again.
 ;; [ ] Get font working again.
 
 ;; [ ] Requires in my files. Nominal order is require-package, require built-ins,
@@ -94,7 +93,7 @@ re-downloaded in order to locate PACKAGE.
 ;; [ ] pd-sort-paragraph-dwim: make it ignore any comments at the start of
 ;;     the paragraph.
 ;; [ ] pd-helm: Get helm ignores working. This will speed up greps a lot.
-;; [ ] pd-helm: Use ripgrep or ag?
+;; [ ] pd-helm: Use ripgrep.
 
 ;; [ ] Spell checking.
 ;; [ ] Flymake

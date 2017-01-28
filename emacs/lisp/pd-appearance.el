@@ -17,6 +17,26 @@
 (size-indication-mode 1)
 (blink-cursor-mode 0)
 
+;; This controls all frames that will be created.
+;; See https://www.gnu.org/software/emacs/manual/html_node/emacs/Frame-Parameters.html
+(setq default-frame-alist
+      '((top . 0)
+        (left . 0)
+        (width . 120)
+        (height . 68)
+        (auto-raise . t)
+        (cursor-color . "red")
+        ))
+
+;; This ensures the right font is set when running in daemon mode, but it is
+;; no longer required since my preferred method is now to start a normal Emacs
+;; window upon login and turn that into a daemon - see the bottom of this file.
+;;(add-hook 'after-make-frame-functions
+;;        (lambda (frame) (pd-set-candidate-font 0 frame t)))
+;; And this ensures the right font is set when running in non-daemon mode.
+;; (if (display-graphic-p)
+;;    (pd-set-candidate-font 0 (selected-frame) t))
+
 
 ;; Some example frame titles. See Emacs wiki.
 ;; (setq frame-title-format (list "\u25b6 %f \u25c0 " user-login-name "@" system-name))
@@ -67,10 +87,6 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;(add-to-list 'default-frame-alist '(height . 50))
-;;(add-to-list 'default-frame-alist '(width . 86))
-;;(show-paren-mode 1)             ;; Superceded by smartparens mode.
-;;(setq-default show-paren-delay 0)
 ;;(global-linum-mode 1)           ;; This is very slow with long lines.
 ;;(setq linum-format "%4d ")      ;; So we don't need this either.
 ;;(display-time-mode 1)
@@ -79,7 +95,6 @@
 ;;(set-face-foreground 'hl-line nil)
 ;;(set-face-underline-p 'hl-line nil)
 
-
 ;;Smart mode line, see https://github.com/Malabarba/smart-mode-line
 ;;(sml/setup)
 ;;(setq sml/theme 'dark)
@@ -87,28 +102,13 @@
 ;;(add-to-list 'sml/replacer-regexp-list '("^/c/work/bitbucket/" "BB:") t)
 ;;(sml/setup)
 
-
 ;; (setq x-gtk-use-system-tooltips nil)
-
-
-;; This ensures the right font is set when running in daemon mode, but it is
-;; no longer required since my preferred method is now to start a normal Emacs
-;; window upon login and turn that into a daemon - see the bottom of this file.
-;;(add-hook 'after-make-frame-functions
-;;        (lambda (frame) (pd-set-candidate-font 0 frame t)))
-;; And this ensures the right font is set when running in non-daemon mode.
-;; (if (display-graphic-p)
-;;    (pd-set-candidate-font 0 (selected-frame) t))
-
-
 ;; (setq custom-theme-directory "~/repos/dotfiles/emacs/themes")
-
 
 ;; http://stackoverflow.com/questions/13625080/looking-forward-a-way-to-make-cursor-blinks-like-a-heartbeat-in-emacs
 ;;(setq-default blink-cursor-alist '((t . (hbar . 5))))
 ;;(setq-default blink-cursor-alist '((t . nil)))
 ;; (global-hl-line-mode 0)
-
 
 ;; This face is used to highlight the selected thing (e.g. function in source
 ;; file). Box is on by default, which causes a temporary line-height increase
