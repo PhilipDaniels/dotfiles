@@ -96,5 +96,5 @@ Originally called oleh-term-exec-hook"
   (interactive (list pd-term-shell)))
 (ad-activate 'ansi-term)
 
-(pd-log-complete)
+(pd-log-loading-complete)
 (provide 'pd-terminal)

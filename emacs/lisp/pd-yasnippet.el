@@ -5,6 +5,7 @@
 (require-package 'yasnippet)
 (require 'yasnippet)
 (require 'pd)
+(pd-log-requires-complete)
 
 ;; Load yasnippet, but only load my snippets (there are many examples
 ;; under the elpa/yasnippet folder which we do not want to load).
@@ -14,5 +15,6 @@
 (add-hook 'prog-mode-hook #'yas-minor-mode)
 (add-hook 'markdown-mode-hook #'yas-minor-mode)
 
-(pd-log-complete)
+
+(pd-log-loading-complete)
 (provide 'pd-yasnippet)

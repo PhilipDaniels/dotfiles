@@ -30,7 +30,7 @@
 ;; By default Emacs will initiate GC every 0.76 MB allocated (gc-cons-threshold
 ;; == 800000). Increase it to 20Mb.
 (setq gc-cons-threshold 20000000)
-(setq garbage-collection-messages t)
+(setq garbage-collection-messages nil)
 
 
 (setq hippie-expand-try-functions-list
@@ -47,5 +47,5 @@
         try-complete-lisp-symbol)
       )
 
-(pd-log-complete)
+(pd-log-loading-complete)
 (provide 'pd-misc)

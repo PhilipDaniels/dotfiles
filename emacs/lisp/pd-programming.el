@@ -14,8 +14,9 @@
 (require-package 'rustfmt)
 (require-package 'sass-mode)
 (require-package 'yaml-mode)
-
 (require 'pd-cpp)
+(pd-log-requires-complete)
+
 
 ;; The style I want to use in c++ mode.
 (c-add-style "pd-style"
@@ -76,5 +77,5 @@
 
 ;; (semantic-mode 1)
 
-(pd-log-complete)
+(pd-log-loading-complete)
 (provide 'pd-programming)

@@ -5,10 +5,11 @@
 (require-package 'unbound)          ;; Unbound provides the command describe-unbound-keys. Try a parameter of 8.
 (require-package 'recentf-ext)
 (require-package 'persistent-scratch)
-
 (require 'which-func)
 (require 'winner)
 (require 'recentf-ext)
+(pd-log-requires-complete)
+
 
 ;; Tramp mode.
 (setq tramp-default-method "sshx")
@@ -48,5 +49,6 @@
 
 (winner-mode 1)
 
-(pd-log-complete)
+
+(pd-log-loading-complete)
 (provide 'pd-modes)

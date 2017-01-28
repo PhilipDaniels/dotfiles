@@ -6,8 +6,9 @@
 (require-package 'gitignore-mode)
 (require-package 'magit)
 (require-package 'ssh-agency)
-
 (require 'pd)
+
+(pd-log-requires-complete)
 
 ;; Make commits done from the command line also use the Magit COMMIT_MSG mode.
 (global-git-commit-mode)
@@ -34,5 +35,5 @@
 (setenv "SSH_ASKPASS" "git-gui--askpass")
 
 
-(pd-log-complete)
+(pd-log-loading-complete)
 (provide 'pd-git)

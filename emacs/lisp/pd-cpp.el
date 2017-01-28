@@ -8,6 +8,7 @@
 ;;; because it is bad practice to do so in header files.
 
 (eval-when-compile (require 'pd))
+(pd-log-requires-complete)
 
 (defvar pd-cpp-use-std-namespace t
   "If non-nil, inserts 'using namespace std;' instead of 'using std::symbol;'")
@@ -387,5 +388,6 @@ performance reasons)."
 for the symbol just typed."
     nil "caut" pd-cpp-auto-keymap)
 
-(pd-log-complete)
+
+(pd-log-loading-complete)
 (provide 'pd-cpp)

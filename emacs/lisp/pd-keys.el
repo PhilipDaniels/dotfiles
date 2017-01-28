@@ -5,24 +5,23 @@
 ;; everything.
 
 (require-package 'expand-region)
-
 (require 'cycle-buffer)
 (require 'dired)
 (require 'expand-region)
 (require 'hideshow)
 (require 'windmove)
-
 (require 'pd)
 (require 'pd-git)
 (require 'pd-helm)
 (require 'pd-hydra)
+(pd-log-requires-complete)
 
 
 ;; When started in daemon mode, window-system will be nil (not 'w32), but
 ;; system-type will be 'cygwin, so we just assume that means we are using the
 ;; Win32 GUI version.
 (when (equal system-type 'cygwin)
-  (pd-log "On Cygwin, therefore making APPS function as a true hyper key (in GUI mode at least)")
+  (pd-log "On Cygwin, make APPS function as a true hyper key.")
   (setq w32-pass-apps-to-system nil w32-apps-modifier 'hyper)
   ;; The following helps in the terminal, however APPS still does not function
   ;; a true hyper key in the terminal because you cannot keep it pressed while
@@ -227,9 +226,10 @@
 (add-hook 'compilation-mode-hook (lambda () (pd-vs-minor-mode 1)))
 (add-hook 'gdb-mode-hook (lambda () (tool-bar-mode 1)))
 
-(pd-log "pd-vs-minor-mode defined and enabled for C mode, compilation mode and gdb mode.")
+(pd-log "pd-vs-minor-mode defined and enabled for C, gdb and compilation.")
 
-(pd-log-complete)
+
+(pd-log-loading-complete)
 (provide 'pd-keys)
 
 

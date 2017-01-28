@@ -315,5 +315,6 @@ file's full path regardless the file is run by `load' or
 interactively by `eval-buffer'."
   (expand-file-name "" (concat (file-name-directory (or load-file-name buffer-file-name)) relative-path)))
 
-(pd-log-complete)
+
+(pd-log-loading-complete)
 (provide 'pd)

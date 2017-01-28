@@ -2,6 +2,7 @@
 ;;; Usage:  (require 'pd-font)
 
 (require 'pd-theme)
+(pd-log-requires-complete)
 
 
 (defun pd-font-exists (font &optional frame)
@@ -74,5 +75,5 @@ search at index 0."
     ))
 
 
-(pd-log-complete)
+(pd-log-loading-complete)
 (provide 'pd-font)

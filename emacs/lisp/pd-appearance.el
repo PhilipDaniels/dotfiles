@@ -7,6 +7,7 @@
 (require 'windmove)
 (require 'pd)
 (require 'pd-theme)
+(pd-log-requires-complete)
 
 (setq ring-bell-function nil)
 (setq visible-bell 1)
@@ -22,7 +23,7 @@
 (setq default-frame-alist
       '((top . 0)
         (left . 0)
-        (width . 120)
+        (width . 110)
         (height . 68)
         (auto-raise . t)
         (cursor-color . "red")
@@ -82,7 +83,7 @@
 (paren-activate)
 (setq paren-match-face 'mode-line)
 
-(pd-log-complete)
+(pd-log-loading-complete)
 (provide 'pd-appearance)
 
 

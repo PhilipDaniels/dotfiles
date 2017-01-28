@@ -2,13 +2,14 @@
 ;;; Usage:  (require 'pd-hydra)
 
 (require-package 'hydra)
-
 (require 'buffer-move)
 (require 'cycle-buffer)
 (require 'winner)
 (require 'windmove)
 (require 'pd-helm)
 (require 'pd-theme)
+(pd-log-requires-complete)
+
 
 (defun pd-hydra-move-splitter-left (arg)
   "Move window splitter left."
@@ -179,5 +180,5 @@ Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
   )
 
 
-(pd-log-complete)
+(pd-log-loading-complete)
 (provide 'pd-hydra)

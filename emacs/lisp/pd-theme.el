@@ -46,6 +46,7 @@
 (require-package 'tangotango-theme)
 (require-package 'underwater-theme)
 (require-package 'zenburn-theme)
+(pd-log-requires-complete)
 
 
 (defvar pd-theme-current nil "The theme that was last loaded by pd-theme-load.")
@@ -122,5 +123,5 @@ Valid values are nil, 'dark and 'light."
 ;; Default decent theme if having problems with solarized.
 ;; (pd-theme-load 'gruvbox)
 
-(pd-log-complete)
+(pd-log-loading-complete)
 (provide 'pd-theme)

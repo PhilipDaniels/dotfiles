@@ -6,13 +6,12 @@
 
 (require-package 'helm)
 (require-package 'shackle)
-
 (require 'helm)
 (require 'helm-config)
 (require 'helm-grep)
 (require 'shackle)
 (require 'helm-misc)
-
+(pd-log-requires-complete)
 
 ;; Helm mode. Based on http://tuhdo.github.io/helm-intro.html
 (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
@@ -69,5 +68,5 @@
 (setq shackle-rules '(("\\`\\*helm.*?\\*\\'" :regexp t :align below :ratio 0.4)))
 
 
-(pd-log-complete)
+(pd-log-loading-complete)
 (provide 'pd-helm)
