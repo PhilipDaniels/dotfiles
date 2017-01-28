@@ -1,18 +1,6 @@
 ;;; Customizations related to fonts.
 ;;; Usage:  (require 'pd-font)
 
-;;; Note that many of these functions will fail if run in daemon mode before
-;;; initialization is complete, because there won't be a GUI frame for them to
-;;; use and/or the window system will not be fully initialized. find-font is the
-;;; main culprit. There is however a special non-visible daemon frame. See
-;;; https://github.com/syl20bnr/spacemacs/issues/6197 at 7 Jun 2016
-;;; http://emacs.stackexchange.com/questions/12351/when-to-call-find-font-if-launching-emacs-in-daemon-mode
-;;; https://github.com/syl20bnr/spacemacs/blob/master/core/core-display-init.el
-;;; http://emacs.1067599.n8.nabble.com/bug-23689-Daemon-mode-on-Windows-quot-w32-initialized-quot-is-set-too-early-td399455.html
-
-;;; Therefore, in my startup logic, the functions are invoked using deferred
-;;; execution.
-
 (require 'cl-lib)
 (require 'pd)
 (require 'pd-theme)
@@ -22,7 +10,7 @@
 ;; fonts. To determine the name that Emacs uses for a font, the easiest way I
 ;; know is to use the customize system to pick a default font, then save
 ;; options, the name of the font then appears in the .emacs file.
-(defvar pd-font-candidates '("Consolas-10"
+(defvar pd-font-candidates '("Consolas-14"
                              "Cousine-10"
                              "Source Code Pro-12"
                              "DejaVu Sans Mono-12"
@@ -92,21 +80,19 @@ search at index 0."
   (pd-font-set-candidate-font 0 (selected-frame) t))
 
 
-;; This will ensure that this functions is run when the first frame is created.
+;;; Note that many of these functions will fail if run in daemon mode before
+;;; initialization is complete, because there won't be a GUI frame for them to
+;;; use and/or the window system will not be fully initialized. find-font is the
+;;; main culprit. There is however a special non-visible daemon frame. See
+;;; https://github.com/syl20bnr/spacemacs/issues/6197 at 7 Jun 2016
+;;; http://emacs.stackexchange.com/questions/12351/when-to-call-find-font-if-launching-emacs-in-daemon-mode
+;;; https://github.com/syl20bnr/spacemacs/blob/master/core/core-display-init.el
+;;; http://emacs.1067599.n8.nabble.com/bug-23689-Daemon-mode-on-Windows-quot-w32-initialized-quot-is-set-too-early-td399455.html
+
+;;; Therefore, in my startup logic, the functions are invoked using deferred
+;;; execution: this will ensure that this function is run when the first frame
+;;; is created.
 (add-hook 'pd-focus-in-hook 'pd-font-select-first-valid-candidate)
-
-
-;; This ensures the right font is set in new frames when running in daemon mode.
-;; This works well since I figured out how to start everything reliably in
-;; daemon mode. If we are not in daemon mode (very rare these days) also ensure
-;; the first frame comes up with my desired font, but only if running in a
-;; graphical display, not the terminal.
-;; (if (daemonp)
-;;     (add-hook 'after-make-frame-functions
-;;               (lambda (frame) (pd-font-set-candidate-font 0 frame t)))
-;;   ;; And this ensures the right font is set when running in non-daemon mode.
-;;   (if (display-graphic-p)
-;;       (pd-font-set-candidate-font 0 (selected-frame) t)))
 
 
 (pd-log-loading-complete)

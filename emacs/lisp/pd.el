@@ -324,19 +324,19 @@ interactively by `eval-buffer'."
 ;; hence fonts are not loaded, until the first frame is created. This variable
 ;; and supporting function allow us to execute a list of functions when the
 ;; first frame is created. This allows us to setup fonts properly. See
-;; pd-font.el.
-;; See https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html#Startup-Summary
+;; pd-font.el and
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html#Startup-Summary
 (defvar pd-focus-in-hook nil
   "List of functions to run (once only) when the FOCUS-IN-HOOK runs.")
 
-(defun pd-focus-in-hook-run ()
+(defun pd-focus-in-hook-execute ()
   "A function that is called once when the FOCUS-IN-HOOK is executed."
-  (message "pd-focus-in-hook-run: Running %d pd-focus-in-hook functions." (length pd-focus-in-hook))
-;  (run-hooks 'pd-focus-in-hook)
-  (message "pd-focus-in-hook-run: pd-focus-in-hook functions executed.")
-  (remove-hook 'focus-in-hook 'pd-focus-in-hook-run))
+  (message "pd-focus-in-hook-execute: Executing %d pd-focus-in-hook functions." (length pd-focus-in-hook))
+  (run-hooks 'pd-focus-in-hook)
+  (message "pd-focus-in-hook-execute: Execution complete.")
+  (remove-hook 'focus-in-hook 'pd-focus-in-hook-execute))
 
-(add-hook 'focus-in-hook 'pd-focus-in-hook-run)
+(add-hook 'focus-in-hook 'pd-focus-in-hook-execute)
 
 
 (pd-log-loading-complete)

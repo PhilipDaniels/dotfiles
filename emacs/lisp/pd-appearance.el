@@ -22,10 +22,11 @@
 ;; This controls all frames that will be created.
 ;; See https://www.gnu.org/software/emacs/manual/html_node/emacs/Frame-Parameters.html
 (setq default-frame-alist
-      '((top . 0)
-        (left . 0)
-        (width . 130)
-        (height . 68)
+      '((fullscreen . maximized)
+        ;; (top . 0)
+        ;; (left . 0)
+        ;; (width . 130)
+        ;; (height . 68)
         (auto-raise . t)
         (cursor-color . "red")
         ))
