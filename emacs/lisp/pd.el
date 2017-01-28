@@ -315,6 +315,29 @@ file's full path regardless the file is run by `load' or
 interactively by `eval-buffer'."
   (expand-file-name "" (concat (file-name-directory (or load-file-name buffer-file-name)) relative-path)))
 
+(defmacro pd-run-once-when-idle (idle-secs &rest body)
+  "Run the form BODY once, after Emacs has been idle for IDLE-SECS."
+  `(run-with-idle-timer ,idle-secs nil (lambda () ,@body)))
+
+
+;; When running in daemon mode the window system is not fully initialized, and
+;; hence fonts are not loaded, until the first frame is created. This variable
+;; and supporting function allow us to execute a list of functions when the
+;; first frame is created. This allows us to setup fonts properly. See
+;; pd-font.el.
+;; See https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html#Startup-Summary
+(defvar pd-focus-in-hook nil
+  "List of functions to run (once only) when the FOCUS-IN-HOOK runs.")
+
+(defun pd-focus-in-hook-run ()
+  "A function that is called once when the FOCUS-IN-HOOK is executed."
+  (message "pd-focus-in-hook-run: Running %d pd-focus-in-hook functions." (length pd-focus-in-hook))
+;  (run-hooks 'pd-focus-in-hook)
+  (message "pd-focus-in-hook-run: pd-focus-in-hook functions executed.")
+  (remove-hook 'focus-in-hook 'pd-focus-in-hook-run))
+
+(add-hook 'focus-in-hook 'pd-focus-in-hook-run)
+
 
 (pd-log-loading-complete)
 (provide 'pd)

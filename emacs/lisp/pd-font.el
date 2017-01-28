@@ -3,18 +3,18 @@
 
 ;;; Note that many of these functions will fail if run in daemon mode before
 ;;; initialization is complete, because there won't be a GUI frame for them to
-;;; use and/or the window system will not be fully initialized. Therefore the
-;;; functions are invoked using deferred execution.
+;;; use and/or the window system will not be fully initialized. find-font is the
+;;; main culprit. There is however a special non-visible daemon frame. See
+;;; https://github.com/syl20bnr/spacemacs/issues/6197 at 7 Jun 2016
+;;; http://emacs.stackexchange.com/questions/12351/when-to-call-find-font-if-launching-emacs-in-daemon-mode
+;;; https://github.com/syl20bnr/spacemacs/blob/master/core/core-display-init.el
+;;; http://emacs.1067599.n8.nabble.com/bug-23689-Daemon-mode-on-Windows-quot-w32-initialized-quot-is-set-too-early-td399455.html
 
-;; When emacs starts in daemon mode there is no frame and hence some GUI related
-;; functions such as find-font do not work. There is however a special
-;; non-visible daemon frame.
-;; See https://github.com/syl20bnr/spacemacs/issues/6197 at 7 Jun 2016
-;; http://emacs.stackexchange.com/questions/12351/when-to-call-find-font-if-launching-emacs-in-daemon-mode
-;; and https://github.com/syl20bnr/spacemacs/blob/master/core/core-display-init.el
-;; and http://emacs.1067599.n8.nabble.com/bug-23689-Daemon-mode-on-Windows-quot-w32-initialized-quot-is-set-too-early-td399455.html
+;;; Therefore, in my startup logic, the functions are invoked using deferred
+;;; execution.
 
 (require 'cl-lib)
+(require 'pd)
 (require 'pd-theme)
 (pd-log-requires-complete)
 
@@ -23,7 +23,6 @@
 ;; know is to use the customize system to pick a default font, then save
 ;; options, the name of the font then appears in the .emacs file.
 (defvar pd-font-candidates '("Consolas-10"
-                             "Consolas-12"
                              "Cousine-10"
                              "Source Code Pro-12"
                              "DejaVu Sans Mono-12"
@@ -35,7 +34,6 @@
                              "Liberation Mono-12"
                              "CPMono_v07 Plain-12"
                              "Calibri-12"
-                             "foofont"
                              )
   "Defines a list of fonts that I like. The fonts are in priority order.")
 
@@ -53,11 +51,8 @@ exist on this system."
   "Returns the first valid candidate font."
   (find-if (lambda (f) (pd-font-existsp f)) pd-font-candidates))
 
-
-
 (defvar pd-font-index nil
   "Specifies the index of the candidate font that is currently selected.")
-
 
 (defun pd-font-set-candidate-font (step frame &optional show-msg)
   "Scans forwards (if STEP is 1) or backwards (if STEP is -1) through the list
@@ -90,6 +85,28 @@ search at index 0."
     (if (not font-is-valid)
         (message "No valid fonts found in candidates: %s" pd-font-candidates))
     ))
+
+(defun pd-font-select-first-valid-candidate ()
+  "Selects the first valid candidate font."
+  (pd-font-remove-non-existent-candidates)
+  (pd-font-set-candidate-font 0 (selected-frame) t))
+
+
+;; This will ensure that this functions is run when the first frame is created.
+(add-hook 'pd-focus-in-hook 'pd-font-select-first-valid-candidate)
+
+
+;; This ensures the right font is set in new frames when running in daemon mode.
+;; This works well since I figured out how to start everything reliably in
+;; daemon mode. If we are not in daemon mode (very rare these days) also ensure
+;; the first frame comes up with my desired font, but only if running in a
+;; graphical display, not the terminal.
+;; (if (daemonp)
+;;     (add-hook 'after-make-frame-functions
+;;               (lambda (frame) (pd-font-set-candidate-font 0 frame t)))
+;;   ;; And this ensures the right font is set when running in non-daemon mode.
+;;   (if (display-graphic-p)
+;;       (pd-font-set-candidate-font 0 (selected-frame) t)))
 
 
 (pd-log-loading-complete)
