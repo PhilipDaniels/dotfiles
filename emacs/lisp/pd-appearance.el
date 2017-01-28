@@ -7,6 +7,7 @@
 (require 'windmove)
 (require 'pd)
 (require 'pd-theme)
+(require 'pd-font)
 (pd-log-requires-complete)
 
 (setq ring-bell-function nil)
@@ -23,20 +24,31 @@
 (setq default-frame-alist
       '((top . 0)
         (left . 0)
-        (width . 110)
+        (width . 130)
         (height . 68)
         (auto-raise . t)
         (cursor-color . "red")
         ))
 
-;; This ensures the right font is set when running in daemon mode, but it is
-;; no longer required since my preferred method is now to start a normal Emacs
-;; window upon login and turn that into a daemon - see the bottom of this file.
-;;(add-hook 'after-make-frame-functions
-;;        (lambda (frame) (pd-set-candidate-font 0 frame t)))
-;; And this ensures the right font is set when running in non-daemon mode.
-;; (if (display-graphic-p)
-;;    (pd-set-candidate-font 0 (selected-frame) t))
+(if (or (equal window-system 'w32) (equal system-type 'cygwin))
+    (progn
+      (add-to-list 'default-frame-alist '(font . "Consolas-10"))
+      (pd-log "On Windows; Consolas-10 added to default-frame-alist."))
+  (add-to-list 'default-frame-alist '(font . "Cousine-10"))
+  (pd-log "On Linux; Cousine-10 added to default-frame-alist")
+  )
+
+;; This ensures the right font is set in new frames when running in daemon mode.
+;; This works well since I figured out how to start everything reliably in
+;; daemon mode. If we are not in daemon mode (very rare these days) also ensure
+;; the first frame comes up with my desired font, but only if running in a
+;; graphical display, not the terminal.
+;; (if (daemonp)
+;;     (add-hook 'after-make-frame-functions
+;;               (lambda (frame) (pd-font-set-candidate-font 0 frame t)))
+;;   ;; And this ensures the right font is set when running in non-daemon mode.
+;;   (if (display-graphic-p)
+;;       (pd-font-set-candidate-font 0 (selected-frame) t)))
 
 
 ;; Some example frame titles. See Emacs wiki.

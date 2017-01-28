@@ -7,6 +7,7 @@
 (require 'winner)
 (require 'windmove)
 (require 'pd-helm)
+(require 'pd-font)
 (require 'pd-theme)
 (pd-log-requires-complete)
 
@@ -87,8 +88,8 @@
   "Adjust font size and face"
   ("+" text-scale-increase "larger")
   ("-" text-scale-decrease "smaller")
-  ("n" (lambda () (interactive) (pd-set-candidate-font 1 (selected-frame) t)) "next")
-  ("p" (lambda () (interactive) (pd-set-candidate-font -1 (selected-frame) t)) "prev")
+  ("n" (lambda () (interactive) (pd-font-set-candidate-font 1 (selected-frame) t)) "next")
+  ("p" (lambda () (interactive) (pd-font-set-candidate-font -1 (selected-frame) t)) "prev")
   ("q" nil "cancel"))
 
 ;; Create a hydra to switch themes. We use the Emacs 24 theme engine (aka

@@ -1,13 +1,10 @@
 ;;; Customizations related to fonts.
 ;;; Usage:  (require 'pd-font)
 
-(require 'pd-theme)
-(pd-log-requires-complete)
-
-
-(defun pd-font-exists (font &optional frame)
-  "Return a font if it exists, nil otherwise. Does not work in daemon mode."
-  (find-font (font-spec :name font) frame))
+;;; Note that many of these functions will fail if run in daemon mode before
+;;; initialization is complete, because there won't be a GUI frame for them to
+;;; use and/or the window system will not be fully initialized. Therefore the
+;;; functions are invoked using deferred execution.
 
 ;; When emacs starts in daemon mode there is no frame and hence some GUI related
 ;; functions such as find-font do not work. There is however a special
@@ -17,13 +14,16 @@
 ;; and https://github.com/syl20bnr/spacemacs/blob/master/core/core-display-init.el
 ;; and http://emacs.1067599.n8.nabble.com/bug-23689-Daemon-mode-on-Windows-quot-w32-initialized-quot-is-set-too-early-td399455.html
 
+(require 'cl-lib)
+(require 'pd-theme)
+(pd-log-requires-complete)
+
 ;; See https://github.com/chrissimpkins/codeface to get a big zip of ttf and otf
 ;; fonts. To determine the name that Emacs uses for a font, the easiest way I
 ;; know is to use the customize system to pick a default font, then save
 ;; options, the name of the font then appears in the .emacs file.
 (defvar pd-font-candidates '("Consolas-10"
                              "Consolas-12"
-                             "Consolas-11"
                              "Cousine-10"
                              "Source Code Pro-12"
                              "DejaVu Sans Mono-12"
@@ -35,14 +35,31 @@
                              "Liberation Mono-12"
                              "CPMono_v07 Plain-12"
                              "Calibri-12"
+                             "foofont"
                              )
-  "Defines a list of fonts to be tried in order.")
+  "Defines a list of fonts that I like. The fonts are in priority order.")
+
+(defun pd-font-existsp (font &optional frame)
+  "Return a font if it exists, nil otherwise. Will fail if run in
+daemon mode before initialization is complete."
+  (find-font (font-spec :name font) frame))
+
+(defun pd-font-remove-non-existent-candidates ()
+  "Removes font elements from PD-FONT-CANDIDATES that do not
+exist on this system."
+  (setq pd-font-candidates (cl-remove-if-not 'pd-font-existsp pd-font-candidates)))
+
+(defun pd-font-first-candidate ()
+  "Returns the first valid candidate font."
+  (find-if (lambda (f) (pd-font-existsp f)) pd-font-candidates))
+
+
 
 (defvar pd-font-index nil
   "Specifies the index of the candidate font that is currently selected.")
 
 
-(defun pd-set-candidate-font (step frame &optional show-msg)
+(defun pd-font-set-candidate-font (step frame &optional show-msg)
   "Scans forwards (if STEP is 1) or backwards (if STEP is -1) through the list
 pd-font-candidates looking for a valid font. If STEP is 0, the current font is
 reset to the first font. The first time this function is called it starts the
@@ -62,7 +79,7 @@ search at index 0."
 
       (setq next-font (nth pd-font-index pd-font-candidates)
             num-seen (1+ num-seen)
-            font-is-valid (pd-font-exists next-font frame))
+            font-is-valid (pd-font-existsp next-font frame))
 
       (if font-is-valid
           (progn
