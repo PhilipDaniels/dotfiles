@@ -61,7 +61,7 @@
 (setq rm-blacklist ".*")         ;; List of lighter strings or simply ".*"
 (rich-minority-mode 1)
 
-(setq scroll-margin 3)
+(setq scroll-margin 5)
 (setq scroll-conservatively 10000)
 (setq scroll-error-top-bottom t)
 (setq scroll-preserve-screen-position t)

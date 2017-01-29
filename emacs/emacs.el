@@ -69,6 +69,11 @@ re-downloaded in order to locate PACKAGE.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; TODO
 ;; [ ] Check everything still works in Linux.
+;; [ ] Write a shell script to byte-compile my /lisp directory.
+;; [ ] Setup auto-compile for my /lisp directory so that a local edit of any
+;;     file in there is automatically byte-compiled.
+;; [ ] Multiple cursors.
+;; [ ] Writable dired.
 
 ;; [ ] Requires in my files. Nominal order is require-package, require built-ins,
 ;;     require pd-*, however, should we use eval-when-compile, as seen in pd-cpp?
@@ -79,9 +84,6 @@ re-downloaded in order to locate PACKAGE.
 ;; [ ] Should we use ' or #' ?
 
 ;; [ ] Move to use-package - this looks awesome.
-;; [ ] Write a shell script to byte-compile my /lisp directory.
-;; [ ] Setup auto-compile for my /lisp directory so that a local edit of any
-;;     file in there is automatically byte-compiled.
 
 ;; [ ] Windows compatible keybindings for copy/paste/save/find and ctrl-arrow
 ;;     for word movement
@@ -97,6 +99,8 @@ re-downloaded in order to locate PACKAGE.
 ;; [ ] Spell checking.
 ;; [ ] Flymake
 ;; [ ] Proper bookmarks.
+;; [ ] C/C++/Rust development environment.
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tricks

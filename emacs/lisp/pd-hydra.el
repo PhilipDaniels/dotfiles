@@ -86,10 +86,10 @@
 
 (defhydra hydra-fonts ()
   "Adjust font size and face"
-  ("+" text-scale-increase "larger")
-  ("-" text-scale-decrease "smaller")
-  ("n" (lambda () (interactive) (pd-font-set-candidate-font 1 (selected-frame) t)) "next")
-  ("p" (lambda () (interactive) (pd-font-set-candidate-font -1 (selected-frame) t)) "prev")
+  ("<up>" text-scale-increase "larger")
+  ("<down>" text-scale-decrease "smaller")
+  ("<right>" (lambda () (interactive) (pd-font-set-candidate-font 1 (selected-frame) t)) "next")
+  ("<left>" (lambda () (interactive) (pd-font-set-candidate-font -1 (selected-frame) t)) "prev")
   ("q" nil "cancel"))
 
 ;; Create a hydra to switch themes. We use the Emacs 24 theme engine (aka
@@ -130,7 +130,7 @@
   "
 Favourite : _sd_ Sol Dark       _sl_ Sol Light       _zb_ Zenburn        _ob_ Obsidian        _ty_ TTY Dark
 Dark      : _gd_ Gruber Darker  _cp_ Cyberpunk       _gb_ Gruvbox        _bb_ BusyBee         _uw_ Underwater
-            _md_ Minimal Dark    _mn_ Monokai        _ml_ Molokai        _cf_ Calm Forest
+            _md_ Minimal Dark   _mn_ Monokai         _ml_ Molokai        _cf_ Calm Forest
 Light     : _lv_ Leuven         _hl_ Hemisu-Light    _mi_ Minimal Light  _ao_ Aalto Light
 Grey      : _ma_ Material       _az_ Anti-Zenburn    _fu_ Flat UI        _sm_ Soft Morning    _tt_ TangoTango
             _je_ JEdit Grey     _cb_ Charcoal Black
