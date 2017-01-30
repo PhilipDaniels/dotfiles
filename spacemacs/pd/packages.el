@@ -30,7 +30,7 @@
 ;;; Code:
 
 (defconst pd-packages
-  '()
+  '(helm)
   "The list of Lisp packages required by the pd layer.
 
 Each entry is either:
@@ -57,6 +57,15 @@ Each entry is either:
 
       - A list beginning with the symbol `recipe' is a melpa
         recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
+
+
+(defun pd/post-init-helm ()
+  "My helm customizations."
+  (eval-after-load 'helm
+    ;; Make the selection line really prominent.
+    '(if (facep 'helm-selection)
+      (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil)))
+  )
 
 
 ;;; packages.el ends here

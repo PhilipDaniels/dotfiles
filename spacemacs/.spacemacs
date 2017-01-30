@@ -55,6 +55,7 @@ values."
      ;; syntax-checking
      theming
      ;; version-control
+     pd
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
