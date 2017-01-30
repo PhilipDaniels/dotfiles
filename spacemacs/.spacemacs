@@ -310,6 +310,20 @@ you should place your code here."
 
   (global-hl-line-mode -1)
   (setq powerline-default-separator 'arrow)
+  (setq tramp-default-method "sshx")
+  (setq tramp-default-user "phil")
+  (setq dired-listing-switches "-laGh1v --group-directories-first")
+  (setq dired-dwim-target t)
+  (setq recentf-max-menu-items 50)
+  (setq recentf-max-saved-items 100)
+  (setq confirm-nonexistent-file-or-buffer nil)
+  (setq delete-by-moving-to-trash t)
+  (setq disabled-command-function nil)
+  (setq sentence-end-double-space nil)
+  (setq user-full-name "Philip Daniels")
+  (setq user-mail-address "philip.daniels1971@gmail.com")
+  (setq require-final-newline t)
+  (setq scroll-margin 5)
 
   ;; Get color-theme-solarized working. It is specified as an additional package
   ;; above. First we setup some theme modifications - we must do this *before*
@@ -329,6 +343,7 @@ you should place your code here."
   (set-terminal-parameter nil 'background-mode 'dark)
   (set-frame-parameter nil 'background-mode 'dark)
   (spacemacs/load-theme 'solarized)
+  ;; TODO Does not work (set-cursor-color "red")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
