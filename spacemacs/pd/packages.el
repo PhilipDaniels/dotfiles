@@ -1,3 +1,11 @@
+;;; See https://github.com/syl20bnr/spacemacs/blob/master/doc/LAYERS.org#anatomy-of-a-layer
+
+;;; It contains this list of packages of the layer and the actual configuration
+;;; for the packages included in the layer. This file is loaded after layers.el.
+;;; It must define a variable called <layer>-packages, which should be a list of
+;;; all the packages that this layer needs.
+
+
 ;;; packages.el --- pd layer packages file for Spacemacs.
 ;;
 ;; Copyright (c) 2012-2016 Sylvain Benner & Contributors
@@ -58,6 +66,7 @@ Each entry is either:
       - A list beginning with the symbol `recipe' is a melpa
         recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
 
+(setq pd-dir (spacemacs//get-package-directory 'pd))
 
 (defun pd/post-init-helm ()
   "My helm customizations."
@@ -67,5 +76,12 @@ Each entry is either:
       (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil)))
   )
 
+(defun pd-snippets-initialize ()
+  "My yasnippet customizations. Adds my personal snippet dir to
+the head of the list, so that they have priority."
+  ;; See http://capitaomorte.github.io/yasnippet/
+  (let ((snip-dir (expand-file-name "snippets" pd-dir)))
+    (add-to-list 'yas-snippet-dirs snip-dir)
+    (yas-load-directory snip-dir)))
 
-;;; packages.el ends here
+(with-eval-after-load 'yasnippet (pd-snippets-initialize))
