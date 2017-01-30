@@ -48,13 +48,14 @@ values."
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      ;; syntax-checking
+     theming
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(color-theme-solarized)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -290,6 +291,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+
   )
 
 (defun dotspacemacs/user-config ()
@@ -299,6 +301,28 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  (global-hl-line-mode -1)
+  (setq powerline-default-separator 'arrow)
+
+  ;; Get color-theme-solarized working. It is specified as an additional package
+  ;; above. First we setup some theme modifications - we must do this *before*
+  ;; we load the theme. Note that the color-theme-solarized package appears in
+  ;; the list of themes as plain old 'solarized'.
+  (setq theming-modifications
+        ;; Provide a sort of "on-off" modeline whereby the current buffer has a nice
+        ;; bright blue background, and all the others are in cream.
+        '((solarized (mode-line :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
+                     (powerline-active1 :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
+                     (powerline-active2 :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
+                     (mode-line-inactive :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
+                     (power-line-inactive1 :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
+                     (power-line-inactive2 :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
+                     )))
+  ;; Now we can load the theme.
+  (set-terminal-parameter nil 'background-mode 'dark)
+  (set-frame-parameter nil 'background-mode 'dark)
+  (spacemacs/load-theme 'solarized)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
