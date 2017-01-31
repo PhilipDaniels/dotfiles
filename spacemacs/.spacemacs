@@ -307,6 +307,7 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (push "~/repos/dotfiles/spacemacs/lisp/" load-path)
 
   (global-hl-line-mode -1)
   (setq powerline-default-separator 'arrow)

@@ -38,7 +38,7 @@
 ;;; Code:
 
 (defconst pd-packages
-  '(helm)
+  '(helm magit)
   "The list of Lisp packages required by the pd layer.
 
 Each entry is either:
@@ -113,6 +113,43 @@ interactively by `eval-buffer'."
     '(if (facep 'helm-selection)
       (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil)))
   )
+
+(defun pd/post-init-magit ()
+  "My git customizations."
+  (eval-after-load 'magit
+    ;; Make commits done from the command line also use the Magit COMMIT_MSG mode.
+    '(progn (
+             (global-git-commit-mode t)
+             (setq magit-push-always-verify nil)))
+    ;; (add-hook 'magit-diff-mode-hook 'pd-hide-dos-eol)
+    ;; (add-hook 'git-timemachine-mode-hook 'pd-hide-dos-eol)
+    ;; (add-hook 'magit-mode-popup-hook 'pd-turn-off-trailing-whitespace-display)
+    )
+  )
+
+
+;; (defun pd/init-ssh-agency ()
+;;   "My ssh-agency customizations."
+;;   ;(use-package ssh-agency
+;;   ;  :defer t
+;;   ;  )
+
+;;   (eval-after-load 'ssh-agency
+;;     ;; Configure Magit so that it will either use my existing ssh-agent, or
+;;     ;; prompt for passwords if none is yet known. In Cygwin, this will require
+;;     ;; X to be started.
+;;     ;; From https://github.com/magit/magit/wiki/Pushing-with-Magit-from-Windows#openssh-passphrase-caching-via-ssh-agent
+;;     ;; Prompt for HTTPS passwords if not cached.
+;;     (setenv "GIT_ASKPASS" "git gui--askpass")
+;;     ;; Make ssh-ahency prompt for my ssh passphrase using a graphical prompt.
+;;     ;; This should in fact not be necessary, because ssh-agent should be started
+;;     ;; from my cygwin login script.
+;;     (setenv "SSH_ASKPASS" "git gui--askpass")
+;;     (when (eq system-type 'cygwin)
+;;       (setq ssh-agency-add-executable "/bin/ssh-add.exe")
+;;       (setq ssh-agency-agent-executable "/bin/ssh-agent.exe"))
+;;     )
+;;   )
 
 (defun pd-snippets-initialize ()
   "My yasnippet customizations. Adds my personal snippet dir to
