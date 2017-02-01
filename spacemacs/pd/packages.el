@@ -38,7 +38,7 @@
 ;;; Code:
 
 (defconst pd-packages
-  '(helm magit ssh-agency)
+  '(helm magit ssh-agency persistent-scratch recentf-ext)
   "The list of Lisp packages required by the pd layer.
 
 Each entry is either:
@@ -118,3 +118,14 @@ Each entry is either:
       (when (eq system-type 'cygwin)
         (setq ssh-agency-add-executable "/bin/ssh-add.exe")
         (setq ssh-agency-agent-executable "/bin/ssh-agent.exe")))))
+
+(defun pd/init-persistent-scratch ()
+  "My persistent-scratch customizations.."
+  (use-package persistent-scratch
+    :config
+    (persistent-scratch-setup-default)))
+
+(defun pd/init-recentf-ext ()
+  "My recentf-ext customizations. This makes recentf store
+directories too. There is no customization per se."
+  (use-package recentf-ext))
