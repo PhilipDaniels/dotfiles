@@ -319,6 +319,9 @@ source file name as a prefix."
 
 (defun pd-get-full-path (relative-path)
   "Return the full path of relative-path, relative to caller's file location.
+This does not always work, if files load other files you can be relative to
+the original file. In other words, it does not give the path of a lisp file
+on disk.
 
 Example: If you have this line
  (pd-get-full-path \"../xyz.el\")

@@ -76,16 +76,15 @@ Each entry is either:
 
 (defun pd/post-init-magit ()
   "My git customizations."
-  (eval-after-load 'magit
-    ;; Make commits done from the command line also use the Magit COMMIT_MSG mode.
-    '(progn (
-             (global-git-commit-mode t)
-             (setq magit-push-always-verify nil)))
+  (use-package magit
+    :config
+    (progn
+      ;; Make commits done from the command line also use the Magit COMMIT_MSG mode.
+      (global-git-commit-mode)
+      (setq magit-push-always-verify nil))))
     ;; (add-hook 'magit-diff-mode-hook 'pd-hide-dos-eol)
     ;; (add-hook 'git-timemachine-mode-hook 'pd-hide-dos-eol)
     ;; (add-hook 'magit-mode-popup-hook 'pd-turn-off-trailing-whitespace-display)
-    )
-  )
 
 
 ;; (defun pd/init-ssh-agency ()

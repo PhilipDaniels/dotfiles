@@ -310,6 +310,8 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (push "~/repos/dotfiles/spacemacs/lisp/" load-path)
 
+  (add-hook 'pd-focus-in-hook (lambda () (message "Host = %s, system-type=%s, window-system=%s" system-name system-type window-system)))
+
   (global-hl-line-mode -1)
   (setq powerline-default-separator 'arrow)
   (setq tramp-default-method "sshx")
