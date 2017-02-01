@@ -43,7 +43,8 @@ values."
 
      ;; Tools and support.
      helm
-     ;; auto-completion
+     (auto-completion :variables  ;; brings in yasnippet. Expansion key is 'M-/'.
+                      auto-completion-private-snippets-directory "~/repos/dotfiles/spacemacs/pd/snippets")
      ;; better-defaults
      emacs-lisp
      git
