@@ -66,13 +66,23 @@ Each entry is either:
       - A list beginning with the symbol `recipe' is a melpa
         recipe.  See: https://github.com/milkypostman/melpa#recipe-format")
 
+
+(defun pd-set-helm-appearance ()
+  ;; Make the selection line really prominent.
+  (if (facep 'helm-selection)
+      (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil))
+  )
+
 (defun pd/post-init-helm ()
   "My helm customizations."
-  (eval-after-load 'helm
-    ;; Make the selection line really prominent.
-    '(if (facep 'helm-selection)
-      (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil)))
-  )
+  (use-package helm
+    :config
+    (progn
+      (add-hook 'pd-focus-in-hook 'pd-set-helm-appearance)
+      (add-to-list 'helm-mini-default-sources 'helm-source-files-in-current-dir 'append)
+      (setq-default helm-buffer-max-length nil)
+      (setq-default helm-ff-newfile-prompt-p nil)
+      )))
 
 (defun pd/post-init-magit ()
   "My git customizations."
