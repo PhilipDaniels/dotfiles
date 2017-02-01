@@ -71,6 +71,7 @@ Each entry is either:
   ;; Make the selection line really prominent.
   (if (facep 'helm-selection)
       (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil))
+  (set-cursor-color "red")
   )
 
 (defun pd/post-init-helm ()
