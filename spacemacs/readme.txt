@@ -1,6 +1,17 @@
 TODO
 ====
 No backups or temp files
+Parentheses with mic-paren
+Cursor color.
+pd-appearance - there are still some things I don't have.
+pd-hydras - can it do things that Spacemacs can't?
+pd-cpp - not up to Spacemacs spec
+Keybindings need work
+  need hyper key on Linux.
+pd-font - not ported. Specify more fonts.
+Test on Windows.
+Do not delete emacs.bak - it is the one I want to keep.
+Repeat last command = Ctrl-y.
 
 
 Installation
