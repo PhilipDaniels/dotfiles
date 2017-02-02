@@ -25,7 +25,7 @@
 ;;(define-key global-map (kbd "<f2>")      'bmkp-next-bookmark)
 ;;(define-key global-map (kbd "S-<f2>")    'bmkp-previous-bookmark)
 ;;(define-key global-map (kbd "C-<f2>")    'bmkp-toggle-autonamed-bookmark-set/delete)
-(define-key global-map (kbd "M-<f2>")    'helm-filtered-bookmarks)
+;;(define-key global-map (kbd "M-<f2>")    'helm-filtered-bookmarks)
 (define-key global-map (kbd "<f9>")      'cycle-buffer-backward-permissive)
 (define-key global-map (kbd "<f10>")     'cycle-buffer-permissive)
 (define-key global-map (kbd "S-<f9>")    'cycle-buffer-backward)
@@ -57,8 +57,14 @@
 (define-key global-map (kbd "M-<down>")    'windmove-down)
 (define-key global-map (kbd "M-<left>")    'windmove-left)
 (define-key global-map (kbd "M-<right>")   'windmove-right)
-(define-key global-map (kbd "C-M-<left>")  'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
-(define-key global-map (kbd "C-M-<right>") 'end-of-defun)
+(define-key global-map (kbd "M-S-<up>")    'buf-move-up)
+(define-key global-map (kbd "M-S-<down>")  'buf-move-down)
+(define-key global-map (kbd "M-S-<left>")  'buf-move-left)
+(define-key global-map (kbd "M-S-<right>") 'buf-move-right)
+
+
+;;(define-key global-map (kbd "C-M-<left>")  'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
+;;(define-key global-map (kbd "C-M-<right>") 'end-of-defun)
 ;;(pd-log "Arrow keys defined.")
 
 ;; ******************* Windows compatible keybindings  ********************
