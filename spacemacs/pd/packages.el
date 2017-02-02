@@ -38,7 +38,14 @@
 ;;; Code:
 
 (defconst pd-packages
-  '(helm magit ssh-agency persistent-scratch recentf-ext)
+  '(helm
+    magit
+    ssh-agency
+    persistent-scratch
+    recentf-ext
+    (buffer-move :location local)
+    (cycle-buffer :location local)
+    )
   "The list of Lisp packages required by the pd layer.
 
 Each entry is either:
@@ -71,8 +78,7 @@ Each entry is either:
   ;; Make the selection line really prominent.
   (if (facep 'helm-selection)
       (set-face-attribute 'helm-selection nil :background "red" :foreground "white" :inverse-video nil))
-  (set-cursor-color "red")
-  )
+  (set-cursor-color "#b58900"))
 
 (defun pd/post-init-helm ()
   "My helm customizations."
@@ -129,3 +135,9 @@ Each entry is either:
   "My recentf-ext customizations. This makes recentf store
 directories too. There is no customization per se."
   (use-package recentf-ext))
+
+(defun pd/init-buffer-move ()
+  (use-package buffer-move))
+
+(defun pd/init-cycle-buffer ()
+  (use-package cycle-buffer))

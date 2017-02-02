@@ -308,7 +308,7 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (push "~/repos/dotfiles/spacemacs/lisp/" load-path)
+  ;;(push "~/repos/dotfiles/spacemacs/lisp/" load-path)
 
   (add-hook 'pd-focus-in-hook (lambda () (message "Host = %s, system-type=%s, window-system=%s" system-name system-type window-system)))
 

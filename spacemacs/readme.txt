@@ -1,9 +1,6 @@
 TODO
 ====
-Red cursor
-Stop prompting to create files
 No backups or temp files
-dotspacemacs-scratch-mode - org mode for persistent scratch
 
 
 Installation
