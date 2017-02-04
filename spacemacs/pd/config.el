@@ -17,3 +17,8 @@
   "List of functions to run (once only) when the FOCUS-IN-HOOK runs.")
 
 (add-hook 'focus-in-hook 'pd-focus-in-hook-execute)
+
+;; Some colors from solarized.
+(defconst pd-sol-yellow "#b58900")
+(defconst pd-sol-blue "#2075c7")
+(defconst pd-sol-cream "#e9e2cb")

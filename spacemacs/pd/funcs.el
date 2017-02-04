@@ -290,10 +290,15 @@ If region is active, apply to active region instead."
 
 (defun pd-focus-in-hook-execute ()
   "A function that is called once when the FOCUS-IN-HOOK is executed."
-  (message "pd-focus-in-hook-execute: Executing %d pd-focus-in-hook functions." (length pd-focus-in-hook))
-  (run-hooks 'pd-focus-in-hook)
-  (message "pd-focus-in-hook-execute: Execution complete.")
-  (remove-hook 'focus-in-hook 'pd-focus-in-hook-execute))
+  (when (> (length pd-focus-in-hook) 0)
+    (message "pd-focus-in-hook-execute: Executing %d pd-focus-in-hook functions." (length pd-focus-in-hook))
+    (run-hooks 'pd-focus-in-hook)
+    (message "pd-focus-in-hook-execute: Execution complete.")
+    (remove-hook 'focus-in-hook 'pd-focus-in-hook-execute)))
+
+(defun pd-log-sys-info ()
+  "Logs system info."
+  (message "Host = %s, system-type=%s, window-system=%s" system-name system-type window-system))
 
 (defun pd-log (message)
   "Logs a message with incremental time since last message and

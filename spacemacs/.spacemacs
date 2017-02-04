@@ -44,7 +44,9 @@ values."
      ;; Tools and support.
      helm
      (auto-completion :variables  ;; brings in yasnippet. Expansion key is 'M-/'.
-                      auto-completion-private-snippets-directory "~/repos/dotfiles/spacemacs/pd/snippets")
+                      auto-completion-private-snippets-directory "~/repos/dotfiles/spacemacs/pd/snippets"
+                      auto-completion-tab-key-behavior 'complete
+                      auto-completion-complete-with-key-sequence-delay 0.2)
      ;; better-defaults
      emacs-lisp
      git
@@ -137,7 +139,8 @@ values."
    dotspacemacs-themes '(spacemacs-dark
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
-   dotspacemacs-colorize-cursor-according-to-state t
+   ;; PD: This must be non-nil if we want to set our own cursor color!
+   dotspacemacs-colorize-cursor-according-to-state nil
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
@@ -298,7 +301,6 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-
   )
 
 (defun dotspacemacs/user-config ()
@@ -308,10 +310,6 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  ;;(push "~/repos/dotfiles/spacemacs/lisp/" load-path)
-
-  (add-hook 'pd-focus-in-hook (lambda () (message "Host = %s, system-type=%s, window-system=%s" system-name system-type window-system)))
-
   (global-hl-line-mode -1)
   (setq powerline-default-separator 'arrow)
   (setq tramp-default-method "sshx")
@@ -334,20 +332,31 @@ you should place your code here."
   ;; we load the theme. Note that the color-theme-solarized package appears in
   ;; the list of themes as plain old 'solarized'.
   (setq theming-modifications
-        ;; Provide a sort of "on-off" modeline whereby the current buffer has a nice
-        ;; bright blue background, and all the others are in cream.
-        '((solarized (mode-line :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
-                     (powerline-active1 :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
-                     (powerline-active2 :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
-                     (mode-line-inactive :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
-                     (power-line-inactive1 :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
-                     (power-line-inactive2 :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
-                     )))
+        '((solarized
+           ;; Provide a sort of "on-off" modeline whereby the current buffer has a nice
+           ;; bright blue background, and all the others are in cream.
+           ;; TODO: Change to use variables here. However, got error:
+           ;; (Spacemacs) Error in dotspacemacs/user-config: Wrong type argument: stringp, pd-blue
+           (mode-line :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
+           (powerline-active1 :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
+           (powerline-active2 :foreground "#e9e2cb" :background "#2075c7" :inverse-video nil)
+           (mode-line-inactive :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
+           (powerline-inactive1 :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
+           (powerline-inactive2 :foreground "#2075c7" :background "#e9e2cb" :inverse-video nil)
+           ;; Make a really prominent helm selection line.
+           (helm-selection :foreground "white" :background "red" :inverse-video nil)
+           ;; See comment above about dotspacemacs-colorize-cursor-according-to-state.
+           (cursor :background "#b58900")
+           )))
+
   ;; Now we can load the theme.
   (set-terminal-parameter nil 'background-mode 'dark)
   (set-frame-parameter nil 'background-mode 'dark)
   (spacemacs/load-theme 'solarized)
-  )
+
+  ;; Run this once.
+  (add-hook 'pd-focus-in-hook 'pd-log-sys-info)
+)
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
