@@ -1,16 +1,10 @@
 ;;; My collection of hydras.
 ;;; Usage:  (require 'pd-hydra)
 
-(require-package 'hydra)
-(require 'buffer-move)
-(require 'cycle-buffer)
-(require 'winner)
-(require 'windmove)
-(require 'pd-helm)
-(require 'pd-font)
-(require 'pd-theme)
-(pd-log-requires-complete)
-
+;; (require 'buffer-move)
+;; (require 'cycle-buffer)
+;; (require 'winner)
+;; (require 'windmove)
 
 (defun pd-hydra-move-splitter-left (arg)
   "Move window splitter left."
@@ -56,41 +50,41 @@
       (goto-char mk))))
 
 (defhydra hydra-windows ()
-  "C-arrow = switch, S-arrow = size, M-arrow = move"
-  ("M-<left>" windmove-left nil)
-  ("M-<right>" windmove-right nil)
+  "M-arrow = select,  M-S-arrow = move, S-arrow = size"
   ("M-<up>" windmove-up nil)
   ("M-<down>" windmove-down nil)
+  ("M-<left>" windmove-left nil)
+  ("M-<right>" windmove-right nil)
+  ("M-S-<left>" buf-move-left nil)
+  ("M-S-<right>" buf-move-right nil)
+  ("M-S-<up>" buf-move-up nil)
+  ("M-S-<down>" buf-move-down nil)
   ("S-<left>" pd-hydra-move-splitter-left nil)
   ("S-<right>" pd-hydra-move-splitter-right  nil)
   ("S-<up>" pd-hydra-move-splitter-up nil)
   ("S-<down>" pd-hydra-move-splitter-down nil)
-  ("C-<left>" buf-move-left nil)
-  ("C-<right>" buf-move-right nil)
-  ("C-<up>" buf-move-up nil)
-  ("C-<down>" buf-move-down nil)
-  ("p" previous-buffer "prev-buf")
-  ("n" next-buffer "next-buf")
-  ("1" delete-other-windows "1")
-  ("d" delete-window "del")
-  ("k" kill-buffer "kill")
-  ("s" save-buffer "save")
+  ("p" previous-buffer "prev-buf")  ;; nis
+  ("n" next-buffer "next-buf")      ;; nis
+  ("1" delete-other-windows "1")    ;; nis
+  ("d" delete-window "del")         ;; nis
+  ("k" kill-buffer "kill")          ;; nis
+  ("s" save-buffer "save")          ;; nis
   ("u" (progn (winner-undo) (setq this-command 'winner-undo)) "undo")
   ("r" winner-redo "restore")
-  ("b" helm-mini "helm-mini" :exit t)
-  ("f" helm-find-files "helm-find" :exit t)
+  ("b" helm-mini "helm-mini" :exit t)        ;; nis
+  ("f" helm-find-files "helm-find" :exit t)  ;; nis
   ("|" (lambda () (interactive) (split-window-right) (windmove-right)) "split-h")
   ("_" (lambda () (interactive) (split-window-below) (windmove-down)) "split-v")
   ("q" nil "cancel")
   )
 
-(defhydra hydra-fonts ()
-  "Adjust font size and face"
-  ("<up>" text-scale-increase "larger")
-  ("<down>" text-scale-decrease "smaller")
-  ("<right>" (lambda () (interactive) (pd-font-set-candidate-font 1 (selected-frame) t)) "next")
-  ("<left>" (lambda () (interactive) (pd-font-set-candidate-font -1 (selected-frame) t)) "prev")
-  ("q" nil "cancel"))
+;; (defhydra hydra-fonts ()
+;;   "Adjust font size and face"
+;;   ("<up>" text-scale-increase "larger")
+;;   ("<down>" text-scale-decrease "smaller")
+;;   ("<right>" (lambda () (interactive) (pd-font-set-candidate-font 1 (selected-frame) t)) "next")
+;;   ("<left>" (lambda () (interactive) (pd-font-set-candidate-font -1 (selected-frame) t)) "prev")
+;;   ("q" nil "cancel"))
 
 ;; Create a hydra to switch themes. We use the Emacs 24 theme engine (aka
 ;; deftheme) only, not the old color-theme.el engine.
@@ -126,60 +120,60 @@
 ;; 3. Write a fn, which may be arbitrarily smart, which simply modifies
 ;;    faces and colours as appropriate and run it after switching themes.
 
-(defhydra hydra-themes (:hint nil)
-  "
-Favourite : _sd_ Sol Dark       _sl_ Sol Light       _zb_ Zenburn        _ob_ Obsidian        _ty_ TTY Dark
-Dark      : _gd_ Gruber Darker  _cp_ Cyberpunk       _gb_ Gruvbox        _bb_ BusyBee         _uw_ Underwater
-            _md_ Minimal Dark   _mn_ Monokai         _ml_ Molokai        _cf_ Calm Forest
-Light     : _lv_ Leuven         _hl_ Hemisu-Light    _mi_ Minimal Light  _ao_ Aalto Light
-Grey      : _ma_ Material       _az_ Anti-Zenburn    _fu_ Flat UI        _sm_ Soft Morning    _tt_ TangoTango
-            _je_ JEdit Grey     _cb_ Charcoal Black
-Blue      : _rs_ Resolve        _bs_ Blue Sea        _rp_ Raspopovic     _ad_ Aalto Dark      _pr_ Parus
-Mono      : _ro_ Retro Orange   _mo_ Monochrome      _rg_ Retro Green    _gp_ Green Phosphor
-Consider  :
-Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
-"
-  ("ab" (pd-theme-load 'alect-black))
-  ("ad" (pd-theme-load 'aalto-dark))
-  ("al" (pd-theme-load 'alect-light))
-  ("ao" (pd-theme-load 'aalto-light))
-  ("az" (pd-theme-load 'anti-zenburn))
-  ("bb" (pd-theme-load 'busybee))
-  ("bs" (pd-theme-load 'blue-sea))
-  ("cb" (pd-theme-load 'charcoal-black))
-  ("cf" (pd-theme-load 'calm-forest))
-  ("cp" (pd-theme-load 'cyberpunk))
-  ("fu" (pd-theme-load 'flatui))
-  ("gb" (pd-theme-load 'gruvbox))
-  ("gd" (pd-theme-load 'gruber-darker))
-  ("gp" (pd-theme-load 'green-phosphor))
-  ("gr" (pd-theme-load 'goldenrod))
-  ("hd" (pd-theme-load 'hemisu-dark))
-  ("hl" (pd-theme-load 'hemisu-light))
-  ("je" (pd-theme-load 'jedit-grey))
-  ("lv" (pd-theme-load 'leuven))
-  ("ma" (pd-theme-load 'material))
-  ("md" (pd-theme-load 'minimal))
-  ("mi" (pd-theme-load 'minimal-light))
-  ("ml" (pd-theme-load 'molokai))
-  ("mn" (pd-theme-load 'monokai))
-  ("mo" (pd-theme-load 'monochrome))
-  ("ob" (pd-theme-load 'obsidian))
-  ("pr" (pd-theme-load 'parus))
-  ("rg" (pd-theme-load 'retro-green))
-  ("ro" (pd-theme-load 'retro-orange))
-  ("rp" (pd-theme-load 'raspopovic))
-  ("rs" (pd-theme-load 'resolve))
-  ("sd" (pd-theme-load 'solarized 'dark))
-  ("sl" (pd-theme-load 'solarized 'light))
-  ("sm" (pd-theme-load 'soft-morning))
-  ("tt" (pd-theme-load 'tangotango))
-  ("ty" (pd-theme-load 'tty-dark))
-  ("uw" (pd-theme-load 'underwater))
-  ("zb" (pd-theme-load 'zenburn))
-  ("q"  nil)
-  )
+;; (defhydra hydra-themes (:hint nil)
+;;   "
+;; Favourite : _sd_ Sol Dark       _sl_ Sol Light       _zb_ Zenburn        _ob_ Obsidian        _ty_ TTY Dark
+;; Dark      : _gd_ Gruber Darker  _cp_ Cyberpunk       _gb_ Gruvbox        _bb_ BusyBee         _uw_ Underwater
+;;             _md_ Minimal Dark   _mn_ Monokai         _ml_ Molokai        _cf_ Calm Forest
+;; Light     : _lv_ Leuven         _hl_ Hemisu-Light    _mi_ Minimal Light  _ao_ Aalto Light
+;; Grey      : _ma_ Material       _az_ Anti-Zenburn    _fu_ Flat UI        _sm_ Soft Morning    _tt_ TangoTango
+;;             _je_ JEdit Grey     _cb_ Charcoal Black
+;; Blue      : _rs_ Resolve        _bs_ Blue Sea        _rp_ Raspopovic     _ad_ Aalto Dark      _pr_ Parus
+;; Mono      : _ro_ Retro Orange   _mo_ Monochrome      _rg_ Retro Green    _gp_ Green Phosphor
+;; Consider  :
+;; Rejects   : _ab_ Alect Black _al_ Alect Light _hd_ Hemisu Dark _gr_ Goldenrod
+;; "
+;;   ("ab" (pd-theme-load 'alect-black))
+;;   ("ad" (pd-theme-load 'aalto-dark))
+;;   ("al" (pd-theme-load 'alect-light))
+;;   ("ao" (pd-theme-load 'aalto-light))
+;;   ("az" (pd-theme-load 'anti-zenburn))
+;;   ("bb" (pd-theme-load 'busybee))
+;;   ("bs" (pd-theme-load 'blue-sea))
+;;   ("cb" (pd-theme-load 'charcoal-black))
+;;   ("cf" (pd-theme-load 'calm-forest))
+;;   ("cp" (pd-theme-load 'cyberpunk))
+;;   ("fu" (pd-theme-load 'flatui))
+;;   ("gb" (pd-theme-load 'gruvbox))
+;;   ("gd" (pd-theme-load 'gruber-darker))
+;;   ("gp" (pd-theme-load 'green-phosphor))
+;;   ("gr" (pd-theme-load 'goldenrod))
+;;   ("hd" (pd-theme-load 'hemisu-dark))
+;;   ("hl" (pd-theme-load 'hemisu-light))
+;;   ("je" (pd-theme-load 'jedit-grey))
+;;   ("lv" (pd-theme-load 'leuven))
+;;   ("ma" (pd-theme-load 'material))
+;;   ("md" (pd-theme-load 'minimal))
+;;   ("mi" (pd-theme-load 'minimal-light))
+;;   ("ml" (pd-theme-load 'molokai))
+;;   ("mn" (pd-theme-load 'monokai))
+;;   ("mo" (pd-theme-load 'monochrome))
+;;   ("ob" (pd-theme-load 'obsidian))
+;;   ("pr" (pd-theme-load 'parus))
+;;   ("rg" (pd-theme-load 'retro-green))
+;;   ("ro" (pd-theme-load 'retro-orange))
+;;   ("rp" (pd-theme-load 'raspopovic))
+;;   ("rs" (pd-theme-load 'resolve))
+;;   ("sd" (pd-theme-load 'solarized 'dark))
+;;   ("sl" (pd-theme-load 'solarized 'light))
+;;   ("sm" (pd-theme-load 'soft-morning))
+;;   ("tt" (pd-theme-load 'tangotango))
+;;   ("ty" (pd-theme-load 'tty-dark))
+;;   ("uw" (pd-theme-load 'underwater))
+;;   ("zb" (pd-theme-load 'zenburn))
+;;   ("q"  nil)
+;;   )
 
 
-(pd-log-loading-complete)
+;;(pd-log-loading-complete)
 (provide 'pd-hydra)

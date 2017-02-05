@@ -1,13 +1,17 @@
 TODO
 ====
-pd-hydras - can it do things that Spacemacs can't?
-pd-cpp - not up to Spacemacs spec
-Keybindings need work
-  need hyper key on Linux.
-pd-font - not ported. Specify more fonts.
-Test on Windows.
-Do not delete emacs.bak - it is the one I want to keep.
-Repeat last command = Ctrl-y.
+[ ] Ripgrep
+[ ] Open current file in su mode
+[ ] pd-hydras - exists in here, but fonts and themes hydras are commented out.
+    The font hydra in particular is nice, and Spacemacs does not support it
+    out of the box (though it does support font size adjustments).
+    The windows hydra perhaps could be merged with
+[ ] pd-cpp - not up to Spacemacs spec
+[ ] Keybindings need work - need hyper key on Linux.
+[ ] pd-font - not ported. Specify more fonts.
+[ ] Test on Windows.
+[ ] Do not delete emacs.bak - it is the one I want to keep.
+[ ] Repeat last command = Ctrl-y.
 
 
 Installation

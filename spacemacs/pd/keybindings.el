@@ -37,7 +37,7 @@
 (define-key global-map (kbd "C-<f11>")   'menu-bar-open)
 ;;(define-key global-map (kbd "<f12>")     'sr-speedbar-toggle)
 ;;(define-key global-map (kbd "S-<f12>")   'sr-speedbar-select-window)
-;;(define-key global-map (kbd "C-<f12> w") 'hydra-windows/body)
+(define-key global-map (kbd "C-<f12> w") 'hydra-windows/body)
 ;;(define-key global-map (kbd "C-<f12> f") 'hydra-fonts/body)
 ;;(define-key global-map (kbd "C-<f12> t") 'hydra-themes/body)
 ;;(pd-log "Function keys defined.")

@@ -46,6 +46,7 @@
     (buffer-move :location local)
     (cycle-buffer :location local)
     mic-paren
+    (pd-hydra :location local)
     )
   "The list of Lisp packages required by the pd layer.
 
@@ -145,3 +146,6 @@ prefer this."
     (paren-activate)
     (setq paren-match-face 'mode-line)
   ))
+
+(defun pd/init-pd-hydra ()
+  (use-package pd-hydra))
