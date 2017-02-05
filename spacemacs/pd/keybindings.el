@@ -430,34 +430,57 @@
 ;;   '(("g" spacemacs/toggle-golden-ratio)))
 
 
-;; (if (configuration-layer/package-usedp 'golden-ratio)
-;;     "\n ^^^^                    ^^^^                  ^^                     ^^                           [_g_] golden-ratio %`golden-ratio-mode"
-;;   ""))
+;; ^ is a special char that has zero width in the resulting docstring.
+;; In [_a_], we will lose two characters when rendered, hence the ^^ in the lines above.
 
 (spacemacs|define-transient-state pd-window-manipulation
   :title "Phil's Window Manipulation Transient State."
-  :doc (concat "
- M-arrow = select, M-S-arrow = move, S-arrow = size.
+  :doc (concat "M-arrow = select, M-S-arrow = move, S-arrow = resize. 0-9 = select window N.
 
- Select^^^^              Move^^^^              Split^^                Resize^^                     Buffers^^       Other^^
- ──────^^^^───────────── ────^^^^───────────── ─────^^─────────────── ──────^^──────────────────── ───────^^─────  ─────^^─────────────────────
- [_<down>_/_<up>_]       [_J_/_K_] down/up     [_s_/___] vertical     [_[_] shrink horizontally    [_n_] next      [_q_] quit
- [_<left>_/_<right>_]    [_H_/_L_] left/right  [_S_]^^ vert & follow  [_]_] enlarge horizontally   [_p_] previous  [_u_] restore prev layout
- [_0_-_9_] window N      [_r_]^^   rotate fwd  [_v_/_|_] horizontal   [_{_] shrink vertically      [_k_] kill      [_U_] restore next layout
- [_w_]^^   only window   [_R_]^^   rotate bwd  [_V_]^^ horiz & follow [_}_] enlarge vertically     [_s_] write     [_d_] close current
- [_f_]^^   other frame   ^^^^                  ^^                     ^^                           [_b_] helm mini [_D_] close other")
+Split^^              Buffers^^      Windows^^          Files^^         Other
+─────^^───────────── ───────^^───── ───────^^───────── ─────^^──────── ─────^^──────────────────
+[___] vertical       [_n_] next     [_c_] close        [_b_] helm mini [_u_] restore prev layout
+[_V_] vert & follow  [_p_] previous [_o_] close others [_f_] helm find [_U_] restore next layout
+[_|_] horizontal     [_k_] kill     [_r_] rotate fwd   [_d_] dired     [_F_] go to other frame
+[_H_] horiz & follow [_s_] save     [_R_] rotate bwd   [_t_] terminal  [_g_] golden-ratio-mode")
   :bindings
+  ;; Split
+  ("_" split-window-below)
+  ("v" split-window-below)
+  ("V" split-window-below-and-focus)
+  ("-" split-window-below-and-focus)
+  ("|" split-window-right)
+  ("h" split-window-right)
+  ("H" split-window-right-and-focus)
+  ("/" split-window-right-and-focus)
+  ;; Buffers
+  ("n" cycle-buffer-permissive)
+  ("p" cycle-buffer-backward-permissive)
+  ("k" kill-buffer)
+  ("s" save-buffer)
+  ;; Windows
+  ("c" delete-window)
+  ("o" delete-other-windows)
+  ("r" spacemacs/rotate-windows)
+  ("R" spacemacs/rotate-windows-backward)
+  ;; Files
+  ("b" helm-mini)
+  ("f" helm-find-files)
+  ("d" dired-jump)
+  ("t" pd-ansi-term)
+  ;; Other
+  ("q" nil :exit t)
+  ("u" winner-undo)
+  ("U" winner-redo)
+  ("F" other-frame)
+  ("g" spacemacs/toggle-golden-ratio)
   ;; Select
-  ;;("j"         evil-window-down)
   ("<down>"    evil-window-down)
   ("<M-down>"  evil-window-down)
-  ;;("k"         evil-window-up)
   ("<up>"      evil-window-up)
   ("<M-up>"    evil-window-up)
-  ;;("h"         evil-window-left)
   ("<left>"    evil-window-left)
   ("<M-left>"  evil-window-left)
-  ;;("l"         evil-window-right)
   ("<right>"   evil-window-right)
   ("<M-right>" evil-window-right)
   ("0" select-window-0)
@@ -470,55 +493,20 @@
   ("7" select-window-7)
   ("8" select-window-8)
   ("9" select-window-9)
-  ("w" delete-other-windows)
-  ("f" other-frame)
-
   ;; Move
-  ;;("J"           evil-window-move-very-bottom)
   ("<M-S-down>"  evil-window-move-very-bottom)
-  ;;("K"           evil-window-move-very-top)
   ("<M-S-up>"    evil-window-move-very-top)
-  ;;("H"           evil-window-move-far-left)
   ("<M-S-left>"  evil-window-move-far-left)
-  ;;("L"           evil-window-move-far-right)
   ("<M-S-right>" evil-window-move-far-right)
-  ("r"           spacemacs/rotate-windows)
-  ("R"           spacemacs/rotate-windows-backward)
-
-  ;; Split
-  ("_" split-window-below)
-  ("s" split-window-below)
-  ("S" split-window-below-and-focus)
-  ("-" split-window-below-and-focus)
-  ("|" split-window-right)
-  ("v" split-window-right)
-  ("V" split-window-right-and-focus)
-  ("/" split-window-right-and-focus)
-
   ;; Resize
   ("[" spacemacs/shrink-window-horizontally)
   ("]" spacemacs/enlarge-window-horizontally)
   ("{" spacemacs/shrink-window)
   ("}" spacemacs/enlarge-window)
-
-  ;; Buffers
-  ("n" next-buffer)
-  ("p" previous-buffer)
-  ("k" kill-buffer)
-  ("s" save-buffer)
-
   ("<S-left>"  spacemacs/shrink-window-horizontally)
   ("<S-right>" spacemacs/enlarge-window-horizontally)
   ("<S-up>"    spacemacs/shrink-window)
   ("<S-down>"  spacemacs/enlarge-window)
-
-  ;; Other
-  ("q" nil :exit t)
-  ("u" winner-undo)
-  ("U" winner-redo)
-  ("d" delete-window)
-  ("D" delete-other-windows)
-  ("g" spacemacs/toggle-golden-ratio)
   )
 
 ;; (setq spacemacs-pd-window-manipulation-transient-state-add-bindings
