@@ -45,6 +45,7 @@
     recentf-ext
     (buffer-move :location local)
     (cycle-buffer :location local)
+    mic-paren
     )
   "The list of Lisp packages required by the pd layer.
 
@@ -133,3 +134,14 @@ directories too. There is no customization per se."
 
 (defun pd/init-cycle-buffer ()
   (use-package cycle-buffer))
+
+(defun pd/init-mic-paren ()
+  "Customize mic-paren. The standard package
+highlight-parentheses is banned in my .spacemacs file, I must
+prefer this."
+  (use-package mic-paren
+    :config
+    (setq blink-matching-paren nil)
+    (paren-activate)
+    (setq paren-match-face 'mode-line)
+  ))

@@ -1,7 +1,5 @@
 TODO
 ====
-No backups or temp files
-Parentheses with mic-paren
 pd-appearance - there are still some things I don't have.
 pd-hydras - can it do things that Spacemacs can't?
 pd-cpp - not up to Spacemacs spec

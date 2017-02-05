@@ -68,7 +68,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(vi-tilde-fringe)
+   dotspacemacs-excluded-packages '(vi-tilde-fringe highlight-parentheses)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -347,19 +347,16 @@ you should place your code here."
            (helm-selection :foreground "white" :background "red" :inverse-video nil)
            ;; See comment above about dotspacemacs-colorize-cursor-according-to-state.
            (cursor :background "#b58900")
-           )))
+         )))
 
   ;; Now we can load the theme.
   (set-terminal-parameter nil 'background-mode 'dark)
   (set-frame-parameter nil 'background-mode 'dark)
   (spacemacs/load-theme 'solarized)
 
+  ;; Turn this off to stop it interfering with mic-paren.
   (set-face-attribute 'sp-show-pair-match-face nil :foreground 'unspecified :background 'unspecified)
   (set-face-attribute 'sp-show-pair-mismatch-face nil :foreground 'unspecified :background 'unspecified)
-  (setq hl-paren-colors nil)
-  (setq hl-paren-background-colors '("grey"))
-  (require 'highlight-parentheses)
-  (set-face-attribute 'hl-paren-face nil :weight 'unspecified)
 
   ;; Run this once.
   (add-hook 'pd-focus-in-hook 'pd-log-sys-info)
