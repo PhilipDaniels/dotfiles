@@ -354,6 +354,13 @@ you should place your code here."
   (set-frame-parameter nil 'background-mode 'dark)
   (spacemacs/load-theme 'solarized)
 
+  (set-face-attribute 'sp-show-pair-match-face nil :foreground 'unspecified :background 'unspecified)
+  (set-face-attribute 'sp-show-pair-mismatch-face nil :foreground 'unspecified :background 'unspecified)
+  (setq hl-paren-colors nil)
+  (setq hl-paren-background-colors '("grey"))
+  (require 'highlight-parentheses)
+  (set-face-attribute 'hl-paren-face nil :weight 'unspecified)
+
   ;; Run this once.
   (add-hook 'pd-focus-in-hook 'pd-log-sys-info)
 )
