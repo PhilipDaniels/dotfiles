@@ -311,21 +311,24 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (global-hl-line-mode -1)
-  (setq powerline-default-separator 'arrow)
-  (setq tramp-default-method "sshx")
-  (setq tramp-default-user "phil")
-  (setq dired-listing-switches "-laGh1v --group-directories-first")
-  (setq dired-dwim-target t)
-  (setq recentf-max-menu-items 50)
-  (setq recentf-max-saved-items 100)
+
   (setq confirm-nonexistent-file-or-buffer nil)
   (setq delete-by-moving-to-trash t)
+  (setq dired-dwim-target t)
+  (setq dired-listing-switches "-laGh1v --group-directories-first")
   (setq disabled-command-function nil)
+  (setq frame-title-format (list user-login-name "@" system-name ":%f"))
+  (setq powerline-default-separator 'arrow)
+  (setq recentf-max-menu-items 50)
+  (setq recentf-max-saved-items 100)
+  (setq require-final-newline t)
+  (setq scroll-margin 3)
   (setq sentence-end-double-space nil)
+  (setq tramp-default-method "sshx")
+  (setq tramp-default-user "phil")
   (setq user-full-name "Philip Daniels")
   (setq user-mail-address "philip.daniels1971@gmail.com")
-  (setq require-final-newline t)
-  (setq scroll-margin 5)
+  (setq windmove-wrap-around t)
 
   ;; Get color-theme-solarized working. It is specified as an additional package
   ;; above. First we setup some theme modifications - we must do this *before*
