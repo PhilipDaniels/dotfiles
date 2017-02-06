@@ -6,14 +6,28 @@ TODO
     The font hydra in particular is nice, and Spacemacs does not support it
     out of the box (though it does support font size adjustments).
 [ ] pd-cpp - not up to Spacemacs spec
-[ ] Keybindings need work - need hyper key on Linux.
 [ ] pd-font - not ported. Specify more fonts.
+[ ] pd-terminal - not ported.
+[ ] Keybindings need work - need hyper key on Linux.
 [ ] Test on Windows.
 [ ] Do not delete emacs.bak - it is the one I want to keep.
 [ ] Repeat last command = Ctrl-y.
 [ ] GNU Global.
 [ ] Multiple cursors.
 [ ] Hydra for search and replace operations?
+[ ] Writable dired.
+[ ] Write an underline function.
+[ ] pd-terminal: Make ansi-term update a variable which contains the cwd
+    so that it can be smarter about creating new windows. See comment in
+    the file.
+[ ] pd-sort-paragraph-dwim: make it ignore any comments at the start of
+    the paragraph.
+[ ] Spell checking.
+[ ] Flymake
+[ ] Proper bookmarks.
+[ ] C/C++/Rust development environment.
+
+
 
 Installation
 ============
