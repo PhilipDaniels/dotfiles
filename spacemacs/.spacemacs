@@ -132,7 +132,7 @@ values."
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
-   dotspacemacs-scratch-mode 'org-mode
+   dotspacemacs-scratch-mode 'lisp-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
@@ -313,6 +313,7 @@ you should place your code here."
   (global-hl-line-mode -1)
 
   (setq confirm-nonexistent-file-or-buffer nil)
+  (setq create-lockfiles nil)
   (setq delete-by-moving-to-trash t)
   (setq dired-dwim-target t)
   (setq dired-listing-switches "-laGh1v --group-directories-first")

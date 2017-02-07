@@ -137,9 +137,8 @@ directories too. There is no customization per se."
   (use-package cycle-buffer))
 
 (defun pd/init-mic-paren ()
-  "Customize mic-paren. The standard package
-highlight-parentheses is banned in my .spacemacs file, I must
-prefer this."
+  "Customize mic-paren. The standard package highlight-parentheses is banned
+in my .spacemacs file, I much prefer this."
   (use-package mic-paren
     :config
     (setq blink-matching-paren nil)

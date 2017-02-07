@@ -1,6 +1,7 @@
 TODO
 ====
 [ ] Ripgrep
+[ ] Markdown mode clobbers M-arrow keys.
 [ ] Open current file in su mode
 [ ] pd-hydras - exists in here, but fonts and themes hydras are commented out.
     The font hydra in particular is nice, and Spacemacs does not support it
