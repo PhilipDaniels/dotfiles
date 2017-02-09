@@ -68,7 +68,8 @@
 ;;(pd-log "Arrow keys defined.")
 
 ;; ******************* Windows compatible keybindings  ********************
-(define-key global-map (kbd "C-z")       'undo)   ;; Emacs default = suspend-emacs
+(global-set-key (kbd "C-z")       'undo)   ;; Emacs default = suspend-emacs
+;; We should turn on delete selection mode to make the del key or typing delete the selection.
 
 ;; https://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts
 ;;(define-key global-map (kbd "C-y")       'redo last operation)
