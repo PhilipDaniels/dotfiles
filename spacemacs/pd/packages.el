@@ -39,6 +39,8 @@
 
 (defconst pd-packages
   '(helm
+    iy-go-to-char
+    jump-char
     magit
     ssh-agency
     persistent-scratch
@@ -84,6 +86,12 @@ Each entry is either:
       (setq-default helm-buffer-max-length nil)
       (setq-default helm-ff-newfile-prompt-p nil)
       )))
+
+(defun pd/init-jump-char ()
+  (use-package jump-char))
+
+(defun pd/init-iy-go-to-char ()
+  (use-package iy-go-to-char))
 
 (defun pd/post-init-magit ()
   "My git customizations."

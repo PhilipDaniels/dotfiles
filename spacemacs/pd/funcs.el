@@ -80,6 +80,7 @@ From http://stackoverflow.com/questions/88399"
       (beginning-of-line)
     (back-to-indentation)))
 
+;; write-file.
 (defun pd-rename-file-and-buffer (new-name)
   "Rename the current buffer and the file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
@@ -95,6 +96,7 @@ From http://stackoverflow.com/questions/88399"
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
+;; spacemacs/delete-current-buffer-file
 (defun pd-delete-file-and-buffer ()
   "Delete the current buffer and its backing file."
   (interactive)
@@ -108,21 +110,23 @@ From http://stackoverflow.com/questions/88399"
         (kill-buffer buffer)
         (message "File '%s' successfully removed" filename)))))
 
-(defun pd-replace-all-in-buffer ()
-  "Replace all occurrences of a string in the buffer."
+(defun pd-query-replace-whole-buffer ()
+  "Run query-replace for an entire buffer. By default,
+query-replace just runs from the current point to the end of the
+buffer. This command starts it from the beginning of the buffer,
+then restores point afterwards."
   (interactive)
   (save-excursion
-    (if (equal mark-active nil) (mark-word))
-    (let* ((curr-word (buffer-substring-no-properties (mark) (point)))
-           (old-string (read-string "OLD string: " curr-word))
-           (new-string (read-string "NEW string: " old-string)))
-      (replace-string old-string new-string nil (point-min) (point-max)))))
+    (goto-char (point-min))
+    (call-interactively #'query-replace)))
 
+;; Replaced by pd-kill-whitespace.
 (defun pd-join-line ()
   "Joins a line with the next line, leaving no space."
   (interactive)
   (join-line -1))
 
+;; Replaced by pd-kill-whitespace.
 (defun pd-no-space ()
   "A version of just-one-space that leaves no spaces. If at the end
 of a line, calls pd-join-line."

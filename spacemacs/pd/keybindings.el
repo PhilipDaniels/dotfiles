@@ -7,6 +7,224 @@
 ;;; this reason, code in these files must be generally safe, regardless of which
 ;;; packages are installed.
 
+;; Use describe-personal-keybindings to list these out.
+;;(require 'bind-key)
+
+;; Make C-x, -c, -v behave properly if there is a selection. C-x KEY still works!
+;; C-z is undo. C-RET starts rectangle selection mode.
+(cua-mode t)
+
+;; ******************* Function keys ********************
+;; Move help to F1. Must happen before we rebind C-h.
+(global-set-key [f1] (lookup-key global-map (kbd "C-h")))
+(bind-key* "<f2>"    #'er/expand-region)      ;; From MS Excel muscle memory.
+(bind-key* "S-<f2>"  #'pd-shrink-region)
+(bind-key* "M-<f4>"  #'kill-buffer)           ;; CUA.
+(bind-key* "M-<f5>"  #'recenter-top-bottom)   ;; Ought to be F5, but want to reserve that for "VS debug program".
+(bind-key* "<f7>"    #'ff-find-other-file)    ;; VS View.ToggleDesigner.
+
+;; ******************* Letter keys ********************
+(bind-key* "C-a"     #'pd-back-to-indentation-or-beginning)
+(bind-key* "C-S-a"   #'mark-whole-buffer)
+(bind-key* "C-b"     #'helm-mini)
+(bind-key* "C-x C-b" #'helm-mini)
+(bind-key* "C-x b"   #'helm-mini)
+(bind-key* "M-c"     #'pd-copy-current-line)
+(bind-key* "C-S-c"   #'pd-duplicate-line-or-region) ;; No longer works for regions. Ok for unselected lines.
+(bind-key* "C-f"     #'isearch-forward)             ;; Bindings within isearch need changing. Change to regex version by default?
+(bind-key* "M-f"     #'isearch-forward-regexp)
+(bind-key* "M-g"     #'goto-line)
+(bind-key* "C-h"     #'query-replace)           ;; Change to regex version by default?
+(bind-key* "M-h"     #'pd-query-replace-whole-buffer)
+(bind-key* "C-S-h"   #'query-replace-regexp)
+(bind-key* "C-i"     #'spacemacs/indent-region-or-buffer)
+(bind-key* "C-j"     #'pd-kill-whitespace)
+(bind-key* "M-j"     #'pd-kill-whitespace-and-indent)
+(bind-key* "C-S-j"   #'pd-kill-whitespace-leave-one-space)
+(bind-key* "C-l"     #'kill-whole-line)
+(bind-key* "C-n"     #'spacemacs/new-empty-buffer)
+(bind-key* "C-o"     #'spacemacs/helm-find-files)
+(bind-key* "M-o"     #'ff-find-other-file)
+(bind-key* "C-S-o"   #'revert-buffer)
+(bind-key* "C-M-o"   #'insert-file)
+;; https://github.com/syl20bnr/spacemacs/blob/b7e51d70aa3fb81df2da6dc16d9652a002ba5e6b/layers/%2Bdistributions/spacemacs-base/packages.el
+;; (bind-key "C-p"   #'projects)
+(global-set-key      [remap fill-paragraph] #'spacemacs/fill-or-unfill)
+(bind-key* "M-r"     #'isearch-backward-regexp)
+(bind-key* "C-s"     #'save-buffer)
+(bind-key* "M-s"     #'write-file)             ;; Writes a copy to a new file, renames the buffer, so that we are editing the new file.
+(bind-key* "C-M-s"   #'pd-write-copy-to-file)  ;; Writes a copy to a new file, keeps existing buffer, so that we are editing the original file.
+(bind-key* "C-S-s"   #'save-some-buffers)
+(bind-key* "C-u"     #'xah-toggle-letter-case)  ;; See also ergoemacs-camelize, ergoemacs-toggle-letter-case
+(bind-key* "M-v"     #'helm-show-kill-ring)
+;; (bind-key* "C-w" #'close-current-buffer) From  https://github.com/ergoemacs/ergoemacs-mode/blob/b3df015fa95ee6c2c3e62cf162c03c13dac034b1/ergoemacs-functions.el
+;; Also see ergoemacs-redo, ergoemacs-open-last-closed
+(bind-key* "C-M-x"   #'append-next-kill)
+(bind-key* "C-y"     #'repeat)             ;; From MS Excel. Consider using "redo" here, it seems more standard.
+;; CUA mode should bind C-z to undo.
+;; (bind-key* "C-z"     #'undo-tree-undo)     ;; Also on C-_ and C/ by default. Spacemacs still grabs this...
+(bind-key* "C-S-z"   #'undo-tree-redo)     ;; Also on M-_ and C-? by default.
+
+;; sudo edit = helm find files then C-c r
+
+
+;; ******************* Punctutation ********************
+;; (bind-key* "C-;"   #'jump-char-forward)    ;; See https://github.com/lewang/jump-char/blob/master/jump-char.el. ';' moves to next match, ',' moves to previous match.
+;; (bind-key* "C-:"   #'jump-char-backward)
+(bind-key* "C-;"   #'iy-go-to-char)           ;; iy does not have any highlighting.
+(bind-key* "C-:"   #'iy-go-to-char-backward)
+(bind-key* "M-;"   #'endless/comment-line-or-region)
+(bind-key* "C-'"   #'er/expand-region)
+(bind-key* "C-@"   #'pd-shrink-region)     ;; This is actually C-S-', in keeping with S- meaning "inverse of".
+
+;; ******************* Arrow, PgUp/Down and other TKL keys ********************
+;; C-arrow and S-arrow are already Windows compatible (move by word, extend selection, respectively)
+;; These functions used to be bound to C-, since M- clashes with org-mode
+;; keybindings. However, I do not really use org-mode, and moving them back to
+;; M- allows me to use C- for more natural Windows keybindings.
+(bind-key* "M-<up>"      #'windmove-up)
+(bind-key* "M-<down>"    #'windmove-down)
+(bind-key* "M-<left>"    #'windmove-left)
+(bind-key* "M-<right>"   #'windmove-right)
+(bind-key* "M-S-<up>"    #'buf-move-up)
+(bind-key* "M-S-<down>"  #'buf-move-down)
+(bind-key* "M-S-<left>"  #'buf-move-left)
+(bind-key* "M-S-<right>" #'buf-move-right)
+
+;; <prior> is Page Down, <next> is Page Up. M- is the standard "scroll other window" command.
+(bind-key* "C-<prior>"   #'cycle-buffer)
+(bind-key* "S-<prior>"   #'cycle-buffer-permissive)
+(bind-key* "C-<next>"    #'cycle-buffer-backward)
+(bind-key* "S-<next>"    #'cycle-buffer-backward-permissive)
+
+(bind-key* "C-S-<return>"    #'ergoemacs-open-line-below)
+(bind-key* "C-M-<return>"    #'ergoemacs-open-line-above)          ;; From Notepad++.
+(bind-key* "M-S-<return>"    #'spacemacs/toggle-fullscreen-frame)  ;; VS standard. Windows standard is F11.
+(bind-key* "C-<tab>"         #'helm-mini)                          ;; Like VS quick switch window.
+(bind-key* "M-<backspace>"   #'undo)
+
+
+(defun pd-shrink-region ()
+  "Shrinks the current region by 1 step."
+  (interactive)
+  (er/expand-region -1))
+
+(defun pd-write-copy-to-file ()
+  "Write a copy of the current buffer or region to a file."
+  ;; From http://stackoverflow.com/questions/18770669/how-can-i-save-as-in-emacs-without-visiting-the-new-file
+  (interactive)
+  (let* ((curr (buffer-file-name))
+         (new (read-file-name
+               "Copy to file: " nil nil nil
+               (and curr (file-name-nondirectory curr))))
+         (mustbenew (if (and curr (file-equal-p new curr)) 'excl t)))
+    (if (use-region-p)
+        (write-region (region-beginning) (region-end) new nil nil nil mustbenew)
+      (save-restriction
+        (widen)
+        (write-region (point-min) (point-max) new nil nil nil mustbenew)))))
+
+;; From better defaults.
+;; http://endlessparentheses.com/fill-and-unfill-paragraphs-with-a-single-key.html
+(defun spacemacs/fill-or-unfill ()
+  "Like `fill-paragraph', but unfill if used twice."
+  (interactive)
+  (let ((fill-column
+         (if (eq last-command 'spacemacs/fill-or-unfill)
+             (progn (setq this-command nil)
+                    (point-max))
+           fill-column)))
+    (call-interactively #'fill-paragraph)))
+
+
+(defun xah-toggle-letter-case ()
+  "Toggle the letter case of current word or text selection.
+Always cycle in this order: Init Caps, ALL CAPS, all lower.
+
+URL `http://ergoemacs.org/emacs/modernization_upcase-word.html'
+Version 2016-01-08"
+  (interactive)
+  (let (
+        (deactivate-mark nil)
+        -p1 -p2)
+    (if (use-region-p)
+        (setq -p1 (region-beginning)
+              -p2 (region-end))
+      (save-excursion
+        (skip-chars-backward "[:alnum:]")
+        (setq -p1 (point))
+        (skip-chars-forward "[:alnum:]")
+        (setq -p2 (point))))
+    (when (not (eq last-command this-command))
+      (put this-command 'state 0))
+    (cond
+     ((equal 0 (get this-command 'state))
+      (upcase-initials-region -p1 -p2)
+      (put this-command 'state 1))
+     ((equal 1  (get this-command 'state))
+      (upcase-region -p1 -p2)
+      (put this-command 'state 2))
+     ((equal 2 (get this-command 'state))
+      (downcase-region -p1 -p2)
+      (put this-command 'state 0)))))
+
+(defun ergoemacs-open-line-below ()
+  "Open line below.
+If a major/minor mode rebinds the default M-RET command, use that instead."
+  (interactive)
+  (end-of-line)
+  (newline-and-indent))
+
+(defun ergoemacs-open-line-above ()
+  "Open line above"
+  (interactive)
+  (beginning-of-line)
+  (newline-and-indent)
+  (forward-line -1)
+  (indent-for-tab-command))
+
+
+
+(defun pd-kill-whitespace ()
+  "Kill all the whitespace around point.
+Has the effect of joining lines and eliminating consecutive blank lines."
+  ;; From https://www.emacswiki.org/emacs/DeletingWhitespace
+  (interactive "*")
+  (save-excursion
+    (save-restriction
+      (save-match-data
+        (progn
+          (re-search-backward "[^ \t\r\n]" nil t)
+          (re-search-forward "[ \t\r\n]+" nil t)
+          (replace-match "" nil nil))))))
+
+(defun pd-kill-whitespace-leave-one-space ()
+  "Kills all whitespace around point except for a single space."
+  (interactive "*")
+  (save-excursion
+    (save-restriction
+      (save-match-data
+        (progn
+          (pd-kill-whitespace)
+          (insert " "))))))
+
+(defun pd-kill-whitespace-and-indent ()
+  "Kills all whitespace around point, but do not join the next non-blank line."
+  (interactive "*")
+  (save-excursion
+    (save-restriction
+      (save-match-data
+        (progn
+          (pd-kill-whitespace)
+          (newline-and-indent))))))
+
+;; ergoemacs-copy-line-or-region
+;; (bind-key* "C-w" #'close-current-buffer) From  https://github.com/ergoemacs/ergoemacs-mode/blob/b3df015fa95ee6c2c3e62cf162c03c13dac034b1/ergoemacs-functions.el
+;; ergoemacs-open-last-closed. Not really needed, will be on helm-mini.
+
+
+
+
 
 ;; When started in daemon mode, window-system will be nil (not 'w32), but
 ;; system-type will be 'cygwin, so we just assume that means we are using the
@@ -21,115 +239,27 @@
 
 
 ;; ******************* Global Function keys ********************
-(define-key global-map (kbd "<f1>")      (lambda () (interactive) (find-file "~/repos/dotfiles/emacs/emacs_keys.txt")))
-;;(define-key global-map (kbd "<f2>")      'bmkp-next-bookmark)
-;;(define-key global-map (kbd "S-<f2>")    'bmkp-previous-bookmark)
-;;(define-key global-map (kbd "C-<f2>")    'bmkp-toggle-autonamed-bookmark-set/delete)
-;;(define-key global-map (kbd "M-<f2>")    'helm-filtered-bookmarks)
-(define-key global-map (kbd "<f9>")      'cycle-buffer-backward-permissive)
-(define-key global-map (kbd "<f10>")     'cycle-buffer-permissive)
-(define-key global-map (kbd "S-<f9>")    'cycle-buffer-backward)
-(define-key global-map (kbd "S-<f10>")   'cycle-buffer)
-(define-key global-map (kbd "C-<f9>")    (lambda () (interactive) (kill-buffer nil)))
-(define-key global-map (kbd "C-<f10>")   'bury-buffer)
-(define-key global-map (kbd "<f11>")     'menu-bar-open)
-(define-key global-map (kbd "S-<f11>")   'menu-bar-open)
-(define-key global-map (kbd "C-<f11>")   'menu-bar-open)
-;;(define-key global-map (kbd "<f12>")     'sr-speedbar-toggle)
-;;(define-key global-map (kbd "S-<f12>")   'sr-speedbar-select-window)
-(define-key global-map (kbd "C-<f12>") 'hydra-windows/body)
-;;(define-key global-map (kbd "C-<f12> f") 'hydra-fonts/body)
-;;(define-key global-map (kbd "C-<f12> t") 'hydra-themes/body)
-;;(pd-log "Function keys defined.")
-
-;; f3, f4 = macros start and end.
-;; f5 - f8 = undefined (taken over by pd-vs-minor-mode-map)
-;; f9 = undefined
-;; f10 = menu-bar-open
-;; f11 = full-screen
-;; f12 = undefined
-
-;; ******************* Arrow keys ********************
-;; The arrow keys used to be bound to C-, since M- clashes with org-mode
-;; keybindings. However, I do not really use org-mode, and moving them back to
-;; M- allows me to use C- for more natural Windows keybindings.
-(define-key global-map (kbd "M-<up>")      'windmove-up)
-(define-key global-map (kbd "M-<down>")    'windmove-down)
-(define-key global-map (kbd "M-<left>")    'windmove-left)
-(define-key global-map (kbd "M-<right>")   'windmove-right)
-(define-key global-map (kbd "M-S-<up>")    'buf-move-up)
-(define-key global-map (kbd "M-S-<down>")  'buf-move-down)
-(define-key global-map (kbd "M-S-<left>")  'buf-move-left)
-(define-key global-map (kbd "M-S-<right>") 'buf-move-right)
-
-
-;;(define-key global-map (kbd "C-M-<left>")  'beginning-of-defun)     ;; beg/end of defun is C-M-a or e, which is too hard to type.
-;;(define-key global-map (kbd "C-M-<right>") 'end-of-defun)
-;;(pd-log "Arrow keys defined.")
-
-;; ******************* Windows compatible keybindings  ********************
-(global-set-key (kbd "C-z")       'undo)   ;; Emacs default = suspend-emacs
-;; We should turn on delete selection mode to make the del key or typing delete the selection.
-
-;; https://en.wikipedia.org/wiki/Table_of_keyboard_shortcuts
-;;(define-key global-map (kbd "C-y")       'redo last operation)
-;;(define-key global-map (kbd "C-x")       'cut and place in clipboard) Emacs = prefix key
-;;(define-key global-map (kbd "C-c")       'copy to clipboard)  Emacs = prefix key
-;;(define-key global-map (kbd "C-v")       'paste clipboard)  Emacs = scroll-up-command
-;;(define-key global-map (kbd "C-a")       'select all)  Emacs = pd-back-to-indentation-or-beginning
-;; o = open, s = save, n = new, p = print, f = find/search
-;; w = save as, r/h = replace, C-S-s = save all, g = goto line
-;;(pd-log "Windows-compatible keys defined.")
-
-;; ******************* Main number keys ********************
-;; C-0..9 and M-0..9 are normally bound to digit-argument, which can be used via
-;; C-u anyway, so feel free to grab them for other uses. C-n are available in
-;; the terminal, so they should be used in preference.
-;; (define-key global-map (kbd "M-1") (lambda () (interactive) (jump-to-register ?z)))
-;; (define-key global-map (kbd "M-2") (lambda () (interactive) (window-configuration-to-register ?z) (message "Window configuration saved")))
-;; (define-key global-map (kbd "M-3") (lambda () (interactive) (point-to-register ?z) (message "Point saved")))
-
-;; In Spacemacs, M-0..9 take you to that window.
 
 ;; ******************* Letter/main section keys ********************
-(define-key global-map (kbd "C-'")       'er/expand-region)
-(define-key global-map (kbd "C-; SPC")   'helm-all-mark-rings)
-(define-key global-map (kbd "C-; a")     'helm-apropos)
-(define-key global-map (kbd "C-; c")     'helm-colors)
-(define-key global-map (kbd "C-; f")     'helm-find)
-(define-key global-map (kbd "C-; i")     'insert-char)
-(define-key global-map (kbd "C-; m")     'helm-man-woman)
-(define-key global-map (kbd "C-; o")     'helm-occur)
-(define-key global-map (kbd "C-; r")     'helm-all-mark-rings)
-(define-key global-map (kbd "C-; s")     'helm-semantic-or-imenu)
-(define-key global-map (kbd "M-'")       (lambda () (interactive) (er/expand-region -1)))
-(define-key global-map (kbd "M-#")       'hydra-windows/body)
-(define-key global-map (kbd "C-\\")      'hs-toggle-hiding)
-(define-key global-map (kbd "C-|")       'hs-show-all)
-(define-key global-map (kbd "M-/")       'hippie-expand)
-(define-key global-map (kbd "M-;")       'endless/comment-line-or-region)
-;; (define-key global-map (kbd "M-[")       'backward-sexp)  Screws up in terminal Emacs
-;; fine-key global-map (kbd "M-]")       'forward-sexp)
-(define-key global-map (kbd "M-{")       'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
-(define-key global-map (kbd "M-}")       'endless/forward-paragraph)
+;; (define-key global-map (kbd "C-; SPC")   'helm-all-mark-rings)
+;; (define-key global-map (kbd "C-; a")     'helm-apropos)
+;; (define-key global-map (kbd "C-; c")     'helm-colors)
+;; (define-key global-map (kbd "C-; f")     'helm-find)
+;; (define-key global-map (kbd "C-; i")     'insert-char)
+;; (define-key global-map (kbd "C-; m")     'helm-man-woman)
+;; (define-key global-map (kbd "C-; o")     'helm-occur)
+;; (define-key global-map (kbd "C-; r")     'helm-all-mark-rings)
+;; (define-key global-map (kbd "C-; s")     'helm-semantic-or-imenu)
+;; (define-key global-map (kbd "M-#")       'hydra-windows/body)
+;; (define-key global-map (kbd "C-\\")      'hs-toggle-hiding)
+;; (define-key global-map (kbd "C-|")       'hs-show-all)
 
-(define-key global-map (kbd "C-S-o")     'pd-duplicate-line-or-region)
-(define-key global-map (kbd "C-S-w")     'pd-copy-current-line)
-(define-key global-map (kbd "C-a")       'pd-back-to-indentation-or-beginning)
-(define-key global-map (kbd "C-x C-b")   'helm-mini)
-(define-key global-map (kbd "C-x C-f")   'helm-find-files)
-(define-key global-map (kbd "C-x C-g")   'magit-status)
-(define-key global-map (kbd "C-x b")     'helm-mini)
-(define-key global-map (kbd "C-x g")     'magit-status)
-(define-key global-map (kbd "C-x C-t")   'pd-ansi-term)
-(define-key global-map (kbd "C-x z")     'undo)
-(define-key global-map (kbd "C-%")       'pd-replace-all-in-buffer)
-(define-key global-map (kbd "M-j")       'pd-join-line)
-(define-key global-map (kbd "M-x")       'helm-M-x)
-(define-key global-map (kbd "M-y")       'helm-show-kill-ring)
-;;(define-key global-map (kbd "M-SPC")     'pd-no-space)
-;;(define-key global-map (kbd "H-SPC")     'pd-no-space)
-;;(pd-log "Main keys defined.")
+;; ;; (define-key global-map (kbd "M-[")       'backward-sexp)  Screws up in terminal Emacs
+;; ;; fine-key global-map (kbd "M-]")       'forward-sexp)
+;; (define-key global-map (kbd "M-{")       'endless/backward-paragraph)     ;; Replace standard bindings for bp and fp with better versions.
+;; (define-key global-map (kbd "M-}")       'endless/forward-paragraph)
+;; (define-key global-map (kbd "C-x C-t")   'pd-ansi-term)
+
 
 
 (defun pd-bind-key (keyseq func)
@@ -145,15 +275,15 @@
 
 ;; Consider arrow keys too.
 ;; Want for bookmarks, macros, ggtags, rectangles?
-(pd-bind-key "b"  'cycle-buffer-backward-permissive)
-(pd-bind-key "d"  'dired-jump)
-(pd-bind-key "f"  'cycle-buffer-permissive)
-(pd-bind-key "g"  'magit-status)
-(pd-bind-key "o"  'pd-duplicate-line-or-region)
-(pd-bind-key "p"  'pd-cleanup-programming-buffer)
-(pd-bind-key "s"  'pd-sort-paragraph-dwim)
-(pd-bind-key "t"  'pd-ansi-term)
-(pd-bind-key "w"  'pd-copy-current-line)
+;; (pd-bind-key "b"  'cycle-buffer-backward-permissive)
+;; (pd-bind-key "d"  'dired-jump)
+;; (pd-bind-key "f"  'cycle-buffer-permissive)
+;; (pd-bind-key "g"  'magit-status)
+;; (pd-bind-key "o"  'pd-duplicate-line-or-region)
+;; (pd-bind-key "p"  'pd-cleanup-programming-buffer)
+;; (pd-bind-key "s"  'pd-sort-paragraph-dwim)
+;; (pd-bind-key "t"  'pd-ansi-term)
+;; (pd-bind-key "w"  'pd-copy-current-line)
 ;;(pd-log "Hyper/apps keys defined.")
 
 ;; (pd-bind-key "rb" 'pd-revert-buffer)
