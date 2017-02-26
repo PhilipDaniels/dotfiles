@@ -28,7 +28,7 @@
     # 5) emacs-w32     emacsclient --tty      Behaves as per 2)
     # 6) emacs-w32     emacsclient -c         Behaves as per 1)
     editor = emacsclient -q -t
-    pager = cat
+    pager = less -x4 -d
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems
     # (Linux, MSysGit, Cygwin). It requires Windows machines to know
