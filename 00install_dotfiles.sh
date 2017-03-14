@@ -61,6 +61,7 @@ f_Inst $DIR/.profile ~/.profile
 f_Inst $DIR/colors/.dircolors.solarized.ansi-universal ~/.dircolors
 f_Inst $DIR/emacs/emacs.el ~/.emacs
 f_Inst $DIR/.tmux.conf ~/.tmux.conf
+f_Inst $DIR/.spacemacs ~/.spacemacs
 
 if [ -f /etc/debian_version ]; then
     # We are running on Debian, this file improves font rendering considerably,
