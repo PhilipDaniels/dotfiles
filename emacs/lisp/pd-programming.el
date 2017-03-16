@@ -10,8 +10,8 @@
 (require-package 'json-mode)
 (require-package 'lua-mode)
 (require-package 'powershell)          ;; Run powershell as an inferior process.
-(require-package 'rust-mode)
-(require-package 'rustfmt)
+;;(require-package 'rust-mode)
+;(require-package 'rustfmt)
 (require-package 'sass-mode)
 (require-package 'yaml-mode)
 (require 'pd-cpp)
