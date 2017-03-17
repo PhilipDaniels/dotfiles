@@ -21,5 +21,5 @@ fi
 # Start X.
 run xwin -multiwindow
 
-# Start Emacs daemon.
-emacs-w32 --daemon
+
+emacs-w32
