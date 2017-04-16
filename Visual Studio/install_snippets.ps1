@@ -28,7 +28,7 @@ $myDocs = [Environment]::GetFolderPath("mydocuments")  # Differs on Win7/8.
 
 # Install Visual Studio snippets.
 $sourceDir = "$scriptDir\Code Snippets"
-foreach ($vsVer in 2012,2013,2015)
+foreach ($vsVer in 2012,2013,2015,2017)
 {
     $snippetDir = "{0}\Visual Studio {1}\Code Snippets" -f $myDocs, $vsVer
     #$snippetDir = "C:\temp\tst"

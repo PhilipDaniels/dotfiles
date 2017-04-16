@@ -6,7 +6,7 @@
 $myDocs = [Environment]::GetFolderPath("mydocuments")  # Differs on Win7/8.
 
 # Clean Visual Studio snippets.
-foreach ($vsVer in 2012,2013,2015)
+foreach ($vsVer in 2012,2013,2015,2017)
 {
     $snippetDir = "{0}\Visual Studio {1}\Code Snippets" -f $myDocs, $vsVer
 

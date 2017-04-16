@@ -21,5 +21,4 @@ fi
 # Start X.
 run xwin -multiwindow
 
-
-emacs-w32
+emacs-w32 &
