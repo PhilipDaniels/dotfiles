@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;
+    *) return;;
 esac
 
 # Keep functions in separate files.
@@ -82,11 +82,11 @@ f_AddToPath "$HOME/repos/dotfiles/bin"
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
 fi
 
 # Setup nvm (Node Version Manager) to use a folder in my home directory.
@@ -193,4 +193,8 @@ if [ "$OS" == "cygwin" ]; then
 
     # To fix 'Failed to connect to server' errors.
     alias tmux="rm -rf /tmp/tmux* && tmux"
+fi
+
+if [ "$OS" == "winbash" ]; then
+    export DISPLAY=:0.0
 fi

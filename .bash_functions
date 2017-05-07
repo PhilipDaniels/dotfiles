@@ -38,7 +38,7 @@ f_DetermineOS()
     esac
 
     case `uname -r` in
-        *microsoft) OS="bashwindows" ;;
+        *Microsoft) OS="winbash" ;;
     esac
 }
 
