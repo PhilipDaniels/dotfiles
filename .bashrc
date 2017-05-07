@@ -189,7 +189,7 @@ if [ "$OS" == "cygwin" ]; then
     # This will start an X server on Cygwin without displaying any startup windows.
     # If this is not working, you probably forgot to install the "xinit" package.
     # http://x.cygwin.com/docs/faq/cygwin-x-faq.html#q-whereis-startxwin-bat
-    alias runx="run xwin -multiwindow"
+    alias runx="run xwin -multiwindow -listen tcp"
 
     # To fix 'Failed to connect to server' errors.
     alias tmux="rm -rf /tmp/tmux* && tmux"

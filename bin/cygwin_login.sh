@@ -19,6 +19,6 @@ if f_AtHome; then
 fi
 
 # Start X.
-run xwin -multiwindow
+run xwin -multiwindow -listen tcp
 
-emacs-w32 &
+# emacs-w32 &

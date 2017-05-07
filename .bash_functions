@@ -22,20 +22,24 @@ function f_AddToPath()
 
 f_AptUpdateAndUpgrade()
 {
-  sudo apt-get update && \
-    sudo apt-get -y dist-upgrade && \
-    sudo apt-get -y autoremove && \
-    sudo apt-get -y autoclean
+    sudo apt-get update && \
+        sudo apt-get -y dist-upgrade && \
+        sudo apt-get -y autoremove && \
+        sudo apt-get -y autoclean
 }
 
 f_DetermineOS()
 {
-  case "$OSTYPE" in
-    cygwin*)  OS="cygwin" ;;
-    linux*)   OS="linux" ;;
-    msys*)    OS="msys" ;;
-    *)        OS="unknown: $OSTYPE"  ;;
-  esac
+    case "$OSTYPE" in
+        cygwin*)  OS="cygwin" ;;
+        linux*)   OS="linux" ;;
+        msys*)    OS="msys" ;;
+        *)        OS="unknown: $OSTYPE"  ;;
+    esac
+
+    case `uname -r` in
+        *microsoft) OS="bashwindows" ;;
+    esac
 }
 
 f_IsRoot()
