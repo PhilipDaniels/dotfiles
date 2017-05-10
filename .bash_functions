@@ -6,7 +6,7 @@
 
 function f_ShowPath()
 {
-    echo $PATH | tr ':' '\n' | sort -u
+    echo $PATH | tr ':' '\n' | sort
 }
 
 # Add a directory to the path if and only if it is not already
@@ -16,7 +16,26 @@ function f_ShowPath()
 function f_AddToPath()
 {
     if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
-        PATH="$1:$PATH"
+        PATH="$PATH:$1"
+    fi
+}
+
+function f_PruneWindowsDirectoriesFromPath()
+{
+    # Remove all Windows dirs as they appear either in WSL or in Cygwin.
+    PATH=`echo $PATH | tr ':' '\n' | grep -v '^/mnt/c/\|^/c/\|^$' | tr '\n' ':'`
+
+    # Remove last :.
+    PATH=${PATH::-1}
+
+    if [ $OS == "winbash" ] ; then
+        f_AddToPath "/mnt/c/Windows"
+        f_AddToPath "/mnt/c/Windows/System32"
+    fi
+
+    if [ $OS == "cygwin" ] ; then
+        f_AddToPath "/c/Windows"
+        f_AddToPath "/c/Windows/System32"
     fi
 }
 

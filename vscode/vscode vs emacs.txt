@@ -1,0 +1,14 @@
+What I would lose from Spacemacs
+  magit
+  dired
+  great terminal integration
+  tramp & ssh integration
+  filling at 80 columns
+  expand selection
+  jump to char
+  hydras
+  cycle buffers / windows
+  does not work on BUW.
+
+  
+
