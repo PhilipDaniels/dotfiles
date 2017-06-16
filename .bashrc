@@ -77,6 +77,7 @@ f_AddToPath "$HOME/bin"
 f_AddToPath "$HOME/bin/p4merge/bin"
 f_AddToPath "$HOME/repos/dotfiles/fancontrol"
 f_AddToPath "$HOME/repos/dotfiles/bin"
+f_AddToPath "$HOME/.cargo/bin"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
