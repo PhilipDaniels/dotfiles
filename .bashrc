@@ -78,6 +78,8 @@ f_AddToPath "$HOME/bin/p4merge/bin"
 f_AddToPath "$HOME/repos/dotfiles/fancontrol"
 f_AddToPath "$HOME/repos/dotfiles/bin"
 f_AddToPath "$HOME/.cargo/bin"
+f_AddToPath "/data/bin"
+f_AddToPath "/data/bin/dotnet"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -199,3 +201,4 @@ fi
 if [ "$OS" == "winbash" ]; then
     export DISPLAY=:0.0
 fi
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
