@@ -64,9 +64,9 @@ f_Inst $DIR/.tmux.conf ~/.tmux.conf
 
 # We use Spacemacs now, which we get automatically by not having a .emacs file, after
 # following the Spacemacs install instructions at https://github.com/syl20bnr/spacemacs#default-installation
-#f_Inst $DIR/emacs/emacs.el ~/.emacs
-rm -f ~/.emacs
-f_Inst $DIR/.spacemacs ~/.spacemacs
+# f_Inst $DIR/emacs/emacs.el ~/.emacs
+# rm -f ~/.emacs
+# f_Inst $DIR/.spacemacs ~/.spacemacs
 
 
 if [ -f /etc/debian_version ]; then
