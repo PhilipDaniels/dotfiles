@@ -61,6 +61,13 @@ f_DetermineOS()
     esac
 }
 
+f_DetermineLinuxDistro()
+{
+    if [ -f /etc/lsb-release ] ; then
+        DISTRO=`cat /etc/lsb-release | grep DISTRIB_ID | cut -d= -f2`
+    fi
+}
+
 f_IsRoot()
 {
     # Determine if you are root, and set two environment variables accordingly.
@@ -78,6 +85,7 @@ f_Info()
     # Print out various bits of information. This used to be printed when I
     # logged in, but it became tiresome.
     f_DetermineOS
+    f_DetermineLinuxDistro
     f_IsRoot
     echo -e "OS=$OS\nTERM=$TERM\nISROOTMSG=$ISROOTMSG"
 }

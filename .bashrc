@@ -11,6 +11,7 @@ esac
 # Keep functions in separate files.
 . ~/repos/dotfiles/.bash_functions
 f_DetermineOS
+f_DetermineLinuxDistro
 f_IsRoot
 
 # Start ssh-agent. This writes a bash script into ~/.keychain and sources it,
@@ -20,13 +21,18 @@ f_IsRoot
 # This should be run first time from cygwin_login.sh so it should be a no-op
 # when run in .bashrc, except for bringing in the environment variables.
 if f_AtHome; then
-    eval `keychain --quiet --eval id_phil`
+    if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
+        eval `keychain --quiet --eval id_phil`
+    fi
 fi
 
 
 # Ensure that Git sets core.fileMode to false whenever I cd into a repo directory.
 # See http://stackoverflow.com/questions/12457910/how-do-i-prevent-git-on-cygwin-to-set-core-filemode-true
-PROMPT_COMMAND=f_PromptCommand
+if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
+    PROMPT_COMMAND=f_PromptCommand
+fi
+
 f_PromptCommand()
 {
     [ -d .git -a ! -g .git/config ] || return
@@ -74,12 +80,12 @@ shopt -s checkwinsize
 f_AddToPath "/sbin"
 f_AddToPath "/usr/sbin"
 f_AddToPath "$HOME/bin"
-f_AddToPath "$HOME/bin/p4merge/bin"
-f_AddToPath "$HOME/repos/dotfiles/fancontrol"
-f_AddToPath "$HOME/repos/dotfiles/bin"
+# f_AddToPath "$HOME/bin/p4merge/bin"
+# f_AddToPath "$HOME/repos/dotfiles/fancontrol"
+# f_AddToPath "$HOME/repos/dotfiles/bin"
 f_AddToPath "$HOME/.cargo/bin"
-f_AddToPath "/data/bin"
-f_AddToPath "/data/bin/dotnet"
+# f_AddToPath "/data/bin"
+# f_AddToPath "/data/bin/dotnet"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -133,9 +139,9 @@ fi
 # requires the terminal to have been configured with solarized colors but will
 # fall back to reasonable defaults if not. n.b. MSysGit does not provide dircolors,
 # but we seem to get some highlighting anyway.
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-fi
+#if [ -x /usr/bin/dircolors ]; then
+#    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+#fi
 
 # Emacs setup. NO_AT_BRIDGE suppresses a message from GUI Emacs when starting
 # under Cygwin. n.b. EDITOR is not used by my Git setup, the editor is set
@@ -201,4 +207,5 @@ fi
 if [ "$OS" == "winbash" ]; then
     export DISPLAY=:0.0
 fi
+
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

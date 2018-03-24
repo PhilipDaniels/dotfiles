@@ -10,6 +10,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # Sets up the bash environment.
 source $DIR/.bash_functions
 f_DetermineOS
+f_DetermineLinuxDistro
 
 function f_Inst()
 {
@@ -58,20 +59,24 @@ f_Inst $DIR/.bash_logout ~/.bash_logout
 f_Inst $DIR/.bash_profile ~/.bash_profile
 f_Inst $DIR/.bashrc ~/.bashrc
 f_Inst $DIR/.profile ~/.profile
-f_Inst $DIR/colors/.dircolors.solarized.ansi-universal ~/.dircolors
+# f_Inst $DIR/colors/.dircolors.solarized.ansi-universal ~/.dircolors
 f_Inst $DIR/.tmux.conf ~/.tmux.conf
+
 # We use Spacemacs now, which we get automatically by not having a .emacs file, after
 # following the Spacemacs install instructions at https://github.com/syl20bnr/spacemacs#default-installation
 #f_Inst $DIR/emacs/emacs.el ~/.emacs
 rm -f ~/.emacs
 f_Inst $DIR/.spacemacs ~/.spacemacs
 
-if [ -f /etc/debian_version ]; then
-    # We are running on Debian, this file improves font rendering considerably,
-    # but it is not necessary for Ubuntu, Mint etc.
-    f_Inst $DIR/.fonts.conf ~/.fonts.conf
-fi
 
+if [ -f /etc/debian_version ]; then
+    if [ "$DISTRO" == "DEBIAN" ] ; then
+        # We are running on Debian, this file improves font rendering considerably,
+        # but it is not necessary for Ubuntu, Mint etc.
+        echo "Installing ~/.fonts.conf because this is Debian (note this may be obsolete now)"
+        f_Inst $DIR/.fonts.conf ~/.fonts.conf
+    fi
+fi
 
 
 echo "Installation complete."
