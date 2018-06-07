@@ -50,13 +50,4 @@ f_Inst $DIR/.profile ~/.profile
 # f_Inst $DIR/colors/.dircolors.solarized.ansi-universal ~/.dircolors
 f_Inst $DIR/.tmux.conf ~/.tmux.conf
 
-if [ -f /etc/debian_version ]; then
-    if [ "$DISTRO" == "DEBIAN" ] ; then
-        # We are running on Debian, this file improves font rendering considerably,
-        # but it is not necessary for Ubuntu, Mint etc.
-        echo "Installing ~/.fonts.conf because this is Debian (note this may be obsolete now)"
-        f_Inst $DIR/.fonts.conf ~/.fonts.conf
-    fi
-fi
-
 echo "Installation complete."
