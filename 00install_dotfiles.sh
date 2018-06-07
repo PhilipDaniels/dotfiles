@@ -44,7 +44,7 @@ fi
 
 # Do Cygwin specific things.
 if [ "$OS" == "cygwin" ] ; then
-    f_Inst $DIR/colors/mintty-themes/SolarizedDark ~/.minttyrc
+    f_Inst $DIR/colors/mintty-themes/SolarizedDark.mintty ~/.minttyrc
     f_CopyFileWithBackup $DIR/ConEmu.xml ~/AppData/Roaming/ConEmu.xml
 
     if [ ! -f /bin/apt-cyg ] ; then

@@ -1,6 +1,8 @@
+# This is the Solarized Dark theme for mintty.
+
 Term=xterm-256color
 Font=Cousine
-FontHeight=12
+FontHeight=10
 CursorType=block
 Scrollbar=none
 SwitchShortcuts=no
@@ -9,9 +11,12 @@ AltFnShortcuts=no
 BoldAsFont=no
 BoldAsColour=yes
 
-ForegroundColour=101, 123, 131
-BackgroundColour=253, 246, 227
-CursorColour=    220,  50,  47
+BackgroundColour=  0,  43,  54
+ForegroundColour=131, 148, 150
+CursorColour    = 181,137,   0
+#CursorColour   = 38, 139, 210 blue not bad
+#CursorColour=    211,54,130   magenta not bad
+#CursorColour=   203,75,22     bold-red not bad, All others don't work
 
 Black=             7,  54,  66
 BoldBlack=         0,  43,  54
@@ -30,3 +35,5 @@ BoldCyan=        147, 161, 161
 White=           238, 232, 213
 BoldWhite=       253, 246, 227
 
+# Turn the APPS key into PRINT in Emacs.
+Key_Menu=29

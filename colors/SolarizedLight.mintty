@@ -1,5 +1,18 @@
-ForegroundColour=131, 148, 150
-BackgroundColour=  0,  43,  54
+# This is the Solarized light theme for mintty.
+
+Term=xterm-256color
+Font=Cousine
+FontHeight=12
+CursorType=block
+Scrollbar=none
+SwitchShortcuts=no
+ZoomShortcuts=no
+AltFnShortcuts=no
+BoldAsFont=no
+BoldAsColour=yes
+
+ForegroundColour=101, 123, 131
+BackgroundColour=253, 246, 227
 CursorColour=    220,  50,  47
 
 Black=             7,  54,  66
@@ -18,3 +31,4 @@ Cyan=             42, 161, 152
 BoldCyan=        147, 161, 161
 White=           238, 232, 213
 BoldWhite=       253, 246, 227
+
