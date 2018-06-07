@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name : link snippet
-# key: lnk
-# --
-[${1:caption}]($0)
-
