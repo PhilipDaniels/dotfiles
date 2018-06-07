@@ -1,3 +1,0 @@
-# Specify terminal type. It defaults to 'screen', which is only 8 colors.
-term screen-256color
-
