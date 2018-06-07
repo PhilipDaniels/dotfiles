@@ -28,12 +28,6 @@ if f_AtWork; then
     sed -i.bak 's/email = Philip.Daniels1971@gmail.com/email = Philip.Daniels@landmark.co.uk/g' ~/.gitconfig
 fi
 
-# Ensure we have the right git client.
-if [ "$OS" == "cygwin" ] ; then
-    echo "This is Cygwin, updating ~/.gitconfig to set git core.editor to emacsclient-w32"
-    sed -i.bak 's/editor = emacsclient/editor = emacsclient-w32.exe/g' ~/.gitconfig
-fi
-
 if f_AtWork; then
     echo "You are at work, setting the Git proxy server"
     f_GitSetProxy
@@ -46,12 +40,6 @@ fi
 if [ "$OS" == "cygwin" ] ; then
     f_Inst $DIR/colors/mintty-themes/SolarizedDark.mintty ~/.minttyrc
     f_CopyFileWithBackup $DIR/ConEmu.xml ~/AppData/Roaming/ConEmu.xml
-
-    if [ ! -f /bin/apt-cyg ] ; then
-        echo "Downloading apt-cyg to /bin"
-        lynx -source https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg > /bin/apt-cyg
-        chmod ugo+rx /bin/apt-cyg
-    fi
 fi
 
 
