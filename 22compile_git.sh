@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script compiles Git from source.
-# All pre-requisites were installed by 10install_linux.sh
+# All pre-requisites were installed by 10install_programs.sh
 # See https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
 cd ~/repos

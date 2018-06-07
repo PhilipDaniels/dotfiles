@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script compiles Emacs from Git source.
-# All pre-requisites were installed by 10install_linux.sh
+# All pre-requisites were installed by 10install_programs.sh
 # Alternatively, you can do
 #  sudo apt-get build-dep emacs24
 # See http://www.emacswiki.org/emacs/EmacsSnapshotAndDebian

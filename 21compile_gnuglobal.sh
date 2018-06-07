@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script compiles and installs GNU Global from source.
-# All pre-requisites were installed by 10install_linux.sh (it
+# All pre-requisites were installed by 10install_programs.sh (it
 # needs gperf, libtool and libtool-bin).
 # See https://www.gnu.org/software/global/download.html
 
