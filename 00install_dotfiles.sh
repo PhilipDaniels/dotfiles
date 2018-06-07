@@ -19,7 +19,6 @@ function f_Inst()
     f_Relink $src $dest
 }
 
-
 # Always copy this. It can get tricky having a file called .gitconfig in the
 # repo, because that affects the behaviour of git in this repo!
 f_CopyFileWithBackup $DIR/.gitconfig.master ~/.gitconfig
@@ -39,7 +38,6 @@ fi
 # Do Cygwin specific things.
 if [ "$OS" == "cygwin" ] ; then
     f_Inst $DIR/colors/mintty-themes/SolarizedDark.mintty ~/.minttyrc
-    f_CopyFileWithBackup $DIR/ConEmu.xml ~/AppData/Roaming/ConEmu.xml
 fi
 
 
@@ -47,7 +45,6 @@ f_Inst $DIR/.bash_logout ~/.bash_logout
 f_Inst $DIR/.bash_profile ~/.bash_profile
 f_Inst $DIR/.bashrc ~/.bashrc
 f_Inst $DIR/.profile ~/.profile
-# f_Inst $DIR/colors/.dircolors.solarized.ansi-universal ~/.dircolors
 f_Inst $DIR/.tmux.conf ~/.tmux.conf
 
 echo "Installation complete."
