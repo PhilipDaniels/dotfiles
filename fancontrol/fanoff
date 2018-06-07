@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# Change to directory of script so that we can run programs in this directory
-# without needing a full path.
-cd $(dirname $0)
-
-sudo ./smm 30a3
-
