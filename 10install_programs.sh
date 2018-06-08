@@ -63,6 +63,7 @@ gnome-mahjongg gnome-mines gnome-specimen \
 gperf \
 gthumb \
 htop \
+jed \
 kdbg \
 kdiff3 \
 libc6-dev \
