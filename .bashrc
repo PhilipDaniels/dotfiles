@@ -8,33 +8,13 @@ case $- in
     *) return;;
 esac
 
-# Start ssh-agent. This writes a bash script into ~/.keychain and sources it,
-# which ensures that other processes know that ssh-agent is running.
-# See http://www.funtoo.org/Keychain
-# and https://thomaswabner.wordpress.com/2009/11/06/using-keychain-under-cygwin/
-# There must be a corresponding call in .bashrc to source the existing file.
-#if f_AtHome; then
-    #eval `keychain --eval id_phil`
-#fi
-
-# Keep functions in separate files.
+. ~/repos/dotfiles/.bash_controlcodes
 . ~/repos/dotfiles/.bash_functions
+. ~/repos/dotfiles/.bash_prompt
+
 f_DetermineOS
 f_DetermineLinuxDistro
 f_IsRoot
-
-# Start ssh-agent. This writes a bash script into ~/.keychain and sources it,
-# which ensures that other processes know that ssh-agent is running.
-# See http://www.funtoo.org/Keychain
-# and https://thomaswabner.wordpress.com/2009/11/06/using-keychain-under-cygwin/
-# This should be run first time from cygwin_login.sh so it should be a no-op
-# when run in .bashrc, except for bringing in the environment variables.
-if f_AtHome; then
-    if [ "$OS" == "cygwin" ] || [ "$OS" == "msys" ]; then
-        eval `keychain --quiet --eval id_phil`
-    fi
-fi
-
 
 # Ensure that Git sets core.fileMode to false whenever I cd into a repo directory.
 # See http://stackoverflow.com/questions/12457910/how-do-i-prevent-git-on-cygwin-to-set-core-filemode-true
@@ -65,9 +45,6 @@ f_PromptCommand()
 #    echo
 #fi
 
-# Bring in control codes (for setting colors etc.) then configure the prompt.
-. ~/repos/dotfiles/.bash_controlcodes
-. ~/repos/dotfiles/.bash_prompt
 
 # Don't put duplicate lines in the history. See bash(1) for more options
 HISTCONTROL=ignoredups:ignorespace
@@ -89,12 +66,9 @@ shopt -s checkwinsize
 f_AddToPath "/sbin"
 f_AddToPath "/usr/sbin"
 f_AddToPath "$HOME/bin"
-# f_AddToPath "$HOME/bin/p4merge/bin"
-# f_AddToPath "$HOME/repos/dotfiles/fancontrol"
-# f_AddToPath "$HOME/repos/dotfiles/bin"
 f_AddToPath "$HOME/.cargo/bin"
-# f_AddToPath "/data/bin"
-# f_AddToPath "/data/bin/dotnet"
+f_AddToPath "$HOME/.local/bin"
+
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
