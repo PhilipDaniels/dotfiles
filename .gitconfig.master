@@ -10,24 +10,7 @@
     # Store passwords in RAM for 6 days (6 * 24 * 60 * 60).
     helper = cache --timeout=518400
 [core]
-    # When running from a non-internal shell,
-    # If server is     and client is          Then...
-    # 1) emacs-w32     emacsclient-w32        The existing GUI window is reused
-    # 2) emacs-w32     emacsclient-w32 --tty  Emacs opens in the current console
-    # 3) emacs-w32     emacsclient-w32 -c     Emacs opens a new GUI window, but also brings the existing window forward and focuses it, which is annoying
-    # 4) emacs-w32     emacsclient            Behaves as per 1)
-    # 5) emacs-w32     emacsclient --tty      Behaves as per 2)
-    # 6) emacs-w32     emacsclient -c         Behaves as per 2)
-    #
-    # When running from an ansi-term shell,
-    # If server is     and client is          Then...
-    # 1) emacs-w32     emacsclient-w32        A GUI buffer is opened in the window that contains ansi-term, behaviour is good, except for annoying "waiting for Emacs" prompt from Git.
-    # 2) emacs-w32     emacsclient-w32 --tty  A console Emacs buffer is opened, running under ansi-term. Very confusing, colors are wrong.
-    # 3) emacs-w32     emacsclient-w32 -c     A new GUI window pops up, behaviour is good, but ansi-term seems to get a bit confused by cursor position.
-    # 4) emacs-w32     emacsclient            Behaves as per 1)
-    # 5) emacs-w32     emacsclient --tty      Behaves as per 2)
-    # 6) emacs-w32     emacsclient -c         Behaves as per 1)
-    editor = emacsclient -q -t
+    editor = vim
     pager = less -x4 -d
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems
@@ -92,8 +75,7 @@
     # mupull = subtree pull --prefix MiscUtils --squash git@github.com:PhilipDaniels/MiscUtils.git master
     # mupush = subtree push --prefix MiscUtils git@github.com:PhilipDaniels/MiscUtils.git master
 
-# Setup the GUI diff and mergetools. You can pick which one by uncommenting
-# the relevant lines.
+# Setup the GUI diff and mergetools. You can pick which one by uncommenting the relevant lines.
 [merge]
     conflictstyle = diff3
     tool = kdiff3
@@ -106,16 +88,6 @@
 [difftool]
     prompt = false
 
-[mergetool "p4merge"]
-    cmd = "p4merge $BASE $LOCAL $REMOTE $MERGED"
-    keepTemporaries = false
-    trustExitCode = false
-    keepBackup = false
-[mergetool "tortoisemerge"]
-    cmd = \""c:/Program Files/TortoiseGIT/bin/TortoiseGitMerge.exe"\" -base "$BASE" -theirs "$REMOTE" -mine "$LOCAL" -merged "$MERGED"
-    keepTemporaries = false
-    trustExitCode = false
-    keepBackup = false
 [mergetool "kdiff3"]
     cmd = \""C:/Program Files/KDiff3/kdiff3"\" $BASE $LOCAL $REMOTE -o $MERGED
 [mergetool "vs2015"]
@@ -123,10 +95,6 @@
     keepbackup = false
     trustexistcode = true
 
-[difftool "p4merge"]
-    cmd = "p4merge $LOCAL $REMOTE"
-[difftool "tortoisediff"]
-    cmd = \""c:/Program Files/TortoiseGIT/bin/TortoiseGitMerge.exe"\" -mine "$REMOTE" -base "$LOCAL"
 [difftool "kdiff3"]
     cmd = \""C:/Program Files/KDiff3/kdiff3"\" $LOCAL $REMOTE
 [difftool "vs2015"]
