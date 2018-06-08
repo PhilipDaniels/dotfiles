@@ -1,0 +1,14 @@
+
+[mergetool "kdiff3"]
+    cmd = \""C:/Program Files/KDiff3/kdiff3"\" $BASE $LOCAL $REMOTE -o $MERGED
+[mergetool "vs2015"]
+    cmd = \""C:/Program Files (x86)/Microsoft Visual Studio 14.0/Common7/IDE/vsdiffmerge.exe"\" "$REMOTE" "$LOCAL" "$BASE" "$MERGED" //m
+    keepbackup = false
+    trustexistcode = true
+
+[difftool "kdiff3"]
+    cmd = \""C:/Program Files/KDiff3/kdiff3"\" $LOCAL $REMOTE
+[difftool "vs2015"]
+    cmd = \""C:/Program Files (x86)/Microsoft Visual Studio 14.0/Common7/IDE/vsdiffmerge.exe\"" "$LOCAL" "$REMOTE" //t
+    keepbackup = false
+    trustexistcode = true

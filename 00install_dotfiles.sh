@@ -12,13 +12,14 @@ source $DIR/.bash_functions
 f_DetermineOS
 f_DetermineLinuxDistro
 
-function f_Inst()
-{
-    local src=$1
-    local dest=$2
-    f_Relink $src $dest
-}
+f_Install $DIR/.bash_logout ~/.bash_logout
+f_Install $DIR/.bash_profile ~/.bash_profile
+f_Install $DIR/.bashrc ~/.bashrc
+f_Install $DIR/.profile ~/.profile
+f_Install $DIR/.tmux.conf ~/.tmux.conf
 
+######################################################################################
+# Setup Git.
 # Always copy this. It can get tricky having a file called .gitconfig in the
 # repo, because that affects the behaviour of git in this repo!
 f_CopyFileWithBackup $DIR/.gitconfig.master ~/.gitconfig
@@ -35,16 +36,19 @@ else
     f_GitUnsetProxy
 fi
 
+if [ "$OS" == "cygwin" ] ; then
+    echo "Detected Cygwin, setting Windows diff and merge tools in ~/.gitconfig"
+    cat $DIR/.gitconfig.windows >> ~/.gitconfig
+else
+    echo "Not on Cygwin, setting Linux diff and merge tools in ~/.gitconfig"
+    cat $DIR/.gitconfig.linux >> ~/.gitconfig
+fi
+
+######################################################################################
+
 # Do Cygwin specific things.
 if [ "$OS" == "cygwin" ] ; then
     f_Inst $DIR/colors/mintty-themes/SolarizedDark.mintty ~/.minttyrc
 fi
-
-
-f_Inst $DIR/.bash_logout ~/.bash_logout
-f_Inst $DIR/.bash_profile ~/.bash_profile
-f_Inst $DIR/.bashrc ~/.bashrc
-f_Inst $DIR/.profile ~/.profile
-f_Inst $DIR/.tmux.conf ~/.tmux.conf
 
 echo "Installation complete."

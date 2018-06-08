@@ -80,7 +80,7 @@ f_IsRoot()
     fi
 }
 
-f_Info()
+f_ShowInfo()
 {
     # Print out various bits of information. This used to be printed when I
     # logged in, but it became tiresome.
@@ -191,6 +191,14 @@ f_Relink()
     ln -s $target $src
 }
 
+function f_Install()
+{
+    # Installs a file using a link. Used in the 00install_dotfiles script.
+    local src=$1
+    local dest=$2
+    f_Relink $src $dest
+}
+
 f_IsCmd()
 {
     # Check to see if a command is installed.
@@ -284,6 +292,9 @@ f_GitPersonalEmail()
     # of what the global default is.
     git config user.email Philip.Daniels1971@gmail.com
 }
+
+# n.b. To set core.filemode on or off there are two git aliases,
+# 'git fmon' and 'git fmoff' will do the trick.
 
 f_GitWorkEmail()
 {

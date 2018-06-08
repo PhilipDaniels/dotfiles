@@ -1,0 +1,6 @@
+
+[mergetool "kdiff3"]
+    cmd = kdiff3 $BASE $LOCAL $REMOTE -o $MERGED
+
+[difftool "kdiff3"]
+    cmd = kdiff3 $LOCAL $REMOTE

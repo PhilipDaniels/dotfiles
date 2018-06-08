@@ -27,8 +27,7 @@
     default = simple
 [http]
     # See also functions f_GitSetProxy and f_GitUnsetProxy and the call of the former
-    # from .bashrc. Reading is http://rdproxy01:800 and Exeter is http://exproxy03:8080
-    # The new proxy is http://fpproxy.corp.edrlandmark.net:8080
+    # from .bashrc. The new proxy is http://fpproxy.corp.edrlandmark.net:8080
     proxy = http://fpproxy.corp.edrlandmark.net:8080
 [https]
     proxy = http://fpproxy.corp.edrlandmark.net:8080
@@ -88,16 +87,3 @@
 [difftool]
     prompt = false
 
-[mergetool "kdiff3"]
-    cmd = \""C:/Program Files/KDiff3/kdiff3"\" $BASE $LOCAL $REMOTE -o $MERGED
-[mergetool "vs2015"]
-    cmd = \""C:/Program Files (x86)/Microsoft Visual Studio 14.0/Common7/IDE/vsdiffmerge.exe"\" "$REMOTE" "$LOCAL" "$BASE" "$MERGED" //m
-    keepbackup = false
-    trustexistcode = true
-
-[difftool "kdiff3"]
-    cmd = \""C:/Program Files/KDiff3/kdiff3"\" $LOCAL $REMOTE
-[difftool "vs2015"]
-    cmd = \""C:/Program Files (x86)/Microsoft Visual Studio 14.0/Common7/IDE/vsdiffmerge.exe\"" "$LOCAL" "$REMOTE" //t
-    keepbackup = false
-    trustexistcode = true
