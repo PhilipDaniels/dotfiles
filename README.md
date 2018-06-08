@@ -81,3 +81,7 @@ Check if these services are started and set to automatic.
 * Setup a fixed IP for a VM by reserving its MAC address on the router and adding it to
   `C:\Windows\System32\drivers\etc\hosts`. If you don't do this it may not be accessible
   by RDP.
+
+### TODO
+
+A decent prompt once more! Must be fast though.
