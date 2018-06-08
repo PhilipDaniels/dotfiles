@@ -353,6 +353,14 @@ function f_StopEmacsDaemon()
     fi
 }
 
+function qstart()
+{
+    # Start a program quietly, dumping all messages from stdout and stderr to /dev/null.
+    # This is useful for starting X programs from the command line (especially helpful
+    # in WSL).
+    "$@" > /dev/null 2>&1 &
+}
+
 ########################################################################
 # settitle ()
 # {
