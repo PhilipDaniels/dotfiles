@@ -1,26 +1,83 @@
 # dotfiles
 
-dotfiles: bash, vim, terminal and misc config for Linux and Cygwin.
+dotfiles: bash, vim, terminal and misc config for Linux and WSL.
 
-See document Public Build Book.odt for full installation instructions for a new box.
+### Linux Installation instructions
 
-### Installation instructions
-From an elevated CMD command prompt (not ConEmu because it is part of the install), first install Cygwin so you get Git:
-
-```
-REM To install cygwin
-@powershell -NoProfile -ExecutionPolicy unrestricted -Command "iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/philipdaniels/dotfiles/master/setup_cygwin.ps1'))"
-```
-
-Then clone this repository into ~\repos\dotfiles. Then you can run individual scripts to install or upgrade,
-or alternatively just upgrade everything. Then flip to an elevated PowerShell prompt:
+This repo is expected to live at ~/repos/dotfiles. 
 
 ```
-REM To install/upgrade chocolatey (and a large list of apps) and setup some environment variables
-> ./setup_choco.ps1
-> choco upgrade all -y
-
-REM To install/upgrade Cygwin after the initial install:
-./setup_cygwin.ps1
+cd
+mkdir repos
+cd repos
+git clone git@github.com:PhilipDaniels/dotfiles.git
+cd dotfiles
+./00install_dotfiles.sh
 ```
 
+### Chocolatey setup
+
+To install/upgrade chocolatey (and a large list of apps) and setup some environment variables run
+this from an elevated PowerShell prompt:
+
+```
+./setup_choco.ps1
+choco upgrade all -y
+```
+
+Chocolatey installs most apps into Program Files normally, but a large proportion are put in
+`C:\ProgramData\chocolatey\bin`. This folder should get added to your path automatically.
+
+Your profile is at: %UserProfile%\AppData\Roaming\Microsoft\Windows. Open your Windows Start
+Menu folder and create shortcuts to the apps that you will be using frequently. This makes them
+available by searching by pressing the "Win" key.
+
+### Fonts
+
+There is a Linux script to install fonts, but I am not sure how good it is. There is
+no Windows equivalent at the moment.
+
+Some sources of fonts: 
+
+Download fonts from https://github.com/chrissimpkins/codeface and install them all (search for ttf in the unzipped folder).
+
+### Commands for debugging TCP in Windows
+
+```
+nbtstat -n
+route print
+route delete 0.0.0.0
+ipconfig /release
+ipconfig /renew
+ipconfig /flushdns
+```
+
+To reset TCP/IP http://support.microsoft.com/kb/299357 http://www.timdavis.com.au/general/windows-7-default-gateway-0-0-0-0-problem/
+
+```
+ netsh int ip reset c:\resetlog.txt
+ netsh winsock reset  c:\winsock.txt
+``` 
+
+Then reboot.
+
+Check if these services are started and set to automatic.
+
+```
+ DHCP Client
+ DNS Client
+ Remote Procedure Call (RPC)
+ TCP/IP Netbios helper
+```
+
+### Misc Windows notes
+
+* Do not create Windows VMs using Windows Enterprise because they do not get upgraded to
+  Windows 10. Windows anything-but-Enterprise will get upgraded automatically.
+* To enable Remote Desktop to virtual machines you need to go into Control Panel (in the
+  VM itself) and enable Remote Desktop. Remote Assistance can be disabled.
+* When using RDP to connect to a VM, to specify no domain, as for a Linux box, enter the
+  user name as "\phil" 
+* Setup a fixed IP for a VM by reserving its MAC address on the router and adding it to
+  `C:\Windows\System32\drivers\etc\hosts`. If you don't do this it may not be accessible
+  by RDP.
