@@ -15,13 +15,31 @@ cd dotfiles
 ./00install_dotfiles.sh
 ```
 
+### WSL Setup
+
+You need an X Server. VcXsrv is installed by the chocolatey script and seems to work
+reasonably well, however it does not autostart on Windows startup. To fix this, create
+a shortcut to the xlaunch.exe program in your startup folder (which is typically at
+XXXX)
+
+### SSH
+
+For how to use SSH etc, see my blog postings:
+
+http://philipdaniels.com/blog/2016/12/setup-of-ssh/
+
 ### Chocolatey setup
 
 To install/upgrade chocolatey (and a large list of apps) and setup some environment variables run
 this from an elevated PowerShell prompt:
 
 ```
-./setup_choco.ps1
+./20install_windows_programs.ps1
+```
+
+In the future, to upgrade all choco programs do:
+
+```
 choco upgrade all -y
 ```
 

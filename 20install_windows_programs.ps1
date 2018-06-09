@@ -178,6 +178,7 @@ choco install nugetpackageexplorer -y
 #choco install virtuawin -y
 choco install vlc -y
 choco install windirstat -y
+choco install vcxsrv -y
 #choco install winmerge -y
 
 Write-Host ("{0} Completed setup_choco.ps1" -f (Get-Date -format s))
