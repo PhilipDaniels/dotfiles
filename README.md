@@ -18,9 +18,14 @@ cd dotfiles
 ### WSL Setup
 
 You need an X Server. VcXsrv is installed by the chocolatey script and seems to work
-reasonably well, however it does not autostart on Windows startup. To fix this, create
-a shortcut to the xlaunch.exe program in your startup folder (which is typically at
-XXXX)
+reasonably well. However, the default "Run on startup" shortcut it creates asks you
+some bothersome questions. To fix this, go the startup folder (typically at
+C:\Users\Phil\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup) and delete
+the existing shortcut, and create a new one with a target of
+
+```
+  "C:\Program Files\VcXsrv\vcxsrv.exe" -multiwindow  
+```
 
 ### SSH
 
