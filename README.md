@@ -15,6 +15,14 @@ chmod 600 ~/.ssh/id_phil
 chmod 644 ~/.ssh/id_phil.pub
 ```
 
+Possibly you will need to install keychain and eval it manually the first time:
+
+```
+sudo apt install keychain
+eval `keychain --eval id_phil`
+```
+
+
 ```
 mkdir ~/repos
 cd ~/repos
