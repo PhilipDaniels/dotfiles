@@ -28,7 +28,7 @@ function f_PruneWindowsDirectoriesFromPath()
     # Remove last :.
     PATH=${PATH::-1}
 
-    if [ $OS == "winbash" ] ; then
+    if [ $OS == "wsl" ] ; then
         f_AddToPath "/mnt/c/Windows"
         f_AddToPath "/mnt/c/Windows/System32"
     fi

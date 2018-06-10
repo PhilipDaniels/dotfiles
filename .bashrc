@@ -66,24 +66,16 @@ fi
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-if [ "$OS" == "cygwin" ]; then
-    # Always export this so that an X server started from one Cygwin terminal
-    # is available from another.
-    export DISPLAY=:0.0
-
-    # This will start an X server on Cygwin without displaying any startup windows.
-    # If this is not working, you probably forgot to install the "xinit" package.
-    # http://x.cygwin.com/docs/faq/cygwin-x-faq.html#q-whereis-startxwin-bat
-    alias runx="run xwin -multiwindow -listen tcp"
-
-    # To fix 'Failed to connect to server' errors.
-    alias tmux="rm -rf /tmp/tmux* && tmux"
-fi
 
 if [ "$OS" == "wsl" ]; then
     export DISPLAY=:0.0
 fi
 
+# Liquidprompt is rather slow on my work machine, though tolerable.
+# It's fine on real Linux though and my home PC though.
+if [ -f ~/repos/liquidprompt/liquidprompt ] ; then
+    source ~/repos/liquidprompt/liquidprompt
+fi
 
 ########################################################################
 
