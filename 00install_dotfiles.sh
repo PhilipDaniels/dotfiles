@@ -24,12 +24,8 @@ f_Install $DIR/.tmux.conf ~/.tmux.conf
 # repo, because that affects the behaviour of git in this repo!
 f_CopyFileWithBackup $DIR/.gitconfig.master ~/.gitconfig
 if f_AtWork; then
-    echo "It looks like you are at Landmark, updating ~/.gitconfig..."
+    echo "It looks like you are at Landmark, updating ~/.gitconfig to use your work email and enable the proxy..."
     sed -i.bak 's/email = Philip.Daniels1971@gmail.com/email = Philip.Daniels@landmark.co.uk/g' ~/.gitconfig
-fi
-
-if f_AtWork; then
-    echo "You are at work, setting the Git proxy server"
     f_GitSetProxy
 else
     echo "You are at home, un-setting the Git proxy server"
