@@ -4,16 +4,31 @@ dotfiles: bash, vim, terminal and misc config for Linux and WSL.
 
 ### Linux Installation instructions
 
-This repo is expected to live at ~/repos/dotfiles. 
+This repo is expected to live at ~/repos/dotfiles. It is best to clone it using SSH
+as it makes pushing changes easier. First create my .ssh folder and install my keys,
+note that the permissions are important: https://superuser.com/questions/215504/permissions-on-private-key-in-ssh-folder
 
 ```
-cd
-mkdir repos
-cd repos
-git clone git@github.com:PhilipDaniels/dotfiles.git
+mkdir -m700 ~/.ssh
+# Copy in my id_phil files...
+chmod 600 ~/.ssh/id_phil
+chmod 644 ~/.ssh/id_phil.pub
+```
+
+```
+mkdir ~/repos
+cd ~/repos
+```
+
+```
+git clone git@github.com:PhilipDaniels/dotfiles.git       # ssh, or
+git clone https://github.com/PhilipDaniels/dotfiles.git   # https
+
 cd dotfiles
 ./00install_dotfiles.sh
 ```
+
+For more on SSH: http://philipdaniels.com/blog/2016/12/setup-of-ssh/
 
 ### WSL Setup
 
@@ -27,11 +42,23 @@ the existing shortcut, and create a new one with a target of
   "C:\Program Files\VcXsrv\vcxsrv.exe" -multiwindow  
 ```
 
-### SSH
+To start-over with WSL, you can do
 
-For how to use SSH etc, see my blog postings:
+```
+lxrun /uninstall /full
+```
 
-http://philipdaniels.com/blog/2016/12/setup-of-ssh/
+This will remove any file system, but leave the new store app installed. A new filesystem
+will be built for you the next time you run an Ubuntu prompt.
+
+```
+ubuntu clean 
+```
+
+Source: https://docs.microsoft.com/en-us/windows/wsl/faq
+https://github.com/Microsoft/WSL/issues/2590
+https://www.howtogeek.com/261188/how-to-uninstall-or-reinstall-windows-10s-ubuntu-bash-shell
+
 
 ### Chocolatey setup
 
