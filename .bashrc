@@ -36,6 +36,17 @@ f_AddToPath "$HOME/bin"
 f_AddToPath "$HOME/.cargo/bin"
 f_AddToPath "$HOME/.local/bin"
 
+export VISUAL=vim
+export EDITOR=vim
+
+# Start ssh-agent. This writes a bash script into ~/.keychain and sources it,
+# which ensures that other processes know that ssh-agent is running. This means
+# you should only ever have to type in your passphrase once.
+# See http://www.funtoo.org/Keychain
+# and https://thomaswabner.wordpress.com/2009/11/06/using-keychain-under-cygwin/
+# There must be a corresponding call in .bashrc to source the existing file.
+eval `keychain --quiet --eval id_phil`
+
 # Enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -55,9 +66,26 @@ fi
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+if [ "$OS" == "cygwin" ]; then
+    # Always export this so that an X server started from one Cygwin terminal
+    # is available from another.
+    export DISPLAY=:0.0
+
+    # This will start an X server on Cygwin without displaying any startup windows.
+    # If this is not working, you probably forgot to install the "xinit" package.
+    # http://x.cygwin.com/docs/faq/cygwin-x-faq.html#q-whereis-startxwin-bat
+    alias runx="run xwin -multiwindow -listen tcp"
+
+    # To fix 'Failed to connect to server' errors.
+    alias tmux="rm -rf /tmp/tmux* && tmux"
+fi
+
+if [ "$OS" == "wsl" ]; then
+    export DISPLAY=:0.0
+fi
+
+
 ########################################################################
-export VISUAL=vim
-export EDITOR=vim
 
 alias grep="grep --color"
 alias egrep="egrep --color=auto"
@@ -82,27 +110,8 @@ alias com='git checkout master'
 alias gfm='git config --local core.fileMode false'
 alias gp='git pull'
 
-if [ "$OS" == "cygwin" ]; then
-    # Always export this so that an X server started from one Cygwin terminal
-    # is available from another.
-    export DISPLAY=:0.0
 
-    # This will start an X server on Cygwin without displaying any startup windows.
-    # If this is not working, you probably forgot to install the "xinit" package.
-    # http://x.cygwin.com/docs/faq/cygwin-x-faq.html#q-whereis-startxwin-bat
-    alias runx="run xwin -multiwindow -listen tcp"
-
-    # To fix 'Failed to connect to server' errors.
-    alias tmux="rm -rf /tmp/tmux* && tmux"
-fi
-
-if [ "$OS" == "winbash" ]; then
-    export DISPLAY=:0.0
-fi
-
-
-
-
+########################################################################
 #if f_IsCmd "fortune"; then
 #    echo
 #    fortune -a ~/repos/dotfiles/fortunes ~/repos/dotfiles/fortunes-dune

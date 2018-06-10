@@ -19,7 +19,7 @@ Possibly you will need to install keychain and eval it manually the first time:
 
 ```
 sudo apt install keychain
-eval `keychain --eval id_phil`
+eval `keychain --quiet --eval id_phil`
 ```
 
 
