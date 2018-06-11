@@ -77,6 +77,10 @@ if [ -f ~/repos/liquidprompt/liquidprompt ] ; then
     source ~/repos/liquidprompt/liquidprompt
 fi
 
+if f_IsCmd "fasd"; then
+    eval "$(fasd --init auto)"
+fi
+
 ########################################################################
 
 alias grep="grep --color"
@@ -102,7 +106,6 @@ alias cod='git checkout develop'
 alias com='git checkout master'
 alias gfm='git config --local core.fileMode false'
 alias gp='git pull'
-
 
 ########################################################################
 #if f_IsCmd "fortune"; then
