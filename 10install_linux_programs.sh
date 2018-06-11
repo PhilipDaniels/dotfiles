@@ -52,6 +52,7 @@ exuberant-ctags \
 flex \
 font-manager \
 fonts-inconsolata fonts-jura fonts-linuxlibertine fonts-quattrocento \
+fonts-noto fonts-noto-hinted fonts-noto-mono fonts-noto-unhinted \
 fortune fortunes fortune-mod \
 g++ gcc gdb \
 galculator \
