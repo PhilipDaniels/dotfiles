@@ -52,10 +52,12 @@ exuberant-ctags \
 flex \
 font-manager \
 fonts-inconsolata fonts-jura fonts-linuxlibertine fonts-quattrocento \
-fonts-noto fonts-noto-hinted fonts-noto-mono fonts-noto-unhinted \
+fonts-noto fonts-noto-hinted fonts-noto-mono fonts-noto-unhinted fonts-powerline \
 fortune fortunes fortune-mod \
 g++ gcc gdb \
 galculator \
+geany \
+gedit \
 gettext \
 gimp \
 git git-core git-doc git-gui gitk \
@@ -65,6 +67,7 @@ gperf \
 gthumb \
 htop \
 jed \
+kate \
 kdbg \
 kdiff3 \
 libc6-dev \
