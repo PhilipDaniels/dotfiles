@@ -45,7 +45,9 @@ export EDITOR=vim
 # See http://www.funtoo.org/Keychain
 # and https://thomaswabner.wordpress.com/2009/11/06/using-keychain-under-cygwin/
 # There must be a corresponding call in .bashrc to source the existing file.
-eval `keychain --quiet --eval id_phil`
+# First, find all the private key files that are installed in the directory.
+KeyFiles=`find ~/.ssh -type f ! -name "*.*" -name "id*"`
+eval `keychain --quiet --eval "$KeyFiles"`
 
 # Enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
