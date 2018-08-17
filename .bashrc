@@ -79,9 +79,9 @@ fi
 
 # Liquidprompt is rather slow on my work machine, though tolerable.
 # It's fine on real Linux though and my home PC though.
-if [ -f ~/repos/liquidprompt/liquidprompt ] ; then
-    source ~/repos/liquidprompt/liquidprompt
-fi
+# if [ -f ~/repos/liquidprompt/liquidprompt ] ; then
+#    source ~/repos/liquidprompt/liquidprompt
+#fi
 
 if f_IsCmd "fasd"; then
     eval "$(fasd --init auto)"
