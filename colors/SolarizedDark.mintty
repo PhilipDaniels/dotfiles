@@ -1,7 +1,7 @@
 # This is the Solarized Dark theme for mintty.
 
 Term=xterm-256color
-Font=Cousine
+Font=Consolas
 FontHeight=10
 CursorType=block
 Scrollbar=none
