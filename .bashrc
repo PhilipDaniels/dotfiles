@@ -16,6 +16,10 @@ f_DetermineOS
 f_DetermineLinuxDistro
 f_IsRoot
 
+# This environment variable should only be set on Windows, to plink.exe.
+# If set on Cywgin or WSL it interferes with git cloning operations.
+unset GIT_SSH
+
 # See bash(1) for details.
 HISTCONTROL=ignoreboth      # Don't put duplicate lines or lines starting with space in the history.  
 HISTSIZE=1000               # For setting history length see HISTSIZE and HISTFILESIZE in bash(1)
