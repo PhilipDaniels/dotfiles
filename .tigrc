@@ -1,6 +1,41 @@
-# Make the P key push to the remote.
+# See https://github.com/jonas/tig/wiki/Bindings
+# and https://gist.github.com/matsubo/8012c260f76f1dad3ad9
+# and man 5 tigrc (available at http://jonas.nitro.dk/tig/tigrc.5.html)
+
+# Automatically refresh when files change (does not work, see Github).
+# set refresh-mode = auto
+
+# For bind commands:
+#    !  Run the command in the foreground with output shown.
+#    @  Run the command in the background with no output.
+#    ?  Prompt the user before executing the command.
+#    <  Exit Tig after executing the command.
+
+# Reload ~/.tigrc when 'S' is pressed
+bind generic S :source .tigrc
+
+# Make the P key push to the remote. ? asks for confirmation.
 bind main P !?git push
-bind status P !?git push
+bind status P !git push
 
 # Make the D key delete a file
-bind status D !@rm file
+bind status D !@?rm %(file)
+
+# Amending and making commits.
+bind status a @git commit --amend --no-edit -a
+bind status A @git commit --amend --no-edit
+bind status + !git commit --amend
+bind status c !git commit
+
+# Make the s/S key do the same as the U key in status view.
+bind status s status-update
+
+# Helper bindings for undoing changes.
+bind status r status-revert
+
+# Use normal git difftool to Compare changed file.
+bind status <F4> @git difftool -y -- %(file)
+
+# Compare selected commit in log view (main view) with its parent
+bind main <F4> @git difftool -d %(commit)^!
+
