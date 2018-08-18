@@ -44,8 +44,8 @@ fi
 ######################################################################################
 
 # Do Cygwin specific things.
-#if [ "$OS" == "cygwin" ] ; then
+if [ "$OS" == "cygwin" ] ; then
     f_Install $DIR/colors/SolarizedDark.mintty ~/.minttyrc
-#fi
+fi
 
 echo "Installation complete."
