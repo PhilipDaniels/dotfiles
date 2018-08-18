@@ -17,6 +17,7 @@ f_Install $DIR/.bash_profile ~/.bash_profile
 f_Install $DIR/.bashrc ~/.bashrc
 f_Install $DIR/.profile ~/.profile
 f_Install $DIR/.tmux.conf ~/.tmux.conf
+f_Install $DIR/.tigrc ~/.tigrc
 
 ######################################################################################
 # Setup Git.

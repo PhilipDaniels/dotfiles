@@ -1,0 +1,6 @@
+# Make the P key push to the remote.
+bind main P !?git push
+bind status P !?git push
+
+# Make the D key delete a file
+bind status D !@rm file
