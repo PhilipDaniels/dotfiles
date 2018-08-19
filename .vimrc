@@ -22,3 +22,7 @@ set nobackup
 set undodir=~/.vim/undo
 set undofile
 
+" Space will reply a macro stored in the register q.
+" Use qq to record such a macro, and q to terminate recording.
+:nnoremap <Space> @q
+
