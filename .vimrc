@@ -5,17 +5,16 @@
 set nocompatible    " Do not try to be backward compatible. [Required by Vundle.]
 filetype off        " [Required by Vundle.]
 
-" set the runtime path to include Vundle and initialize
+" Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plugin 'VundleVim/Vundle.vim'   " Let Vundle manage Vundle, required.
+Plugin 'iCyMind/NeoSolarized'
+Plugin 'ctrlpvim/ctrlp.vim'
+call vundle#end()               " Required.
+filetype plugin indent on       " Required.
 
 " ========== End of Vundle Setup - all other config comes after this ==========
-
 
 set noswapfile      " Turn off creation of .swp files.
 set nobackup        " Turn off creation of ~ backup files.
@@ -34,4 +33,16 @@ set undofile
 " Use qq to record such a macro, and q to terminate recording.
 " 5Q will run it 5 times.
 :nnoremap Q @q
+
+syntax on           " Turn on syntax highlighting.
+if has('termguicolors')
+    set termguicolors
+endif
+set background=dark
+colorscheme NeoSolarized
+
+" Make Ctrl-P invoke the Ctrl-P package (duh).
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_show_hidden = 1
 
