@@ -1,22 +1,30 @@
-" Ensure ~/.vim and relevant subfolders are created.
-if !isdirectory($HOME."/.vim")
-    call mkdir($HOME."/.vim", "", 0770)
-endif
-if !isdirectory($HOME."/.vim/undo")
-    call mkdir($HOME."/.vim/undo", "", 0700)
-endif
-if !isdirectory($HOME."/.vim/swap")
-    call mkdir($HOME."/.vim/swap", "", 0700)
-endif
-if !isdirectory($HOME."/.vim/backup")
-    call mkdir($HOME."/.vim/backup", "", 0700)
-endif
+" Necessary folders are created in the dotfiles installation script
+" rather than every time vim starts.
 
-" Turn off creation of .swp files.
-set noswapfile
+" =============== Start of Vundle Setup ===============
+set nocompatible    " Do not try to be backward compatible. [Required by Vundle.]
+filetype off        " [Required by Vundle.]
 
-" Turn off creation of ~ backup files.
-set nobackup
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" ========== End of Vundle Setup - all other config comes after this ==========
+
+
+set noswapfile      " Turn off creation of .swp files.
+set nobackup        " Turn off creation of ~ backup files.
+set number          " Turn on line numbers.
+set laststatus=2    " Turn on the status line.
+set tabstop=4       " Make tab characters appear 4 spaces wide.
+set shiftwidth=4    " Indents will have a width of 4.
+set expandtab       " Make the tab key insert spaces instead of a tab.
+set autoindent      " Copy indentation from current line when starting a new line.
 
 " Turn on creation of persistent undo files.
 set undodir=~/.vim/undo

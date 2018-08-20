@@ -42,8 +42,22 @@ else
     cat $DIR/.gitconfig.linux >> ~/.gitconfig
 fi
 
-######################################################################################
 
+######################################################################################
+# Setup folders expected by Vim. These are used in my .vimrc. It is better to create/
+# check for existence once on installation rather than every time vim starts.
+mkdir -m=0770 -p ~/.vim
+mkdir -m=0700 -p ~/.vim/backup
+mkdir -m=0700 -p ~/.vim/swap
+mkdir -m=0700 -p ~/.vim/undo
+mkdir -m=0700 -p ~/.vim/bundle
+
+if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
+    echo "Cloning Vundle..."
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+fi
+
+######################################################################################
 # Do Cygwin specific things.
 if [ "$OS" == "cygwin" ] ; then
     f_Install $DIR/colors/SolarizedDark.mintty ~/.minttyrc
