@@ -11,6 +11,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'   " Let Vundle manage Vundle, required.
 Plugin 'iCyMind/NeoSolarized'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'itchyny/lightline.vim'
 call vundle#end()               " Required.
 filetype plugin indent on       " Required.
 
@@ -24,6 +25,8 @@ set tabstop=4       " Make tab characters appear 4 spaces wide.
 set shiftwidth=4    " Indents will have a width of 4.
 set expandtab       " Make the tab key insert spaces instead of a tab.
 set autoindent      " Copy indentation from current line when starting a new line.
+set noshowmode      " Turn off -- INSERT -- appearing at the bottom. Not necessary since we have lightline.
+set backspace=indent,eol,start  " In insert mode, allow deletion of the end of line.
 
 " Turn on creation of persistent undo files.
 set undodir=~/.vim/undo
@@ -40,6 +43,7 @@ if has('termguicolors')
 endif
 set background=dark
 colorscheme NeoSolarized
+let g:lightline = { 'colorscheme': 'solarized' }
 
 " Make Ctrl-P invoke the Ctrl-P package (duh).
 let g:ctrlp_map = '<c-p>'
