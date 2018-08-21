@@ -77,7 +77,7 @@ fi
 
 
 if [ "$OS" == "wsl" ]; then
-    export DISPLAY=:1.0
+    export DISPLAY=:0.0
     if [ "$(umask)" == "0000" ]; then
         umask 022
     fi
