@@ -81,7 +81,9 @@ if [ "$OS" == "wsl" ]; then
     if [ "$(umask)" == "0000" ]; then
         umask 022
     fi
-    sudo service dbus start
+    if [ "$(pgrep -f /usr/bin/dbus-daemon)" == "" ]; then
+        sudo service dbus start
+    fi
 fi
 
 # Liquidprompt is rather slow on my work machine, though tolerable.
