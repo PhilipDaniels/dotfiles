@@ -77,7 +77,11 @@ fi
 
 
 if [ "$OS" == "wsl" ]; then
-    export DISPLAY=:0.0
+    export DISPLAY=:1.0
+    if [ "$(umask)" == "0000" ]; then
+        umask 022
+    fi
+    sudo service dbus start
 fi
 
 # Liquidprompt is rather slow on my work machine, though tolerable.
