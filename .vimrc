@@ -12,6 +12,7 @@ Plugin 'VundleVim/Vundle.vim'   " Let Vundle manage Vundle, required.
 Plugin 'iCyMind/NeoSolarized'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'itchyny/lightline.vim'
+Plugin 'scrooloose/nerdtree'
 call vundle#end()               " Required.
 filetype plugin indent on       " Required.
 
