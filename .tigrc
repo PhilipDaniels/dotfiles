@@ -36,7 +36,6 @@ bind main <F4> @git difftool -d %(commit)^!        # Compare selected commit to 
 bind status P !git push
 bind status D !@?rm %(file)                        # Make the D key delete a file
 bind status r status-revert
-bind status s status-update                        # s comes into this mode! Make it do the same as u.
 bind status <F4> @git difftool -y -- %(file)       # Run git-difftool on file.
 bind status a !git commit --amend -a               # Stage tracked files, amend.
 bind status A @git commit --amend -a --no-edit     # Stage tracked files, amend without editing message.
