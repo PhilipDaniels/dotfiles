@@ -48,7 +48,7 @@ let g:lightline = { 'colorscheme': 'solarized' }
 
 " Make Ctrl-P invoke the Ctrl-P package (duh).
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlPBuffer'
+let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_show_hidden = 1
 
 " Make Vim and Ctrl-P ignore Rust build artifacts.
