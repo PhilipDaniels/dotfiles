@@ -24,7 +24,7 @@ export PS1="\[${F_Yellow}\][${OS}]\[${R_All}\] \[${F_Cyan}\]\u@\h\[${F_Green}\] 
 unset GIT_SSH
 
 # See bash(1) for details.
-HISTCONTROL=ignoreboth      # Don't put duplicate lines or lines starting with space in the history.  
+HISTCONTROL=ignoreboth      # Don't put duplicate lines or lines starting with space in the history.
 HISTSIZE=1000               # For setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTFILESIZE=2000
 shopt -s histappend         # Append to the history file, don't overwrite it
@@ -95,6 +95,9 @@ fi
 if f_IsCmd "fasd"; then
     eval "$(fasd --init auto)"
 fi
+
+# Make all my Rust builds native ones.
+export RUSTFLAGS="-C target-cpu=native"
 
 ########################################################################
 
