@@ -97,7 +97,7 @@ if f_IsCmd "fasd"; then
 fi
 
 # Make all my Rust builds native ones.
-export RUSTFLAGS="-C target-cpu=native"
+# export RUSTFLAGS="-C target-cpu=native"
 
 ########################################################################
 
