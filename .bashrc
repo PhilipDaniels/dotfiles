@@ -99,6 +99,9 @@ fi
 # Make all my Rust builds native ones.
 # export RUSTFLAGS="-C target-cpu=native"
 
+# Swap caps and ctrl in XFCE.
+/usr/bin/setxkbmap -option "ctrl:swapcaps"
+
 ########################################################################
 
 alias grep="grep --color"
