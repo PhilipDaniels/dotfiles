@@ -99,9 +99,6 @@ fi
 # Make all my Rust builds native ones.
 # export RUSTFLAGS="-C target-cpu=native"
 
-# Swap caps and ctrl in XFCE.
-/usr/bin/setxkbmap -option "ctrl:swapcaps"
-
 ########################################################################
 
 alias grep="grep --color"
@@ -127,6 +124,8 @@ alias cod='git checkout develop'
 alias com='git checkout master'
 alias gfm='git config --local core.fileMode false'
 alias gp='git pull'
+alias nclippy='cargo +nightly clippy'
+alias sclippy='cargo clippy'
 
 ########################################################################
 #if f_IsCmd "fortune"; then
