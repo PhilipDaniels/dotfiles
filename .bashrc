@@ -17,7 +17,8 @@ f_DetermineLinuxDistro
 f_IsRoot
 
 # Set this after bringing in the control codes and determining OS.
-export PS1="\[${F_Yellow}\][${OS}]\[${R_All}\] \[${F_Cyan}\]\u@\h\[${F_Green}\] \w\[${R_All}\]\n\\$ "
+# export PS1="\[${F_Yellow}\][${OS}]\[${R_All}\] \[${F_Cyan}\]\u@\h\[${F_Green}\] \w\[${R_All}\]\n\\$ "
+export PS1="\[${F_Green}\]CWD: \w\[${R_All}\]\n\\$ "
 
 # This environment variable should only be set on Windows, to plink.exe.
 # If set on Cywgin or WSL it interferes with git cloning operations.
