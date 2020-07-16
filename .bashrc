@@ -1,5 +1,3 @@
-# -*- mode: shell-script -*-
-
 # See https://www.gnu.org/software/bash/manual/html_node/Bash-Startup-Files.html
 
 # If not running interactively, don't do anything
@@ -10,7 +8,6 @@ esac
 
 . ~/repos/dotfiles/.bash_controlcodes
 . ~/repos/dotfiles/.bash_functions
-. ~/repos/dotfiles/.bash_prompt
 
 f_DetermineOS
 f_DetermineLinuxDistro
@@ -76,26 +73,6 @@ fi
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-
-if [ "$OS" == "wsl" ]; then
-    export DISPLAY=:0.0
-    if [ "$(umask)" == "0000" ]; then
-        umask 022
-    fi
-    if [ "$(pgrep -f /usr/bin/dbus-daemon)" == "" ]; then
-        sudo service dbus start
-    fi
-fi
-
-# Liquidprompt is rather slow on my work machine, though tolerable.
-# It's fine on real Linux though and my home PC though.
-# if [ -f ~/repos/liquidprompt/liquidprompt ] ; then
-#    source ~/repos/liquidprompt/liquidprompt
-#fi
-
-if f_IsCmd "fasd"; then
-    eval "$(fasd --init auto)"
-fi
 
 # Make all my Rust builds native ones.
 # export RUSTFLAGS="-C target-cpu=native"

@@ -33,19 +33,6 @@ else
     f_GitUnsetProxy
 fi
 
-if [ "$OS" == "cygwin" ] ; then
-    echo "Detected Cygwin, setting Windows diff and merge tools in ~/.gitconfig"
-    cat $DIR/.gitconfig.windows >> ~/.gitconfig
-else
-    echo "Not on Cygwin, setting Linux diff and merge tools in ~/.gitconfig"
-    cat $DIR/.gitconfig.linux >> ~/.gitconfig
-fi
-
-
-######################################################################################
-# Do Cygwin specific things.
-if [ "$OS" == "cygwin" ] ; then
-    f_Install $DIR/colors/SolarizedDark.mintty ~/.minttyrc
-fi
+cat $DIR/.gitconfig.linux >> ~/.gitconfig
 
 echo "Installation complete."
