@@ -44,16 +44,6 @@ f_AddToPath "$HOME/.local/bin"
 export VISUAL=vim
 export EDITOR=vim
 
-# Start ssh-agent. This writes a bash script into ~/.keychain and sources it,
-# which ensures that other processes know that ssh-agent is running. This means
-# you should only ever have to type in your passphrase once.
-# See http://www.funtoo.org/Keychain
-# and https://thomaswabner.wordpress.com/2009/11/06/using-keychain-under-cygwin/
-# There must be a corresponding call in .bashrc to source the existing file.
-# First, find all the private key files that are installed in the directory.
-KeyFiles=`find ~/.ssh -type f ! -name "*.*" -name "id*"`
-eval `keychain --quiet --eval "$KeyFiles"`
-
 # Enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
