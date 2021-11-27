@@ -1,0 +1,3 @@
+At 4k, use 125% font scaling.
+At 2k, use ??
+
