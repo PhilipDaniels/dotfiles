@@ -41,8 +41,8 @@ f_AddToPath "$HOME/bin"
 f_AddToPath "$HOME/.cargo/bin"
 f_AddToPath "$HOME/.local/bin"
 
-export VISUAL=vim
-export EDITOR=vim
+export VISUAL=micro
+export EDITOR=micro
 
 # Enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile

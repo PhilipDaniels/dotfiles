@@ -10,7 +10,7 @@
     # Store passwords in RAM for 6 days (6 * 24 * 60 * 60).
     helper = cache --timeout=518400
 [core]
-    editor = vim
+    editor = micro
     pager = less -x4 -d
     # Do not do any conversion. Always keep whatever the file was entered with.
     # This seems to be best for files that you need to use on different systems

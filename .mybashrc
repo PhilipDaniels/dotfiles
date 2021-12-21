@@ -496,8 +496,12 @@ f_AddToPath "$HOME/.local/bin"
 
 . "$HOME/.cargo/env"
 
-export VISUAL=vim
-export EDITOR=vim
+
+if f_IsCmd "micro"; then
+    export VISUAL=micro
+    export EDITOR=micro
+fi
+
 
 # Setup nvm (Node Version Manager) to use a folder in my home directory.
 if [ -s ~/.nvm/nvm.sh ]; then
