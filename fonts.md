@@ -1,3 +1,7 @@
+At 4k, use 125% font scaling.
+At 2k, use 0% scaling.
+
+
 # Best
 DejaVu Serif, Sans and Sans Mono
 Cousine - but many of the mono fonts are very similar
@@ -29,3 +33,4 @@ Liberation Mono - dotted zero
 Nimbus Mono PS - small letters compared to font size. Non-dotted zero.
 Noto Mono - non-dotted zero.
 Ubuntu Mono - dotted zero, not as clear as some of the others
+
