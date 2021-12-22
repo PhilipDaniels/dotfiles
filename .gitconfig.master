@@ -1,6 +1,3 @@
-# -*- mode: conf -*-
-# vim: set filetype=gitconfig:
-
 [user]
     name = Philip Daniels
     email = Philip.Daniels1971@gmail.com
@@ -25,12 +22,6 @@
     safecrlf = false
 [push]
     default = simple
-[http]
-    # See also functions f_GitSetProxy and f_GitUnsetProxy and the call of the former
-    # from .bashrc. The new proxy is http://fpproxy.corp.edrlandmark.net:8080
-    proxy = http://fpproxy.corp.edrlandmark.net:8080
-[https]
-    proxy = http://fpproxy.corp.edrlandmark.net:8080
 [alias]
     s = status
     ss = status --short
